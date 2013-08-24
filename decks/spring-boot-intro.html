@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>Spring Boot Intro</title>
+	
+	<meta name="description" content="A jQuery library for modern HTML presentations">
+	
+	<!-- Core and extension CSS files -->
+	<link rel="stylesheet" href="../core/deck.core.css">
+	<link rel="stylesheet" href="../extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="../extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="../extensions/status/deck.status.css">
+	<link rel="stylesheet" href="../extensions/hash/deck.hash.css">
+	
+	<!-- Theme CSS files -->
+	<link rel="stylesheet" href="../themes/style/springone13.css">
+	<link rel="stylesheet" href="../themes/transition/horizontal-slide.css">
+	
+	<script src="../modernizr.custom.js"></script>
+</head>
+
+<body class="deck-container">
+
+<div class="slide" id="slide1"><h1 id="toc_0">Spring Boot</h1>
+
+<p>Dave Syer, Phil Webb, 2013<br>
+Twitter: <code>@david_syer</code>, <code>@phillip_webb</code><br>
+Email: [dsyer, pwebb]@gopivotal.com</p>
+
+<p>(Introduction to Spring Boot)</p>
+
+<p><img src="images/springio.png" alt="Spring IO"></p>
+
+</div><div class="slide" id="slide2"><h2 id="toc_1">Agenda</h2>
+
+<ul>
+<li>Quick overview of goals and high level features</li>
+<li>Getting started demo</li>
+<li>Behind the scenes of <code>@EnableAutoConfiguration</code></li>
+<li>Adding new features to Spring Boot</li>
+</ul>
+
+</div><div class="slide" id="slide3"><h2 id="toc_2">Introduction</h2>
+
+<p>Spring Boot:</p>
+
+<ul>
+<li>Focuses attention at a single point (as opposed to large collection
+of <code>spring-*</code> projects)</li>
+<li>A tool for getting started very quickly with Spring</li>
+<li>Common non-functional requirements for a &quot;real&quot; application</li>
+<li>Exposes a lot of useful features by default</li>
+<li>Gets out of the way quickly if you want to change defaults</li>
+</ul>
+
+<blockquote>
+<p>An opportunity for Spring to be opinionated</p>
+</blockquote>
+
+</div><div class="slide" id="slide4"><h2 id="toc_3">Focus Attention</h2>
+
+<p><img src="images/boot-focus.png" alt="Spring Boot in Context"></p>
+
+</div><div class="slide" id="slide5"><h2 id="toc_4">Spring Boot Overview</h2>
+
+<blockquote>
+<p>Spring Boot makes it easy to create Spring-powered, production-grade
+applications and services with absolute minimum fuss. It takes an
+opinionated view of the Spring platform so that new and existing
+users can quickly get to the bits they need.</p>
+</blockquote>
+
+</div><div class="slide" id="slide6"><h2 id="toc_5">Spring Boot Goals</h2>
+
+<ul>
+<li>Provide a radically faster and widely accessible getting started experience</li>
+<li>Be opinionated out of the box, but get out of the way quickly as requirements start to
+diverge from the defaults</li>
+<li>Provide a range of non-functional features that are common to large classes of projects
+(e.g. embedded servers, security, metrics, health checks, externalized configuration)</li>
+<li>Absolutely no code generation and no requirement for XML configuration</li>
+</ul>
+
+</div><div class="slide" id="slide7"><h2 id="toc_6">Getting Started <em>Really</em> Quickly</h2>
+
+<p><code>app.groovy</code>:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">@Controller
+class Application {
+    @RequestMapping(&#39;/&#39;)
+    @ResponseBody
+    String home() {
+        &#39;Hello World!&#39;
+    }
+}
+</code></pre></div>
+<p><br/>then</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ spring run app.groovy
+</code></pre></div>
+</div><div class="slide" id="slide8"><h2 id="toc_7">Getting Started</h2>
+
+<div id="center">
+<div>DEMO</div>
+</div>
+
+</div><div class="slide" id="slide9"><h2 id="toc_8">Getting Started In Java</h2>
+
+<p><code>Application.java</code>:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">...
+@Controller
+public class Application {
+
+    @RequestMapping(&quot;/&quot;)
+    @ResponseBody
+    public String home() {
+        &quot;Hello World!&quot;;
+    }
+
+    public static main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
+}
+</code></pre></div>
+<p><br/>then</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ mvn package
+$ java -jar target/*.jar
+</code></pre></div>
+</div><div class="slide" id="slide10"><h2 id="toc_9">Getting Started</h2>
+
+<div id="center">
+<div>DEMO</div>
+</div>
+
+</div><div class="slide" id="slide11"><h2 id="toc_10">What Just Happened?</h2>
+
+<ul>
+<li><code>SpringApplication</code>: convenient way to write a <code>main()</code> method that loads a Spring context</li>
+<li><code>@EnableAutoConfiguration</code>: optional annotation that adds stuff to your context, including...</li>
+<li><code>EmbeddedServletContainerFactory</code>: added to your context if a server is available on the classpath</li>
+<li><code>CommandLineRunner</code>: a hook to run application-specific code after the context is created</li>
+</ul>
+
+</div><div class="slide" id="slide12"><h2 id="toc_11">Spring Boot Modules</h2>
+
+<ul>
+<li>Spring Boot - main library supporting the other parts of Spring Boot</li>
+<li>Spring Boot Autoconfigure - single <code>@EnableAutoConfiguration</code>
+annotation creates a whole Spring context</li>
+<li>Spring Boot Starters - a set of convenient dependency descriptors
+that you can include in your application.</li>
+<li>Spring Boot CLI - compiles and runs Groovy source as a Spring
+application</li>
+<li>Spring Boot Actuator - comman non-functional features that make an
+app instantly deployable and supportable in production</li>
+<li>Spring Boot Tools - for building and executing self-contained JAR
+and WAR archives</li>
+<li>Spring Boot Samples - a wide range of sample apps</li>
+</ul>
+
+</div><div class="slide" id="slide13"><h2 id="toc_12">Spring Boot Module Relations</h2>
+
+<p><img src="images/boot-modules.png" alt="Spring Boot Modules"></p>
+
+</div><div class="slide" id="slide14"><h2 id="toc_13">Binding to Command Line Arguments</h2>
+
+<p><code>SpringApplication</code> binds its own bean properties to command line
+arguments, and then adds them to the Spring <code>Environment</code>, e.g.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ java -jar target/*.jar --server.port=9000
+</code></pre></div>
+</div><div class="slide" id="slide15"><h2 id="toc_14">Externalizing Configuration to Properties</h2>
+
+<p>Just put <code>application.properties</code> in your classpath, e.g.</p>
+
+<p><code>application.properties</code></p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">server.port: 9000
+</code></pre></div>
+</div><div class="slide" id="slide16"><h2 id="toc_15">Using YAML</h2>
+
+<p>Just put <code>application.yml</code> in your classpath</p>
+
+<p><code>application.yml</code></p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">server:
+  port: 9000
+</code></pre></div>
+<p>Both properties and YAML add entries with period-separated paths to
+the Spring <code>Environment</code>.</p>
+
+</div><div class="slide" id="slide17"><h2 id="toc_16">Binding External Configuration To Beans</h2>
+
+<p><code>MineProperties.java</code></p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">@ConfigurationProperties(prefix=&quot;mine&quot;)
+public class MinePoperties {
+    private Resource location;
+    private boolean skip = true;
+    // ... getters and setters
+}
+</code></pre></div>
+<p><br/>
+<code>application.properties</code></p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">mine.location: classpath:mine.xml
+mine.skip: false
+</code></pre></div>
+</div><div class="slide" id="slide18"><h2 id="toc_17">Customizing Configuration Location</h2>
+
+<p>Set </p>
+
+<ul>
+<li><code>spring.config.name</code> - default <code>application</code>, can be comma-separated
+list</li>
+<li><code>spring.config.location</code> - a <code>Resource</code> path, overrides name</li>
+</ul>
+
+<p>e.g.</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ java -jar target/*.jar --spring.config.name=sagan
+</code></pre></div>
+</div><div class="slide" id="slide19"><h2 id="toc_18">Spring Profiles</h2>
+
+<ul>
+<li><p>Activate external configuration with a Spring profile</p>
+
+<ul>
+<li>file name convention e.g. <code>application-development.properties</code></li>
+<li>or nested documents:</li>
+</ul>
+
+<p><code>application.yml</code></p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">defaults: etc...
+---
+spring:
+  profiles: development,postgresql
+other:
+  stuff: more stuff...
+</code></pre></div></li>
+<li><p>Set the default spring profile in external configuration, e.g:</p>
+
+<p><code>application.properties</code></p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">spring.profiles.active: default,postgresql
+</code></pre></div></li>
+</ul>
+
+</div><div class="slide" id="slide20"><h2 id="toc_19">Adding some Autoconfigured Behaviour</h2>
+
+<p>Extend the demo and see what we can get by just modifying the
+classpath, e.g. </p>
+
+<ul>
+<li>Add an in memory database</li>
+<li>Add a Tomcat connection pool</li>
+</ul>
+
+</div><div class="slide" id="slide21"><h2 id="toc_20">Adding A UI with Thymeleaf</h2>
+
+<ul>
+<li>Add Thymeleaf to the classpath and see it render a view</li>
+<li>Spring Boot Autoconfigure has added all the boilerplate stuff</li>
+<li>Common configuration options via <code>spring.template.*</code>, e.g.
+
+<ul>
+<li><code>spring.template.prefix:classpath:/templates/</code> (location of templates)</li>
+<li><code>spring.template.cache:true</code> (set to <code>false</code> to reload templates
+when changed)</li>
+</ul></li>
+<li>Extend and override:
+
+<ul>
+<li>add Thymeleaf <code>IDialect</code> beans</li>
+<li>add <code>thymeleafViewResolver</code></li>
+<li>add <code>SpringTemplateEngine</code></li>
+<li>add <code>defaultTemplateResolver</code></li>
+</ul></li>
+</ul>
+
+</div><div class="slide" id="slide22"><h2 id="toc_21">Currently Available Autoconfigured Behaviour</h2>
+
+<ul>
+<li>Embedded servlet container (Tomcat or Jetty)</li>
+<li><code>DataSource</code> and <code>JdbcTemplate</code></li>
+<li>JPA</li>
+<li>Spring Data JPA (scan for repositories)</li>
+<li>Thymeleaf</li>
+<li>Batch processing</li>
+<li>Reactor for events and async processing</li>
+<li>Actuator features (Security, Audit, Metrics, Trace)</li>
+</ul>
+
+</div><div class="slide" id="slide23"><h2 id="toc_22">Building a WAR</h2>
+
+<p>We like launchable JARs, but you can still use WAR format if you
+prefer. Spring Boot Tools take care of repackaging a WAR to make it
+executable.</p>
+
+<p>If you want a WAR to be deployable (in a &quot;normal&quot; container) too, then
+you need to use <code>SpringServletInitializer</code> instead of
+<code>SpringApplication</code>.</p>
+
+</div><div class="slide" id="slide24"><h2 id="toc_23">The Actuator</h2>
+
+<p>Adds common non-functional features to your application and exposes
+MVC endpoints to interact with them.</p>
+
+<ul>
+<li>Security</li>
+<li>Secure endpoints: <code>/metrics</code>, <code>/health</code>, <code>/trace</code>, <code>/dump</code>, <code>/shutdown</code></li>
+<li>Audit</li>
+<li><code>/info</code></li>
+</ul>
+
+<p>If embedded in a web app or web service can use the same port or a
+different one (and a different network interface).</p>
+
+</div><div class="slide" id="slide25"><h2 id="toc_24">Adding Security</h2>
+
+<ul>
+<li>Use the Actuator</li>
+<li>Add Spring Security to classpath</li>
+</ul>
+
+</div><div class="slide" id="slide26"><h2 id="toc_25">Logging</h2>
+
+<ul>
+<li>Spring Boot provides default configuration files for 3 common logging
+frameworks: logback, log4j and <code>java.util.logging</code></li>
+<li>Starters (and Samples) use logback</li>
+<li>External configuration and classpath influence runtime behaviour</li>
+<li><code>LoggingApplicationContextInitializer</code> sets it all up</li>
+</ul>
+
+</div><div class="slide" id="slide27"><h2 id="toc_26">Customizing the <code>ApplicationContext</code> Creation</h2>
+
+<ul>
+<li>Add external configuration (System properties, OS env vars, config
+file, command line arguments)</li>
+<li>Add <code>ApplicationContextInitializer</code> implementations</li>
+</ul>
+
+</div><div class="slide" id="slide28"><h2 id="toc_27">Customizing the <code>@EnableAutoConfiguration</code> Behaviour</h2>
+
+<ul>
+<li>Add JAR with <code>META-INF/spring.factories</code> entry for
+<code>EnableAutoConfiguration</code></li>
+<li>All entries from classpath merged and added to context</li>
+</ul>
+
+</div><div class="slide" id="slide29"><h2 id="toc_28">Customizing the CLI</h2>
+
+<p>Uses standard Java <code>META-INF/services</code> scanning</p>
+
+<ul>
+<li><code>CompilerAutoConfiguration</code>: add dependencies and imports</li>
+<li><code>CommandFactory</code>: add commands</li>
+</ul>
+
+<p>Can also add script commands (written in Groovy)</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ spring script foo ...
+</code></pre></div>
+<p>looks for <code>foo.groovy</code> in <code>${SPRING_HOME}/bin</code> and
+<code>${SPRING_HOME}/ext</code> by default.</p>
+
+</div><div class="slide" id="slide30"><h2 id="toc_29">Customizing Servlet Container Properties</h2>
+
+<ul>
+<li>Some common features exposed with external configuration,
+e.g. <code>server.port</code> (see <code>ServerProperties</code> bean)</li>
+<li>Add bean of type <code>EmbeddedServletContainerCustomizer</code> - all
+instances get a callback</li>
+<li>Add bean of type <code>EmbeddedServletContainerFactory</code> (replacing
+auto-configured one)</li>
+</ul>
+
+</div><div class="slide" id="slide31"><h2 id="toc_30">Spring Boot Loader</h2>
+
+<p><strong>Motivation</strong>: existing solutions for executable JAR are not very robust;
+executable WAR is very tricky to create.</p>
+
+<p><strong>Response</strong>: <code>JarLauncher</code> and <code>WarLauncher</code> with specialized
+  <code>ClassLoader</code> implementations that can find resources in nested JARs
+  (e.g. <code>lib/*.jar</code> or <code>WEB-INF/lib/*.jar</code>)</p>
+
+</div><div class="slide" id="slide32"><h2 id="toc_31">Maven and Gradle Tooling</h2>
+
+<p>Create an executable archive (JAR or WAR)</p>
+
+<ul>
+<li><p>Maven plugin (using <code>spring-boot-starter-parent</code>):</p>
+
+<p><plugin>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+</plugin></p>
+
+<p>$ mvn package</p></li>
+<li><p>Gradle plugin:</p>
+
+<p>apply plugin: &#39;spring-boot&#39;</p>
+
+<p>$ gradle repackage</p></li>
+</ul>
+
+</div><div class="slide" id="slide33"><h2 id="toc_32">Testing with <code>Spring Test</code> and <code>Spring Test MVC</code></h2>
+
+<p><code>SpringApplication</code> is an opinionated creator of an
+<code>ApplicationContext</code>, but most of the behaviour is encapsulated in
+<code>ApplicationContextInitializer</code> implementations. To reproduce the
+behaviour of you app in an integration test it is useful to duplicate
+those features you can use the corresponding initializers.</p>
+
+<p>Example if you have externalized configuration:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = IntegrationTestsConfiguration.class, 
+    initializers = ConfigFileApplicationContextInitializer.class)
+public class IntegrationTests {
+
+  // Normal Spring Test stuff
+
+}
+</code></pre></div>
+</div><div class="slide" id="slide34"><h2 id="toc_33">Links</h2>
+
+<ul>
+<li><a href="https://github.com/SpringSource/spring-boot">https://github.com/SpringSource/spring-boot</a> Spring Boot on Github</li>
+<li><a href="https://projects.springframework.io/spring-boot">https://projects.spring.io/spring-boot</a> Documentation</li>
+<li><a href="">http://spring.io/blog</a></li>
+<li><a href="">http://dsyer.com/decks/spring-boot-intro.md.html</a></li>
+<li>Twitter: @david_syer<br></li>
+<li>Email: <a href="mailto:dsyer@vmware.com">dsyer@vmware.com</a></li>
+</ul>
+
+<div id="center">
+<div>Spring Boot Intro - END</div>
+</div>
+</div>
+
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<div id="footer">
+</div>
+
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="number" name="slidenum" id="goto-slide">
+	<input type="submit" value="Go">
+</form>
+
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<script src="../jquery-1.7.2.min.js"></script>
+<script>window.jQuery</script>
+
+<!-- Deck Core and extensions -->
+<script src="../core/deck.core.js"></script>
+<script src="../extensions/menu/deck.menu.js"></script>
+<script src="../extensions/goto/deck.goto.js"></script>
+<script src="../extensions/status/deck.status.js"></script>
+<script src="../extensions/navigation/deck.navigation.js"></script>
+<script src="../extensions/hash/deck.hash.js"></script>
+
+<script type="text/javascript">
+$.extend(true, $.deck.defaults, {
+   classes: {
+      menu: 'deck-menu'
+   },
+
+   keys: {
+      menu: 77 // 'm'
+   }
+});
+
+$(function() {
+	// Deck initialization
+	$.deck('.slide');
+});
+</script>
+
+</body>
+</html>

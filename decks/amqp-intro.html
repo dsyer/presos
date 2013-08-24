@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title></title>
+	
+	<meta name="description" content="A jQuery library for modern HTML presentations">
+	
+	<!-- Core and extension CSS files -->
+	<link rel="stylesheet" href="../core/deck.core.css">
+	<link rel="stylesheet" href="../extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="../extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="../extensions/status/deck.status.css">
+	<link rel="stylesheet" href="../extensions/hash/deck.hash.css">
+	
+	<!-- Theme CSS files -->
+	<link rel="stylesheet" href="../themes/style/spring.css">
+	<link rel="stylesheet" href="../themes/transition/horizontal-slide.css">
+	
+	<script src="../modernizr.custom.js"></script>
+</head>
+
+<body class="deck-container">
+
+</div><div class="slide" id="slide2"><h2 id="toc_0">Advanced Messaging with AMQP</h2>
+
+<p>This presentation provides an overview of AMQP and an outline of why it might be an important piece of a message-oriented architecture in an enterprise or cloud system.  We describe the features of the protocol by looking at example use cases, and highlight those features that make AMQP unique.  A comparison is made with JMS, so the strengths and weaknesses of both approaches can be seen, but we also emphasise that AMQP is not just for Java developers.  Spring AMQP is introduced briefly as providing a convenient programming model for Java and .NET application developers.</p>
+</div>
+
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<div id="footer">
+</div>
+
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="number" name="slidenum" id="goto-slide">
+	<input type="submit" value="Go">
+</form>
+
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<script src="../jquery-1.7.2.min.js"></script>
+<script>window.jQuery</script>
+
+<!-- Deck Core and extensions -->
+<script src="../core/deck.core.js"></script>
+<script src="../extensions/menu/deck.menu.js"></script>
+<script src="../extensions/goto/deck.goto.js"></script>
+<script src="../extensions/status/deck.status.js"></script>
+<script src="../extensions/navigation/deck.navigation.js"></script>
+<script src="../extensions/hash/deck.hash.js"></script>
+
+<script type="text/javascript">
+$.extend(true, $.deck.defaults, {
+   classes: {
+      menu: 'deck-menu'
+   },
+
+   keys: {
+      menu: 77 // 'm'
+   }
+});
+
+$(function() {
+	// Deck initialization
+	$.deck('.slide');
+});
+</script>
+
+</body>
+</html>

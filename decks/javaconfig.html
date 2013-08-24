@@ -1,0 +1,92 @@
+<div class="slide" id="slide1"><h1 id="toc_0">Spring Security Javaconfig</h1>
+
+<p>Dave Syer, 2013<br>
+Twitter: @david_syer<br>
+Email: <a href="mailto:dsyer@gopivotal.com">dsyer@gopivotal.com</a></p>
+
+</div><div class="slide" id="slide2"><h2 id="toc_1">Agenda</h2>
+
+<ul>
+<li>What&#39;s happening in Spring Security?</li>
+<li>How do I get started with the <code>@Configuration</code>?</li>
+<li>Demo / live coding session</li>
+</ul>
+
+</div><div class="slide" id="slide3"><h2 id="toc_2">What&#39;s Happening</h2>
+
+<ul>
+<li><code>@rob_winch</code> project lead (2012)</li>
+<li>GA: Spring Security 3.1.4 -&gt; Spring 3.0.*</li>
+<li>In the pipeline Spring Security 3.2.0 -&gt; Spring 3.2.*
+
+<ul>
+<li>Servlet 3.0 and Spring MVC async</li>
+<li>Servlet 3.0 API</li>
+<li>Concurrency</li>
+<li>Javaconfig, a.k.a. <code>@Configuration</code></li>
+</ul></li>
+<li>Spring Security Javaconfig is standalone at 1.0.0.CI-SNAPSHOT, but
+intended to be part of 3.2.*</li>
+<li>Spring 4 is coming!</li>
+</ul>
+
+</div><div class="slide" id="slide4"><h2 id="toc_3">Getting Started 1</h2>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">:::java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration {
+
+}    
+</code></pre></div>
+</div><div class="slide" id="slide5"><h2 id="toc_4">Getting Started 2</h2>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">:::java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration {
+
+   @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return new AuthenticationBuilder().inMemoryAuthentication().withUser(&quot;user&quot;)
+            .password(&quot;password&quot;).roles(&quot;USER&quot;).and().and().build();
+    }
+
+}
+</code></pre></div>
+</div><div class="slide" id="slide6"><h2 id="toc_5">Getting Started 3</h2>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">:::java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+   @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return new AuthenticationBuilder().inMemoryAuthentication().withUser(&quot;user&quot;)
+            .password(&quot;password&quot;).roles(&quot;USER&quot;).and().and().build();
+    }
+
+    @Override
+    protected void configure(HttpConfigurator http) throws Exception {
+        http.authorizeUrls()
+              .antMatchers(&quot;/**&quot;).authenticated()
+          .and()
+              .formLogin().permitAll();
+    }
+
+}
+</code></pre></div>
+</div><div class="slide" id="slide7"><h2 id="toc_6">Demo</h2>
+
+<div id="center">
+<div>XML -> <code>@Configuration</code></div>
+</div>
+
+</div><div class="slide" id="slide8"><h2 id="toc_7">Links</h2>
+
+<ul>
+<li><a href="">http://github.com/SpringSource/spring-security-javaconfig</a></li>
+<li><a href="http://blog.springsource.org/2012/12/17/spring-security-3-2-m1-highlights-servlet-3-api-support/">Spring Security 3.2.0.M1 Blog</a></li>
+<li><a href="">http://blog.springsource.org</a></li>
+<li><a href="">https://springone2gx.com/conference/santa_clara</a></li>
+<li><a href="http://skillsmatter.com/event/java-jee/spring-exchange-1724">Spring eXchange 2013/11/15</a></li>
+</ul>
+</div>
