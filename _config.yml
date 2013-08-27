@@ -1,0 +1,8 @@
+### Global gh-pages pre-amble
+lsi: false
+pygments: true
+markdown: redcarpet
+exclude:
+  - deck.js
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
