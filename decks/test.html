@@ -19,13 +19,13 @@
 	<link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
 	<link rel="stylesheet" href="../extensions/status/deck.status.css">
 	<link rel="stylesheet" href="../extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="../css/syntax.css">
 	
 	<!-- Theme CSS files (menu swaps these out) -->
-	<link rel="stylesheet" id="style-theme-link" href="../themes/style/web-2.0.css">
+    
+    
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/spring.css">
 	<link rel="stylesheet" id="transition-theme-link" href="../themes/transition/horizontal-slide.css">
-	
-	<!-- Custom CSS just for this page -->
-	<link rel="stylesheet" href="introduction.css">
 	
 	<script src="../modernizr.custom.js"></script>
 </head>
@@ -44,12 +44,25 @@
 
 <p>Lorem ipsum</p>
 
-<figure><a href="/images/ditaa/ditaa-92eed52fec23b86d9def5e0a1797ae9a.png" title="images/ditaa/ditaa-92eed52fec23b86d9def5e0a1797ae9a.png" ><img src="/images/ditaa/ditaa-92eed52fec23b86d9def5e0a1797ae9a.png" title="images/ditaa/ditaa-92eed52fec23b86d9def5e0a1797ae9a.png" max-width="99%" /></a></figure>
+<div class="highlight"><pre><code class="java"><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Foo</span> <span class="o">{</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">name</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&quot;foo&quot;</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<div class="highlight"><pre><code class="ruby"><span class="lineno">1</span>     <span class="k">def</span> <span class="nf">foo</span>
+<span class="lineno">2</span>       <span class="nb">puts</span> <span class="s2">&quot;foo&quot;</span>
+<span class="lineno">3</span>     <span class="k">end</span>
+</code></pre></div>
 
 </div><div class="slide" id="slide4"><h2 id="toc_2">Second</h2>
 
 <p>More stuff</p>
 </div>
+
 
 <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
 <a href="#" class="deck-next-link" title="Next">&#8594;</a>
