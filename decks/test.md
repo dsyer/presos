@@ -32,4 +32,27 @@ public class Foo {
 
 ## Second
 
-More stuff
+* More stuff
+```java
+public String name() {
+    return "foo";
+}
+```
+* and more
+
+
+## Third
+
+`app.groovy`:
+
+```groovy
+@Controller
+class Application {
+    @RequestMapping('/')
+    @ResponseBody
+    String home() {
+        'Hello World!'
+    }
+}
+```
+

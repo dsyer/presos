@@ -57,18 +57,22 @@ Spring Boot:
 
 `app.groovy`:
 
-    @Controller
-    class Application {
-        @RequestMapping('/')
-        @ResponseBody
-        String home() {
-            'Hello World!'
-        }
+```groovy
+@Controller
+class Application {
+    @RequestMapping('/')
+    @ResponseBody
+    String home() {
+        'Hello World!'
     }
+}
+```
 
-<br/>then
+then
 
-    $ spring run app.groovy
+```
+$ spring run app.groovy
+```
 
 ## Getting Started
 
@@ -80,21 +84,23 @@ Spring Boot:
 
 `Application.java`:
 
-    ...
-    @Controller
-    public class Application {
+```java
+...
+@Controller
+public class Application {
 
-        @RequestMapping("/")
-        @ResponseBody
-        public String home() {
-            "Hello World!";
-        }
-        
-        public static main(String[] args) {
-            SpringApplication.run(Application.class, args);
-        }
-        
+    @RequestMapping("/")
+    @ResponseBody
+    public String home() {
+        "Hello World!";
     }
+        
+    public static main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+        
+}
+```
 
 <br/>then
 
@@ -145,17 +151,21 @@ arguments, and then adds them to the Spring `Environment`, e.g.
 Just put `application.properties` in your classpath, e.g.
 
 `application.properties`
-        
-    server.port: 9000
+
+```properties
+server.port: 9000
+```
 
 ## Using YAML
 
 Just put `application.yml` in your classpath
 
 `application.yml`
-        
-    server:
-      port: 9000
+
+```yaml        
+server:
+  port: 9000
+```
 
 Both properties and YAML add entries with period-separated paths to
 the Spring `Environment`.
@@ -164,18 +174,22 @@ the Spring `Environment`.
 
 `MineProperties.java`
 
-    @ConfigurationProperties(prefix="mine")
-    public class MinePoperties {
-        private Resource location;
-        private boolean skip = true;
-        // ... getters and setters
-    }
+```java
+@ConfigurationProperties(prefix="mine")
+public class MinePoperties {
+    private Resource location;
+    private boolean skip = true;
+    // ... getters and setters
+}
+```
 
 <br/>
 `application.properties`
-        
-    mine.location: classpath:mine.xml
-    mine.skip: false
+
+```properties
+mine.location: classpath:mine.xml
+mine.skip: false
+```
 
 ## Customizing Configuration Location
 

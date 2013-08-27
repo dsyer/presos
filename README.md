@@ -19,10 +19,10 @@ Use Ruby 1.9.3 and make sure you have `bundle` on your `PATH`
 
     $ cd presos
     $ bundle
-    $ rackup
+    $ jekyll server -w
     ...
     
-This builds all slides and then runs a server on port 3333 which
+This builds all slides and then runs a server on port 4000 which
 rebuilds each deck as you reload it.
 
 ## Static Website

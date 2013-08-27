@@ -10,9 +10,6 @@ module Jekyll
       site.source = 'deck.js'
       site.read_directories
       site.source = source
-      site.pages.each do |page|
-        page.content = page.content.gsub(/```(\w+)(.*)```/m, "{% highlight \\1 %}\n\\2\n{% endhighlight %}")
-      end
     end
   end
 
