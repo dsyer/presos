@@ -10,6 +10,7 @@
 	<title></title>
 	
 	<meta name="description" content="A jQuery library for modern HTML presentations">
+	<meta name="viewport" content="width=1024, user-scalable=no">
 	
 	<!-- Core and extension CSS files -->
 	<link rel="stylesheet" href="../core/deck.core.css">
@@ -18,10 +19,13 @@
 	<link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
 	<link rel="stylesheet" href="../extensions/status/deck.status.css">
 	<link rel="stylesheet" href="../extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="../css/syntax.css">
 	
-	<!-- Theme CSS files -->
-	<link rel="stylesheet" href="../themes/style/spring.css">
-	<link rel="stylesheet" href="../themes/transition/horizontal-slide.css">
+	<!-- Theme CSS files (menu swaps these out) -->
+    
+    
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/spring.css">
+	<link rel="stylesheet" id="transition-theme-link" href="../themes/transition/horizontal-slide.css">
 	
 	<script src="../modernizr.custom.js"></script>
 </head>
@@ -414,6 +418,7 @@ some concrete choices</li>
 </ul>
 </div>
 
+
 <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
 <a href="#" class="deck-next-link" title="Next">&#8594;</a>
 
@@ -423,9 +428,6 @@ some concrete choices</li>
 	<span class="deck-status-total"></span>
 </p>
 
-<div id="footer">
-</div>
-
 <form action="." method="get" class="goto-form">
 	<label for="goto-slide">Go to slide:</label>
 	<input type="number" name="slidenum" id="goto-slide">
@@ -434,7 +436,7 @@ some concrete choices</li>
 
 <a href="." title="Permalink to this slide" class="deck-permalink">#</a>
 
-<script src="../jquery-1.7.2.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
 <script>window.jQuery</script>
 
 <!-- Deck Core and extensions -->
@@ -446,19 +448,21 @@ some concrete choices</li>
 <script src="../extensions/hash/deck.hash.js"></script>
 
 <script type="text/javascript">
-$.extend(true, $.deck.defaults, {
-   classes: {
-      menu: 'deck-menu'
-   },
-
-   keys: {
-      menu: 77 // 'm'
-   }
-});
-
 $(function() {
 	// Deck initialization
 	$.deck('.slide');
+	
+	$('#style-themes').change(function() {
+		$('#style-theme-link').attr('href', $(this).val());
+	});
+	
+	$('#transition-themes').change(function() {
+		$('#transition-theme-link').attr('href', $(this).val());
+	});
+
+    $('pre').click(function (){
+	$(this).toggleClass('highlighted');
+    });
 });
 </script>
 

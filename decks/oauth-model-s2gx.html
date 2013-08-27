@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title></title>
+	
+	<meta name="description" content="A jQuery library for modern HTML presentations">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+	
+	<!-- Core and extension CSS files -->
+	<link rel="stylesheet" href="../core/deck.core.css">
+	<link rel="stylesheet" href="../extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="../extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="../extensions/status/deck.status.css">
+	<link rel="stylesheet" href="../extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="../css/syntax.css">
+	
+	<!-- Theme CSS files (menu swaps these out) -->
+    
+    
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/springone13.css">
+	<link rel="stylesheet" id="transition-theme-link" href="../themes/transition/horizontal-slide.css">
+	
+	<script src="../modernizr.custom.js"></script>
+</head>
+
+<body class="deck-container">
+
+<div class="slide" id="slide1"><h1 id="toc_0">Data Modelling for OAuth2</h1>
+
+<p>Dave Syer, 2013<br>
+Twitter: @david_syer<br>
+Email: <a href="mailto:dsyer@gopivotal.com">dsyer@gopivotal.com</a></p>
+
+</div><div class="slide" id="slide2"><h2></h2>
+
+<p><img src="images/springio.png" alt="Spring IO"></p>
+
+</div><div class="slide" id="slide3"><h2 id="toc_1">Agenda</h2>
+
+<ul>
+<li>Quick overview of <a href="http://en.wikipedia.org/wiki/OAuth#OAuth_2.0">OAuth2</a>?</li>
+<li>Data Modelling for OAuth2</li>
+<li>Spring OAuth</li>
+<li>Cloud Foundry <a href="http://github.com/cloudfoundry/uaa">UAA</a></li>
+</ul>
+
+</div><div class="slide" id="slide4"><h2 id="toc_2">Quick Introduction to OAuth2</h2>
+
+<blockquote>
+<p>A Client application, often web application, acts on behalf of a
+User, but with the User&#39;s approval</p>
+</blockquote>
+
+<ul>
+<li>Authorization Server</li>
+<li>Resource Server</li>
+<li>Client application</li>
+</ul>
+
+<p>Common examples of Authorization Servers on the internet:</p>
+
+<ul>
+<li><a href="http://developers.facebook.com">Facebook</a> - Graph API</li>
+<li><a href="http://code.google.com/apis/accounts/docs/OAuth2.html">Google</a> - Google APIs</li>
+<li><a href="http://uaa.run.pivotal.io">Cloud Foundry</a> - Cloud Controller</li>
+</ul>
+
+</div><div class="slide" id="slide5"><h2 id="toc_3">OAuth2 Key Features</h2>
+
+<ul>
+<li>Extremely simple for clients</li>
+<li>Access tokens carry information (beyond identity)</li>
+<li><p>Resource Servers are free to interpret tokens</p></li>
+<li><p>Example token contents:</p>
+
+<ul>
+<li>Client id</li>
+<li>Resource id (audience)</li>
+<li>User id</li>
+<li>Role assignments</li>
+</ul></li>
+</ul>
+
+</div><div class="slide" id="slide6"><h2 id="toc_4">UAA Bearer Tokens</h2>
+
+<ul>
+<li>OAuth 2.0 tokens are opaque to clients</li>
+<li>But they carry important information to Resource Servers</li>
+<li>Example of implementation (from Cloud Foundry UAA, JWT = signed,
+base64-encoded, JSON):</li>
+</ul>
+
+<div class="highlight"><pre><code class="json"><span class="p">{</span>  <span class="nt">&quot;client_id&quot;</span><span class="p">:</span><span class="s2">&quot;vmc&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;exp&quot;</span><span class="p">:</span><span class="mi">1346325625</span><span class="p">,</span>
+   <span class="nt">&quot;scope&quot;</span><span class="p">:[</span><span class="s2">&quot;cloud_controller.read&quot;</span><span class="p">,</span><span class="s2">&quot;openid&quot;</span><span class="p">,</span><span class="s2">&quot;password.write&quot;</span><span class="p">],</span>
+   <span class="nt">&quot;aud&quot;</span><span class="p">:[</span><span class="s2">&quot;openid&quot;</span><span class="p">,</span><span class="s2">&quot;cloud_controller&quot;</span><span class="p">,</span><span class="s2">&quot;password&quot;</span><span class="p">],</span>
+   <span class="nt">&quot;user_name&quot;</span><span class="p">:</span><span class="s2">&quot;vcap_tester@vmware.com&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="s2">&quot;52147673-9d60-4674-a6d9-225b94d7a64e&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="s2">&quot;vcap_tester@vmware.com&quot;</span><span class="p">,</span>
+ <span class="nt">&quot;jti&quot;</span><span class="p">:</span><span class="s2">&quot;f724ae9a-7c6f-41f2-9c4a-526cea84e614&quot;</span> <span class="p">}</span>
+ 
+</code></pre></div>
+
+</div><div class="slide" id="slide7"><h2 id="toc_5">Web Application Client</h2>
+
+<p>The Client wants to access a Resource on behalf of the User</p>
+
+<p><img src="images/oauth-web-client.png" alt="oauth-web-client"></p>
+
+</div><div class="slide" id="slide8"><h2 id="toc_6">Obtaining a User Token</h2>
+
+<p>A client can act on behalf of a user (e.g. <code>authorization_code</code> grant):</p>
+
+<p><img src="images/auth-code-flow.png" alt="auth-code-flow"></p>
+
+</div><div class="slide" id="slide9"><h2 id="toc_7">Authorization Code Grant Summary</h2>
+
+<ol>
+<li><p>Authorization Server authenticates the User</p></li>
+<li><p>Client starts the authorization flow and obtain User&#39;s approval</p></li>
+<li><p>Authorization Server issues an authorization code (opaque one-time
+token)</p></li>
+<li><p>Client exchanges the authorization code for an access token.</p></li>
+</ol>
+
+</div><div class="slide" id="slide10"><h2 id="toc_8">Role of Client Application</h2>
+
+<ul>
+<li>Register with Authorization Server (get a <code>client_id</code> and maybe a
+<code>client_secret</code>)</li>
+<li>Do not collect user credentials</li>
+<li>Obtain a token (opaque) from Authorization Server
+
+<ul>
+<li>On its own behalf - <code>client_credentials</code></li>
+<li>On behalf of a user</li>
+</ul></li>
+<li>Use it to access Resource Server</li>
+</ul>
+
+</div><div class="slide" id="slide11"><h2 id="toc_9">Role of Resource Server</h2>
+
+<ol>
+<li>Extract token from request and decode it</li>
+<li>Make access control decision
+
+<ul>
+<li>Scope</li>
+<li>Audience</li>
+<li>User account information (id, roles etc.)</li>
+<li>Client information (id, roles etc.)</li>
+</ul></li>
+<li>Send 403 (FORBIDDEN) if token not sufficient</li>
+</ol>
+
+</div><div class="slide" id="slide12"><h2 id="toc_10">Role of the Authorization Server</h2>
+
+<ol>
+<li>Grant tokens</li>
+<li>Interface for users to confirm that they authorize the Client to act
+on their behalf</li>
+<li>Authenticate users (<code>/authorize</code>)</li>
+<li>Authenticate clients (<code>/token</code>)</li>
+</ol>
+
+<p>#1 and #4 are covered thoroughly by the spec; #2 and #3 not (for
+good reasons).</p>
+
+</div><div class="slide" id="slide13"><h2 id="toc_11">More on Scopes</h2>
+
+<p>Per the spec they are arbitrary strings.  The Authorization Server and
+the Resource Servers agree on the content and meanings.</p>
+
+<p>Examples:</p>
+
+<ul>
+<li>Google: <code>https://www.googleapis.com/auth/userinfo.profile</code></li>
+<li>Facebook: <code>email</code>, <code>read_stream</code>, <code>write_stream</code></li>
+<li>UAA: <code>cloud_controller.read</code>, <code>cloud_controller.write</code>, <code>scim.read</code>,
+<code>openid</code></li>
+</ul>
+
+<p>Authorization Server has to decide whether to grant a token to a given
+client and user based on the requested scope (if any).</p>
+
+</div><div class="slide" id="slide14"><h2 id="toc_12">Links</h2>
+
+<ul>
+<li><a href="">http://github.com/springsource/spring-security-oauth</a></li>
+<li><a href="">http://github.com/cloudfoundry/uaa</a></li>
+<li><a href="">http://blog.cloudfoundry.org</a></li>
+<li><a href="">http://spring.io/blog</a></li>
+<li><a href="">http://dsyer.com/decks/oauth-model-s2gx.md.html</a></li>
+<li>Twitter: @david_syer<br></li>
+<li>Email: <a href="mailto:dsyer@vmware.com">dsyer@vmware.com</a></li>
+</ul>
+</div>
+
+
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="number" name="slidenum" id="goto-slide">
+	<input type="submit" value="Go">
+</form>
+
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+<script>window.jQuery</script>
+
+<!-- Deck Core and extensions -->
+<script src="../core/deck.core.js"></script>
+<script src="../extensions/menu/deck.menu.js"></script>
+<script src="../extensions/goto/deck.goto.js"></script>
+<script src="../extensions/status/deck.status.js"></script>
+<script src="../extensions/navigation/deck.navigation.js"></script>
+<script src="../extensions/hash/deck.hash.js"></script>
+
+<script type="text/javascript">
+$(function() {
+	// Deck initialization
+	$.deck('.slide');
+	
+	$('#style-themes').change(function() {
+		$('#style-theme-link').attr('href', $(this).val());
+	});
+	
+	$('#transition-themes').change(function() {
+		$('#transition-theme-link').attr('href', $(this).val());
+	});
+
+    $('pre').click(function (){
+	$(this).toggleClass('highlighted');
+    });
+});
+</script>
+
+</body>
+</html>

@@ -10,6 +10,7 @@
 	<title></title>
 	
 	<meta name="description" content="A jQuery library for modern HTML presentations">
+	<meta name="viewport" content="width=1024, user-scalable=no">
 	
 	<!-- Core and extension CSS files -->
 	<link rel="stylesheet" href="../core/deck.core.css">
@@ -18,20 +19,24 @@
 	<link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
 	<link rel="stylesheet" href="../extensions/status/deck.status.css">
 	<link rel="stylesheet" href="../extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="../css/syntax.css">
 	
-	<!-- Theme CSS files -->
-	<link rel="stylesheet" href="../themes/style/spring.css">
-	<link rel="stylesheet" href="../themes/transition/horizontal-slide.css">
+	<!-- Theme CSS files (menu swaps these out) -->
+    
+    
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/spring.css">
+	<link rel="stylesheet" id="transition-theme-link" href="../themes/transition/horizontal-slide.css">
 	
 	<script src="../modernizr.custom.js"></script>
 </head>
 
 <body class="deck-container">
 
-</div><div class="slide" id="slide2"><h2 id="toc_0">Advanced Messaging with AMQP</h2>
+<div class="slide" id="slide1"><h2 id="toc_0">Advanced Messaging with AMQP</h2>
 
 <p>This presentation provides an overview of AMQP and an outline of why it might be an important piece of a message-oriented architecture in an enterprise or cloud system.  We describe the features of the protocol by looking at example use cases, and highlight those features that make AMQP unique.  A comparison is made with JMS, so the strengths and weaknesses of both approaches can be seen, but we also emphasise that AMQP is not just for Java developers.  Spring AMQP is introduced briefly as providing a convenient programming model for Java and .NET application developers.</p>
 </div>
+
 
 <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
 <a href="#" class="deck-next-link" title="Next">&#8594;</a>
@@ -42,9 +47,6 @@
 	<span class="deck-status-total"></span>
 </p>
 
-<div id="footer">
-</div>
-
 <form action="." method="get" class="goto-form">
 	<label for="goto-slide">Go to slide:</label>
 	<input type="number" name="slidenum" id="goto-slide">
@@ -53,7 +55,7 @@
 
 <a href="." title="Permalink to this slide" class="deck-permalink">#</a>
 
-<script src="../jquery-1.7.2.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
 <script>window.jQuery</script>
 
 <!-- Deck Core and extensions -->
@@ -65,19 +67,21 @@
 <script src="../extensions/hash/deck.hash.js"></script>
 
 <script type="text/javascript">
-$.extend(true, $.deck.defaults, {
-   classes: {
-      menu: 'deck-menu'
-   },
-
-   keys: {
-      menu: 77 // 'm'
-   }
-});
-
 $(function() {
 	// Deck initialization
 	$.deck('.slide');
+	
+	$('#style-themes').change(function() {
+		$('#style-theme-link').attr('href', $(this).val());
+	});
+	
+	$('#transition-themes').change(function() {
+		$('#transition-theme-link').attr('href', $(this).val());
+	});
+
+    $('pre').click(function (){
+	$(this).toggleClass('highlighted');
+    });
 });
 </script>
 
