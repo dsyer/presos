@@ -88,25 +88,11 @@ User, but with the User&#39;s approval</p>
 </ul></li>
 </ul>
 
-</div><div class="slide" id="slide6"><h2 id="toc_4">OAuth2 Bearer Tokens</h2>
+</div><div class="slide" id="slide6"><h2 id="toc_4">Obtaining a Client Token</h2>
 
-<ul>
-<li>OAuth 2.0 tokens are opaque to clients (so might be simple keys to a backend store)</li>
-<li>But they carry important information to Resource Servers</li>
-<li>Example of implementation (from Cloud Foundry UAA, JWT = signed,
-base64-encoded, JSON):</li>
-</ul>
+<p>A client can act its own behalf (<code>client_credentials</code> grant):</p>
 
-<div class="highlight"><pre><code class="json"><span class="p">{</span>  <span class="nt">&quot;client_id&quot;</span><span class="p">:</span><span class="s2">&quot;vmc&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;exp&quot;</span><span class="p">:</span><span class="mi">1346325625</span><span class="p">,</span>
-   <span class="nt">&quot;scope&quot;</span><span class="p">:[</span><span class="s2">&quot;cloud_controller.read&quot;</span><span class="p">,</span><span class="s2">&quot;openid&quot;</span><span class="p">,</span><span class="s2">&quot;password.write&quot;</span><span class="p">],</span>
-   <span class="nt">&quot;aud&quot;</span><span class="p">:[</span><span class="s2">&quot;openid&quot;</span><span class="p">,</span><span class="s2">&quot;cloud_controller&quot;</span><span class="p">,</span><span class="s2">&quot;password&quot;</span><span class="p">],</span>
-   <span class="nt">&quot;user_name&quot;</span><span class="p">:</span><span class="s2">&quot;vcap_tester@vmware.com&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="s2">&quot;52147673-9d60-4674-a6d9-225b94d7a64e&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="s2">&quot;vcap_tester@vmware.com&quot;</span><span class="p">,</span>
- <span class="nt">&quot;jti&quot;</span><span class="p">:</span><span class="s2">&quot;f724ae9a-7c6f-41f2-9c4a-526cea84e614&quot;</span> <span class="p">}</span>
- 
-</code></pre></div>
+<p><img src="images/client-credentials-flow.png" alt="auth-code-flow"></p>
 
 </div><div class="slide" id="slide7"><h2 id="toc_5">Web Application Client</h2>
 
@@ -130,7 +116,18 @@ token)</p></li>
 <li><p>Client exchanges the authorization code for an access token.</p></li>
 </ol>
 
-</div><div class="slide" id="slide10"><h2 id="toc_8">Role of Client Application</h2>
+</div><div class="slide" id="slide10"><h2 id="toc_8">OAuth2 Bearer Tokens</h2>
+
+<p>Bearer tokens are authentication tokens for client applications. Once
+you have one you can act on behalf of a user, accessing resources:</p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ curl -H &quot;Authorization: Bearer &lt;token&gt;&quot; resource.server.com/stuff
+</code></pre></div>
+<p><br/></p>
+
+<p>The resource server treats the request as if it came from an
+authenticated user.</p>
+
+</div><div class="slide" id="slide11"><h2 id="toc_9">Role of Client Application</h2>
 
 <ul>
 <li>Register with Authorization Server (get a <code>client_id</code> and maybe a
@@ -145,7 +142,7 @@ token)</p></li>
 <li>Use it to access Resource Server</li>
 </ul>
 
-</div><div class="slide" id="slide11"><h2 id="toc_9">Role of Resource Server</h2>
+</div><div class="slide" id="slide12"><h2 id="toc_10">Role of Resource Server</h2>
 
 <ol>
 <li>Extract token from request and decode it</li>
@@ -160,10 +157,10 @@ token)</p></li>
 <li>Send 403 (FORBIDDEN) if token not sufficient</li>
 </ol>
 
-</div><div class="slide" id="slide12"><h2 id="toc_10">Role of the Authorization Server</h2>
+</div><div class="slide" id="slide13"><h2 id="toc_11">Role of the Authorization Server</h2>
 
 <ol>
-<li>Grant tokens</li>
+<li>Compute token content and grant tokens</li>
 <li>Interface for users to confirm that they authorize the Client to act
 on their behalf</li>
 <li>Authenticate users (<code>/authorize</code>)</li>
@@ -173,9 +170,109 @@ on their behalf</li>
 <p>#1 and #4 are covered thoroughly by the spec; #2 and #3 not (for
 good reasons).</p>
 
-</div><div class="slide" id="slide13"><h2 id="toc_11">More on Scopes</h2>
+</div><div class="slide" id="slide14"><h2 id="toc_12">Spring Security OAuth2</h2>
 
-<p>Per the spec they are arbitrary strings.  The Authorization Server and
+<blockquote>
+<p><em>Goal:</em> implement Resource Server, Authorization Server, and Client
+Application with sensible defaults and plenty of customization
+choices. Provides features for implementing both consumers and
+providers of the OAuth protocols using standard Spring and Spring
+Security programming models and configuration idioms.</p>
+</blockquote>
+
+<ul>
+<li>1.0 = Nov 2012</li>
+<li>1.0.5 = Aug 2013</li>
+<li>1.1.0 = soon</li>
+</ul>
+
+</div><div class="slide" id="slide15"><h2 id="toc_13">OAuth2 Data Modelling</h2>
+
+<ul>
+<li>Token format</li>
+<li>Token contents</li>
+<li>Client registrations</li>
+<li>Computing permissions</li>
+<li>User approvals</li>
+</ul>
+
+</div><div class="slide" id="slide16"><h2 id="toc_14">Token Format</h2>
+
+<ul>
+<li>OAuth 2.0 tokens are opaque to clients (so might be simple keys to a backend store)</li>
+<li>But they carry important information to Resource Servers</li>
+<li>Example implementation (from Cloud Foundry UAA, JWT = signed,
+base64-encoded, JSON):</li>
+</ul>
+<div class="highlight"><pre><code class="json language-json" data-lang="json"><span class="p">{</span>  <span class="nt">&quot;client_id&quot;</span><span class="p">:</span><span class="s2">&quot;vmc&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;exp&quot;</span><span class="p">:</span><span class="mi">1346325625</span><span class="p">,</span>
+   <span class="nt">&quot;scope&quot;</span><span class="p">:[</span><span class="s2">&quot;cloud_controller.read&quot;</span><span class="p">,</span><span class="s2">&quot;openid&quot;</span><span class="p">,</span><span class="s2">&quot;password.write&quot;</span><span class="p">],</span>
+   <span class="nt">&quot;aud&quot;</span><span class="p">:[</span><span class="s2">&quot;openid&quot;</span><span class="p">,</span><span class="s2">&quot;cloud_controller&quot;</span><span class="p">,</span><span class="s2">&quot;password&quot;</span><span class="p">],</span>
+   <span class="nt">&quot;user_name&quot;</span><span class="p">:</span><span class="s2">&quot;vcap_tester@vmware.com&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="s2">&quot;52147673-9d60-4674-a6d9-225b94d7a64e&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="s2">&quot;vcap_tester@vmware.com&quot;</span><span class="p">,</span>
+ <span class="nt">&quot;jti&quot;</span><span class="p">:</span><span class="s2">&quot;f724ae9a-7c6f-41f2-9c4a-526cea84e614&quot;</span> <span class="p">}</span>
+</code></pre></div>
+</div><div class="slide" id="slide17"><h2 id="toc_15">Token Format Choices</h2>
+
+<p>Resources decode through:</p>
+
+<ol>
+<li>Shared storage -&gt; opaque</li>
+<li>Remote service (e.g. <code>/check_token</code>) -&gt; opaque</li>
+<li>Resources decode locally -&gt; encoded + signed ( + possibly encrypted)</li>
+</ol>
+
+<p>#2 and #3 require key management infrastructure - resource server
+and authorization server need to agree on signing (and possibly
+encryption). Can be as simple as shared configuration file.</p>
+
+</div><div class="slide" id="slide18"><h2 id="toc_16">Token Contents</h2>
+
+<ul>
+<li>Audience</li>
+<li>Scope</li>
+<li>Expiry</li>
+<li>Client details</li>
+<li>Other...</li>
+</ul>
+
+</div><div class="slide" id="slide19"><h2 id="toc_17">Token Audience</h2>
+
+<p>Resource Servers should check if they are the intended recipient of a
+token. No specific mechanism in OAuth2 spec.</p>
+
+<p>In Spring OAuth every resource optionally has a &quot;resource ID&quot;. It is
+copmared with the token in an authentication filter.</p>
+
+<blockquote>
+<p>For encoded tokens, e.g. JWT has a standard field <code>aud</code> for the
+audience of the token.</p>
+</blockquote>
+
+</div><div class="slide" id="slide20"><h2 id="toc_18">Client Registration Data</h2>
+
+<p>Minimum</p>
+
+<ul>
+<li>Client id</li>
+<li>Secret</li>
+<li>Redirect URIs</li>
+<li>Authorized grant types</li>
+</ul>
+
+<p>Desirable</p>
+
+<ul>
+<li>Authorities -&gt; scope for client token</li>
+<li>Default scopes -&gt; scope for user token</li>
+<li>Resource ids -&gt; audience</li>
+<li>Owner of registration (e.g. a user)</li>
+</ul>
+
+</div><div class="slide" id="slide21"><h2 id="toc_19">More on Scopes</h2>
+
+<p>Per the spec scopes are arbitrary strings.  The Authorization Server and
 the Resource Servers agree on the content and meanings.</p>
 
 <p>Examples:</p>
@@ -190,7 +287,55 @@ the Resource Servers agree on the content and meanings.</p>
 <p>Authorization Server has to decide whether to grant a token to a given
 client and user based on the requested scope (if any).</p>
 
-</div><div class="slide" id="slide14"><h2 id="toc_12">Links</h2>
+</div><div class="slide" id="slide22"><h2 id="toc_20">Simple Example of Computed Scopes</h2>
+
+<ul>
+<li>Client requests <code>scope=read,write</code></li>
+<li>Auth server compares client <code>authorities=read</code></li>
+<li>Grants token with narrower scope</li>
+</ul>
+
+<blockquote>
+<p>Uses Spring Security concept of &quot;authorities&quot; attached to a client</p>
+
+<p>Not implemented out of the box in Spring OAuth 1.0 (might be in 1.1)</p>
+</blockquote>
+
+</div><div class="slide" id="slide23"><h2 id="toc_21">Cloud Foundry Scope Computation</h2>
+
+<p><em>Client Token</em></p>
+
+<ul>
+<li>If client requests no explicit scope: set to default value per client</li>
+<li>Restrict to intersection with default scopes (per client)</li>
+</ul>
+
+<p><em>User Token</em></p>
+
+<ul>
+<li>If client requests no explicit scope: set to default value per client</li>
+<li>Restrict to intersection with default scopes (per client)</li>
+<li>Further restrict to intersection with user groups (same as scope names)</li>
+</ul>
+
+</div><div class="slide" id="slide24"><h2 id="toc_22">Separate Data for User and Client Grants</h2>
+
+<p>Clients often act on their own behalf (<code>client_credentials</code> grant),
+and then the available scopes might be different.  In Cloud Foundry we
+find it useful to distinguish between client scopes (for user tokens)
+and authorities (for client tokens).</p>
+
+</div><div class="slide" id="slide25"><h2 id="toc_23">User Approvals</h2>
+
+<p>An access token represents a user approval:</p>
+
+<figure><a href="/decks/images/ditaa/ditaa-821901b5e9ac020a39a628e2ef3bdda6.png" title="decks/images/ditaa/ditaa-821901b5e9ac020a39a628e2ef3bdda6.png" ><img src="/decks/images/ditaa/ditaa-821901b5e9ac020a39a628e2ef3bdda6.png" title="decks/images/ditaa/ditaa-821901b5e9ac020a39a628e2ef3bdda6.png" max-width="99%" /></a></figure>
+
+</div><div class="slide" id="slide26"><h2 id="toc_24">Other Token Types</h2>
+
+<p>...</p>
+
+</div><div class="slide" id="slide27"><h2 id="toc_25">Links</h2>
 
 <ul>
 <li><a href="">http://github.com/springsource/spring-security-oauth</a></li>

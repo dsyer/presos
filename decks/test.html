@@ -43,8 +43,7 @@
 </div><div class="slide" id="slide3"><h2 id="toc_1">First</h2>
 
 <p>Lorem ipsum</p>
-
-<div class="highlight"><pre><code class="java"><span class="nd">@Configuration</span>
+<div class="highlight"><pre><code class="java language-java" data-lang="java"><span class="nd">@Configuration</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Foo</span> <span class="o">{</span>
     <span class="nd">@Bean</span>
     <span class="kd">public</span> <span class="n">String</span> <span class="nf">name</span><span class="o">()</span> <span class="o">{</span>
@@ -52,7 +51,6 @@
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
-
 <div class="highlight"><pre><code class="ruby"><span class="lineno">1</span>     <span class="k">def</span> <span class="nf">foo</span>
 <span class="lineno">2</span>       <span class="nb">puts</span> <span class="s2">&quot;foo&quot;</span>
 <span class="lineno">3</span>     <span class="k">end</span>
@@ -60,8 +58,28 @@
 
 </div><div class="slide" id="slide4"><h2 id="toc_2">Second</h2>
 
-<p>More stuff</p>
-</div>
+<ul>
+<li>More stuff
+<code>java
+public String name() {
+return &quot;foo&quot;;
+}
+</code></li>
+<li>and more</li>
+</ul>
+
+</div><div class="slide" id="slide5"><h2 id="toc_3">Third</h2>
+
+<p><code>app.groovy</code>:</p>
+<div class="highlight"><pre><code class="groovy language-groovy" data-lang="groovy"><span class="nd">@Controller</span>
+<span class="kd">class</span> <span class="nc">Application</span> <span class="o">{</span>
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s1">&#39;/&#39;</span><span class="o">)</span>
+    <span class="nd">@ResponseBody</span>
+    <span class="n">String</span> <span class="nf">home</span><span class="o">()</span> <span class="o">{</span>
+        <span class="s1">&#39;Hello World!&#39;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
 
 
 <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
