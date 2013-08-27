@@ -260,12 +260,6 @@ and authorities (for client tokens).
 
 An access token represents a user approval:
 
-{% ditaa %}
-
-     1      *           
-User --------> Approval ----------> Scope, Client
-
-{% endditaa %}
 
 ## Other Token Types
 
