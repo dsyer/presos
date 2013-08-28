@@ -11,7 +11,7 @@
 }
 .deck-container .slide pre {
   border-color: #ccc;
-  font-size: 90%;
+  font-size: 70%;
   padding: 8px;
   margin: 0px;
   margin-top: 4px;
@@ -63,10 +63,9 @@
 }
 #slide1 > h1 {
   border: none;
-  font-weight: normal;
+  font-weight: bold;
   text-align: center;
-  padding-top: 310px;
-  font-size: 1.5em;
+  font-size: 3em;
 }
 #slide1 > p {
 	font-size: 0.8em;
@@ -85,8 +84,8 @@ ul > li {
 
 .slide > ul > li > ul > li {
 	font-size: 0.95em;
-    margin: 0px;
-    padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
 .slide > ul > li > ul > li,
@@ -105,3 +104,11 @@ ul > li {
 
 #center {display:table;width:100%;height:600px;overflow:hidden}
 #center div {display:table-cell;margin:0px auto;text-align:center;vertical-align:middle}
+
+div.demo {
+  color: #AAAAAA;
+  font-size: 120%;
+  font-style: italic;
+  margin-top: 150px;
+  text-align: center;
+}
