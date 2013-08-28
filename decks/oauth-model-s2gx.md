@@ -137,6 +137,24 @@ good reasons).
 * 1.0.5 = Aug 2013
 * 1.1.0 = soon
 
+## Spring OAuth Responsibilities
+
+* Authorization Server: `AuthorizationEndpoint` and `TokenEndpoint`
+* Resource Server: `OAuth2AuthenticationProcessingFilter`
+* Client: `OAuth2RestTemplate`, `OAuth2ClientContextFilter`
+
+## Spring as Resource Server
+
+![resource-server-endpoints](images/resource-server-endpoints.png)
+
+## Spring as Authorization Server
+
+![auth-server-endpoints](images/auth-server-endpoints.png)
+
+## Spring as Client Application
+
+![oauth-rest-template](images/oauth-rest-template.png)
+
 ## OAuth2 Data Modelling
 
 * Token format
@@ -144,6 +162,7 @@ good reasons).
 * Client registrations
 * Computing permissions
 * User approvals
+* User authentication
 
 ## Token Format
 
@@ -193,6 +212,22 @@ copmared with the token in an authentication filter.
 
 > For encoded tokens, e.g. JWT has a standard field `aud` for the
 > audience of the token.
+
+## Client Registration Data
+
+* Client id
+* Secret
+* Redirect URIs
+* Authorized grant types
+
+## Client Registration Scopes
+
+Clients often act on their own behalf (`client_credentials` grant),
+and then the available scopes might be different.  In Cloud Foundry we
+find it useful to distinguish between client scopes (for user tokens)
+and authorities (for client tokens).
+
+![client-scopes](images/client-scopes.png)
 
 ## Client Registration Data
 
@@ -249,21 +284,61 @@ _User Token_
 * Restrict to intersection with default scopes (per client)
 * Further restrict to intersection with user groups (same as scope names)
 
-## Separate Data for User and Client Grants
-
-Clients often act on their own behalf (`client_credentials` grant),
-and then the available scopes might be different.  In Cloud Foundry we
-find it useful to distinguish between client scopes (for user tokens)
-and authorities (for client tokens).
-
 ## User Approvals
 
 An access token represents a user approval:
 
+![token-model](images/token-model.png)
+
+## User Approvals as Token
+
+An access token represents a user approval:
+
+![token-as-approval](images/token-as-approval.png)
+
+## Formal Model for User Approvals
+
+It can be an advantage to store individual approvals independently
+(e.g. for explicit revokes of individual scopes):
+
+![](images/token-with-approvals.png)
+
+## Consumer Side User Authentication
+
+> Using OAuth2 for authentication (and SSO)
+
+Authorization Server (typically) provides `/userinfo` endpoint. Client
+exchanges a bearer token for some information about the
+user. Examples:
+
+* Github: [https://api.github.com/user](https://api.github.com/user)
+* Facebook: [https://graph.facebook.com/me](https://graph.facebook.com/me)
+* Cloud Foundry: [https://uaa.run.pivotal.io/userinfo](uaa.run.pivotal.io/userinfo)
+
+Beware: no standard data format for user info.
+
+## Spring OAuth Strategies
+
+* `TokenEnhancer` - modify token contents
+* `UserApprovalHandler` - decide if authorization request has been approved
+* `AuthorizationRequestManager` (`OAuth2RequestFactory` and `OAuth2RequestValidator` in 1.1)
+* `TokenStore` - backend store for opaque tokens
+
+Higher level:
+
+* `AuthorizationServerTokenServices` - create and refresh tokens
+* `ResourceServerTokenServices` - decode token
+* `ConsumerTokenServices` - manage token grants and revokes
 
 ## Other Token Types
 
-...
+* OpenID connect. Simple view: add `id_token` to access token.
+* MAC Tokens. Simple view: sign token  with hash of request.
+
+Not to be confused with:
+
+* grant types (e.g. exchange SAML assertion for token),
+* authentication channels (e.g. LDAP authentication for users)
 
 ## Links
 
