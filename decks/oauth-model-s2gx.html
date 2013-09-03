@@ -22,6 +22,7 @@
 	<link rel="stylesheet" href="../css/syntax.css">
 	
 	<!-- Theme CSS files (menu swaps these out) -->
+    <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
     
     
 	<link rel="stylesheet" id="style-theme-link" href="../themes/style/springone13.css">
@@ -357,26 +358,65 @@ client and user based on the requested scope (if any).</p>
 <li>Further restrict to intersection with user groups (same as scope names)</li>
 </ul>
 
-</div><div class="slide" id="slide30"><h2 id="toc_28">User Approvals</h2>
+</div><div class="slide" id="slide30"><h2 id="toc_28">UAA Scopes</h2>
+
+<ul>
+<li>UAA scopes are actually Groups in the User accounts</li>
+<li><p><code>GET /Groups</code>, <code>Get /Users/{id}</code></p>
+<div class="highlight"><pre><code class="text language-text" data-lang="text">{
+  &quot;id&quot;: &quot;73ba999e-fc34-49eb-ac26-dc8be52c1d82&quot;,
+  &quot;meta&quot;: {...},
+  &quot;userName&quot;: &quot;marissa&quot;,
+  &quot;groups&quot;: [
+   ...
+   {
+      &quot;value&quot;: &quot;23a71835-c7ce-43ac-b511-c84d3ae8e788&quot;,
+      &quot;display&quot;: &quot;uaa.user&quot;,
+      &quot;membershipType&quot;: &quot;DIRECT&quot;
+    }
+  ],
+}
+</code></pre></div></li>
+</ul>
+
+</div><div class="slide" id="slide31"><h2 id="toc_29">User Approvals</h2>
 
 <p>An access token represents a user approval:</p>
 
 <p><img src="images/token-model.png" alt="token-model"></p>
 
-</div><div class="slide" id="slide31"><h2 id="toc_29">User Approvals as Token</h2>
+</div><div class="slide" id="slide32"><h2 id="toc_30">User Approvals as Token</h2>
 
 <p>An access token represents a user approval:</p>
 
 <p><img src="images/token-as-approval.png" alt="token-as-approval"></p>
 
-</div><div class="slide" id="slide32"><h2 id="toc_30">Formal Model for User Approvals</h2>
+</div><div class="slide" id="slide33"><h2 id="toc_31">Formal Model for User Approvals</h2>
 
 <p>It can be an advantage to store individual approvals independently
 (e.g. for explicit revokes of individual scopes):</p>
 
 <p><img src="images/token-with-approvals.png" alt=""></p>
 
-</div><div class="slide" id="slide33"><h2 id="toc_31">Consumer Side User Authentication</h2>
+</div><div class="slide" id="slide34"><h2 id="toc_32">Authentication and the Authorization Server</h2>
+
+<ul>
+<li>Authentication (checking user credentials) is orthogonal to
+authorization (granting tokens)</li>
+<li>They don&#39;t have to be handled in the same component of a large
+system</li>
+<li>Authentication is often deferred to existing systems (SSO)</li>
+<li>Authorization Server has to be able to authenticate the OAuth
+endpoints (<code>/authorize</code> and <code>/token</code>)</li>
+<li>It <em>does not</em> have to collect credentials (except for
+<code>grant_type=password</code>)</li>
+</ul>
+
+</div><div class="slide" id="slide35"><h2 id="toc_33">Cloud Foundry UAA Authorization Server</h2>
+
+<p><img src="images/cf-uaa.png" alt="cf-uaa"></p>
+
+</div><div class="slide" id="slide36"><h2 id="toc_34">Consumer Side User Authentication</h2>
 
 <blockquote>
 <p>Using OAuth2 for authentication (and SSO)</p>
@@ -394,13 +434,14 @@ user. Examples:</p>
 
 <p>Beware: no standard data format for user info.</p>
 
-</div><div class="slide" id="slide34"><h2 id="toc_32">Spring OAuth Strategies</h2>
+</div><div class="slide" id="slide37"><h2 id="toc_35">Spring OAuth Strategies</h2>
 
 <ul>
 <li><code>TokenEnhancer</code> - modify token contents</li>
 <li><code>UserApprovalHandler</code> - decide if authorization request has been approved</li>
 <li><code>AuthorizationRequestManager</code> (<code>OAuth2RequestFactory</code> and <code>OAuth2RequestValidator</code> in 1.1)</li>
 <li><code>TokenStore</code> - backend store for opaque tokens</li>
+<li><code>ApprovalStore</code> - new in 1.1</li>
 </ul>
 
 <p>Higher level:</p>
@@ -411,7 +452,17 @@ user. Examples:</p>
 <li><code>ConsumerTokenServices</code> - manage token grants and revokes</li>
 </ul>
 
-</div><div class="slide" id="slide35"><h2 id="toc_33">Other Token Types</h2>
+</div><div class="slide" id="slide38"><h2 id="toc_36">UAA Strategies</h2>
+
+<ul>
+<li>Implementations of <code>UserApprovalHandler</code>, <code>*TokenServices</code>, <code>AuthorizationRequestManager</code></li>
+<li><code>UaaUserDatabase</code></li>
+<li><code>ScimUserProvisioning</code>, <code>ScimGroupProvisioning</code></li>
+<li>Custom approvals layer (will be superseded by 1.1)</li>
+<li>Autologin (<code>loggin-server</code>)</li>
+</ul>
+
+</div><div class="slide" id="slide39"><h2 id="toc_37">Other Token Types</h2>
 
 <ul>
 <li>OpenID connect. Simple view: add <code>id_token</code> to access token.</li>
@@ -425,7 +476,7 @@ user. Examples:</p>
 <li>authentication channels (e.g. LDAP authentication for users)</li>
 </ul>
 
-</div><div class="slide" id="slide36"><h2 id="toc_34">Links</h2>
+</div><div class="slide" id="slide40"><h2 id="toc_38">Links</h2>
 
 <ul>
 <li><a href="">http://github.com/springsource/spring-security-oauth</a></li>

@@ -22,6 +22,7 @@
 	<link rel="stylesheet" href="../css/syntax.css">
 	
 	<!-- Theme CSS files (menu swaps these out) -->
+    <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
     
     
 	<link rel="stylesheet" id="style-theme-link" href="../themes/style/springone13.css">
@@ -34,18 +35,20 @@
 
 <div class="slide" id="slide1"><h1 id="toc_0">Spring IO Platform</h1>
 
-<p>Dave Syer,<br>
-Chris Beams,<br>
-Adrian Colyer</p>
+<p>Adrian Colyer,
+Dave Syer,<br>
+Jergen Hoeller,
+Chris Beams  </p>
 
 <p>Twitter:<br>
+  @adriancolyer<br>
   @david_syer<br>
-  @cbeams<br>
-  @adriancolyer  </p>
+  @cbeams  </p>
 
-<p>Email: [dsyer,<br>
-  cbeams,<br>
-  acolyer]@gopivotal.com</p>
+<p>Email: [acolyer,<br>
+  dsyer,<br>
+  jhoeller,
+  cbeams]@gopivotal.com</p>
 
 </div><div class="slide" id="slide2"><h2 id="toc_1">Agenda</h2>
 
@@ -70,6 +73,8 @@ opinionated view of the Spring platform so that new and existing
 users can quickly get to the bits they need.</p>
 </blockquote>
 
+<p><img src="images/boot-focus.png" width="60%"/></p>
+
 </div><div class="slide" id="slide5"><h2 id="toc_4">Spring Boot Goals</h2>
 
 <ul>
@@ -87,24 +92,22 @@ diverge from the defaults</li>
 <div>Spring Boot Demo</div>
 </div>
 
-</div><div class="slide" id="slide7"><h2 id="toc_6">Spring Boot Modules</h2>
+</div><div class="slide" id="slide7"><h2 id="toc_6">Spring Boot FAQ</h2>
 
-<ul>
-<li>Spring Boot - main library supporting the other parts of Spring Boot</li>
-<li>Spring Boot Autoconfigure - a single <code>@EnableAutoConfiguration</code>
-annotation triggers a Spring context</li>
-<li>Spring Boot Starters - a set of convenient dependency descriptors
-that you can include in your application.</li>
-<li>Spring Boot CLI - compiles and runs Groovy source as a Spring
-application</li>
-<li>Spring Boot Actuator - comman non-functional features that make an
-app instantly deployable and supportable in production</li>
-<li>Spring Boot Tools - for building and executing self-contained JAR
-and WAR archives</li>
-<li>Spring Boot Samples - a wide range of sample apps</li>
-</ul>
+<p><br/><br/>
+<i class="icon-comment-alt icon-3x"></i> Cool! Now what else can I do with it?
+<br/><br/></p>
 
-</div><div class="slide" id="slide8"><h2 id="toc_7">Spring 4.0</h2>
+<ol>
+<li>How can I extend it?</li>
+<li>Can I use a traditional WAR deployment?</li>
+</ol>
+
+</div><div class="slide" id="slide8"><h2 id="toc_7">Spring Boot Modules</h2>
+
+<p><img src="images/boot-modules.png" alt="Spring Boot Modules"></p>
+
+</div><div class="slide" id="slide9"><h2 id="toc_8">Spring 4.0</h2>
 
 <ul>
 <li>New Baseline = JDK 6+, Servlet 3.0, and other 3rd pary OS libraries</li>
@@ -115,7 +118,7 @@ and WAR archives</li>
 <li>Web improvements: async, HATEOAS, cache busting</li>
 </ul>
 
-</div><div class="slide" id="slide9"><h2 id="toc_8">Spring Website</h2>
+</div><div class="slide" id="slide10"><h2 id="toc_9">Spring Website</h2>
 
 <div id="center">
 <div>Spring Website Demo</div>
