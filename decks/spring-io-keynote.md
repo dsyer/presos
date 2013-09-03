@@ -4,18 +4,20 @@ layout: springone13
 ---
 # Spring IO Platform
 
+Adrian Colyer,
 Dave Syer,  
-Chris Beams,  
-Adrian Colyer
+Jergen Hoeller,
+Chris Beams  
 
 Twitter:  
+  @adriancolyer  
   @david_syer  
   @cbeams  
-  @adriancolyer  
 
-Email: [dsyer,  
-  cbeams,  
-  acolyer]@gopivotal.com
+Email: [acolyer,  
+  dsyer,  
+  jhoeller,
+  cbeams]@gopivotal.com
 
 ## Agenda
 * Big picture: What is Spring IO?
@@ -35,6 +37,8 @@ Email: [dsyer,
 > opinionated view of the Spring platform so that new and existing
 > users can quickly get to the bits they need.
 
+<img src="images/boot-focus.png" width="60%"/>
+
 ## Spring Boot Goals
 
 * Provide a radically faster and widely accessible getting started experience
@@ -50,20 +54,18 @@ Email: [dsyer,
 <div>Spring Boot Demo</div>
 </div>
 
+## Spring Boot FAQ
+
+<br/><br/>
+<i class="icon-comment-alt icon-3x"></i> Cool! Now what else can I do with it?
+<br/><br/>
+
+1. How can I extend it?
+2. Can I use a traditional WAR deployment?
+
 ## Spring Boot Modules
 
-* Spring Boot - main library supporting the other parts of Spring Boot
-* Spring Boot Autoconfigure - a single `@EnableAutoConfiguration`
-  annotation triggers a Spring context
-* Spring Boot Starters - a set of convenient dependency descriptors
-  that you can include in your application.
-* Spring Boot CLI - compiles and runs Groovy source as a Spring
-  application
-* Spring Boot Actuator - comman non-functional features that make an
-  app instantly deployable and supportable in production
-* Spring Boot Tools - for building and executing self-contained JAR
-  and WAR archives
-* Spring Boot Samples - a wide range of sample apps
+![Spring Boot Modules](images/boot-modules.png)
 
 ## Spring 4.0
 

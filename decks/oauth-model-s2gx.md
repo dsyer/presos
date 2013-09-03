@@ -284,6 +284,25 @@ _User Token_
 * Restrict to intersection with default scopes (per client)
 * Further restrict to intersection with user groups (same as scope names)
 
+## UAA Scopes
+
+* UAA scopes are actually Groups in the User accounts
+* `GET /Groups`, `Get /Users/{id}`
+
+        {
+          "id": "73ba999e-fc34-49eb-ac26-dc8be52c1d82",
+          "meta": {...},
+          "userName": "marissa",
+          "groups": [
+           ...
+           {
+              "value": "23a71835-c7ce-43ac-b511-c84d3ae8e788",
+              "display": "uaa.user",
+              "membershipType": "DIRECT"
+            }
+          ],
+        }
+
 ## User Approvals
 
 An access token represents a user approval:
@@ -302,6 +321,22 @@ It can be an advantage to store individual approvals independently
 (e.g. for explicit revokes of individual scopes):
 
 ![](images/token-with-approvals.png)
+
+## Authentication and the Authorization Server
+
+* Authentication (checking user credentials) is orthogonal to
+  authorization (granting tokens)
+* They don't have to be handled in the same component of a large
+  system
+* Authentication is often deferred to existing systems (SSO)
+* Authorization Server has to be able to authenticate the OAuth
+  endpoints (`/authorize` and `/token`)
+* It _does not_ have to collect credentials (except for
+  `grant_type=password`)
+
+## Cloud Foundry UAA Authorization Server
+
+![cf-uaa](images/cf-uaa.png)
 
 ## Consumer Side User Authentication
 
@@ -323,12 +358,21 @@ Beware: no standard data format for user info.
 * `UserApprovalHandler` - decide if authorization request has been approved
 * `AuthorizationRequestManager` (`OAuth2RequestFactory` and `OAuth2RequestValidator` in 1.1)
 * `TokenStore` - backend store for opaque tokens
+* `ApprovalStore` - new in 1.1
 
 Higher level:
 
 * `AuthorizationServerTokenServices` - create and refresh tokens
 * `ResourceServerTokenServices` - decode token
 * `ConsumerTokenServices` - manage token grants and revokes
+
+## UAA Strategies
+
+* Implementations of `UserApprovalHandler`, `*TokenServices`, `AuthorizationRequestManager`
+* `UaaUserDatabase`
+* `ScimUserProvisioning`, `ScimGroupProvisioning`
+* Custom approvals layer (will be superseded by 1.1)
+* Autologin (`loggin-server`)
 
 ## Other Token Types
 
