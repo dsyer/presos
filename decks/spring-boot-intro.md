@@ -37,13 +37,6 @@ Spring Boot:
 
 ![Spring Boot in Context](images/boot-focus.png)
 
-## Spring Boot Overview
-
-> Spring Boot makes it easy to create Spring-powered, production-grade
-> applications and services with absolute minimum fuss. It takes an
-> opinionated view of the Spring platform so that new and existing
-> users can quickly get to the bits they need.
-
 ## Spring Boot Goals
 
 * Provide a radically faster and widely accessible getting started experience
@@ -87,6 +80,7 @@ $ spring run app.groovy
 ```java
 ...
 @Controller
+@EnableAutoConfiguration
 public class Application {
 
     @RequestMapping("/")
@@ -102,10 +96,14 @@ public class Application {
 }
 ```
 
-<br/>then
+## Getting Started In Java
+
+...then
 
     $ mvn package
     $ java -jar target/*.jar
+    
+(or use gradle equivalents)
 
 ## Getting Started
 
@@ -119,6 +117,7 @@ public class Application {
 * `@EnableAutoConfiguration`: optional annotation that adds stuff to your context, including...
 * `EmbeddedServletContainerFactory`: added to your context if a server is available on the classpath
 * `CommandLineRunner`: a hook to run application-specific code after the context is created
+* `JarLauncher` was added to the JAR file
 
 ## Spring Boot Modules
 
@@ -183,7 +182,6 @@ public class MinePoperties {
 }
 ```
 
-<br/>
 `application.properties`
 
 ```properties
@@ -237,9 +235,9 @@ classpath, e.g.
 
 * Add Thymeleaf to the classpath and see it render a view
 * Spring Boot Autoconfigure has added all the boilerplate stuff
-* Common configuration options via `spring.template.*`, e.g.
-    - `spring.template.prefix:classpath:/templates/` (location of templates)
-    - `spring.template.cache:true` (set to `false` to reload templates
+* Common configuration options via `spring.thymeleaf.*`, e.g.
+    - `spring.thymeleaf.prefix:classpath:/templates/` (location of templates)
+    - `spring.tjymeleaf.cache:true` (set to `false` to reload templates
       when changed)
 * Extend and override:
     - add Thymeleaf `IDialect` beans
@@ -264,8 +262,8 @@ We like launchable JARs, but you can still use WAR format if you
 prefer. Spring Boot Tools take care of repackaging a WAR to make it
 executable.
 
-If you want a WAR to be deployable (in a "normal" container) too, then
-you need to use `SpringServletInitializer` instead of
+If you want a WAR to be deployable (in a "normal" container), then you
+need to use `SprinBootServletInitializer` instead of or as well as
 `SpringApplication`.
 
 ## The Actuator
@@ -274,7 +272,7 @@ Adds common non-functional features to your application and exposes
 MVC endpoints to interact with them.
 
 * Security
-* Secure endpoints: `/metrics`, `/health`, `/trace`, `/dump`, `/shutdown`
+* Secure endpoints: `/metrics`, `/health`, `/trace`, `/dump`, `/shutdown`, `/beans`
 * Audit
 * `/info`
 
@@ -298,7 +296,8 @@ frameworks: logback, log4j and `java.util.logging`
 
 * Add external configuration (System properties, OS env vars, config
   file, command line arguments)
-* Add `ApplicationContextInitializer` implementations
+* Add `ApplicationContextInitializer` implementations and enable in
+  `application.properties`
 
 ## Customizing the `@EnableAutoConfiguration` Behaviour
 
@@ -311,14 +310,14 @@ frameworks: logback, log4j and `java.util.logging`
 Uses standard Java `META-INF/services` scanning
 
 * `CompilerAutoConfiguration`: add dependencies and imports
-* `CommandFactory`: add commands
+* `CommandFactory`: add commands via a custom `CommandFactory` in `META-INF/services`
 
-Can also add script commands (written in Groovy)
+E.g. can add script commands (written in Groovy)
 
-    $ spring script foo ...
-    
-looks for `foo.groovy` in `${SPRING_HOME}/bin` and
-`${SPRING_HOME}/ext` by default.
+    $ spring foo ...
+
+Looks for `foo.groovy` in `${SPRING_HOME}/bin` and
+`${SPRING_HOME}/ext` by default
 
 ## Customizing Servlet Container Properties
 
@@ -357,7 +356,7 @@ Create an executable archive (JAR or WAR)
 
     $ gradle repackage
     
-## Testing with `Spring Test` and `Spring Test MVC`
+## Testing with `Spring Test` (`MVC`)
 
 `SpringApplication` is an opinionated creator of an
 `ApplicationContext`, but most of the behaviour is encapsulated in
@@ -367,15 +366,16 @@ those features you can use the corresponding initializers.
 
 Example if you have externalized configuration:
 
-    @RunWith(SpringJUnit4ClassRunner.class)
-    @ContextConfiguration(classes = IntegrationTestsConfiguration.class, 
-        initializers = ConfigFileApplicationContextInitializer.class)
-    public class IntegrationTests {
-    
-      // Normal Spring Test stuff
-      
-    }
+```java
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = IntegrationTestsConfiguration.class, 
+    initializers = ConfigFileApplicationContextInitializer.class)
+public class IntegrationTests {
 
+  // Normal Spring Test stuff
+  
+}
+```
 
 ## Links
 
