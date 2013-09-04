@@ -57,10 +57,12 @@ Email: [acolyer,
 ## Spring Boot FAQ
 
 <br/><br/>
-<i class="icon-comment-alt icon-3x"></i> Cool! Now what else can I do with it?
+<i class="icon-comment-alt icon-3x pull-left"></i> 
+Cool! Now what else can I do with it?  
+
 <br/><br/>
 
-1. How can I extend it?
+1. How can I extend it?  
 2. Can I use a traditional WAR deployment?
 
 ## Spring Boot Modules

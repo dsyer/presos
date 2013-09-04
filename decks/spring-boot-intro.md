@@ -2,7 +2,7 @@
 title: Spring Boot Intro
 layout: springone13
 ---
-# Spring Boot
+# <i class="icon-off"></i> Spring Boot
 
 Dave Syer, Phil Webb, 2013  
 Twitter: `@david_syer`, `@phillip_webb`  
@@ -23,7 +23,7 @@ Email: [dsyer, pwebb]@gopivotal.com
 
 ## Introduction
 
-Spring Boot:
+<i class="icon-off icon-3x"></i> Spring Boot:
 
 * Focuses attention at a single point (as opposed to large collection
   of `spring-*` projects)
