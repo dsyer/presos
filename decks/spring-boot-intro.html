@@ -205,8 +205,11 @@ Demo of Spring Boot with Java.
 <div class="highlight"><pre><code class="java language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.*</span><span class="o">;</span>
 
+<span class="o">...</span>
 <span class="nd">@RestController</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExampleController</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyApplication</span> <span class="o">{</span>
+
+  <span class="o">...</span>
 
   <span class="nd">@RequestMapping</span>
   <span class="kd">public</span> <span class="n">String</span> <span class="nf">sayHello</span><span class="o">()</span> <span class="o">{</span>
@@ -557,8 +560,11 @@ when reading a nested entry.</p>
 <ul>
 <li>Don&#39;t create nested JAR from Strings without context <code>jar:file:/file.jar!/nested.jar!/a/b.txt</code></li>
 <li>Always use the context class loader (<code>ClassLoader.getSystemClassLoader()</code> will fail)</li>
-<li>You don&#39;t need to use it, consider shade or a classic WAR</li>
 </ul>
+
+<blockquote>
+<p>You don&#39;t need to use it, consider shade or a classic WAR</p>
+</blockquote>
 
 </div><div class="slide" id="slide44"><h2 id="toc_42">Building a WAR</h2>
 
