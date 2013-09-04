@@ -559,7 +559,8 @@ when reading a nested entry.
 
 * Don't create nested JAR from Strings without context `jar:file:/file.jar!/nested.jar!/a/b.txt`
 * Always use the context class loader (`ClassLoader.getSystemClassLoader()` will fail)
-* You don't need to use it, consider shade or a classic WAR
+
+> You don't need to use it, consider shade or a classic WAR
 
 ## Building a WAR
 
