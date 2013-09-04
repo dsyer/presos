@@ -36,7 +36,7 @@ Email: [dsyer, pwebb]@gopivotal.com
 
 ## Focus Attention
 
-![Spring Boot in Context](images/boot-focus.png)
+<img src="images/boot-focus.png" width="30%"></img>
 
 ## Spring Boot Goals
 
