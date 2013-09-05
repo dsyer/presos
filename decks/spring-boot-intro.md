@@ -70,10 +70,8 @@ class Example {
 ## What Just Happened?
 
 ```groovy
-// import org.springframework.stereotype.Controller
-// import org.springframework.context.annotation.Profile
-// import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-// // other imports ...
+// import org.springframework.web.bind.annotation.RestController
+// other imports ...
 
 @RestController
 class Example {
@@ -89,12 +87,9 @@ class Example {
 ## What Just Happened?
 
 ```groovy
-// import org.springframework.stereotype.Controller
-// import org.springframework.context.annotation.Profile
-// import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-// // other imports ...
+// import org.springframework.web.bind.annotation.RestController
+// other imports ...
 
-// @Grab("org.springframework.boot:spring-boot-starter:0.5.0")
 // @Grab("org.springframework.boot:spring-boot-web-starter:0.5.0")
 @RestController
 class Example {
@@ -110,12 +105,9 @@ class Example {
 ## What Just Happened?
 
 ```groovy
-// import org.springframework.stereotype.Controller
-// import org.springframework.context.annotation.Profile
-// import org.springframework.boot.autoconfigure.EnableAutoConfiguration
+// import org.springframework.web.bind.annotation.RestController
 // other imports ...
 
-// @Grab("org.springframework.boot:spring-boot-starter:0.5.0")
 // @Grab("org.springframework.boot:spring-boot-web-starter:0.5.0")
 // @EnableAutoConfiguration
 @RestController
@@ -132,12 +124,9 @@ class Example {
 ## What Just Happened?
 
 ```groovy
-// import org.springframework.stereotype.Controller
-// import org.springframework.context.annotation.Profile
-// import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-// // other imports ...
+// import org.springframework.web.bind.annotation.RestController
+// other imports ...
 
-// @Grab("org.springframework.boot:spring-boot-starter:0.5.0")
 // @Grab("org.springframework.boot:spring-boot-web-starter:0.5.0")
 // @EnableAutoConfiguration
 @RestController
@@ -169,7 +158,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.*;
 
 @Configuration
-@ComponentScan
 @EnableAutoConfiguration
 public class MyApplication {
 
@@ -183,7 +171,8 @@ public class MyApplication {
 ## What Just Happened?
 
 ```java
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 ...
@@ -192,7 +181,7 @@ public class MyApplication {
 
   ...
 
-  @RequestMapping
+  @RequestMapping("/")
   public String sayHello() {
     return "Hello World!";
   }
@@ -211,16 +200,16 @@ public class MyApplication {
 
 * Gets a running Spring `ApplicationContext`
 * Uses `EmbeddedWebApplicationContext` for web apps
-* Can be a single line: `SpringApplication.run(MyConf.class, args)`
+* Can be a single line: `SpringApplication.run(MyApplication.class, args)`
 * Or customized
 
 ```java
-SpringApplication app = new SpringApplication(MyConf.class);
+SpringApplication app = new SpringApplication(MyApplication.class);
 app.setShowBanner(false);
 app.run(args);
 ```
 
-## @EnableAutoConfigured
+## @EnableAutoConfiguration
 
 * Attempts to auto-configure your application
 * Backs off as you define your own beans
