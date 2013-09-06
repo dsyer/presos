@@ -49,12 +49,6 @@ Email: [dsyer, pwebb]@gopivotal.com
 
 ## Getting Started *Really* Quickly
 
-<div id="center">
-Demo of the Spring Command Line Tool
-</div>
-
-## What Just Happened?
-
 ```groovy
 @RestController
 class Example {
@@ -143,14 +137,7 @@ class Example {
 }
 ```
 
-## Java Demo
-
-<div class="demo">
-Demo of Spring Boot with Java.
-</div>
-
-
-## What Just Happened?
+## Getting Starter in Java
 
 ```java
 import org.springframework.boot.SpringApplication;
@@ -191,17 +178,20 @@ public class MyApplication {
 
 ## Starter POMs
 
+```xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+```
+
 * Standard Maven POMs
 * Define dependencies that we recommend
+* Parent optional
 * Available for web, batch, integration, data
 * e.g. data = hibernate + spring-data + JSR 303
 
 ## SpringApplication
-
-* Gets a running Spring `ApplicationContext`
-* Uses `EmbeddedWebApplicationContext` for web apps
-* Can be a single line: `SpringApplication.run(MyApplication.class, args)`
-* Or customized
 
 ```java
 SpringApplication app = new SpringApplication(MyApplication.class);
@@ -209,7 +199,19 @@ app.setShowBanner(false);
 app.run(args);
 ```
 
+* Gets a running Spring `ApplicationContext`
+* Uses `EmbeddedWebApplicationContext` for web apps
+* Can be a single line: `SpringApplication.run(MyApplication.class, args)`
+* Or customized (see later)...
+
 ## @EnableAutoConfiguration
+
+```java
+@Configuration
+@EnableAutoConfiguration
+public class MyApplication {
+}
+```
 
 * Attempts to auto-configure your application
 * Backs off as you define your own beans
@@ -243,14 +245,14 @@ $ gradle repackage
 
 ## Packaging For Production
 
+```sh
+$ java -jar yourapp.jar
+```
+
 * Easy to understand structure
 * No unpacking or start scripts required
 * Typical REST app ~10Mb
 * Cloud Foundry friendly (works & fast to upload)
-
-```sh
-$ java -jar yourapp.jar
-```
 
 ## Spring Boot Modules
 
@@ -270,7 +272,6 @@ $ java -jar yourapp.jar
 ## Spring Boot Module Relations
 
 ![Spring Boot Modules](images/boot-modules.png)
-
 
 ## Command Line Arguments
 
@@ -295,8 +296,6 @@ $ java -jar yourapp.jar --name=Dave
 $ java -jar target/*.jar --server.port=9000
 ```
 
-
-
 ## Externalizing Configuration to Properties
 
 Just put `application.properties` in your classpath or next to you jar, e.g.
@@ -311,7 +310,7 @@ Properties can be overridden (`command line arg` > `file` > `classpath`)
 
 ## Using YAML
 
-Just include `snake-yaml.jar` put `application.yml` in your classpath
+Just include `snake-yaml.jar` and put `application.yml` in your classpath
 
 `application.yml`
 
@@ -362,24 +361,26 @@ $ java -jar target/*.jar --spring.config.name=production
 * Activate external configuration with a Spring profile
 
     - file name convention e.g. `application-development.properties`
-    - or nested documents:
+    - or nested documents in YAML:
 
     `application.yml`
         
-        defaults: etc...
-        ---
-        spring:
-          profiles: development,postgresql
-        other:
-          stuff: more stuff...
+     ```yaml
+     defaults: etc...
+     ---
+     spring:
+       profiles: development,postgresql
+     other:
+       stuff: more stuff...
+     ```
 
 * Set the default spring profile in external configuration, e.g:
 
     `application.properties`
         
-```
-spring.profiles.active: default, postgresql
-```
+    ```properties
+    spring.profiles.active: default, postgresql
+    ```
 
 ## Logging
 
@@ -391,6 +392,17 @@ frameworks: logback, log4j and `java.util.logging`
 
 ## Adding some Autoconfigured Behavior
 
+```xml
+<dependency>
+  <groupId>org.springframework</groupId>
+  <artifactId>spring-jdbc</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.hsqldb</groupId>
+  <artifactId>hsqldb</artifactId>
+</dependency>
+```
+
 Extend the demo and see what we can get by just modifying the
 classpath, e.g. 
 
@@ -400,16 +412,16 @@ classpath, e.g.
 ## Adding A UI with Thymeleaf
 
 * Add Thymeleaf to the classpath and see it render a view
-* Spring Boot Autoconfigure has added all the boilerplate stuff
+* Spring Boot Autoconfigure adds all the boilerplate stuff
 * Common configuration options via `spring.thymeleaf.*`, e.g.
     - `spring.thymeleaf.prefix:classpath:/templates/` (location of templates)
-    - `spring.tjymeleaf.cache:true` (set to `false` to reload templates
+    - `spring.thymeleaf.cache:true` (set to `false` to reload templates
       when changed)
-* Extend and override:
-    - add Thymeleaf `IDialect` beans
-    - add `thymeleafViewResolver`
-    - add `SpringTemplateEngine`
-    - add `defaultTemplateResolver`
+* Extend and override, just add beans:
+    - Thymeleaf `IDialect`
+    - `thymeleafViewResolver`
+    - `SpringTemplateEngine`
+    - `defaultTemplateResolver`
 
 ## Currently Available Autoconfigured Behaviour
 
@@ -422,7 +434,7 @@ classpath, e.g.
 * Reactor for events and async processing
 * Actuator features (Security, Audit, Metrics, Trace)
 
-_Please open an issue if you want support for something else_
+_Please open an issue on github if you want support for something else_
 
 ## The Actuator
 
@@ -441,6 +453,8 @@ different one (and a different network interface).
 
 * Use the Actuator
 * Add Spring Security to classpath
+* Application endpoints secured via `security.basic.enabled=true` (on by default)
+* Management endpoints secure unless individually excluded
 
 ## Customizing the ApplicationContext
 
