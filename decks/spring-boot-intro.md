@@ -141,7 +141,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.*;
 
-@Configuration
+@RestController
 @EnableAutoConfiguration
 public class MyApplication {
 
@@ -159,16 +159,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
-...
 @RestController
+@EnableAutoConfiguration
 public class MyApplication {
-
-  ...
 
   @RequestMapping("/")
   public String sayHello() {
     return "Hello World!";
   }
+
+  ...
 
 }
 ```
@@ -269,6 +269,12 @@ $ java -jar yourapp.jar
 ## Spring Boot Module Relations
 
 ![Spring Boot Modules](images/boot-modules.png)
+
+## Environment and Profiles
+
+* Spring Environment available since 3.1
+* Abstraction for key/value pairs
+* Manages `@Profile` switching
 
 ## Command Line Arguments
 
@@ -475,6 +481,16 @@ different one (and a different network interface).
 * Application endpoints secured via `security.basic.enabled=true` (on by default)
 * Management endpoints secure unless individually excluded
 
+## Building a WAR
+
+We like launchable JARs, but you can still use WAR format if you
+prefer. Spring Boot Tools take care of repackaging a WAR to make it
+executable.
+
+If you want a WAR to be deployable (in a "normal" container), then you
+need to use `SpringBootServletInitializer` instead of or as well as
+`SpringApplication`.
+
 ## Customizing the ApplicationContext
 
 * Directly on the `SpringApplication` instance
@@ -583,16 +599,6 @@ when reading a nested entry.
 * Always use the context class loader (`ClassLoader.getSystemClassLoader()` will fail)
 
 > You don't need to use it, consider shade or a classic WAR
-
-## Building a WAR
-
-We like launchable JARs, but you can still use WAR format if you
-prefer. Spring Boot Tools take care of repackaging a WAR to make it
-executable.
-
-If you want a WAR to be deployable (in a "normal" container), then you
-need to use `SpringBootServletInitializer` instead of or as well as
-`SpringApplication`.
 
 ## Testing with Spring Test (MVC)
 
