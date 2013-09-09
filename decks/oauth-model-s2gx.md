@@ -372,7 +372,7 @@ Higher level:
 * `UaaUserDatabase`
 * `ScimUserProvisioning`, `ScimGroupProvisioning`
 * Custom approvals layer (will be superseded by 1.1)
-* Autologin (`loggin-server`)
+* Autologin (`login-server`)
 
 ## Other Token Types
 
