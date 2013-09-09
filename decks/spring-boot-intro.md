@@ -21,6 +21,10 @@ Email: [dsyer, pwebb]@gopivotal.com
 * Behind the scenes
 * Adding new features to Spring Boot
 
+## Focus Attention
+
+<img src="images/boot-focus.png" width="30%"></img>
+
 ## Introduction
 
 <i class="icon-off icon-3x"></i> Spring Boot:
@@ -33,10 +37,6 @@ Email: [dsyer, pwebb]@gopivotal.com
 * Gets out of the way quickly if you want to change defaults
 
 > An opportunity for Spring to be opinionated
-
-## Focus Attention
-
-<img src="images/boot-focus.png" width="30%"></img>
 
 ## Spring Boot Goals
 
