@@ -386,11 +386,11 @@ Not to be confused with:
 
 ## Links
 
-* [http://projects.spring.io/spring-security-oauth]() Documentation
-* [http://github.com/springsource/spring-security-oauth]() Spring OAuth on Github
-* [http://github.com/cloudfoundry/uaa]() UAA on Github (see `docs/` folder)
-* [http://blog.cloudfoundry.org]()
-* [http://spring.io/blog]()
-* [http://dsyer.com/decks/oauth-model-s2gx.html]()
+* [http://projects.spring.io/spring-security-oauth](http://projects.spring.io/spring-security-oauth) Documentation
+* [http://github.com/springsource/spring-security-oauth](http://github.com/springsource/spring-security-oauth) Spring OAuth on Github
+* [http://github.com/cloudfoundry/uaa](http://github.com/cloudfoundry/uaa) UAA on Github (see `docs/` folder)
+* [http://blog.cloudfoundry.org](http://blog.cloudfoundry.org)
+* [http://spring.io/blog](http://spring.io/blog)
+* [http://dsyer.com/decks/oauth-model-s2gx.html](http://dsyer.com/decks/oauth-model-s2gx.html)
 * Twitter: `@david_syer`  
 * Email: dsyer@gopivotal.com

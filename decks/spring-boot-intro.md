@@ -52,6 +52,12 @@ class Example {
 }
 ```
 
+```
+$ spring run app.groovy
+```
+
+<br/><br/>... application is running at [http://localhost:8080](http://localhost:8080)
+
 ## What Just Happened?
 
 ```groovy
@@ -613,8 +619,8 @@ public class IntegrationTests {
 
 * [https://projects.spring.io/spring-boot](http://projects.spring.io/spring-boot) Documentation
 * [https://github.com/SpringSource/spring-boot](https://github.com/SpringSource/spring-boot) Spring Boot on Github
-* [http://spring.io/blog]()
-* [http://dsyer.com/decks/spring-boot-intro.html]()
+* [http://spring.io/blog](http://spring.io/blog)
+* [http://dsyer.com/decks/spring-boot-intro.html](http://dsyer.com/decks/spring-boot-intro.html)
 * Twitter: `@david_syer`, `@phillip_webb` 
 * Email: dsyer@gopivotal.com`, pwebb@gopivotal.com
 
