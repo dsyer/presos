@@ -623,7 +623,7 @@ public class IntegrationTests {
 * [https://github.com/SpringSource/spring-boot](https://github.com/SpringSource/spring-boot) Spring Boot on Github
 * [https://projects.spring.io/spring-boot](https://projects.springframework.io/spring-boot) Documentation
 * [http://spring.io/blog]()
-* [http://dsyer.com/decks/spring-boot-intro.md.html]()
+* [http://dsyer.com/decks/spring-boot-intro.html]()
 * Twitter: @david_syer, @phillip_webb  
 * Email: dsyer@gopivotal.com, pwebb@gopivotal.com
 
@@ -632,13 +632,3 @@ public class IntegrationTests {
 <div id="center">
 <div>Spring Boot Intro - END</div>
 </div>
-
-
-
-
-
-
-
-
-
-

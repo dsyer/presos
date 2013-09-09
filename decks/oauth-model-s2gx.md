@@ -390,6 +390,6 @@ Not to be confused with:
 * [http://github.com/cloudfoundry/uaa]()
 * [http://blog.cloudfoundry.org]()
 * [http://spring.io/blog]()
-* [http://dsyer.com/decks/oauth-model-s2gx.md.html]()
+* [http://dsyer.com/decks/oauth-model-s2gx.html]()
 * Twitter: @david_syer  
 * Email: dsyer@vmware.com
