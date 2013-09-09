@@ -12,7 +12,7 @@ Email: [dsyer, pwebb]@gopivotal.com
 
 ## 
 
-![Spring IO](images/springio.png)
+![Spring IO](images/spring-io-boot.png)
 
 ## Agenda
 * Quick overview of goals and high level features
@@ -340,6 +340,28 @@ public class MyPoperties {
 ```properties
 mine.location: classpath:mine.xml
 mine.skip: false
+```
+
+## Setting Default Configuration
+
+In properties or YAML you can just use the empty (non-specific)
+profile.
+
+In Java you can add an instance of the configuration properties bean, e.g:
+
+```java
+@Configuration
+@EnableConfigurationProperties
+public class MyConfiguration {
+
+  @Bean
+  public MyProperties myProperties() {
+    MyProperties properties = new MyProperties();
+    properties.setReallyImportant("myDefault");
+    return properties;
+  }
+  
+}
 ```
 
 ## Customizing Configuration Location

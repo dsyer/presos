@@ -10,7 +10,7 @@ Email: dsyer@gopivotal.com
 
 ## 
 
-![Spring IO](images/springio.png)
+![Spring IO](images/spring-io-core.png)
 
 ## Agenda
 * Quick overview of [OAuth2][oauth2wiki]?

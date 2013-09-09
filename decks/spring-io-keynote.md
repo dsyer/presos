@@ -28,7 +28,7 @@ Email: [acolyer,
 
 ## Spring IO Platform
 
-![Spring IO Platform Picture](images/springio.png)
+![Spring IO Platform Picture](images/spring-io.png)
 
 ## Spring Boot Overview
 
