@@ -17,9 +17,9 @@ Email: [dsyer, pwebb]@gopivotal.com
 ## Agenda
 * Quick overview of goals and high level features
 * Getting started demo
-* Customization and Configuration
+* Application configuration with Spring Boot
 * Behind the scenes
-* Adding new features to Spring Boot
+* Customization and extensions
 
 ## Focus Attention
 
@@ -270,16 +270,32 @@ $ java -jar yourapp.jar
 
 ![Spring Boot Modules](images/boot-modules.png)
 
-## Environment and Profiles
-
-* Spring Environment available since 3.1
-* Abstraction for key/value pairs
-* Manages `@Profile` switching
-
-## Command Line Arguments
+## Not a Web Application?
 
 * `CommandLineRunner` is a hook to run application-specific code after 
 the context is created
+
+```java
+@Component
+public class Startup implements CommandLineRunner {
+	
+	@Override
+	public void run(String... args) throws Exception {
+		System.out.println("Hello World");
+    }
+
+}
+```
+
+## Environment and Profiles
+
+* Every `ApplicationContext` has an `Environment`
+* Spring `Environment` available since 3.1
+* Abstraction for key/value pairs from multiple sources
+* Used to manage `@Profile` switching
+* Always available: `System` properties and OS `ENV` vars
+
+## Command Line Arguments
 
 * `SpringApplication` adds command line arguments to the Spring 
 `Environment` so you can refer inject them into beans:
@@ -347,8 +363,6 @@ mine.skip: false
 
 ## Data Binding to `@ConfigurationProperties`
 
-...and `SpringApplication`
-
 * Spring `DataBinder` so does type coercion and conversion where possible
 * Custom `ConversionService` additionally discovered by bean name
   (same as `ApplicationContext`)
@@ -360,27 +374,7 @@ mine.skip: false
 * Uses a `RelaxedDataBinder` which accepts common variants of property
 names (e.g. `CAPITALIZED`, `camelCased` or `with_underscores`)
 
-## Setting Default Configuration
-
-In properties or YAML you can just use the empty (non-specific)
-profile for defaults.
-
-In Java you can add an instance of the configuration properties bean, e.g:
-
-```java
-@Configuration
-@EnableConfigurationProperties
-public class MyConfiguration {
-
-  @Bean
-  public MyProperties myProperties() {
-    MyProperties properties = new MyProperties();
-    properties.setReallyImportant("myDefaultValue");
-    return properties;
-  }
-  
-}
-```
+> Also binds to `SpringApplication`
 
 ## Customizing Configuration Location
 
@@ -426,7 +420,7 @@ $ java -jar target/*.jar --spring.config.name=production
 
 * Spring Boot provides default configuration files for 3 common logging
 frameworks: logback, log4j and `java.util.logging`
-* Starters (and Samples) use logback with color output
+* Starters (and Samples) use logback with colour output
 * External configuration and classpath influence runtime behavior
 * `LoggingApplicationContextInitializer` sets it all up
 
@@ -524,6 +518,15 @@ If you want a WAR to be deployable (in a "normal" container), then you
 need to use `SpringBootServletInitializer` instead of or as well as
 `SpringApplication`.
 
+## Customizing Business Content
+
+<i class="icon-cloud"></i> It's just Spring...
+
+* Add `@Bean` definitions
+* Use `@Autowired`, `@Value` and `@ComponentScan`
+* Groovy CLI auto-imports common DI annotations
+* Even use old-fashioned XML if you like
+
 ## Customizing the ApplicationContext
 
 * Directly on the `SpringApplication` instance
@@ -534,10 +537,10 @@ need to use `SpringBootServletInitializer` instead of or as well as
 
 ## Customizing @EnableAutoConfiguration
 
-* Disable specific feature `@EnableAutoConfiguration(disable={WebMvcAutoConfiguration.class})
+* Disable specific feature `@EnableAutoConfiguration(disable={WebMvcAutoConfiguration.class})`
 * Write you own...
-* Add JAR with `META-INF/spring.factories` entry for `EnableAutoConfiguration`
-* All entries from classpath merged and added to context
+    - Add JAR with `META-INF/spring.factories` entry for `EnableAutoConfiguration`
+    - All entries from classpath merged and added to context
 
 ## Customizing the CLI
 
