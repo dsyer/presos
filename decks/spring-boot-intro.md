@@ -529,11 +529,11 @@ need to use `SpringBootServletInitializer` instead of or as well as
 
 ## Customizing the ApplicationContext
 
-* Directly on the `SpringApplication` instance
+* Directly on the `SpringApplication` instance (`spring.main.*`)
 * Add external configuration (System properties, OS env vars, config
   file, command line arguments)
-* Add `ApplicationContextInitializer` implementations and enable in
-  `application.properties`
+* Add `SpringApplicationInitializer` implementations and enable in
+  `META-INF/spring.factories`
 
 ## Customizing @EnableAutoConfiguration
 
@@ -631,20 +631,23 @@ when reading a nested entry.
     
 ## Spring Boot Loader Limitations
 
-* Don't create nested JAR from Strings without context `jar:file:/file.jar!/nested.jar!/a/b.txt`
+* No compression for top-level JAR entries
+* Don't create nested JAR resource from String without context
+  `jar:file:/file.jar!/nested.jar!/a/b.txt`
+* Use Spring abstractions for `Resource` wherever possible
 * Always use the context class loader (`ClassLoader.getSystemClassLoader()` will fail)
 
 > You don't need to use it, consider shade or a classic WAR
 
-## Testing with Spring Test (MVC)
+## Testing with Spring Test (and MVC)
 
 `SpringApplication` is an opinionated creator of an
 `ApplicationContext`, but most of the behaviour is encapsulated in
 `ApplicationContextInitializer` implementations. To reproduce the
-behaviour of you app in an integration test it is useful to duplicate
-those features you can use the corresponding initializers.
+behaviour of your app in an integration test it is useful to duplicate
+those features, so you can use the corresponding initializers.
 
-Example if you have externalized configuration:
+Example with externalized configuration:
 
 ```java
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -659,15 +662,15 @@ public class IntegrationTests {
 
 ## Links
 
-* [https://projects.spring.io/spring-boot](http://projects.spring.io/spring-boot) Documentation
+* [http://projects.spring.io/spring-boot](http://projects.spring.io/spring-boot) Documentation
 * [https://github.com/SpringSource/spring-boot](https://github.com/SpringSource/spring-boot) Spring Boot on Github
 * [http://spring.io/blog](http://spring.io/blog)
 * [http://dsyer.com/decks/spring-boot-intro.html](http://dsyer.com/decks/spring-boot-intro.html)
 * Twitter: `@david_syer`, `@phillip_webb` 
-* Email: dsyer@gopivotal.com`, pwebb@gopivotal.com
+* Email: dsyer@gopivotal.com, pwebb@gopivotal.com
 
 ## 
 
 <div id="center">
-<div>Spring Boot Intro - END</div>
+<div><i class="icon-smile icon-4x"></i> Spring Boot Intro - END <i class="icon-off icon-rotate-90 icon-4x"></i></div>
 </div>
