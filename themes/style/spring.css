@@ -73,6 +73,10 @@
 	margin-bottom: 12px;
 }
 
+.slide ul ul, .slide ol ol {
+    margin-bottom: 0px;
+}
+
 ul > li {
 	font-size: 1.0em;
 }
