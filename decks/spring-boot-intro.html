@@ -154,12 +154,12 @@ of <code>spring-*</code> projects)</li>
 <span class="c1">//  }</span>
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide11"><h2 id="toc_9">Getting Starter in Java</h2>
+</div><div class="slide" id="slide11"><h2 id="toc_9">Getting Started in Java</h2>
 <div class="highlight"><pre><code class="java language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.springframework.boot.SpringApplication</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.context.annotation.*</span><span class="o">;</span>
 
-<span class="nd">@Configuration</span>
+<span class="nd">@RestController</span>
 <span class="nd">@EnableAutoConfiguration</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyApplication</span> <span class="o">{</span>
 
@@ -174,16 +174,16 @@ of <code>spring-*</code> projects)</li>
 <span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.*</span><span class="o">;</span>
 
-<span class="o">...</span>
 <span class="nd">@RestController</span>
+<span class="nd">@EnableAutoConfiguration</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyApplication</span> <span class="o">{</span>
-
-  <span class="o">...</span>
 
   <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">)</span>
   <span class="kd">public</span> <span class="n">String</span> <span class="nf">sayHello</span><span class="o">()</span> <span class="o">{</span>
     <span class="k">return</span> <span class="s">&quot;Hello World!&quot;</span><span class="o">;</span>
   <span class="o">}</span>
+
+  <span class="o">...</span>
 
 <span class="o">}</span>
 </code></pre></div>
@@ -270,7 +270,15 @@ and WAR archives</li>
 
 <p><img src="images/boot-modules.png" alt="Spring Boot Modules"></p>
 
-</div><div class="slide" id="slide20"><h2 id="toc_18">Command Line Arguments</h2>
+</div><div class="slide" id="slide20"><h2 id="toc_18">Environment and Profiles</h2>
+
+<ul>
+<li>Spring Environment available since 3.1</li>
+<li>Abstraction for key/value pairs</li>
+<li>Manages <code>@Profile</code> switching</li>
+</ul>
+
+</div><div class="slide" id="slide21"><h2 id="toc_19">Command Line Arguments</h2>
 
 <ul>
 <li><p><code>CommandLineRunner</code> is a hook to run application-specific code after 
@@ -287,7 +295,7 @@ the context is created</p></li>
 </ul>
 <div class="highlight"><pre><code class="sh language-sh" data-lang="sh"><span class="nv">$ </span>java -jar target/*.jar --server.port<span class="o">=</span>9000
 </code></pre></div>
-</div><div class="slide" id="slide21"><h2 id="toc_19">Externalizing Configuration to Properties</h2>
+</div><div class="slide" id="slide22"><h2 id="toc_20">Externalizing Configuration to Properties</h2>
 
 <p>Just put <code>application.properties</code> in your classpath or next to you jar, e.g.</p>
 
@@ -296,7 +304,7 @@ the context is created</p></li>
 </code></pre></div>
 <p>Properties can be overridden (<code>command line arg</code> &gt; <code>file</code> &gt; <code>classpath</code>)</p>
 
-</div><div class="slide" id="slide22"><h2 id="toc_20">Using YAML</h2>
+</div><div class="slide" id="slide23"><h2 id="toc_21">Using YAML</h2>
 
 <p>Just include <code>snake-yaml.jar</code> and put <code>application.yml</code> in your classpath</p>
 
@@ -307,7 +315,7 @@ the context is created</p></li>
 <p>Both properties and YAML add entries with period-separated paths to
 the Spring <code>Environment</code>.</p>
 
-</div><div class="slide" id="slide23"><h2 id="toc_21">Binding Configuration To Beans</h2>
+</div><div class="slide" id="slide24"><h2 id="toc_22">Binding Configuration To Beans</h2>
 
 <p><code>MyProperties.java</code></p>
 <div class="highlight"><pre><code class="java language-java" data-lang="java"><span class="nd">@ConfigurationProperties</span><span class="o">(</span><span class="n">prefix</span><span class="o">=</span><span class="s">&quot;mine&quot;</span><span class="o">)</span>
@@ -321,7 +329,7 @@ the Spring <code>Environment</code>.</p>
 <div class="highlight"><pre><code class="properties language-properties" data-lang="properties"><span class="na">mine.location</span><span class="o">:</span> <span class="s">classpath:mine.xml</span>
 <span class="na">mine.skip</span><span class="o">:</span> <span class="s">false</span>
 </code></pre></div>
-</div><div class="slide" id="slide24"><h2 id="toc_22">Setting Default Configuration</h2>
+</div><div class="slide" id="slide25"><h2 id="toc_23">Setting Default Configuration</h2>
 
 <p>In properties or YAML you can just use the empty (non-specific)
 profile.</p>
@@ -340,7 +348,7 @@ profile.</p>
 
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide25"><h2 id="toc_23">Customizing Configuration Location</h2>
+</div><div class="slide" id="slide26"><h2 id="toc_24">Customizing Configuration Location</h2>
 
 <p>Set </p>
 
@@ -353,7 +361,7 @@ list</li>
 <p>e.g.</p>
 <div class="highlight"><pre><code class="sh language-sh" data-lang="sh"><span class="nv">$ </span>java -jar target/*.jar --spring.config.name<span class="o">=</span>production
 </code></pre></div>
-</div><div class="slide" id="slide26"><h2 id="toc_24">Spring Profiles</h2>
+</div><div class="slide" id="slide27"><h2 id="toc_25">Spring Profiles</h2>
 
 <ul>
 <li><p>Activate external configuration with a Spring profile</p>
@@ -378,7 +386,7 @@ list</li>
 </code></pre></div></li>
 </ul>
 
-</div><div class="slide" id="slide27"><h2 id="toc_25">Logging</h2>
+</div><div class="slide" id="slide28"><h2 id="toc_26">Logging</h2>
 
 <ul>
 <li>Spring Boot provides default configuration files for 3 common logging
@@ -388,7 +396,7 @@ frameworks: logback, log4j and <code>java.util.logging</code></li>
 <li><code>LoggingApplicationContextInitializer</code> sets it all up</li>
 </ul>
 
-</div><div class="slide" id="slide28"><h2 id="toc_26">Adding some Autoconfigured Behavior</h2>
+</div><div class="slide" id="slide29"><h2 id="toc_27">Adding some Autoconfigured Behavior</h2>
 <div class="highlight"><pre><code class="xml language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
   <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
   <span class="nt">&lt;artifactId&gt;</span>spring-jdbc<span class="nt">&lt;/artifactId&gt;</span>
@@ -406,7 +414,29 @@ classpath, e.g. </p>
 <li>Add a Tomcat connection pool</li>
 </ul>
 
-</div><div class="slide" id="slide29"><h2 id="toc_27">Adding A UI with Thymeleaf</h2>
+</div><div class="slide" id="slide30"><h2 id="toc_28">Adding Static Resources</h2>
+
+<p>Easiest: use <code>classpath:/static/**</code></p>
+
+<p>Many alternatives:</p>
+
+<ul>
+<li><code>classpath:/public/**</code></li>
+<li><code>classpath:/resources/**</code></li>
+<li><code>classpath:/META-INF/resources/**</code></li>
+<li>Normal servlet context <code>/</code> (root of WAR file, see later)
+
+<ul>
+<li>i.e. <code>src/main/webapp</code> if building with Maven or Gradle</li>
+<li><code>static/**</code></li>
+<li><code>public/**</code></li>
+<li>set <code>documentRoot</code> in <code>EmbeddedServletContextFactory</code> (see
+later)</li>
+</ul></li>
+<li>Special treatment for <code>index.html</code> (in any of the above locations)</li>
+</ul>
+
+</div><div class="slide" id="slide31"><h2 id="toc_29">Adding A UI with Thymeleaf</h2>
 
 <ul>
 <li>Add Thymeleaf to the classpath and see it render a view</li>
@@ -428,7 +458,7 @@ when changed)</li>
 </ul></li>
 </ul>
 
-</div><div class="slide" id="slide30"><h2 id="toc_28">Currently Available Autoconfigured Behaviour</h2>
+</div><div class="slide" id="slide32"><h2 id="toc_30">Currently Available Autoconfigured Behaviour</h2>
 
 <ul>
 <li>Embedded servlet container (Tomcat or Jetty)</li>
@@ -443,7 +473,7 @@ when changed)</li>
 
 <p><em>Please open an issue on github if you want support for something else</em></p>
 
-</div><div class="slide" id="slide31"><h2 id="toc_29">The Actuator</h2>
+</div><div class="slide" id="slide33"><h2 id="toc_31">The Actuator</h2>
 
 <p>Adds common non-functional features to your application and exposes
 MVC endpoints to interact with them.</p>
@@ -458,7 +488,7 @@ MVC endpoints to interact with them.</p>
 <p>If embedded in a web app or web service can use the same port or a
 different one (and a different network interface).</p>
 
-</div><div class="slide" id="slide32"><h2 id="toc_30">Adding Security</h2>
+</div><div class="slide" id="slide34"><h2 id="toc_32">Adding Security</h2>
 
 <ul>
 <li>Use the Actuator</li>
@@ -467,7 +497,17 @@ different one (and a different network interface).</p>
 <li>Management endpoints secure unless individually excluded</li>
 </ul>
 
-</div><div class="slide" id="slide33"><h2 id="toc_31">Customizing the ApplicationContext</h2>
+</div><div class="slide" id="slide35"><h2 id="toc_33">Building a WAR</h2>
+
+<p>We like launchable JARs, but you can still use WAR format if you
+prefer. Spring Boot Tools take care of repackaging a WAR to make it
+executable.</p>
+
+<p>If you want a WAR to be deployable (in a &quot;normal&quot; container), then you
+need to use <code>SpringBootServletInitializer</code> instead of or as well as
+<code>SpringApplication</code>.</p>
+
+</div><div class="slide" id="slide36"><h2 id="toc_34">Customizing the ApplicationContext</h2>
 
 <ul>
 <li>Directly on the <code>SpringApplication</code> instance</li>
@@ -477,7 +517,7 @@ file, command line arguments)</li>
 <code>application.properties</code></li>
 </ul>
 
-</div><div class="slide" id="slide34"><h2 id="toc_32">Customizing @EnableAutoConfiguration</h2>
+</div><div class="slide" id="slide37"><h2 id="toc_35">Customizing @EnableAutoConfiguration</h2>
 
 <ul>
 <li>Disable specific feature `@EnableAutoConfiguration(disable={WebMvcAutoConfiguration.class})</li>
@@ -486,7 +526,7 @@ file, command line arguments)</li>
 <li>All entries from classpath merged and added to context</li>
 </ul>
 
-</div><div class="slide" id="slide35"><h2 id="toc_33">Customizing the CLI</h2>
+</div><div class="slide" id="slide38"><h2 id="toc_36">Customizing the CLI</h2>
 
 <p>Uses standard Java <code>META-INF/services</code> scanning</p>
 
@@ -501,7 +541,7 @@ file, command line arguments)</li>
 <p>Looks for <code>foo.groovy</code> in <code>${SPRING_HOME}/bin</code> and
 <code>${SPRING_HOME}/ext</code> by default</p>
 
-</div><div class="slide" id="slide36"><h2 id="toc_34">Customizing Servlet Container Properties</h2>
+</div><div class="slide" id="slide39"><h2 id="toc_37">Customizing Servlet Container Properties</h2>
 
 <ul>
 <li>Some common features exposed with external configuration,
@@ -512,7 +552,7 @@ instances get a callback</li>
 auto-configured one)</li>
 </ul>
 
-</div><div class="slide" id="slide37"><h2 id="toc_35">Spring Boot Loader</h2>
+</div><div class="slide" id="slide40"><h2 id="toc_38">Spring Boot Loader</h2>
 
 <p><strong>Motivation</strong>: existing solutions for executable JAR are not very robust;
 executable WAR is very tricky to create.</p>
@@ -521,7 +561,7 @@ executable WAR is very tricky to create.</p>
 <code>ClassLoader</code> and <code>JarFile</code> implementations that can find resources in 
 nested JARs (e.g. <code>lib/*.jar</code> or <code>WEB-INF/lib/*.jar</code>)</p>
 
-</div><div class="slide" id="slide38"><h2 id="toc_36">How We Load Nested Jars</h2>
+</div><div class="slide" id="slide41"><h2 id="toc_39">How We Load Nested Jars</h2>
 
 <p>Each regular JAR file is sequence of <code>JarEntries</code></p>
 
@@ -535,7 +575,7 @@ nested JARs (e.g. <code>lib/*.jar</code> or <code>WEB-INF/lib/*.jar</code>)</p>
 | S1 | S2 | S3 | ...
 +----+----+----+-----
 </code></pre></div>
-</div><div class="slide" id="slide39"><h2 id="toc_37">How We Load Nested Jars</h2>
+</div><div class="slide" id="slide42"><h2 id="toc_40">How We Load Nested Jars</h2>
 
 <p>With nested JARs entries are contained within entries.</p>
 
@@ -546,7 +586,7 @@ nested JARs (e.g. <code>lib/*.jar</code> or <code>WEB-INF/lib/*.jar</code>)</p>
 |    |    |    | +----+----+----+-------
 +----+----+----+-+--------------------
 </code></pre></div>
-</div><div class="slide" id="slide40"><h2 id="toc_38">How We Load Nested Jars</h2>
+</div><div class="slide" id="slide43"><h2 id="toc_41">How We Load Nested Jars</h2>
 
 <p>We can scan nested JARs and simply seek to the correct part of the outer file
 when reading a nested entry.</p>
@@ -563,7 +603,7 @@ when reading a nested entry.</p>
 <p><strong>NOTE:</strong> In order to seek inside the nested JAR, the containing entry cannot be compressed.</p>
 </blockquote>
 
-</div><div class="slide" id="slide41"><h2 id="toc_39">Spring Boot Loader Limitations</h2>
+</div><div class="slide" id="slide44"><h2 id="toc_42">Spring Boot Loader Limitations</h2>
 
 <ul>
 <li>Don&#39;t create nested JAR from Strings without context <code>jar:file:/file.jar!/nested.jar!/a/b.txt</code></li>
@@ -574,17 +614,7 @@ when reading a nested entry.</p>
 <p>You don&#39;t need to use it, consider shade or a classic WAR</p>
 </blockquote>
 
-</div><div class="slide" id="slide42"><h2 id="toc_40">Building a WAR</h2>
-
-<p>We like launchable JARs, but you can still use WAR format if you
-prefer. Spring Boot Tools take care of repackaging a WAR to make it
-executable.</p>
-
-<p>If you want a WAR to be deployable (in a &quot;normal&quot; container), then you
-need to use <code>SpringBootServletInitializer</code> instead of or as well as
-<code>SpringApplication</code>.</p>
-
-</div><div class="slide" id="slide43"><h2 id="toc_41">Testing with Spring Test (MVC)</h2>
+</div><div class="slide" id="slide45"><h2 id="toc_43">Testing with Spring Test (MVC)</h2>
 
 <p><code>SpringApplication</code> is an opinionated creator of an
 <code>ApplicationContext</code>, but most of the behaviour is encapsulated in
@@ -602,7 +632,7 @@ those features you can use the corresponding initializers.</p>
 
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide44"><h2 id="toc_42">Links</h2>
+</div><div class="slide" id="slide46"><h2 id="toc_44">Links</h2>
 
 <ul>
 <li><a href="http://projects.spring.io/spring-boot">https://projects.spring.io/spring-boot</a> Documentation</li>
@@ -613,7 +643,7 @@ those features you can use the corresponding initializers.</p>
 <li>Email: <a href="mailto:dsyer@gopivotal.com">dsyer@gopivotal.com</a>`, <a href="mailto:pwebb@gopivotal.com">pwebb@gopivotal.com</a></li>
 </ul>
 
-</div><div class="slide" id="slide45"><h2></h2>
+</div><div class="slide" id="slide47"><h2></h2>
 
 <div id="center">
 <div>Spring Boot Intro - END</div>
