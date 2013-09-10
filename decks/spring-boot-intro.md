@@ -134,7 +134,7 @@ class Example {
 }
 ```
 
-## Getting Starter in Java
+## Getting Started in Java
 
 ```java
 import org.springframework.boot.SpringApplication;
@@ -433,6 +433,23 @@ classpath, e.g.
 
 * Add an in memory database
 * Add a Tomcat connection pool
+
+## Adding Static Resources
+
+Easiest: use `classpath:/static/**`
+
+Many alternatives:
+
+* `classpath:/public/**`
+* `classpath:/resources/**`
+* `classpath:/META-INF/resources/**`
+* Normal servlet context `/` (root of WAR file, see later)
+    * i.e. `src/main/webapp` if building with Maven or Gradle
+    * `static/**`
+    * `public/**`
+    * set `documentRoot` in `EmbeddedServletContextFactory` (see
+      later)
+* Special treatment for `index.html` (in any of the above locations)
 
 ## Adding A UI with Thymeleaf
 
