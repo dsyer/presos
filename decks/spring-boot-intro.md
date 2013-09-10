@@ -520,7 +520,7 @@ need to use `SpringBootServletInitializer` instead of or as well as
 
 ## Customizing Business Content
 
-<i class="icon-cloud"></i> It's just Spring...
+<i class="icon-comment-alt icon-2x" style="color: #267b42"></i> Remember, it's just Spring...
 
 * Add `@Bean` definitions
 * Use `@Autowired`, `@Value` and `@ComponentScan`
