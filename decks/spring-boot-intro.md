@@ -345,10 +345,25 @@ mine.location: classpath:mine.xml
 mine.skip: false
 ```
 
+## Data Binding to `@ConfigurationProperties`
+
+...and `SpringApplication`
+
+* Spring `DataBinder` so does type coercion and conversion where possible
+* Custom `ConversionService` additionally discovered by bean name
+  (same as `ApplicationContext`)
+* Ditto for validation
+    - `configurationPropertiesValidator` bean if present
+    - JSR303 if present
+    - `ignoreUnkownFields=true` (default)
+    - `ignoreInvalidFields=false` (default)
+* Uses a `RelaxedDataBinder` which accepts common variants of property
+names (e.g. `CAPITALIZED`, `camelCased` or `with_underscores`)
+
 ## Setting Default Configuration
 
 In properties or YAML you can just use the empty (non-specific)
-profile.
+profile for defaults.
 
 In Java you can add an instance of the configuration properties bean, e.g:
 
@@ -360,7 +375,7 @@ public class MyConfiguration {
   @Bean
   public MyProperties myProperties() {
     MyProperties properties = new MyProperties();
-    properties.setReallyImportant("myDefault");
+    properties.setReallyImportant("myDefaultValue");
     return properties;
   }
   
@@ -484,12 +499,13 @@ Adds common non-functional features to your application and exposes
 MVC endpoints to interact with them.
 
 * Security
-* Secure endpoints: `/metrics`, `/health`, `/trace`, `/dump`, `/shutdown`, `/beans`
-* Audit
+* Secure endpoints: `/metrics`, `/health`, `/trace`, `/dump`, `/shutdown`, `/beans`, `/env`
 * `/info`
+* Audit
 
 If embedded in a web app or web service can use the same port or a
-different one (and a different network interface).
+different one (`management.port`) and/or a different network interface
+(`management.address`) and/or context path (`management.context_path`).
 
 ## Adding Security
 
