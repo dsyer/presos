@@ -391,6 +391,6 @@ Not to be confused with:
 * [http://github.com/cloudfoundry/uaa](http://github.com/cloudfoundry/uaa) UAA on Github (see `docs/` folder)
 * [http://blog.cloudfoundry.org](http://blog.cloudfoundry.org)
 * [http://spring.io/blog](http://spring.io/blog)
-* [http://dsyer.com/decks/oauth-model-s2gx.html](http://dsyer.com/decks/oauth-model-s2gx.html)
+* [http://dsyer.com/presos/decks/oauth-model-s2gx.html](http://dsyer.com/presos/decks/oauth-model-s2gx.html)
 * Twitter: `@david_syer`  
 * Email: dsyer@gopivotal.com

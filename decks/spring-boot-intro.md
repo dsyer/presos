@@ -1,6 +1,6 @@
 ---
 title: Spring Boot Intro
-layout: springone13
+layout: spring
 ---
 # <i class="icon-off"></i> Spring Boot
 
@@ -29,7 +29,7 @@ Email: [dsyer, pwebb]@gopivotal.com
 
 <i class="icon-off icon-3x"></i> Spring Boot:
 
-* Focuses attention at a single point (as opposed to large collection
+* Single point of focus (as opposed to large collection
   of `spring-*` projects)
 * A tool for getting started very quickly with Spring
 * Common non-functional requirements for a "real" application
@@ -37,6 +37,21 @@ Email: [dsyer, pwebb]@gopivotal.com
 * Gets out of the way quickly if you want to change defaults
 
 > An opportunity for Spring to be opinionated
+
+## Installation
+
+* Requirements: Java (>=1.6) + (for Java projects) Maven 3 or gradle >=1.6
+* Download: [http://repo.spring.io/milestone/org/springframework/boot/spring-boot-cli/0.5.0.M6/spring-boot-cli-0.5.0.M6-bin.zip](http://repo.spring.io/milestone/org/springframework/boot/spring-boot-cli/0.5.0.M6/spring-boot-cli-0.5.0.M6-bin.zip)
+* Unzip the distro (approx. 10MB), and find `bin/` directory
+
+```
+$ spring --help
+...
+```
+
+(Or folow instructions on
+[Github](https://github.com/spring-projects/spring-boot) for GVM or
+Brew.)
 
 ## Getting Started *Really* Quickly
 
@@ -185,7 +200,7 @@ public class MyApplication {
 * Standard Maven POMs
 * Define dependencies that we recommend
 * Parent optional
-* Available for web, batch, integration, data
+* Available for web, batch, integration, data, amqp, aop, jdbc, ...
 * e.g. data = hibernate + spring-data + JSR 303
 
 ## SpringApplication
@@ -285,6 +300,18 @@ public class Startup implements CommandLineRunner {
     }
 
 }
+```
+
+## SpringApplicationBuilder
+
+Flexible builder style with fluent API for building
+`SpringApplication` with more complex requirements.
+
+```java
+new SpringApplicationBuilder(ParentConfiguration.class)
+    .profiles("adminServer", "single")
+    .child(AdminServerApplication.class)
+    .run(args);
 ```
 
 ## Environment and Profiles
@@ -477,10 +504,12 @@ Many alternatives:
 ## Currently Available Autoconfigured Behaviour
 
 * Embedded servlet container (Tomcat or Jetty)
-* `DataSource` and `JdbcTemplate`
-* JPA
-* Spring Data JPA (scan for repositories)
+* JDBC: `DataSource` and `JdbcTemplate`
+* JPA, JMS, AMQP (Rabbit), AOP
+* Websocket
+* Spring Data JPA (scan for repositories) and Mongodb
 * Thymeleaf
+* Mobile
 * Batch processing
 * Reactor for events and async processing
 * Actuator features (Security, Audit, Metrics, Trace)
@@ -504,9 +533,15 @@ different one (`management.port`) and/or a different network interface
 ## Adding Security
 
 * Use the Actuator
-* Add Spring Security to classpath
+* Add Spring Security to classpath, e.g. with `spring-boot-starter-security`
 * Application endpoints secured via `security.basic.enabled=true` (on by default)
 * Management endpoints secure unless individually excluded
+
+## Adding a Remote SSH Server
+
+* Use the Actuator
+* Add `spring-boot-starter-shell-remote` to classpath
+* Application exposed to SSH on port 2000 by default
 
 ## Building a WAR
 
@@ -645,14 +680,15 @@ when reading a nested entry.
 `ApplicationContext`, but most of the behaviour is encapsulated in
 `ApplicationContextInitializer` implementations. To reproduce the
 behaviour of your app in an integration test it is useful to duplicate
-those features, so you can use the corresponding initializers.
+those features, so you can use the corresponding initializers, or you
+can use a context loader provided by Spring Boot.
 
 Example with externalized configuration:
 
 ```java
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = IntegrationTestsConfiguration.class, 
-    initializers = ConfigFileApplicationContextInitializer.class)
+    loader = SpringApplicationContextLoader.class)
 public class IntegrationTests {
 
   // Normal Spring Test stuff
@@ -660,12 +696,14 @@ public class IntegrationTests {
 }
 ```
 
+> Hint: use `spring-boot-starter-test`
+
 ## Links
 
 * [http://projects.spring.io/spring-boot](http://projects.spring.io/spring-boot) Documentation
 * [https://github.com/SpringSource/spring-boot](https://github.com/SpringSource/spring-boot) Spring Boot on Github
 * [http://spring.io/blog](http://spring.io/blog)
-* [http://dsyer.com/decks/spring-boot-intro.html](http://dsyer.com/decks/spring-boot-intro.html)
+* [http://dsyer.com/presos/decks/spring-boot-intro.html](http://dsyer.com/presos/decks/spring-boot-intro.html)
 * Twitter: `@david_syer`, `@phillip_webb` 
 * Email: dsyer@gopivotal.com, pwebb@gopivotal.com
 
