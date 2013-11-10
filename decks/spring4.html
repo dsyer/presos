@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title></title>
+	
+	<meta name="description" content="A jQuery library for modern HTML presentations">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+	
+	<!-- Core and extension CSS files -->
+	<link rel="stylesheet" href="../core/deck.core.css">
+	<link rel="stylesheet" href="../extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="../extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="../extensions/status/deck.status.css">
+	<link rel="stylesheet" href="../extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="../css/syntax.css">
+	
+	<!-- Theme CSS files (menu swaps these out) -->
+    <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
+    
+    
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/springlarge.css">
+	<link rel="stylesheet" id="transition-theme-link" href="../themes/transition/horizontal-slide.css">
+	
+	<script src="../modernizr.custom.js"></script>
+</head>
+
+<body class="deck-container">
+
+<div class="slide" id="slide1"><h1 id="toc_0">Spring 4.0</h1>
+
+<p>Dave Syer, Josh Long, 2013<br>
+Twitter: @david_syer, @starbuxman,<br>
+Email: [dsyer, jlong]@gopivotal.com</p>
+
+<p>(Introduction to Spring 4.0, originally by Oliver Gierke)</p>
+
+</div><div class="slide" id="slide2"><h2 id="toc_1">Sample code</h2>
+
+<ul>
+<li><a href="https://github.com/olivergierke/spring4-guided-tour">https://github.com/olivergierke/spring4-guided-tour</a></li>
+<li>JDK: <a href="https://jdk8.java.net/download.html">https://jdk8.java.net/download.html</a></li>
+<li>Maven: <a href="http://maven.apache.org/download.cgi">http://maven.apache.org/download.cgi</a></li>
+</ul>
+
+</div><div class="slide" id="slide3"><h2 id="toc_2">Where we Came From: Spring 3.x</h2>
+
+<ul>
+<li>Annotation based component model</li>
+<li>Java <code>@Configuration</code></li>
+<li>Composable Annotations</li>
+<li>SpEL</li>
+<li>REST @ MVC, Async</li>
+<li>...</li>
+</ul>
+
+</div><div class="slide" id="slide4"><h2 id="toc_3">Where we Came From: Spring 3.x</h2>
+
+<ul>
+<li>Declarative validation, formatting,</li>
+<li>caching and scheduling</li>
+<li>Spring MVC integration tests</li>
+<li>JSR-330, JSR-303</li>
+<li>JPA 2.0, Servlet 3.0</li>
+</ul>
+
+</div><div class="slide" id="slide5"><h2 id="toc_4">Spring 4: Pruning</h2>
+
+<p>Removed deprecated packages and methods</p>
+
+</div><div class="slide" id="slide6"><h2 id="toc_5">Spring 4: Spec upgrades</h2>
+
+<ul>
+<li>JMS 2.0</li>
+<li>JTA 1.2</li>
+<li>JPA 2.1</li>
+<li>Bean Validation 1.1</li>
+<li>JSR-236 Concurrency</li>
+</ul>
+
+</div><div class="slide" id="slide7"><h2 id="toc_6">Spring 4: Get groovy</h2>
+
+<ul>
+<li>Groovy <code>BeanBuilder</code></li>
+<li><code>GenericGroovyApplicationContext</code></li>
+</ul>
+
+</div><div class="slide" id="slide8"><h2 id="toc_7">Spring 4: Conditional bean definitions</h2>
+
+<ul>
+<li><code>@Conditional</code></li>
+<li>More generalized version of @Profile</li>
+<li>Spring Boot makes heavy use of that</li>
+</ul>
+
+</div><div class="slide" id="slide9"><h2 id="toc_8">Spring 4</h2>
+
+<ul>
+<li>Composable annotations</li>
+<li>Autowiring with Generics</li>
+<li>Hypermedia</li>
+</ul>
+
+</div><div class="slide" id="slide10"><h2 id="toc_9">Spring 4: Messaging and WebSockets</h2>
+
+<ul>
+<li>Messaging abstraction from SI</li>
+<li>JSR-356 (+SockJS, Stomp etc.)</li>
+<li>Highly recommended talk by Rossen Stoyanchev
+<a href="http://bit.ly/spring4-websockets">http://bit.ly/spring4-websockets</a></li>
+</ul>
+
+</div><div class="slide" id="slide11"><h2 id="toc_10">The state of Java8</h2>
+
+<ul>
+<li>Current OpenJDK 8 works for us</li>
+<li>Best IDE support: IntelliJ 12</li>
+<li>STS has Java 8 support preview</li>
+</ul>
+
+</div><div class="slide" id="slide12"><h2 id="toc_11">Spring 4: JDK 8 Support</h2>
+
+<ul>
+<li>Lambda expressions</li>
+<li>Method references</li>
+<li>JSR-310 DateTime</li>
+<li>Repeatable annotations</li>
+<li>Parameter name discovery</li>
+</ul>
+
+</div><div class="slide" id="slide13"><h2 id="toc_12">Lambda expressions</h2>
+
+<ul>
+<li>SAM types</li>
+<li>Works with previously existing callbacks
+<code>JdbcTemplate</code>, <code>JmsTemplate</code>, <code>TransactionTemplate</code> etc.</li>
+</ul>
+
+</div><div class="slide" id="slide14"><h2 id="toc_13">Parameter names</h2>
+
+<ul>
+<li>Advanced reflection support</li>
+<li>Parameter names on interfaces</li>
+</ul>
+
+</div><div class="slide" id="slide15"><h2></h2>
+
+<div class="demo"></div>
+
+<blockquote>
+<p>Should I upgrade to Spring 4.0 already?</p>
+</blockquote>
+
+</div><div class="slide" id="slide16"><h2 id="toc_14">Upgrade</h2>
+
+<ul>
+<li>We strongly recommend to upgrade</li>
+<li>RC November, GA December</li>
+<li>Fully compatible with Java 6 and 7</li>
+<li>Spring 3.2 in maintenance mode</li>
+</ul>
+
+</div><div class="slide" id="slide17"><h2 id="toc_15">Links</h2>
+
+<ul>
+<li><a href="http://projects.spring.io/spring-framework">http://projects.spring.io/spring-framework</a> Documentation</li>
+<li><a href="https://github.com/spring-projects/spring-framework">https://github.com/spring-projects/spring-framework</a> Spring Framework on Github</li>
+<li><a href="http://spring.io/blog">http://spring.io/blog</a></li>
+<li><a href="http://dsyer.com/presos/decks/spring4.html">http://dsyer.com/presos/decks/spring4.html</a></li>
+<li>Twitter: <code>@david_syer</code>, <code>@starbuxman</code></li>
+<li>Email: <a href="mailto:dsyer@gopivotal.com">dsyer@gopivotal.com</a>, <a href="mailto:jlong@gopivotal.com">jlong@gopivotal.com</a></li>
+</ul>
+
+</div><div class="slide" id="slide18"><h2></h2>
+
+<div id="center">
+<div><i class="icon-smile icon-4x"></i> Spring 4.0 - END</i></div>
+</div>
+</div>
+
+
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="number" name="slidenum" id="goto-slide">
+	<input type="submit" value="Go">
+</form>
+
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="../jquery-1.7.2.min.js"><\/script>')</script>
+
+<!-- Deck Core and extensions -->
+<script src="../core/deck.core.js"></script>
+<script src="../extensions/menu/deck.menu.js"></script>
+<script src="../extensions/goto/deck.goto.js"></script>
+<script src="../extensions/status/deck.status.js"></script>
+<script src="../extensions/navigation/deck.navigation.js"></script>
+<script src="../extensions/hash/deck.hash.js"></script>
+
+<script type="text/javascript">
+$(function() {
+	// Deck initialization
+	$.deck('.slide');
+	
+	$('#style-themes').change(function() {
+		$('#style-theme-link').attr('href', $(this).val());
+	});
+	
+	$('#transition-themes').change(function() {
+		$('#transition-theme-link').attr('href', $(this).val());
+	});
+
+    $('pre').click(function (){
+	$(this).toggleClass('highlighted');
+    });
+});
+</script>
+
+</body>
+</html>
