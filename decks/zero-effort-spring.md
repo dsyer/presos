@@ -2,30 +2,44 @@
 title: Spring Boot Intro
 layout: spring
 ---
-# <i class="icon-off"></i> Spring Boot
+# <i class="icon-off"></i> Zero Effort Spring
 
-Dave Syer, Phil Webb, 2013  
-Twitter: `@david_syer`, `@phillip_webb`  
-Email: [dsyer, pwebb]@gopivotal.com
+Dave Syer, Josh Long 2013  
+Twitter: `@david_syer`, `@starbuxman`  
+Email: [dsyer, jlong]@gopivotal.com
 
-(Introduction to Spring Boot)
-
-## 
-
-![Spring IO](images/spring-io-boot.png)
+(Zero Effort Spring: Introduction to Spring Boot)
 
 ## Agenda
-* Quick overview of goals and high level features
+* Spring.IO and new website
+* Quickstart XML -> Java @Configuration
+* Quick overview of goals and high level features of Spring Boot
 * Getting started demo
 * Application configuration with Spring Boot
 * Behind the scenes
 * Customization and extensions
 
-## Focus Attention
+## 
+
+![Spring IO](images/spring-io.png)
+
+## Spring.IO Website
+
+* [http://spring.io](http://spring.io)
+* Project by Pivotal Labs London, 2013
+* Source code (not yet public) [https://github.com/spring-io/spring.io](https://github.com/spring-io/spring.io)
+
+## Quickstart: XML -> Java @Configuration
+
+* XML is old news in Spring community
+* Boot has support for XML but it's not the main focus
+* `@Configuration` is main tool
+
+## Spring Boot: Focus Attention
 
 <img src="images/boot-focus.png" width="30%"></img>
 
-## Introduction
+## Introduction to Spring Boot
 
 <i class="icon-off icon-3x"></i> Spring Boot:
 
@@ -41,6 +55,7 @@ Email: [dsyer, pwebb]@gopivotal.com
 ## Installation
 
 * Requirements: Java (>=1.6) + (for Java projects) Maven 3 or gradle >=1.6
+* [Spring Tool Suite 3.4.0](http://spring.io/tools) has some nice features for Java projects
 * Download: [http://repo.spring.io/milestone/org/springframework/boot/spring-boot-cli/0.5.0.M6/spring-boot-cli-0.5.0.M6-bin.zip](http://repo.spring.io/milestone/org/springframework/boot/spring-boot-cli/0.5.0.M6/spring-boot-cli-0.5.0.M6-bin.zip)
 * Unzip the distro (approx. 10MB), and find `bin/` directory
 
@@ -49,7 +64,7 @@ $ spring --help
 ...
 ```
 
-(Or folow instructions on
+(Or follow instructions on
 [Github](https://github.com/spring-projects/spring-boot) for GVM or
 Brew.)
 
@@ -275,7 +290,7 @@ $ java -jar yourapp.jar
   that you can include in your application.
 * Spring Boot CLI - compiles and runs Groovy source as a Spring
   application
-* Spring Boot Actuator - comman non-functional features that make an
+* Spring Boot Actuator - common non-functional features that make an
   app instantly deployable and supportable in production
 * Spring Boot Tools - for building and executing self-contained JAR
   and WAR archives
@@ -704,8 +719,8 @@ public class IntegrationTests {
 * [https://github.com/SpringSource/spring-boot](https://github.com/SpringSource/spring-boot) Spring Boot on Github
 * [http://spring.io/blog](http://spring.io/blog)
 * [http://dsyer.com/presos/decks/spring-boot-intro.html](http://dsyer.com/presos/decks/spring-boot-intro.html)
-* Twitter: `@david_syer`, `@phillip_webb` 
-* Email: dsyer@gopivotal.com, pwebb@gopivotal.com
+* Twitter: `@david_syer`, `@phillip_webb`, `@starbuxman`  
+* Email: dsyer@gopivotal.com, pwebb@gopivotal.com, jlong@gopivotal.com
 
 ## 
 
