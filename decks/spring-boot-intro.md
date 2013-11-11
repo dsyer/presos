@@ -4,15 +4,11 @@ layout: spring
 ---
 # <i class="icon-off"></i> Spring Boot
 
-Dave Syer, Phil Webb, 2013  
-Twitter: `@david_syer`, `@phillip_webb`  
-Email: [dsyer, pwebb]@gopivotal.com
+Dave Syer, Phil Webb, Josh Long 2013  
+Twitter: `@david_syer`, `@phillip_webb`, `@starbuxman`  
+Email: [dsyer, pwebb, jlong]@gopivotal.com
 
 (Introduction to Spring Boot)
-
-## 
-
-![Spring IO](images/spring-io-boot.png)
 
 ## Agenda
 * Quick overview of goals and high level features
@@ -24,6 +20,10 @@ Email: [dsyer, pwebb]@gopivotal.com
 ## Focus Attention
 
 <img src="images/boot-focus.png" width="30%"></img>
+
+## 
+
+![Spring IO](images/spring-io.png)
 
 ## Introduction
 
@@ -41,6 +41,7 @@ Email: [dsyer, pwebb]@gopivotal.com
 ## Installation
 
 * Requirements: Java (>=1.6) + (for Java projects) Maven 3 or gradle >=1.6
+* [Spring Tool Suite 3.4.0](http://spring.io/tools) has some nice features for Java projects
 * Download: [http://repo.spring.io/milestone/org/springframework/boot/spring-boot-cli/0.5.0.M6/spring-boot-cli-0.5.0.M6-bin.zip](http://repo.spring.io/milestone/org/springframework/boot/spring-boot-cli/0.5.0.M6/spring-boot-cli-0.5.0.M6-bin.zip)
 * Unzip the distro (approx. 10MB), and find `bin/` directory
 
@@ -49,7 +50,7 @@ $ spring --help
 ...
 ```
 
-(Or folow instructions on
+(Or follow instructions on
 [Github](https://github.com/spring-projects/spring-boot) for GVM or
 Brew.)
 
