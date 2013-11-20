@@ -193,6 +193,90 @@ app.run(args);
 * Can be a single line: `SpringApplication.run(MyApplication.class, args)`
 * Or customized...
 
+## Not a Web Application?
+
+* `CommandLineRunner` is a hook to run application-specific code after 
+the context is created
+
+```java
+@Component
+public class Startup implements CommandLineRunner {
+	
+	@Override
+	public void run(String... args) throws Exception {
+		System.out.println("Hello World");
+    }
+
+}
+```
+
+## Currently Available Autoconfigured Behaviour
+
+* Embedded servlet container (Tomcat or Jetty)
+* JDBC: `DataSource` and `JdbcTemplate`
+* JPA, JMS, AMQP (Rabbit), AOP
+* Websocket
+* Spring Data JPA (scan for repositories) and Mongodb
+* Thymeleaf
+* Mobile
+* Batch processing
+* Reactor for events and async processing
+* Actuator features (Security, Audit, Metrics, Trace)
+
+_Please open an issue on github if you want support for something else_
+
+## SpringApplicationBuilder
+
+Flexible builder style with fluent API for building
+`SpringApplication` with more complex requirements.
+
+```java
+new SpringApplicationBuilder(ParentConfiguration.class)
+    .profiles("adminServer", "single")
+    .child(AdminServerApplication.class)
+    .run(args);
+```
+
+## Environment and Profiles
+
+* Every `ApplicationContext` has an `Environment`
+* Spring `Environment` available since 3.1
+* Abstraction for key/value pairs from multiple sources
+* Used to manage `@Profile` switching
+* Always available: `System` properties and OS `ENV` vars
+
+## Externalizing Configuration to Properties
+
+Just put `application.properties` in your classpath or next to you jar, e.g.
+
+`application.properties`
+
+```properties
+server.port: 9000
+```
+
+Properties can be overridden (`command line arg` > `file` > `classpath`)
+
+## Binding Configuration To Beans
+
+`MyProperties.java`
+
+```java
+@ConfigurationProperties(prefix="mine")
+public class MyPoperties {
+    private Resource location;
+    private boolean skip = true;
+    // ... getters and setters
+}
+```
+
+`application.properties`
+
+```properties
+mine.location: classpath:mine.xml
+mine.skip: false
+```
+
 ## Packaging For Production
 
 ```sh

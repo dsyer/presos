@@ -49,7 +49,7 @@ $ spring --help
 ...
 ```
 
-(Or folow instructions on
+(Or follow instructions on
 [Github](https://github.com/spring-projects/spring-boot) for GVM or
 Brew.)
 
@@ -275,7 +275,7 @@ $ java -jar yourapp.jar
   that you can include in your application.
 * Spring Boot CLI - compiles and runs Groovy source as a Spring
   application
-* Spring Boot Actuator - comman non-functional features that make an
+* Spring Boot Actuator - common non-functional features that make an
   app instantly deployable and supportable in production
 * Spring Boot Tools - for building and executing self-contained JAR
   and WAR archives
