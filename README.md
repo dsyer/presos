@@ -28,4 +28,4 @@ rebuilds each deck as you reload it.
 ## Static Website
 
 The decks are all in `gh-pages` at
-[dsyer.com/presos](http://dsyer.com/presos).
+[dsyer.com/presos](http://presos.dsyer.com).
