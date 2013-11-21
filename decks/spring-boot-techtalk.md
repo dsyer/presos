@@ -226,7 +226,7 @@ Demo of Actuator.
 
 ## Questions?
 
-https://github.com/SpringSource/spring-boot
+https://github.com/spring-projects/spring-boot
 
 * pwebb@gopivotal.com
 * dsyer@gopivotal.com

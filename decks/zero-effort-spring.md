@@ -716,9 +716,9 @@ public class IntegrationTests {
 ## Links
 
 * [http://projects.spring.io/spring-boot](http://projects.spring.io/spring-boot) Documentation
-* [https://github.com/SpringSource/spring-boot](https://github.com/SpringSource/spring-boot) Spring Boot on Github
+* [https://github.com/spring-projects/spring-boot](https://github.com/spring-projects/spring-boot) Spring Boot on Github
 * [http://spring.io/blog](http://spring.io/blog)
-* [http://dsyer.com/presos/decks/spring-boot-intro.html](http://dsyer.com/presos/decks/spring-boot-intro.html)
+* [http://dsyer.com/presos/decks/spring-boot-intro.html](http://presos.dsyer.com/decks/spring-boot-intro.html)
 * Twitter: `@david_syer`, `@phillip_webb`, `@starbuxman`  
 * Email: dsyer@gopivotal.com, pwebb@gopivotal.com, jlong@gopivotal.com
 

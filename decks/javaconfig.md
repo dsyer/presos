@@ -81,8 +81,8 @@ Email: dsyer@gopivotal.com
 
 ## Links
 
-* [http://github.com/SpringSource/spring-security-javaconfig]()
+* [http://github.com/spring-projects/spring-security]()
 * [Spring Security 3.2.0.M1 Blog](http://blog.springsource.org/2012/12/17/spring-security-3-2-m1-highlights-servlet-3-api-support/)
-* [http://blog.springsource.org]()
+* [http://blog.spring.io]()
 * [https://springone2gx.com/conference/santa_clara]()
 * [Spring eXchange 2013/11/15](http://skillsmatter.com/event/java-jee/spring-exchange-1724)
