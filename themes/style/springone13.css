@@ -1,4 +1,4 @@
-@import url("../themes/style/spring.css")
+@import url("spring.css");
 .deck-container .slide pre {
   font-size: 90%;
 }
