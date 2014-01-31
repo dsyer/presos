@@ -1,3 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+</head>
+<body>
+	<script type="text/javascript"
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<div id="navbar" class="navbar navbar-default" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target=".navbar-collapse">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand"
+				href="http://presos.dsyer.com">Presos
+			</a>
+		</div>
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="/"> Home </a></li>
+			</ul>
+		</div>
+	</div>
 <div class="slide" id="slide1"><h1 id="toc_0">Presentations</h1>
 
 <ul>
@@ -5,7 +31,7 @@
 <li><a href="decks/oauth-rest-s2gx.html">OAuth2 REST (S2GX 2012)</a> - Long version from SpringOne</li></li>
 <li><a href="decks/oauth-model-s2gx.html">OAuth2 Modelling (S2GX 2013)</a></li>
 <li><a href="decks/spring-boot-intro.html">Spring Boot (S2GX 2013)</a></li>
-<li><a href="decks/uaa-project.html">UAA Project</a>UAA Project</li>
+<li><a href="decks/uaa-project.html">UAA Project</a></li>
 <li><a href="decks/javaconfig.html">Spring Security JavaConfig</a></li>
 </ul>
 
@@ -22,13 +48,14 @@ they are provided as submodules.</p>
 <a href="https://github.com/dsyer/presos">https://github.com/dsyer/presos</a>. Clone
 them (read only) like this:</p>
 <div class="highlight"><pre><code class="text language-text" data-lang="text">$ git clone https://github.com/dsyer/presos
+$ git submodule update --init
 </code></pre></div>
 </div><div class="slide" id="slide3"><h2 id="toc_2">Building the Site</h2>
 
 <p>Use Ruby 1.9.3 and make sure you have <code>bundle</code> on your <code>PATH</code> </p>
 <div class="highlight"><pre><code class="text language-text" data-lang="text">$ cd presos
 $ bundle
-$ jekyll server -w
+$ jekyll serve -w
 ...
 </code></pre></div>
 <p>This builds all slides and then runs a server on port 4000 which
@@ -37,5 +64,9 @@ rebuilds each deck as you reload it.</p>
 </div><div class="slide" id="slide4"><h2 id="toc_3">Static Website</h2>
 
 <p>The decks are all in <code>gh-pages</code> at
-<a href="http://presos.dsyer.com">dsyer.com/presos</a>.</p>
+<a href="http://presos.dsyer.com">http://presos.dsyer.com</a>.</p>
 </div>
+	<script type="text/javascript"
+		src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+</body>
+</html>
