@@ -12,6 +12,7 @@ The slides sources are all in github at
 them (read only) like this:
 
     $ git clone https://github.com/dsyer/presos
+    $ git submodule update --init
 
 ## Building the Site
 
@@ -19,7 +20,7 @@ Use Ruby 1.9.3 and make sure you have `bundle` on your `PATH`
 
     $ cd presos
     $ bundle
-    $ jekyll server -w
+    $ jekyll serve -w
     ...
     
 This builds all slides and then runs a server on port 4000 which
@@ -28,4 +29,4 @@ rebuilds each deck as you reload it.
 ## Static Website
 
 The decks are all in `gh-pages` at
-[dsyer.com/presos](http://presos.dsyer.com).
+[http://presos.dsyer.com](http://presos.dsyer.com).
