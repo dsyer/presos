@@ -1,6 +1,6 @@
 ---
 title: Spring Security Javaconfig
-layout: default
+layout: plain
 ---
 # Spring Security Javaconfig
 
