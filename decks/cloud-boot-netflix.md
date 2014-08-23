@@ -4,14 +4,14 @@ layout: springone14
 ---
 # Spring Boot and Netflix OSS
 
-Spencer Gibb
-email: sgibb@pivotal.io
+Spencer Gibb   
+email: sgibb@pivotal.io   
 
-Dave Syer
-twitter: @david_syer
-email: dsyer@pivotal.io
+Dave Syer   
+twitter: @david_syer   
+email: dsyer@pivotal.io   
 
-(Spring Boot and Netflix OSS
+(Spring Boot and Netflix OSS   
 or Spring Cloud Components)
 
 ## Outline
@@ -181,10 +181,10 @@ public class Application {
 
 DEMO
 
-##
+## Hystrix Synchronous
 
 ```groovy
-@HystrixCommand // Synchronous
+@HystrixCommand
 private String getDefaultMessage() {
   return "World Default";
 }
@@ -195,10 +195,10 @@ public String getMessage() {
 }
 ```
 
-##
+## Hystrix Future
 
 ```groovy
-@HystrixCommand // Future
+@HystrixCommand
 @HystrixCommand(fallbackMethod="getDefaultMessage")
 public Future<String> getMessageFuture() {
   return new AsyncResult<String>() {
@@ -209,10 +209,10 @@ public Future<String> getMessageFuture() {
 }
 ```
 
-## 
+## Hystrix Observable
 
 ```groovy
-@HystrixCommand // Observable
+@HystrixCommand
 @HystrixCommand(fallbackMethod="getDefaultMessage")
 public Observable<String> getMessageFuture() {
   return new ObservableResult<String>() {
