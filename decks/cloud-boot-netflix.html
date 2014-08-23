@@ -18,10 +18,11 @@
 	<link rel="stylesheet" href="../extensions/menu/deck.menu.css">
 	<link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
 	<link rel="stylesheet" href="../extensions/status/deck.status.css">
+	<link rel="stylesheet" href="../extensions/scale/deck.scale.css">
 	<link rel="stylesheet" href="../extensions/hash/deck.hash.css">
 	<link rel="stylesheet" href="../css/syntax.css">
 	
-	<!-- Theme CSS files (menu swaps these out) -->
+2	<!-- Theme CSS files (menu swaps these out) -->
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
     
     
@@ -35,14 +36,14 @@
 
 <div class="slide" id="slide1"><h1 id="spring-boot-and-netflix-oss">Spring Boot and Netflix OSS</h1>
 
-<p>Spencer Gibb
-email: <a href="mailto:sgibb@pivotal.io">sgibb@pivotal.io</a></p>
+<p>Spencer Gibb<br>
+email: <a href="mailto:sgibb@pivotal.io">sgibb@pivotal.io</a>   </p>
 
-<p>Dave Syer
-twitter: @david_syer
-email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p>
+<p>Dave Syer<br>
+twitter: @david_syer<br>
+email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a>   </p>
 
-<p>(Spring Boot and Netflix OSS
+<p>(Spring Boot and Netflix OSS<br>
 or Spring Cloud Components)</p>
 
 </div><div class="slide" id="slide2"><h2 id="outline">Outline</h2>
@@ -247,8 +248,8 @@ or Spring Cloud Components)</p>
 
 <p>DEMO</p>
 
-</div><div class="slide" id="slide19"><h2></h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@HystrixCommand</span> <span class="c1">// Synchronous</span>
+</div><div class="slide" id="slide19"><h2 id="hystrix-synchronous">Hystrix Synchronous</h2>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@HystrixCommand</span>
 <span class="kd">private</span> <span class="n">String</span> <span class="nf">getDefaultMessage</span><span class="o">()</span> <span class="o">{</span>
   <span class="k">return</span> <span class="s2">&quot;World Default&quot;</span><span class="o">;</span>
 <span class="o">}</span>
@@ -258,8 +259,8 @@ or Spring Cloud Components)</p>
   <span class="k">return</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="cm">/*...*/</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide20"><h2></h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@HystrixCommand</span> <span class="c1">// Future</span>
+</div><div class="slide" id="slide20"><h2 id="hystrix-future">Hystrix Future</h2>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@HystrixCommand</span>
 <span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s2">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="n">Future</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">getMessageFuture</span><span class="o">()</span> <span class="o">{</span>
   <span class="k">return</span> <span class="k">new</span> <span class="n">AsyncResult</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
@@ -269,8 +270,8 @@ or Spring Cloud Components)</p>
   <span class="o">};</span>
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide21"><h2></h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@HystrixCommand</span> <span class="c1">// Observable</span>
+</div><div class="slide" id="slide21"><h2 id="hystrix-observable">Hystrix Observable</h2>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@HystrixCommand</span>
 <span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s2">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="n">Observable</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">getMessageFuture</span><span class="o">()</span> <span class="o">{</span>
   <span class="k">return</span> <span class="k">new</span> <span class="n">ObservableResult</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
@@ -418,6 +419,7 @@ or Spring Cloud Components)</p>
 <script src="../extensions/menu/deck.menu.js"></script>
 <script src="../extensions/goto/deck.goto.js"></script>
 <script src="../extensions/status/deck.status.js"></script>
+<script src="../extensions/scale/deck.scale.js"></script>
 <script src="../extensions/navigation/deck.navigation.js"></script>
 <script src="../extensions/hash/deck.hash.js"></script>
 
