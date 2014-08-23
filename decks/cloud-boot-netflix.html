@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title></title>
+	
+	<meta name="description" content="A jQuery library for modern HTML presentations">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+	
+	<!-- Core and extension CSS files -->
+	<link rel="stylesheet" href="../core/deck.core.css">
+	<link rel="stylesheet" href="../extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="../extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="../extensions/status/deck.status.css">
+	<link rel="stylesheet" href="../extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="../css/syntax.css">
+	
+	<!-- Theme CSS files (menu swaps these out) -->
+    <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
+    
+    
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/springone14.css">
+	<link rel="stylesheet" id="transition-theme-link" href="../themes/transition/horizontal-slide.css">
+	
+	<script src="../modernizr.custom.js"></script>
+</head>
+
+<body class="deck-container">
+
+<div class="slide" id="slide1"><h1 id="spring-boot-and-netflix-oss">Spring Boot and Netflix OSS</h1>
+
+<p>Spencer Gibb
+email: <a href="mailto:sgibb@pivotal.io">sgibb@pivotal.io</a></p>
+
+<p>Dave Syer
+twitter: @david_syer
+email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p>
+
+<p>(Spring Boot and Netflix OSS
+or Spring Cloud Components)</p>
+
+</div><div class="slide" id="slide2"><h2 id="outline">Outline</h2>
+
+<ul>
+<li>Define Microservices</li>
+<li>Define distributed system problems</li>
+<li>Introduce Netflix OSS and how we have integrated it into Spring Boot</li>
+</ul>
+
+</div><div class="slide" id="slide3"><h2 id="what-are-micro-services?">What are micro-services?</h2>
+
+<ul>
+<li>Not monolithic :-)</li>
+<li>Smaller units of a larger system</li>
+<li>Runs in its own process</li>
+<li>Lightweight communication protocols</li>
+<li>Single Responsibility Principle</li>
+<li>The UNIX way</li>
+</ul>
+
+<p><a href="http://martinfowler.com/articles/microservices.html">http://martinfowler.com/articles/microservices.html</a>
+<a href="http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html">http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html</a></p>
+
+</div><div class="slide" id="slide4"><h2 id="problems-in-micro-services-systems">Problems in micro-services systems</h2>
+
+<ul>
+<li>Distributed/versioned configuration</li>
+<li>Service registration and discovery</li>
+<li>Routing</li>
+<li>Service-to-service calls</li>
+<li>Load balancing</li>
+<li>Circuit Breaker</li>
+<li>Asynchronous</li>
+<li>Distributed messaging</li>
+</ul>
+
+</div><div class="slide" id="slide5"><h2 id="spring-boot">Spring Boot</h2>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@RestController</span>
+<span class="kd">class</span> <span class="nc">ThisWillActuallyRun</span> <span class="o">{</span>
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s2">&quot;/&quot;</span><span class="o">)</span>
+    <span class="n">String</span> <span class="nf">home</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s2">&quot;Hello World!&quot;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div><div class="slide" id="slide6"><h2 id="how-to-bring-the-ease-of-spring-boot-to-an-micro-services-platform?">How to bring the ease of Spring Boot to an micro-services platform?</h2>
+
+<ul>
+<li>Netflix OSS</li>
+<li>Consul</li>
+<li>etcd</li>
+<li>zookeeper</li>
+<li>custom</li>
+<li>doozerd</li>
+<li>ha proxy</li>
+<li>nginx</li>
+<li>Typesafe Config</li>
+</ul>
+
+<p>and many more... What to choose?</p>
+
+</div><div class="slide" id="slide7"><h2 id="netflix-oss">Netflix OSS</h2>
+
+<ul>
+<li>Eureka</li>
+<li>Hystrix &amp; Turbine</li>
+<li>Ribbon</li>
+<li>Feign</li>
+<li>Zuul</li>
+<li><p>Archaius</p></li>
+<li><p>Curator</p></li>
+<li><p>Asgaard</p></li>
+<li><p>...</p></li>
+</ul>
+
+</div><div class="slide" id="slide8"><h2 id="configuration-server">Configuration Server</h2>
+
+<ul>
+<li>Pluggable source</li>
+<li>Git implementation</li>
+<li>Versioned</li>
+<li>Rollback-able</li>
+<li>Configuration client auto-configured via starter</li>
+</ul>
+
+</div><div class="slide" id="slide9"><h2 id="configuration-server">Configuration Server</h2>
+
+<ul>
+<li>Supports applications <code>&lt;appname&gt;.properties</code></li>
+<li>Supports environments <code>&lt;appname&gt;-&lt;envname&gt;.yml</code></li>
+<li>Default environment <code>application.properties</code> applies to all applications and environments</li>
+</ul>
+
+<p>DEMO</p>
+
+</div><div class="slide" id="slide10"><h2 id="config-client">Config Client</h2>
+
+<p>Consumers of config server can use client library as Spring Boot plugin</p>
+
+<p>Features:</p>
+
+<ul>
+<li>Bootstrap <code>Environment</code> from server</li>
+<li>POST to /env to change <code>Environment</code></li>
+<li><code>@RefreshScope</code> for atomic changes to beans via Spring lifecycle</li>
+<li>POST to /refresh</li>
+<li>POST to /restart</li>
+</ul>
+
+</div><div class="slide" id="slide11"><h2 id="environment-endpoint">Environment Endpoint</h2>
+
+<ul>
+<li>POST to /env</li>
+<li>Re-binds <code>@ConfigurationProperties</code></li>
+<li>Resets loggers if any logging.level changes are detected</li>
+<li>Sends <code>EnvironmentChangeEvent</code> with list of properties that changed</li>
+</ul>
+
+</div><div class="slide" id="slide12"><h2 id="refresh-endpoint">Refresh Endpoint</h2>
+
+<ul>
+<li>POST to /refresh</li>
+<li>Re-loads configuration including remote config server</li>
+<li>Re-binds @ConfigurationProperties</li>
+<li>Resets @RefreshScope cache</li>
+</ul>
+
+</div><div class="slide" id="slide13"><h2 id="refreshscope">RefreshScope</h2>
+
+<ul>
+<li>Annotate @Beans</li>
+<li>Atomic updates during /refresh</li>
+</ul>
+
+<p>DEMO</p>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@RefreshScope</span>
+<span class="nd">@ConfigurationProperties</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyProps</span> <span class="o">{</span>
+  <span class="nd">@RefreshScope</span>
+  <span class="kd">private</span> <span class="n">String</span> <span class="n">myProp</span><span class="o">;</span>
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getMyProp</span><span class="o">(){</span><span class="k">return</span> <span class="n">myProp</span><span class="o">;}</span>
+<span class="o">}</span>
+<span class="c1">//later</span>
+<span class="n">myMethod</span><span class="o">(</span><span class="n">myProps</span><span class="o">.</span><span class="na">getMyProp</span><span class="o">())</span>
+</code></pre></div>
+</div><div class="slide" id="slide14"><h2 id="encrypted-properties">Encrypted Properties</h2>
+
+<ul>
+<li>Authenticated clients have access to unencrypted data.</li>
+<li>Only encrypted data is stored in git.</li>
+</ul>
+
+<p>DEMO</p>
+
+</div><div class="slide" id="slide15"><h2 id="eureka">Eureka</h2>
+
+<ul>
+<li>Service Registration Server</li>
+<li>Highly Available</li>
+<li>In AWS terms, multi Availability Zone and Region aware</li>
+</ul>
+
+</div><div class="slide" id="slide16"><h2 id="eureka-client">Eureka Client</h2>
+
+<ul>
+<li>Register service instances with Eureka Server </li>
+<li><code>@EnableEurekaClient</code> auto registers instance in server</li>
+<li>Eureka Server DEMO</li>
+<li>Eureka Client DEMO</li>
+</ul>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@Configuration</span>
+<span class="nd">@ComponentScan</span>
+<span class="nd">@EnableAutoConfiguration</span>
+<span class="nd">@EnableEurekaClient</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Application</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">Application</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
+       <span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div><div class="slide" id="slide17"><h2 id="hystrix">Hystrix</h2>
+
+<ul>
+<li>latency and fault tolerance</li>
+<li>isolates access to other services</li>
+<li>stops cascading failures</li>
+<li>enables resilience</li>
+<li>circuit breaker pattern</li>
+<li>dashboard</li>
+</ul>
+
+</div><div class="slide" id="slide18"><h2 id="declarative-hystrix">Declarative Hystrix</h2>
+
+<ul>
+<li>Programmatic access is cumbersome</li>
+<li><code>@HystrixCommand</code> to the rescue</li>
+<li><code>@EnableHystrix</code> via starter pom</li>
+<li>wires up spring aop aspect</li>
+</ul>
+
+<p>DEMO</p>
+
+</div><div class="slide" id="slide19"><h2></h2>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@HystrixCommand</span> <span class="c1">// Synchronous</span>
+<span class="kd">private</span> <span class="n">String</span> <span class="nf">getDefaultMessage</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">return</span> <span class="s2">&quot;World Default&quot;</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s2">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">getMessage</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">return</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="cm">/*...*/</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div>
+</div><div class="slide" id="slide20"><h2></h2>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@HystrixCommand</span> <span class="c1">// Future</span>
+<span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s2">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="n">Future</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">getMessageFuture</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="n">AsyncResult</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">invoke</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="cm">/*...*/</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">};</span>
+<span class="o">}</span>
+</code></pre></div>
+</div><div class="slide" id="slide21"><h2></h2>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@HystrixCommand</span> <span class="c1">// Observable</span>
+<span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s2">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="n">Observable</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">getMessageFuture</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="n">ObservableResult</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">invoke</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="cm">/*...*/</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">};</span>
+<span class="o">}</span>
+</code></pre></div>
+</div><div class="slide" id="slide22"><h2 id="turbine">Turbine</h2>
+
+<ul>
+<li>Aggregator for Hystrix data</li>
+<li>Pluggable locator</li>
+<li>static list</li>
+<li>Eureka</li>
+</ul>
+
+<p>DEMO</p>
+
+</div><div class="slide" id="slide23"><h2 id="ribbon">Ribbon</h2>
+
+<ul>
+<li>Client side load balancer</li>
+<li>Pluggable transport</li>
+<li>http, tcp, udp</li>
+<li>Pluggable load balancing algorithms</li>
+<li>round robin, “best available”, random, response time based</li>
+<li>Pluggable source for server list</li>
+<li>static list, Eureka!</li>
+</ul>
+
+</div><div class="slide" id="slide24"><h2 id="feign">Feign</h2>
+
+<ul>
+<li>Declarative web service client definition</li>
+<li>Annotate an interface</li>
+<li>Highly customizable</li>
+<li>encoders/decoders</li>
+<li>annotation processors (Feign, JAX-RS)</li>
+<li>logging</li>
+<li>Supports Ribbon and therefore Eureka</li>
+</ul>
+
+</div><div class="slide" id="slide25"><h2 id="feign-cont.">Feign cont.</h2>
+
+<ul>
+<li>Auto-configuration</li>
+<li>Support for Spring MVC annotations</li>
+<li>Uses Spring MessageConverter’s for decoder/encoder</li>
+</ul>
+
+<p>DEMO</p>
+
+</div><div class="slide" id="slide26"><h2 id="feign-cont.">Feign cont.</h2>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">HelloClient</span> <span class="o">{</span>
+  <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">method</span> <span class="o">=</span> <span class="n">RequestMethod</span><span class="o">.</span><span class="na">GET</span><span class="o">,</span>
+                  <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;/hello&quot;</span><span class="o">)</span>
+  <span class="n">Message</span> <span class="nf">hello</span><span class="o">();</span>
+
+  <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">method</span> <span class="o">=</span> <span class="n">RequestMethod</span><span class="o">.</span><span class="na">POST</span><span class="o">,</span>
+                  <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;/hello&quot;</span><span class="o">,</span>
+                  <span class="n">consumes</span> <span class="o">=</span> <span class="s">&quot;application/json&quot;</span><span class="o">)</span>
+  <span class="n">Message</span> <span class="nf">hello</span><span class="o">(</span><span class="n">Message</span> <span class="n">message</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div>
+</div><div class="slide" id="slide27"><h2 id="zuul">Zuul</h2>
+
+<ul>
+<li>JVM based router and filter</li>
+<li>Similar routing role as httpd, nginx, or CF go router</li>
+<li>Fully programmable rules and filters</li>
+<li>Groovy</li>
+<li>Java</li>
+<li>any JVM language</li>
+</ul>
+
+</div><div class="slide" id="slide28"><h2 id="zuul-cont.">Zuul cont.</h2>
+
+<ul>
+<li>Store routing rules in config server</li>
+<li>uses <code>Hystrix-&gt;Ribbon-&gt;Eureka</code> to forward requests to appropriate service</li>
+</ul>
+
+<p>DEMO</p>
+
+</div><div class="slide" id="slide29"><h2 id="archaius">Archaius</h2>
+
+<ul>
+<li>Client side configuration library</li>
+<li>extends apache commons config</li>
+<li>extendible sources</li>
+<li>Polling or push updates</li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">DynamicStringProperty</span> <span class="n">myprop</span> <span class="o">=</span> <span class="n">DynamicPropertyFactory</span><span class="o">.</span><span class="na">getInstance</span><span class="o">()</span>
+      <span class="o">.</span><span class="na">getStringProperty</span><span class="o">(</span><span class="s">&quot;my.prop&quot;</span><span class="o">);</span>
+<span class="n">someMethod</span><span class="o">(</span><span class="n">myprop</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+</code></pre></div>
+</div><div class="slide" id="slide30"><h2 id="archaius---spring-environment-bridge">Archaius - Spring Environment Bridge</h2>
+
+<ul>
+<li>Auto-configured</li>
+<li>Existing Netflix libraries configured via application.{properties,yml}</li>
+<li>/refresh actuator endpoint</li>
+</ul>
+
+<p>DEMO</p>
+
+</div><div class="slide" id="slide31"><h2 id="platform-bus">Platform Bus</h2>
+
+<ul>
+<li>lightweight messaging bus using spring integration abstractions</li>
+<li>Simple implementation using spring-amqp and rabbitmq</li>
+<li>send messages to all services</li>
+<li>send messages to just one applications nodes</li>
+<li>Translate messages to actuator endpoint calls</li>
+</ul>
+
+<p>DEMO</p>
+</div>
+
+
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="number" name="slidenum" id="goto-slide">
+	<input type="submit" value="Go">
+</form>
+
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="../jquery-1.7.2.min.js"><\/script>')</script>
+
+<!-- Deck Core and extensions -->
+<script src="../core/deck.core.js"></script>
+<script src="../extensions/menu/deck.menu.js"></script>
+<script src="../extensions/goto/deck.goto.js"></script>
+<script src="../extensions/status/deck.status.js"></script>
+<script src="../extensions/navigation/deck.navigation.js"></script>
+<script src="../extensions/hash/deck.hash.js"></script>
+
+<script type="text/javascript">
+$(function() {
+	// Deck initialization
+	$.deck('.slide');
+	
+	$('#style-themes').change(function() {
+		$('#style-theme-link').attr('href', $(this).val());
+	});
+	
+	$('#transition-themes').change(function() {
+		$('#transition-theme-link').attr('href', $(this).val());
+	});
+
+    $('pre').click(function (){
+	$(this).toggleClass('highlighted');
+    });
+});
+</script>
+
+</body>
+</html>

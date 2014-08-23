@@ -293,7 +293,8 @@ base64-encoded, JSON):</p>
 
    <span class="nd">@Override</span>
    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="n">AuthorizationServerEndpointsConfigurer</span> <span class="n">endpoints</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-      <span class="n">endpoints</span><span class="o">.</span><span class="na">authenticationManager</span><span class="o">(</span><span class="n">authenticationManager</span><span class="o">).</span><span class="na">accessTokenConverter</span><span class="o">(</span><span class="n">accessTokenConverter</span><span class="o">());</span>
+      <span class="n">endpoints</span><span class="o">.</span><span class="na">authenticationManager</span><span class="o">(</span><span class="n">authenticationManager</span><span class="o">)</span>
+         <span class="o">.</span><span class="na">accessTokenConverter</span><span class="o">(</span><span class="n">accessTokenConverter</span><span class="o">());</span>
    <span class="o">}</span>
 
    <span class="o">...</span> <span class="c1">// client config</span>
@@ -343,7 +344,16 @@ base64-encoded, JSON):</p>
    <span class="nd">@Bean</span>
    <span class="n">TokenStore</span> <span class="nf">tokenStore</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
       <span class="o">...</span>
-    <span class="o">}</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>or</p>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableResourceServer</span>
+<span class="kd">class</span> <span class="nc">ResourceServer</span> <span class="o">{</span>
+   <span class="nd">@Bean</span>
+   <span class="n">ResourceServerTokenServices</span> <span class="nf">tokenServices</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+      <span class="o">...</span>
+   <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
 </div><div class="slide" id="slide27"><h2 id="simple-client-application">Simple Client Application</h2>
