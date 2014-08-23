@@ -242,7 +242,8 @@ class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
    
    @Override
    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-      endpoints.authenticationManager(authenticationManager).accessTokenConverter(accessTokenConverter());
+      endpoints.authenticationManager(authenticationManager)
+         .accessTokenConverter(accessTokenConverter());
    }
    
    ... // client config
@@ -298,7 +299,19 @@ class ResourceServer {
    @Bean
    TokenStore tokenStore() throws Exception {
       ...
-    }
+   }
+}
+```
+
+or
+
+```groovy
+@EnableResourceServer
+class ResourceServer {
+   @Bean
+   ResourceServerTokenServices tokenServices() throws Exception {
+      ...
+   }
 }
 ```
 
