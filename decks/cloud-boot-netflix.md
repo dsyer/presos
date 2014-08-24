@@ -52,7 +52,9 @@ class ThisWillActuallyRun {
 }
 ```
 
-## How to bring the ease of Spring Boot to an micro-services platform?
+## Bootification
+
+How to bring the ease of Spring Boot to an micro-services platform?
 
 * Netflix OSS
 * Consul

@@ -128,7 +128,7 @@ $ curl -k --cert rod.pem:password https://localhost:8443/hello
   (significantly non-trivial if done properly, but some organizations
   require it anyway)
   
-## "Developer" Token
+## Custom Authentication Token
 
 * Random identifier per authentication
 * Grant them from a central service and/or store in a central database
@@ -144,6 +144,18 @@ $ curl -k --cert rod.pem:password https://localhost:8443/hello
 * It's not a "standard" (but there are ready made implementations)
 * For user authentication, need to collect user credentials in app
 * No separation of client app from user authentication
+* Not optimal for large composite system
+
+## OAuth2 Key Features
+
+* Extremely simple for clients
+* Access tokens carry information (beyond identity)
+* Resources are free to interpret token content
+
+## So what's wrong with that?
+
+* Nothing, but...
+* No standard (yet) for request signing
 
 ## Quick Introduction to OAuth2
 
@@ -199,18 +211,13 @@ class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 }
 ```
 
-## OAuth2 Key Features
+## Example token contents
 
-* Extremely simple for clients
-* Access tokens carry information (beyond identity)
-* Resource Servers are free to interpret tokens
-
-* Example token contents:
-    * Client id
-    * Resource id (audience)
-    * Issuer
-    * User id
-    * Role assignments
+* Client id
+* Resource id (audience)
+* Issuer
+* User id
+* Role assignments
 
 ## JWT Bearer Tokens
 
@@ -411,6 +418,44 @@ client and user based on the requested scope (if any).
   endpoints (`/authorize` and `/token`)
 * It _does not_ have to collect credentials (except for
   `grant_type=password`)
+  
+## OAuth2 and the Microservice
+
+* Resource Servers might be microservices
+* Web app clients: authorization code grant
+* Browser clients (single page app): implicit grant
+* Mobile and non-browser clients: password grant (maybe with mods for multifactor etc.)
+* Service clients (intra-system): client credentials or relay user token
+  
+## OAuth 1.0
+
+* Another (slightly older) standard
+* Includes request signing
+* Common in early wave public APIs (e.g. Twitter)
+* Spring Security OAuth is full solution at framework level
+  
+## So What's Wrong with That?
+
+Nothing but...
+
+* It's hard work for client app developers (crypto)
+* Superseded by OAuth2
+
+## SAML Assertions
+
+* Another standard with similar features to OAuth2
+* XML based
+* Common infrastructure in enterprise
+* Spring Security SAML provides SP and Consumer roles (not IDP)
+* Request signing is standadized
+
+## So What's Wrong with That?
+
+Nothing but...
+
+* Painful to set up for servers and client
+* Large amounts of XML data in HTTP headers
+* Huge complexity for developers
 
 ## In Conclusion
 
@@ -421,6 +466,7 @@ client and user based on the requested scope (if any).
 * OAuth 2.0 is a standard, and has a lot of useful features
 * [Spring Security OAuth][SECOAUTH] aims to be a complete OAuth2
   solution at the framework level
+* Cloudfoundry has an open source, OAuth2 identity service (UAA)
 
 [SECOAUTH]: http://github.com/springsource/spring-security-oauth
 

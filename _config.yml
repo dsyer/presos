@@ -1,6 +1,6 @@
 ### Global gh-pages pre-amble
 lsi: false
-pygments: true
+highlighter: pygments
 markdown: redcarpet
 exclude:
   - deck.js
