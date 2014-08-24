@@ -55,6 +55,7 @@ Identity and permissions:
   roles, ACLs etc.)?
 * How is the data managed: who is responsible for storing and
   retrieving it?
+* How can you verify that the request hasn't been tampered with?
 
 ## HTTP Basic Authentication
 
@@ -62,7 +63,7 @@ Identity and permissions:
 * Supported on practically all servers natively and out of the box
 * Ubiquitous support on the client side in all languages
 * Good support in Spring Security
-* Spring Boot autoconfigured out of the box
+* Spring Boot autoconfigures it out of the box
 
 Example:
 

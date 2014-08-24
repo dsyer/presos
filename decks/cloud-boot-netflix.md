@@ -15,9 +15,9 @@ email: dsyer@pivotal.io
 or Spring Cloud Components)
 
 ## Outline
-* Define Microservices
+* Define microservices
 * Define distributed system problems
-* Introduce Netflix OSS and how we have integrated it into Spring Boot
+* Introduce Netflix OSS and how we have integrated with Spring Boot
 
 ## What are micro-services?
 * Not monolithic :-)
@@ -30,17 +30,9 @@ or Spring Cloud Components)
 [http://martinfowler.com/articles/microservices.html](http://martinfowler.com/articles/microservices.html)
 [http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html](http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html)
 
-## Problems in micro-services systems
-* Distributed/versioned configuration
-* Service registration and discovery
-* Routing
-* Service-to-service calls
-* Load balancing
-* Circuit Breaker
-* Asynchronous
-* Distributed messaging
-
 ## Spring Boot
+
+It needs to be super easy to implement and update a service:
 
 ```groovy
 @RestController
@@ -52,9 +44,58 @@ class ThisWillActuallyRun {
 }
 ```
 
+and you don't get much more "micro" than that.
+
+## Cloudfoundry
+
+Deploying services needs to be simple and reproducible
+
+```
+$ cf push app.groovy
+```
+
+and you don't get much more convenient than that.
+
+(Same argument for other PaaS solutions)
+
+## Example Distributed System: Minified
+
+<style>img[alt=customer-stores-blank] { width: 80%; }</style>
+
+![customer-stores-blank](images/CustomersStoresBlank.svg)
+
+## No Man (Microservice) is an Island
+
+> It's excellent to be able to implement a microservice really easily
+> (Spring Boot), but building a system that way surfaces
+> "non-functional" requirements that you otherwise didn't have.
+
+There are laws of physics that make some problems unsolvable
+(consistency, latency), but brittleness and manageability can be
+addressed with *generic*, *boiler plate* patterns.
+
+## Emergent features of micro-services systems
+
+Coordination of distributed systems leads to boiler plate patterns
+
+* Distributed/versioned configuration
+* Service registration and discovery
+* Routing
+* Service-to-service calls
+* Load balancing
+* Circuit Breaker
+* Asynchronous
+* Distributed messaging
+
+## Example: Coordination Boiler Plate
+
+<style>img[alt=customer-stores-system] { width: 72%; }</style>
+
+![customer-stores-system](images/CustomersStoresSystem.svg)
+
 ## Bootification
 
-How to bring the ease of Spring Boot to an micro-services platform?
+How to bring the ease of Spring Boot to a micro-services platform?
 
 * Netflix OSS
 * Consul
@@ -66,7 +107,7 @@ How to bring the ease of Spring Boot to an micro-services platform?
 * nginx
 * Typesafe Config
 
-and many more... What to choose?
+and many more... what to choose?
 
 ## Netflix OSS
 
@@ -81,6 +122,11 @@ and many more... What to choose?
 * Asgaard
 * ...
 
+## Example: Spring Cloud and Netflix
+
+<style>img[alt=customer-stores] { width: 72%; }</style>
+
+![customer-stores](images/CustomersStores.svg)
 
 ## Configuration Server
 * Pluggable source
@@ -89,7 +135,7 @@ and many more... What to choose?
 * Rollback-able
 * Configuration client auto-configured via starter
 
-## Configuration Server
+## Spring Cloud Configuration Server
 * Supports applications `<appname>.properties`
 * Supports environments `<appname>-<envname>.yml`
 * Default environment `application.properties` applies to all applications and environments
@@ -307,7 +353,7 @@ someMethod(myprop.get());
 
 DEMO
 
-## Platform Bus
+## Spring Cloud Bus
 * lightweight messaging bus using spring integration abstractions
 * Simple implementation using spring-amqp and rabbitmq
 * send messages to all services
