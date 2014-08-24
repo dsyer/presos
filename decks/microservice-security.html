@@ -18,11 +18,10 @@
 	<link rel="stylesheet" href="../extensions/menu/deck.menu.css">
 	<link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
 	<link rel="stylesheet" href="../extensions/status/deck.status.css">
-	<link rel="stylesheet" href="../extensions/scale/deck.scale.css">
 	<link rel="stylesheet" href="../extensions/hash/deck.hash.css">
 	<link rel="stylesheet" href="../css/syntax.css">
 	
-2	<!-- Theme CSS files (menu swaps these out) -->
+	<!-- Theme CSS files (menu swaps these out) -->
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
     
     
@@ -170,7 +169,7 @@ then you have a keystore anyway</li>
 require it anyway)</li>
 </ul>
 
-</div><div class="slide" id="slide13"><h2 id="&quot;developer&quot;-token">&quot;Developer&quot; Token</h2>
+</div><div class="slide" id="slide13"><h2 id="custom-authentication-token">Custom Authentication Token</h2>
 
 <ul>
 <li>Random identifier per authentication</li>
@@ -189,9 +188,25 @@ require it anyway)</li>
 <li>It&#39;s not a &quot;standard&quot; (but there are ready made implementations)</li>
 <li>For user authentication, need to collect user credentials in app</li>
 <li>No separation of client app from user authentication</li>
+<li>Not optimal for large composite system</li>
 </ul>
 
-</div><div class="slide" id="slide15"><h2 id="quick-introduction-to-oauth2">Quick Introduction to OAuth2</h2>
+</div><div class="slide" id="slide15"><h2 id="oauth2-key-features">OAuth2 Key Features</h2>
+
+<ul>
+<li>Extremely simple for clients</li>
+<li>Access tokens carry information (beyond identity)</li>
+<li>Resources are free to interpret token content</li>
+</ul>
+
+</div><div class="slide" id="slide16"><h2 id="so-what&#39;s-wrong-with-that?">So what&#39;s wrong with that?</h2>
+
+<ul>
+<li>Nothing, but...</li>
+<li>No standard (yet) for request signing</li>
+</ul>
+
+</div><div class="slide" id="slide17"><h2 id="quick-introduction-to-oauth2">Quick Introduction to OAuth2</h2>
 
 <blockquote>
 <p>A Client application, often web application, acts on behalf of a
@@ -212,7 +227,7 @@ User, but with the User&#39;s approval</p>
 <li><a href="http://uaa.cloudfoundry.com">Cloud Foundry</a> - Cloud Controller</li>
 </ul>
 
-</div><div class="slide" id="slide16"><h2 id="oauth2-bearer-tokens">OAuth2 Bearer Tokens</h2>
+</div><div class="slide" id="slide18"><h2 id="oauth2-bearer-tokens">OAuth2 Bearer Tokens</h2>
 
 <p>Centralizing account management and permissions:</p>
 
@@ -224,7 +239,7 @@ decision</li>
 <li>Requires HTTPS for secure operation, but you can test with HTTP</li>
 </ul>
 
-</div><div class="slide" id="slide17"><h2 id="oauth2-and-the-microservice">OAuth2 and the Microservice</h2>
+</div><div class="slide" id="slide19"><h2 id="oauth2-and-the-microservice">OAuth2 and the Microservice</h2>
 
 <p>Example command line Client:</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">$ curl -H &quot;Authorization: Bearer $TOKEN&quot; https://myhost/resource
@@ -235,7 +250,7 @@ decision</li>
 <li>it came from an Authorization Server</li>
 </ul>
 
-</div><div class="slide" id="slide18"><h2 id="simple-authorization-server">Simple Authorization Server</h2>
+</div><div class="slide" id="slide20"><h2 id="simple-authorization-server">Simple Authorization Server</h2>
 <div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableAuthorizationServer</span>
 <span class="kd">class</span> <span class="nc">AuthorizationServer</span> <span class="kd">extends</span> <span class="n">AuthorizationServerConfigurerAdapter</span> <span class="o">{</span>
 
@@ -247,13 +262,7 @@ decision</li>
 
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide19"><h2 id="oauth2-key-features">OAuth2 Key Features</h2>
-
-<ul>
-<li>Extremely simple for clients</li>
-<li>Access tokens carry information (beyond identity)</li>
-<li><p>Resource Servers are free to interpret tokens</p></li>
-<li><p>Example token contents:</p>
+</div><div class="slide" id="slide21"><h2 id="example-token-contents">Example token contents</h2>
 
 <ul>
 <li>Client id</li>
@@ -261,10 +270,9 @@ decision</li>
 <li>Issuer</li>
 <li>User id</li>
 <li>Role assignments</li>
-</ul></li>
 </ul>
 
-</div><div class="slide" id="slide20"><h2 id="jwt-bearer-tokens">JWT Bearer Tokens</h2>
+</div><div class="slide" id="slide22"><h2 id="jwt-bearer-tokens">JWT Bearer Tokens</h2>
 
 <ul>
 <li>OAuth 2.0 tokens are opaque to clients</li>
@@ -283,7 +291,7 @@ base64-encoded, JSON):</p>
 </code></pre></div></li>
 </ul>
 
-</div><div class="slide" id="slide21"><h2 id="jwt-authorization-server">JWT Authorization Server</h2>
+</div><div class="slide" id="slide23"><h2 id="jwt-authorization-server">JWT Authorization Server</h2>
 <div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableAuthorizationServer</span>
 <span class="kd">class</span> <span class="nc">AuthorizationServer</span> <span class="kd">extends</span> <span class="n">AuthorizationServerConfigurerAdapter</span> <span class="o">{</span>
 
@@ -301,26 +309,26 @@ base64-encoded, JSON):</p>
    <span class="o">...</span> <span class="c1">// client config</span>
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide22"><h2 id="user-approvals">User Approvals</h2>
+</div><div class="slide" id="slide24"><h2 id="user-approvals">User Approvals</h2>
 
 <p>An access token represents a user approval:</p>
 
 <p><img src="images/token-model.png" alt="token-model"></p>
 
-</div><div class="slide" id="slide23"><h2 id="user-approvals-as-token">User Approvals as Token</h2>
+</div><div class="slide" id="slide25"><h2 id="user-approvals-as-token">User Approvals as Token</h2>
 
 <p>An access token represents a user approval:</p>
 
 <p><img src="images/token-as-approval.png" alt="token-as-approval"></p>
 
-</div><div class="slide" id="slide24"><h2 id="formal-model-for-user-approvals">Formal Model for User Approvals</h2>
+</div><div class="slide" id="slide26"><h2 id="formal-model-for-user-approvals">Formal Model for User Approvals</h2>
 
 <p>It can be an advantage to store individual approvals independently
 (e.g. for explicit revokes of individual scopes):</p>
 
 <p><img src="images/token-with-approvals.png" alt=""></p>
 
-</div><div class="slide" id="slide25"><h2 id="spring-oauth-support">Spring OAuth Support</h2>
+</div><div class="slide" id="slide27"><h2 id="spring-oauth-support">Spring OAuth Support</h2>
 <div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableAuthorizationServer</span>
 <span class="kd">class</span> <span class="nc">AuthorizationServer</span> <span class="kd">extends</span> <span class="n">AuthorizationServerConfigurerAdapter</span> <span class="o">{</span>
 
@@ -339,7 +347,7 @@ base64-encoded, JSON):</p>
    <span class="o">...</span> <span class="c1">// client config and tokenStore() defined here</span>
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide26"><h2 id="simple-resource-server">Simple Resource Server</h2>
+</div><div class="slide" id="slide28"><h2 id="simple-resource-server">Simple Resource Server</h2>
 <div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableResourceServer</span>
 <span class="kd">class</span> <span class="nc">ResourceServer</span> <span class="o">{</span>
    <span class="nd">@Bean</span>
@@ -357,7 +365,7 @@ base64-encoded, JSON):</p>
    <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide27"><h2 id="simple-client-application">Simple Client Application</h2>
+</div><div class="slide" id="slide29"><h2 id="simple-client-application">Simple Client Application</h2>
 <div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableOAuth2Client</span>
 <span class="kd">class</span> <span class="nc">ClientApplication</span> <span class="o">{</span>
 
@@ -377,7 +385,7 @@ base64-encoded, JSON):</p>
 
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide28"><h2 id="authorization-code-grant-summary">Authorization Code Grant Summary</h2>
+</div><div class="slide" id="slide30"><h2 id="authorization-code-grant-summary">Authorization Code Grant Summary</h2>
 
 <ol>
 <li><p>Authorization Server authenticates the User</p></li>
@@ -387,7 +395,7 @@ token)</p></li>
 <li><p>Client exchanges the authorization code for an access token.</p></li>
 </ol>
 
-</div><div class="slide" id="slide29"><h2 id="role-of-resource-server">Role of Resource Server</h2>
+</div><div class="slide" id="slide31"><h2 id="role-of-resource-server">Role of Resource Server</h2>
 
 <ol>
 <li>Extract token from request and decode it</li>
@@ -402,7 +410,7 @@ token)</p></li>
 <li>Send 403 (FORBIDDEN) if token not sufficient</li>
 </ol>
 
-</div><div class="slide" id="slide30"><h2 id="role-of-the-authorization-server">Role of the Authorization Server</h2>
+</div><div class="slide" id="slide32"><h2 id="role-of-the-authorization-server">Role of the Authorization Server</h2>
 
 <ol>
 <li>Grant tokens</li>
@@ -415,7 +423,7 @@ on their behalf</li>
 <p>#1 and #4 are covered thoroughly by the spec; #2 and #3 not (for
 good reasons).</p>
 
-</div><div class="slide" id="slide31"><h2 id="client-registration-and-scopes">Client Registration and Scopes</h2>
+</div><div class="slide" id="slide33"><h2 id="client-registration-and-scopes">Client Registration and Scopes</h2>
 
 <p>For secure channels a client has to authenticate itself to obtain a
 token, so it has to be known to the Authorization Server.
@@ -434,7 +442,7 @@ Registration provides at a mimimum:</p>
 <li>ownership information (which user registered the client)</li>
 </ul>
 
-</div><div class="slide" id="slide32"><h2 id="more-on-scopes">More on Scopes</h2>
+</div><div class="slide" id="slide34"><h2 id="more-on-scopes">More on Scopes</h2>
 
 <p>Per the spec they are arbitrary strings.  The Authorization Server and
 the Resource Servers agree on the content and meanings.</p>
@@ -451,7 +459,7 @@ the Resource Servers agree on the content and meanings.</p>
 <p>Authorization Server has to decide whether to grant a token to a given
 client and user based on the requested scope (if any).</p>
 
-</div><div class="slide" id="slide33"><h2 id="authentication-and-the-authorization-server">Authentication and the Authorization Server</h2>
+</div><div class="slide" id="slide35"><h2 id="authentication-and-the-authorization-server">Authentication and the Authorization Server</h2>
 
 <ul>
 <li>Authentication (checking user credentials) is orthogonal to
@@ -465,7 +473,55 @@ endpoints (<code>/authorize</code> and <code>/token</code>)</li>
 <code>grant_type=password</code>)</li>
 </ul>
 
-</div><div class="slide" id="slide34"><h2 id="in-conclusion">In Conclusion</h2>
+</div><div class="slide" id="slide36"><h2 id="oauth2-and-the-microservice">OAuth2 and the Microservice</h2>
+
+<ul>
+<li>Resource Servers might be microservices</li>
+<li>Web app clients: authorization code grant</li>
+<li>Browser clients (single page app): implicit grant</li>
+<li>Mobile and non-browser clients: password grant (maybe with mods for multifactor etc.)</li>
+<li>Service clients (intra-system): client credentials or relay user token</li>
+</ul>
+
+</div><div class="slide" id="slide37"><h2 id="oauth-1.0">OAuth 1.0</h2>
+
+<ul>
+<li>Another (slightly older) standard</li>
+<li>Includes request signing</li>
+<li>Common in early wave public APIs (e.g. Twitter)</li>
+<li>Spring Security OAuth is full solution at framework level</li>
+</ul>
+
+</div><div class="slide" id="slide38"><h2 id="so-what&#39;s-wrong-with-that?">So What&#39;s Wrong with That?</h2>
+
+<p>Nothing but...</p>
+
+<ul>
+<li>It&#39;s hard work for client app developers (crypto)</li>
+<li>Superseded by OAuth2</li>
+</ul>
+
+</div><div class="slide" id="slide39"><h2 id="saml-assertions">SAML Assertions</h2>
+
+<ul>
+<li>Another standard with similar features to OAuth2</li>
+<li>XML based</li>
+<li>Common infrastructure in enterprise</li>
+<li>Spring Security SAML provides SP and Consumer roles (not IDP)</li>
+<li>Request signing is standadized</li>
+</ul>
+
+</div><div class="slide" id="slide40"><h2 id="so-what&#39;s-wrong-with-that?">So What&#39;s Wrong with That?</h2>
+
+<p>Nothing but...</p>
+
+<ul>
+<li>Painful to set up for servers and client</li>
+<li>Large amounts of XML data in HTTP headers</li>
+<li>Huge complexity for developers</li>
+</ul>
+
+</div><div class="slide" id="slide41"><h2 id="in-conclusion">In Conclusion</h2>
 
 <ul>
 <li>Lightweight services demand lightweight infrastructure</li>
@@ -475,9 +531,10 @@ endpoints (<code>/authorize</code> and <code>/token</code>)</li>
 <li>OAuth 2.0 is a standard, and has a lot of useful features</li>
 <li><a href="http://github.com/springsource/spring-security-oauth">Spring Security OAuth</a> aims to be a complete OAuth2
 solution at the framework level</li>
+<li>Cloudfoundry has an open source, OAuth2 identity service (UAA)</li>
 </ul>
 
-</div><div class="slide" id="slide35"><h2 id="links">Links</h2>
+</div><div class="slide" id="slide42"><h2 id="links">Links</h2>
 
 <ul>
 <li><a href="http://github.com/spring-projects/spring-security-oauth">http://github.com/spring-projects/spring-security-oauth</a></li>
@@ -517,7 +574,6 @@ solution at the framework level</li>
 <script src="../extensions/menu/deck.menu.js"></script>
 <script src="../extensions/goto/deck.goto.js"></script>
 <script src="../extensions/status/deck.status.js"></script>
-<script src="../extensions/scale/deck.scale.js"></script>
 <script src="../extensions/navigation/deck.navigation.js"></script>
 <script src="../extensions/hash/deck.hash.js"></script>
 
