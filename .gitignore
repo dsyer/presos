@@ -9,3 +9,5 @@ _includes/README.md
 _site/
 images/ditaa/
 Gemfile.lock
+*.iml
+.idea

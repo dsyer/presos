@@ -5,6 +5,7 @@ layout: springone14
 # Spring Boot and Netflix OSS
 
 Spencer Gibb   
+twiiter: @spencerbgibb   
 email: sgibb@pivotal.io   
 
 Dave Syer   
@@ -232,9 +233,8 @@ DEMO
 ## Hystrix Synchronous
 
 ```groovy
-@HystrixCommand
 private String getDefaultMessage() {
-  return "World Default";
+  return "Hello World Default";
 }
 
 @HystrixCommand(fallbackMethod="getDefaultMessage")
@@ -246,7 +246,6 @@ public String getMessage() {
 ## Hystrix Future
 
 ```groovy
-@HystrixCommand
 @HystrixCommand(fallbackMethod="getDefaultMessage")
 public Future<String> getMessageFuture() {
   return new AsyncResult<String>() {
@@ -255,20 +254,29 @@ public Future<String> getMessageFuture() {
     }
   };
 }
+
+//somewhere else
+service.getMessageFuture().get();
 ```
 
 ## Hystrix Observable
 
 ```groovy
-@HystrixCommand
 @HystrixCommand(fallbackMethod="getDefaultMessage")
-public Observable<String> getMessageFuture() {
+public Observable<String> getMessageRx() {
   return new ObservableResult<String>() {
     public String invoke() {
       return restTemplate.getForObject(/*...*/);
     }
   };
 }
+
+//somewhere else
+helloService.getMessageRx().subscribe(new Observer<String>() {
+    @Override public void onCompleted() {} 
+    @Override public void onError(Throwable e) {} 
+    @Override public void onNext(String s) {}
+});
 ```
 
 ## Turbine
