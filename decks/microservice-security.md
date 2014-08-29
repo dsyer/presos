@@ -427,6 +427,20 @@ client and user based on the requested scope (if any).
 * Browser clients (single page app): implicit grant
 * Mobile and non-browser clients: password grant (maybe with mods for multifactor etc.)
 * Service clients (intra-system): client credentials or relay user token
+
+## Relaying User Tokens
+
+> Front end app sends SSO token with user credentials to authenticate
+> back end requests, back ends just relay it to each other as
+> necessary.
+
+Simple but possibly flawed: the front end only needs access to user
+details to authenticate, but you need to give it permission to do
+anything to allow it access to the back ends.
+
+Better is to exchange (with full authentication) the incoming token
+for an outgoing one with different permissions (scope and client). Can
+use password grant (e.g. with the incoming token as a password).
   
 ## OAuth 1.0
 

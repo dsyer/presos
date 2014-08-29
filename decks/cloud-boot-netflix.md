@@ -40,7 +40,7 @@ It needs to be super easy to implement and update a service:
 class ThisWillActuallyRun {
     @RequestMapping("/")
     String home() {
-        return "Hello World!"
+        Hello World!"
     }
 }
 ```
@@ -96,7 +96,7 @@ Coordination of distributed systems leads to boiler plate patterns
 
 ## Bootification
 
-How to bring the ease of Spring Boot to a micro-services platform?
+How to bring the ease of Spring Boot to a micro-services architecture?
 
 * Netflix OSS
 * Consul
@@ -369,3 +369,13 @@ DEMO
 * Translate messages to actuator endpoint calls
 
 DEMO
+
+## Links
+
+
+* [http://github.com/spring-cloud](http://github.com/spring-cloud)
+* [http://github.com/spring-cloud-samples](http://github.com/spring-cloud-samples)
+* [http://blog.spring.io](http://blog.spring.io)
+* [http://presos.dsyer.com/decks/cloud-boot-netflix.html](http://presos.dsyer.com/decks/cloud-boot-netflix.html)
+* Twitter: @david_syer  
+* Email: sgubb@pivotal.io, dsyer@pivotal.io
