@@ -5,11 +5,11 @@ layout: springone14
 # Spring Boot and Netflix OSS
 
 Spencer Gibb   
-twiiter: @spencerbgibb   
+twiiter: [@spencerbgibb](http://twitter.com/spencerbgibb)   
 email: sgibb@pivotal.io   
 
 Dave Syer   
-twitter: @david_syer   
+twitter: [@david_syer](http://twitter.com/david_syer)   
 email: dsyer@pivotal.io   
 
 (Spring Boot and Netflix OSS   
@@ -28,6 +28,7 @@ or Spring Cloud Components)
 * Single Responsibility Principle
 * The UNIX way
 
+[http://www.slideshare.net/ewolff/micro-services-small-is-beautiful](http://www.slideshare.net/ewolff/micro-services-small-is-beautiful)
 [http://martinfowler.com/articles/microservices.html](http://martinfowler.com/articles/microservices.html)
 [http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html](http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html)
 
@@ -335,9 +336,23 @@ public interface HelloClient {
 * Java
 * any JVM language
 
-## Zuul cont.
-* Store routing rules in config server
+
+## Spring Cloud Zuul Proxy
+* Store routing rules in config server   
+   `zuul.proxy.route.customers: /customers`
 * uses `Hystrix->Ribbon->Eureka` to forward requests to appropriate service
+
+```java
+@EnableEurekaClient
+@EnableZuulProxy
+@Controller
+class Application extends WebMvcConfigurerAdapter {
+  @RequestMapping("/")
+  String home() { 
+    return 'redirect:/index.html#/customers'
+  }
+}
+```
 
 DEMO
 
@@ -354,19 +369,25 @@ someMethod(myprop.get());
 ```
 
 
-## Archaius - Spring Environment Bridge
+## Archaius - Spring Env. Bridge
 * Auto-configured
+* Allows Archaius Dynamic*Properties to find values via Spring Environment
 * Existing Netflix libraries configured via application.{properties,yml}
+
+<!---
 * /refresh actuator endpoint
 
 DEMO
+-->
 
 ## Spring Cloud Bus
 * lightweight messaging bus using spring integration abstractions
-* Simple implementation using spring-amqp and rabbitmq
-* send messages to all services
-* send messages to just one applications nodes
-* Translate messages to actuator endpoint calls
+  * spring-amqp, rabbitmq and http
+  * other implementations possible
+* send messages to all services or...
+* to just one applications nodes (ie just service x) `?destination=x`
+* post to `/bus/env` sends environment updates
+* post to `/bus/refresh` sends a refresh command
 
 DEMO
 
@@ -377,5 +398,5 @@ DEMO
 * [http://github.com/spring-cloud-samples](http://github.com/spring-cloud-samples)
 * [http://blog.spring.io](http://blog.spring.io)
 * [http://presos.dsyer.com/decks/cloud-boot-netflix.html](http://presos.dsyer.com/decks/cloud-boot-netflix.html)
-* Twitter: @david_syer  
-* Email: sgubb@pivotal.io, dsyer@pivotal.io
+* Twitter: [@spencerbgibb](http://twitter.com/spencerbgibb), [@david_syer](http://twitter.com/david_syer)
+* Email: sgibb@pivotal.io, dsyer@pivotal.io
