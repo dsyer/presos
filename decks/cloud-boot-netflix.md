@@ -18,7 +18,7 @@ or Spring Cloud Components)
 ## Outline
 * Define microservices
 * Define distributed system problems
-* Introduce Netflix OSS and how we have integrated with Spring Boot
+* Introduce Netflix OSS and its integration with Spring Boot
 
 ## What are micro-services?
 * Not monolithic :-)
@@ -390,6 +390,15 @@ DEMO
 * post to `/bus/refresh` sends a refresh command
 
 DEMO
+
+## Spring Cloud Starters
+  |   |
+ ------------- | -------------
+ spring-cloud-starter | spring-cloud-starter-hystrix
+ spring-cloud-starter-bus-amqp | spring-cloud-starter-hystrix-dashboard
+ spring-cloud-starter-cloudfoundry | spring-cloud-starter-turbine
+ spring-cloud-starter-eureka | spring-cloud-starter-zuul
+ spring-cloud-starter-eureka-server |  |
 
 ## Links
 
