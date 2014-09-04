@@ -124,6 +124,8 @@ and many more... what to choose?
 * Asgaard
 * ...
 
+[Mikey Cohen Netflix edge architecture, http://goo.gl/M159zi](http://goo.gl/M159zi)
+
 ## Example: Spring Cloud and Netflix
 
 <style>img[alt=customer-stores] { width: 72%; }</style>
@@ -335,6 +337,19 @@ public interface HelloClient {
 * Groovy
 * Java
 * any JVM language
+
+
+## How Netflix uses Zuul
+* Authentication
+* Insights
+* Stress Testing
+* Canary Testing
+* Dynamic Routing
+* Service Migration
+* Load Shedding
+* Security
+* Static Response handling
+* Active/Active traffic management
 
 
 ## Spring Cloud Zuul Proxy
