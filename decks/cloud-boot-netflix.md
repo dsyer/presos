@@ -190,6 +190,12 @@ public class Application {
 }
 ```
 
+## Restart Endpoint
+
+* POST to `/restart` closes application context and refreshes it
+* Probably more useful in development than production (leaks?)
+* Disabled by default
+
 ## Encrypted Properties
 * Authenticated clients have access to unencrypted data.
 * Only encrypted data is stored in git.
