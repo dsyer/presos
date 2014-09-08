@@ -142,9 +142,10 @@ $ curl -k --cert rod.pem:password https://localhost:8443/hello
 ## So what's wrong with that?
 
 * Nothing, but...
+* No separation of client app from user authentication
+* Coarse grained authorization (all tokens activate all resources) - but see Token Relay (later)
 * It's not a "standard" (but there are ready made implementations)
 * For user authentication, need to collect user credentials in app
-* No separation of client app from user authentication
 * Not optimal for large composite system
 
 ## OAuth2 Key Features
@@ -424,9 +425,19 @@ client and user based on the requested scope (if any).
 
 * Resource Servers might be microservices
 * Web app clients: authorization code grant
-* Browser clients (single page app): implicit grant
+* Browser clients (single page app): authorization code grant (better) or implicit grant
 * Mobile and non-browser clients: password grant (maybe with mods for multifactor etc.)
 * Service clients (intra-system): client credentials or relay user token
+
+## Single Page Apps
+
+With backend services CORS restrictions make reverse proxy useful (`@EnableZuulProxy`).
+Then you can acquire tokens in the client app and relay them to back end.
+
+With no backend services, don't be shy, **use the session** (authorization code flow is vastly
+superior).
+
+Spring Session helps a lot.
 
 ## Relaying User Tokens
 
@@ -436,10 +447,10 @@ client and user based on the requested scope (if any).
 
 Simple but possibly flawed: the front end only needs access to user
 details to authenticate, but you need to give it permission to do
-anything to allow it access to the back ends.
+other things to allow it access to the back ends.
 
-Better is to exchange (with full authentication) the incoming token
-for an outgoing one with different permissions (scope and client). Can
+Idea: exchange (with full authentication) the incoming token for an
+outgoing one with different permissions (client but not scope). Can
 use password grant (e.g. with the incoming token as a password).
   
 ## OAuth 1.0
@@ -454,7 +465,7 @@ use password grant (e.g. with the incoming token as a password).
 Nothing but...
 
 * It's hard work for client app developers (crypto)
-* Superseded by OAuth2
+* (Notionally at least) superseded by OAuth2
 
 ## SAML Assertions
 
@@ -471,6 +482,8 @@ Nothing but...
 * Painful to set up for servers and client
 * Large amounts of XML data in HTTP headers
 * Huge complexity for developers
+
+N.B. exchanging SAML assertion for OAuth2 token is quote normal
 
 ## In Conclusion
 
