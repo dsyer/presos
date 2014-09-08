@@ -186,9 +186,10 @@ require it anyway)</li>
 
 <ul>
 <li>Nothing, but...</li>
+<li>No separation of client app from user authentication</li>
+<li>Coarse grained authorization (all tokens activate all resources) - but see Token Relay (later)</li>
 <li>It&#39;s not a &quot;standard&quot; (but there are ready made implementations)</li>
 <li>For user authentication, need to collect user credentials in app</li>
-<li>No separation of client app from user authentication</li>
 <li>Not optimal for large composite system</li>
 </ul>
 
@@ -479,12 +480,22 @@ endpoints (<code>/authorize</code> and <code>/token</code>)</li>
 <ul>
 <li>Resource Servers might be microservices</li>
 <li>Web app clients: authorization code grant</li>
-<li>Browser clients (single page app): implicit grant</li>
+<li>Browser clients (single page app): authorization code grant (better) or implicit grant</li>
 <li>Mobile and non-browser clients: password grant (maybe with mods for multifactor etc.)</li>
 <li>Service clients (intra-system): client credentials or relay user token</li>
 </ul>
 
-</div><div class="slide" id="slide37"><h2 id="relaying-user-tokens">Relaying User Tokens</h2>
+</div><div class="slide" id="slide37"><h2 id="single-page-apps">Single Page Apps</h2>
+
+<p>With backend services CORS restrictions make reverse proxy useful (<code>@EnableZuulProxy</code>).
+Then you can acquire tokens in the client app and relay them to back end.</p>
+
+<p>With no backend services, don&#39;t be shy, <strong>use the session</strong> (authorization code flow is vastly
+superior).</p>
+
+<p>Spring Session helps a lot.</p>
+
+</div><div class="slide" id="slide38"><h2 id="relaying-user-tokens">Relaying User Tokens</h2>
 
 <blockquote>
 <p>Front end app sends SSO token with user credentials to authenticate
@@ -494,13 +505,13 @@ necessary.</p>
 
 <p>Simple but possibly flawed: the front end only needs access to user
 details to authenticate, but you need to give it permission to do
-anything to allow it access to the back ends.</p>
+other things to allow it access to the back ends.</p>
 
-<p>Better is to exchange (with full authentication) the incoming token
-for an outgoing one with different permissions (scope and client). Can
+<p>Idea: exchange (with full authentication) the incoming token for an
+outgoing one with different permissions (client but not scope). Can
 use password grant (e.g. with the incoming token as a password).</p>
 
-</div><div class="slide" id="slide38"><h2 id="oauth-1.0">OAuth 1.0</h2>
+</div><div class="slide" id="slide39"><h2 id="oauth-1.0">OAuth 1.0</h2>
 
 <ul>
 <li>Another (slightly older) standard</li>
@@ -509,16 +520,16 @@ use password grant (e.g. with the incoming token as a password).</p>
 <li>Spring Security OAuth is full solution at framework level</li>
 </ul>
 
-</div><div class="slide" id="slide39"><h2 id="so-what&#39;s-wrong-with-that?">So What&#39;s Wrong with That?</h2>
+</div><div class="slide" id="slide40"><h2 id="so-what&#39;s-wrong-with-that?">So What&#39;s Wrong with That?</h2>
 
 <p>Nothing but...</p>
 
 <ul>
 <li>It&#39;s hard work for client app developers (crypto)</li>
-<li>Superseded by OAuth2</li>
+<li>(Notionally at least) superseded by OAuth2</li>
 </ul>
 
-</div><div class="slide" id="slide40"><h2 id="saml-assertions">SAML Assertions</h2>
+</div><div class="slide" id="slide41"><h2 id="saml-assertions">SAML Assertions</h2>
 
 <ul>
 <li>Another standard with similar features to OAuth2</li>
@@ -528,7 +539,7 @@ use password grant (e.g. with the incoming token as a password).</p>
 <li>Request signing is standadized</li>
 </ul>
 
-</div><div class="slide" id="slide41"><h2 id="so-what&#39;s-wrong-with-that?">So What&#39;s Wrong with That?</h2>
+</div><div class="slide" id="slide42"><h2 id="so-what&#39;s-wrong-with-that?">So What&#39;s Wrong with That?</h2>
 
 <p>Nothing but...</p>
 
@@ -538,7 +549,9 @@ use password grant (e.g. with the incoming token as a password).</p>
 <li>Huge complexity for developers</li>
 </ul>
 
-</div><div class="slide" id="slide42"><h2 id="in-conclusion">In Conclusion</h2>
+<p>N.B. exchanging SAML assertion for OAuth2 token is quote normal</p>
+
+</div><div class="slide" id="slide43"><h2 id="in-conclusion">In Conclusion</h2>
 
 <ul>
 <li>Lightweight services demand lightweight infrastructure</li>
@@ -551,7 +564,7 @@ solution at the framework level</li>
 <li>Cloudfoundry has an open source, OAuth2 identity service (UAA)</li>
 </ul>
 
-</div><div class="slide" id="slide43"><h2 id="links">Links</h2>
+</div><div class="slide" id="slide44"><h2 id="links">Links</h2>
 
 <ul>
 <li><a href="http://github.com/spring-projects/spring-security-oauth">http://github.com/spring-projects/spring-security-oauth</a></li>
