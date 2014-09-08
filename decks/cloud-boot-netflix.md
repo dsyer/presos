@@ -5,15 +5,15 @@ layout: springone14
 # Spring Boot and Netflix OSS
 
 Spencer Gibb   
-twiiter: [@spencerbgibb](http://twitter.com/spencerbgibb)   
+twitter: [@spencerbgibb](http://twitter.com/spencerbgibb)   
 email: sgibb@pivotal.io   
 
 Dave Syer   
 twitter: [@david_syer](http://twitter.com/david_syer)   
 email: dsyer@pivotal.io   
 
-(Spring Boot and Netflix OSS   
-or Spring Cloud Components)
+(_Spring Boot and Netflix OSS_    
+or _Spring Cloud Components_)
 
 ## Outline
 * Define microservices
@@ -176,15 +176,18 @@ Features:
 DEMO
 
 ```groovy
-@RefreshScope
-@ConfigurationProperties
-public class MyProps {
+@EnableConfigurationProperties(MyProps)
+public class Application {
+
+  @Autowired
+  private MyProps props;
+
   @RefreshScope
-  private String myProp;
-  public String getMyProp(){return myProp;}
+  @Bean
+  public Service service() {
+    new Service(props.name)
+  }
 }
-//later
-myMethod(myProps.getMyProp())
 ```
 
 ## Encrypted Properties
@@ -205,15 +208,8 @@ DEMO
 * Eureka Client DEMO
 
 ```groovy
-@Configuration
-@ComponentScan
-@EnableAutoConfiguration
 @EnableEurekaClient
 public class Application {
-  public static void main(String[] args) {
-    SpringApplication.run(Application.class,
-       args);
-	}
 }
 ```
 
@@ -248,7 +244,7 @@ public String getMessage() {
 
 ## Hystrix Future
 
-```groovy
+```java
 @HystrixCommand(fallbackMethod="getDefaultMessage")
 public Future<String> getMessageFuture() {
   return new AsyncResult<String>() {
@@ -264,7 +260,7 @@ service.getMessageFuture().get();
 
 ## Hystrix Observable
 
-```groovy
+```java
 @HystrixCommand(fallbackMethod="getDefaultMessage")
 public Observable<String> getMessageRx() {
   return new ObservableResult<String>() {
@@ -293,19 +289,19 @@ DEMO
 ## Ribbon
 * Client side load balancer
 * Pluggable transport
-* http, tcp, udp
+* Protocols: http, tcp, udp
 * Pluggable load balancing algorithms
-* round robin, “best available”, random, response time based
+* Round robin, “best available”, random, response time based
 * Pluggable source for server list
-* static list, Eureka!
+* Static list, Eureka!
 
 ## Feign
 * Declarative web service client definition
 * Annotate an interface
 * Highly customizable
-* encoders/decoders
-* annotation processors (Feign, JAX-RS)
-* logging
+* Encoders/decoders
+* Annotation processors (Feign, JAX-RS)
+* Logging
 * Supports Ribbon and therefore Eureka
 
 ## Feign cont.
@@ -357,11 +353,10 @@ public interface HelloClient {
    `zuul.proxy.route.customers: /customers`
 * uses `Hystrix->Ribbon->Eureka` to forward requests to appropriate service
 
-```java
-@EnableEurekaClient
+```groovy
 @EnableZuulProxy
 @Controller
-class Application extends WebMvcConfigurerAdapter {
+class Application {
   @RequestMapping("/")
   String home() { 
     return 'redirect:/index.html#/customers'
@@ -386,8 +381,9 @@ someMethod(myprop.get());
 
 ## Archaius - Spring Env. Bridge
 * Auto-configured
-* Allows Archaius Dynamic*Properties to find values via Spring Environment
-* Existing Netflix libraries configured via application.{properties,yml}
+* Allows Archaius `Dynamic*Properties` to find values via Spring `Environment`
+* Existing Netflix libraries configured via
+  `application.{properties,yml}` and/or Spring Cloud Config Server
 
 <!---
 * /refresh actuator endpoint
@@ -396,13 +392,13 @@ DEMO
 -->
 
 ## Spring Cloud Bus
-* lightweight messaging bus using spring integration abstractions
+* Lightweight messaging bus using spring integration abstractions
   * spring-amqp, rabbitmq and http
   * other implementations possible
-* send messages to all services or...
-* to just one applications nodes (ie just service x) `?destination=x`
-* post to `/bus/env` sends environment updates
-* post to `/bus/refresh` sends a refresh command
+* Send messages to all services or...
+* To just one applications nodes (ie just service x) `?destination=x`
+* Post to `/bus/env` sends environment updates
+* Post to `/bus/refresh` sends a refresh command
 
 DEMO
 
