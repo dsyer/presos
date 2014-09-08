@@ -127,6 +127,7 @@ retrieving it?</li>
 <li>In practice that means small systems</li>
 <li>Only supports username/password</li>
 <li>Only covers authentication</li>
+<li>No distinction between users and machines</li>
 </ul>
 
 </div><div class="slide" id="slide9"><h2 id="network-security">Network Security</h2>
@@ -164,10 +165,12 @@ then you have a keystore anyway</li>
 
 <ul>
 <li>Nothing, but...</li>
-<li>There&#39;s no user identity (only at most the machine)</li>
+<li>There&#39;s no user identity (only at most the machine) unless browsers
+have certificates installed</li>
 <li>Requires keystores and certificates in all applications and services
 (significantly non-trivial if done properly, but some organizations
 require it anyway)</li>
+<li>No fine distinction between users and machines</li>
 </ul>
 
 </div><div class="slide" id="slide13"><h2 id="custom-authentication-token">Custom Authentication Token</h2>
@@ -187,10 +190,9 @@ require it anyway)</li>
 <ul>
 <li>Nothing, but...</li>
 <li>No separation of client app from user authentication</li>
-<li>Coarse grained authorization (all tokens activate all resources) - but see Token Relay (later)</li>
+<li>Coarse grained authorization (all tokens activate all resources)</li>
 <li>It&#39;s not a &quot;standard&quot; (but there are ready made implementations)</li>
 <li>For user authentication, need to collect user credentials in app</li>
-<li>Not optimal for large composite system</li>
 </ul>
 
 </div><div class="slide" id="slide15"><h2 id="oauth2-key-features">OAuth2 Key Features</h2>
@@ -371,16 +373,12 @@ base64-encoded, JSON):</p>
 <div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableOAuth2Client</span>
 <span class="kd">class</span> <span class="nc">ClientApplication</span> <span class="o">{</span>
 
-   <span class="nd">@Resource</span>
-   <span class="nd">@Qualifier</span><span class="o">(</span><span class="s2">&quot;accessTokenRequest&quot;</span><span class="o">)</span>
-   <span class="kd">private</span> <span class="n">AccessTokenRequest</span> <span class="n">accessTokenRequest</span>
+   <span class="nd">@Autowired</span> <span class="c1">// session-scoped</span>
+   <span class="kd">private</span> <span class="n">OAuth2ClientContext</span> <span class="n">clientContext</span>
 
    <span class="nd">@Bean</span>
-   <span class="nd">@Scope</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;session&quot;</span><span class="o">,</span> <span class="n">proxyMode</span> <span class="o">=</span> <span class="n">ScopedProxyMode</span><span class="o">.</span><span class="na">INTERFACES</span><span class="o">)</span>
    <span class="n">OAuth2RestOperations</span> <span class="nf">restTemplate</span><span class="o">()</span> <span class="o">{</span>
-      <span class="n">OAth2ClientContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DefaultOAuth2ClientContext</span><span class="o">(</span><span class="n">accessTokenRequest</span><span class="o">)</span>
-      <span class="k">new</span> <span class="nf">DefaultOAuth2ClientContext</span><span class="o">(</span><span class="n">accessTokenRequest</span><span class="o">)</span> <span class="o">=</span> <span class="n">resource</span><span class="o">()</span>
-      <span class="k">new</span> <span class="nf">OAuth2RestTemplate</span><span class="o">(</span><span class="n">resource</span><span class="o">,</span> <span class="n">context</span><span class="o">)</span>
+      <span class="k">new</span> <span class="nf">OAuth2RestTemplate</span><span class="o">(</span><span class="n">resource</span><span class="o">,</span> <span class="n">clientContext</span><span class="o">)</span>
    <span class="o">}</span>
 
    <span class="o">...</span>
