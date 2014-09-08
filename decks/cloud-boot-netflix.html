@@ -36,15 +36,15 @@
 <div class="slide" id="slide1"><h1 id="spring-boot-and-netflix-oss">Spring Boot and Netflix OSS</h1>
 
 <p>Spencer Gibb<br>
-twiiter: <a href="http://twitter.com/spencerbgibb">@spencerbgibb</a><br>
+twitter: <a href="http://twitter.com/spencerbgibb">@spencerbgibb</a><br>
 email: <a href="mailto:sgibb@pivotal.io">sgibb@pivotal.io</a>   </p>
 
 <p>Dave Syer<br>
 twitter: <a href="http://twitter.com/david_syer">@david_syer</a><br>
 email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a>   </p>
 
-<p>(Spring Boot and Netflix OSS<br>
-or Spring Cloud Components)</p>
+<p>(<em>Spring Boot and Netflix OSS</em><br>
+or <em>Spring Cloud Components</em>)</p>
 
 </div><div class="slide" id="slide2"><h2 id="outline">Outline</h2>
 
@@ -230,15 +230,18 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 </ul>
 
 <p>DEMO</p>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@RefreshScope</span>
-<span class="nd">@ConfigurationProperties</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyProps</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableConfigurationProperties</span><span class="o">(</span><span class="n">MyProps</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Application</span> <span class="o">{</span>
+
+  <span class="nd">@Autowired</span>
+  <span class="kd">private</span> <span class="n">MyProps</span> <span class="n">props</span><span class="o">;</span>
+
   <span class="nd">@RefreshScope</span>
-  <span class="kd">private</span> <span class="n">String</span> <span class="n">myProp</span><span class="o">;</span>
-  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getMyProp</span><span class="o">(){</span><span class="k">return</span> <span class="n">myProp</span><span class="o">;}</span>
+  <span class="nd">@Bean</span>
+  <span class="kd">public</span> <span class="n">Service</span> <span class="nf">service</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">new</span> <span class="nf">Service</span><span class="o">(</span><span class="n">props</span><span class="o">.</span><span class="na">name</span><span class="o">)</span>
+  <span class="o">}</span>
 <span class="o">}</span>
-<span class="c1">//later</span>
-<span class="n">myMethod</span><span class="o">(</span><span class="n">myProps</span><span class="o">.</span><span class="na">getMyProp</span><span class="o">())</span>
 </code></pre></div>
 </div><div class="slide" id="slide19"><h2 id="encrypted-properties">Encrypted Properties</h2>
 
@@ -265,15 +268,8 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <li>Eureka Server DEMO</li>
 <li>Eureka Client DEMO</li>
 </ul>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@Configuration</span>
-<span class="nd">@ComponentScan</span>
-<span class="nd">@EnableAutoConfiguration</span>
-<span class="nd">@EnableEurekaClient</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableEurekaClient</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Application</span> <span class="o">{</span>
-  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">Application</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
-       <span class="n">args</span><span class="o">);</span>
-    <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
 </div><div class="slide" id="slide22"><h2 id="hystrix">Hystrix</h2>
@@ -309,8 +305,8 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <span class="o">}</span>
 </code></pre></div>
 </div><div class="slide" id="slide25"><h2 id="hystrix-future">Hystrix Future</h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s2">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
-<span class="kd">public</span> <span class="n">Future</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">getMessageFuture</span><span class="o">()</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="n">Future</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">getMessageFuture</span><span class="o">()</span> <span class="o">{</span>
   <span class="k">return</span> <span class="k">new</span> <span class="n">AsyncResult</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="n">String</span> <span class="nf">invoke</span><span class="o">()</span> <span class="o">{</span>
       <span class="k">return</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="cm">/*...*/</span><span class="o">);</span>
@@ -322,8 +318,8 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <span class="n">service</span><span class="o">.</span><span class="na">getMessageFuture</span><span class="o">().</span><span class="na">get</span><span class="o">();</span>
 </code></pre></div>
 </div><div class="slide" id="slide26"><h2 id="hystrix-observable">Hystrix Observable</h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s2">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
-<span class="kd">public</span> <span class="n">Observable</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">getMessageRx</span><span class="o">()</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="n">Observable</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">getMessageRx</span><span class="o">()</span> <span class="o">{</span>
   <span class="k">return</span> <span class="k">new</span> <span class="n">ObservableResult</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="n">String</span> <span class="nf">invoke</span><span class="o">()</span> <span class="o">{</span>
       <span class="k">return</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="cm">/*...*/</span><span class="o">);</span>
@@ -333,9 +329,9 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 
 <span class="c1">//somewhere else</span>
 <span class="n">helloService</span><span class="o">.</span><span class="na">getMessageRx</span><span class="o">().</span><span class="na">subscribe</span><span class="o">(</span><span class="k">new</span> <span class="n">Observer</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
-    <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="n">onCompleted</span><span class="o">()</span> <span class="o">{}</span> 
-    <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="n">onError</span><span class="o">(</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{}</span> 
-    <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="n">onNext</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{}</span>
+    <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCompleted</span><span class="o">()</span> <span class="o">{}</span> 
+    <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onError</span><span class="o">(</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{}</span> 
+    <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onNext</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{}</span>
 <span class="o">});</span>
 </code></pre></div>
 </div><div class="slide" id="slide27"><h2 id="turbine">Turbine</h2>
@@ -354,11 +350,11 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <ul>
 <li>Client side load balancer</li>
 <li>Pluggable transport</li>
-<li>http, tcp, udp</li>
+<li>Protocols: http, tcp, udp</li>
 <li>Pluggable load balancing algorithms</li>
-<li>round robin, “best available”, random, response time based</li>
+<li>Round robin, “best available”, random, response time based</li>
 <li>Pluggable source for server list</li>
-<li>static list, Eureka!</li>
+<li>Static list, Eureka!</li>
 </ul>
 
 </div><div class="slide" id="slide29"><h2 id="feign">Feign</h2>
@@ -367,9 +363,9 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <li>Declarative web service client definition</li>
 <li>Annotate an interface</li>
 <li>Highly customizable</li>
-<li>encoders/decoders</li>
-<li>annotation processors (Feign, JAX-RS)</li>
-<li>logging</li>
+<li>Encoders/decoders</li>
+<li>Annotation processors (Feign, JAX-RS)</li>
+<li>Logging</li>
 <li>Supports Ribbon and therefore Eureka</li>
 </ul>
 
@@ -428,13 +424,12 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <code>zuul.proxy.route.customers: /customers</code></li>
 <li>uses <code>Hystrix-&gt;Ribbon-&gt;Eureka</code> to forward requests to appropriate service</li>
 </ul>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@EnableEurekaClient</span>
-<span class="nd">@EnableZuulProxy</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableZuulProxy</span>
 <span class="nd">@Controller</span>
-<span class="kd">class</span> <span class="nc">Application</span> <span class="kd">extends</span> <span class="n">WebMvcConfigurerAdapter</span> <span class="o">{</span>
-  <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">)</span>
+<span class="kd">class</span> <span class="nc">Application</span> <span class="o">{</span>
+  <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s2">&quot;/&quot;</span><span class="o">)</span>
   <span class="n">String</span> <span class="nf">home</span><span class="o">()</span> <span class="o">{</span> 
-    <span class="k">return</span> <span class="err">&#39;</span><span class="nl">redirect:</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="na">html</span><span class="err">#</span><span class="o">/</span><span class="n">customers</span><span class="err">&#39;</span>
+    <span class="k">return</span> <span class="s1">&#39;redirect:/index.html#/customers&#39;</span>
   <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div>
@@ -456,8 +451,9 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 
 <ul>
 <li>Auto-configured</li>
-<li>Allows Archaius Dynamic*Properties to find values via Spring Environment</li>
-<li>Existing Netflix libraries configured via application.{properties,yml}</li>
+<li>Allows Archaius <code>Dynamic*Properties</code> to find values via Spring <code>Environment</code></li>
+<li>Existing Netflix libraries configured via
+<code>application.{properties,yml}</code> and/or Spring Cloud Config Server</li>
 </ul>
 
 <!---
@@ -469,16 +465,16 @@ DEMO
 </div><div class="slide" id="slide37"><h2 id="spring-cloud-bus">Spring Cloud Bus</h2>
 
 <ul>
-<li>lightweight messaging bus using spring integration abstractions
+<li>Lightweight messaging bus using spring integration abstractions
 
 <ul>
 <li>spring-amqp, rabbitmq and http</li>
 <li>other implementations possible</li>
 </ul></li>
-<li>send messages to all services or...</li>
-<li>to just one applications nodes (ie just service x) <code>?destination=x</code></li>
-<li>post to <code>/bus/env</code> sends environment updates</li>
-<li>post to <code>/bus/refresh</code> sends a refresh command</li>
+<li>Send messages to all services or...</li>
+<li>To just one applications nodes (ie just service x) <code>?destination=x</code></li>
+<li>Post to <code>/bus/env</code> sends environment updates</li>
+<li>Post to <code>/bus/refresh</code> sends a refresh command</li>
 </ul>
 
 <p>DEMO</p>
