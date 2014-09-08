@@ -29,8 +29,8 @@ or _Spring Cloud Components_)
 * Single Responsibility Principle
 * The UNIX way
 
-[http://www.slideshare.net/ewolff/micro-services-small-is-beautiful](http://www.slideshare.net/ewolff/micro-services-small-is-beautiful)
-[http://martinfowler.com/articles/microservices.html](http://martinfowler.com/articles/microservices.html)
+[http://www.slideshare.net/ewolff/micro-services-small-is-beautiful](http://www.slideshare.net/ewolff/micro-services-small-is-beautiful)   
+[http://martinfowler.com/articles/microservices.html](http://martinfowler.com/articles/microservices.html)   
 [http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html](http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html)
 
 ## Lightweight Services and REST
@@ -51,7 +51,7 @@ It needs to be super easy to implement and update a service:
 class ThisWillActuallyRun {
     @RequestMapping("/")
     String home() {
-        Hello World!
+        "Hello World!"
     }
 }
 ```
@@ -247,6 +247,14 @@ DEMO
 * enables resilience
 * circuit breaker pattern
 * dashboard
+
+
+## Hystrix Fallback
+
+<style>img[alt=hystrix] { width: 92%; }</style>
+
+![hystrix](images/HystrixFallback.svg)
+
 
 Release It!: [https://pragprog.com/book/mnee/release-it](https://pragprog.com/book/mnee/release-it)
 
