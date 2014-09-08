@@ -92,6 +92,7 @@ class Application {
 * In practice that means small systems
 * Only supports username/password
 * Only covers authentication
+* No distinction between users and machines
 
 ## Network Security
 
@@ -124,10 +125,12 @@ $ curl -k --cert rod.pem:password https://localhost:8443/hello
 ## So what's wrong with that?
 
 * Nothing, but...
-* There's no user identity (only at most the machine)
+* There's no user identity (only at most the machine) unless browsers
+  have certificates installed
 * Requires keystores and certificates in all applications and services
   (significantly non-trivial if done properly, but some organizations
   require it anyway)
+* No fine distinction between users and machines
   
 ## Custom Authentication Token
 
@@ -143,10 +146,9 @@ $ curl -k --cert rod.pem:password https://localhost:8443/hello
 
 * Nothing, but...
 * No separation of client app from user authentication
-* Coarse grained authorization (all tokens activate all resources) - but see Token Relay (later)
+* Coarse grained authorization (all tokens activate all resources)
 * It's not a "standard" (but there are ready made implementations)
 * For user authentication, need to collect user credentials in app
-* Not optimal for large composite system
 
 ## OAuth2 Key Features
 
@@ -330,16 +332,12 @@ class ResourceServer {
 @EnableOAuth2Client
 class ClientApplication {
 
-   @Resource
-   @Qualifier("accessTokenRequest")
-   private AccessTokenRequest accessTokenRequest
+   @Autowired // session-scoped
+   private OAuth2ClientContext clientContext
 
    @Bean
-   @Scope(value = "session", proxyMode = ScopedProxyMode.INTERFACES)
    OAuth2RestOperations restTemplate() {
-      OAth2ClientContext context = new DefaultOAuth2ClientContext(accessTokenRequest)
-      new DefaultOAuth2ClientContext(accessTokenRequest) = resource()
-      new OAuth2RestTemplate(resource, context)
+      new OAuth2RestTemplate(resource, clientContext)
    }
 
    ...
