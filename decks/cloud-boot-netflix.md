@@ -2,7 +2,7 @@
 title: Cloud, Boot, Netflix
 layout: springone14
 ---
-# Spring Boot and Netflix OSS
+# Spring Cloud, Spring Boot and Netflix OSS
 
 Spencer Gibb   
 twitter: [@spencerbgibb](http://twitter.com/spencerbgibb)   
@@ -17,8 +17,9 @@ or _Spring Cloud Components_)
 
 ## Outline
 * Define microservices
-* Define distributed system problems
+* Outline some distributed system problems
 * Introduce Netflix OSS and its integration with Spring Boot
+* Spring Cloud demos
 
 ## What are micro-services?
 * Not monolithic :-)
@@ -32,6 +33,15 @@ or _Spring Cloud Components_)
 [http://martinfowler.com/articles/microservices.html](http://martinfowler.com/articles/microservices.html)
 [http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html](http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html)
 
+## Lightweight Services and REST
+* There is a [strong trend][indeed] in distributed systems with
+lightweight architectures
+* People have started to call them "microservices"
+
+![job-trends](images/jobgraph_REST_SOAP_2014.png)
+
+[indeed]: http://www.indeed.com/jobtrends?q=JSON+REST%2CSOAP+XML&l=&relative=1#shareCode
+
 ## Spring Boot
 
 It needs to be super easy to implement and update a service:
@@ -41,7 +51,7 @@ It needs to be super easy to implement and update a service:
 class ThisWillActuallyRun {
     @RequestMapping("/")
     String home() {
-        Hello World!"
+        Hello World!
     }
 }
 ```
@@ -59,6 +69,14 @@ $ cf push app.groovy
 and you don't get much more convenient than that.
 
 (Same argument for other PaaS solutions)
+
+## Continuous Delivery
+
+* Microservices lend themselves to continuous delivery.
+* You *need* continuous delivery
+
+Book (Humble and Farley): [http://continuousdelivery.com](http://continuousdelivery.com/)
+Netflix Blog: [http://techblog.netflix.com/2013/08/deploying-netflix-api.html](http://techblog.netflix.com/2013/08/deploying-netflix-api.html)
 
 ## Example Distributed System: Minified
 
@@ -180,7 +198,7 @@ DEMO
 public class Application {
 
   @Autowired
-  private MyProps props;
+  private MyProps props
 
   @RefreshScope
   @Bean
@@ -199,10 +217,11 @@ public class Application {
 ## Encrypted Properties
 * Authenticated clients have access to unencrypted data.
 * Only encrypted data is stored in git.
+* Support for server side or client side decryption
 
 DEMO
 
-## Eureka
+## Discovery: Eureka
 * Service Registration Server
 * Highly Available
 * In AWS terms, multi Availability Zone and Region aware
@@ -210,8 +229,8 @@ DEMO
 ## Eureka Client
 * Register service instances with Eureka Server 
 * `@EnableEurekaClient` auto registers instance in server
-* Eureka Server DEMO
-* Eureka Client DEMO
+* Eureka Server
+* Eureka Client
 
 ```groovy
 @EnableEurekaClient
@@ -219,7 +238,9 @@ public class Application {
 }
 ```
 
-## Hystrix
+DEMO
+
+## Circuit Breaker: Hystrix
 * latency and fault tolerance
 * isolates access to other services
 * stops cascading failures
@@ -227,11 +248,13 @@ public class Application {
 * circuit breaker pattern
 * dashboard
 
+Release It!: [https://pragprog.com/book/mnee/release-it](https://pragprog.com/book/mnee/release-it)
+
 ## Declarative Hystrix
 * Programmatic access is cumbersome
 * `@HystrixCommand` to the rescue
 * `@EnableHystrix` via starter pom
-* wires up spring aop aspect
+* Wires up spring aop aspect
 
 DEMO
 
@@ -284,13 +307,20 @@ helloService.getMessageRx().subscribe(new Observer<String>() {
 });
 ```
 
-## Turbine
-* Aggregator for Hystrix data
-* Pluggable locator
-* static list
-* Eureka
+## Circuit Breaker Metrics
+
+* Via actuator `/metrics`
+* Server side event stream `/hystrix.stream`
+* Dashboard app via `@EnableHystrixDashboard`
+* More coming...
 
 DEMO
+
+## Metric Aggregation: Turbine
+* Aggregator for Hystrix data
+* Pluggable locator
+* Static list
+* Eureka
 
 ## Ribbon
 * Client side load balancer
@@ -332,7 +362,7 @@ public interface HelloClient {
 }
 ```
 
-## Zuul
+## Routing: Zuul
 * JVM based router and filter
 * Similar routing role as httpd, nginx, or CF go router
 * Fully programmable rules and filters
@@ -372,7 +402,7 @@ class Application {
 
 DEMO
 
-## Archaius
+## Configuration: Archaius
 * Client side configuration library
 * extends apache commons config
 * extendible sources
@@ -385,7 +415,7 @@ someMethod(myprop.get());
 ```
 
 
-## Archaius - Spring Env. Bridge
+## Archaius: Spring Environment Bridge
 * Auto-configured
 * Allows Archaius `Dynamic*Properties` to find values via Spring `Environment`
 * Existing Netflix libraries configured via
