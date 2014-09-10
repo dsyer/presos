@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title></title>
+	
+	<meta name="description" content="A jQuery library for modern HTML presentations">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+	
+	<!-- Core and extension CSS files -->
+	<link rel="stylesheet" href="../core/deck.core.css">
+	<link rel="stylesheet" href="../extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="../extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="../extensions/status/deck.status.css">
+	<link rel="stylesheet" href="../extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="../css/syntax.css">
+	
+	<!-- Theme CSS files (menu swaps these out) -->
+    <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
+    
+    
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/springone14.css">
+	<link rel="stylesheet" id="transition-theme-link" href="../themes/transition/horizontal-slide.css">
+	
+	<script src="../modernizr.custom.js"></script>
+</head>
+
+<body class="deck-container">
+
+<div class="slide" id="slide1"><h1 id="spring-boot-for-the-web-tier">Spring Boot for the Web Tier</h1>
+
+<p>Phillip Webb<br>
+twiiter: <a href="http://twitter.com/phillip_webb">@phillip_webb</a><br>
+email: <a href="mailto:pwebb@pivotal.io">pwebb@pivotal.io</a>   </p>
+
+<p>Dave Syer<br>
+twitter: <a href="http://twitter.com/david_syer">@david_syer</a><br>
+email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a>   </p>
+
+</div><div class="slide" id="slide2"><h2 id="presentation-overview">Presentation Overview</h2>
+
+<ul>
+<li>Part 1 - Static Content</li>
+<li>Part 2 - Dynamic Content</li>
+<li>Part 3 - Embedded Server</li>
+<li>Part 4 - Other Stacks</li>
+</ul>
+
+</div><div class="slide" id="slide3"><h2 id="static-content---serving-files">Static Content - Serving Files</h2>
+
+<ul>
+<li>Can&#39;t use <code>/src/main/webapp</code> for jar deployments</li>
+<li>Put static files from <code>src/main/resources/static</code></li>
+<li>or <code>.../public</code> or <code>.../resources</code> or <code>.../META-INF/resources</code></li>
+</ul>
+
+</div><div class="slide" id="slide4"><h2 id="static-content---conventions">Static Content - Conventions</h2>
+
+<ul>
+<li><code>src/main/resources/static/index.html</code> is mapped to <code>/index.html</code> &amp; <code>/</code></li>
+<li>Add a <code>src/main/resources/favicon.ico</code> to replace the Spring Leaf</li>
+<li>Imported &quot;webjars&quot; are automatically mapped</li>
+</ul>
+
+</div><div class="slide" id="slide5"><h2 id="demo---static-content">Demo - Static Content</h2>
+
+<!---
+Demo here will show a simple index.html file being added
+the mapping to '/' and an alternative favicon.ico. It will
+also add show a webjar import. 
+-->
+
+</div><div class="slide" id="slide6"><h2 id="static-content:-grunt-toolchain">Static Content: Grunt Toolchain</h2>
+
+<p>For serious front end developers the best choice is a Javascript
+toolchain.</p>
+
+<ul>
+<li>Good community, lots of tools</li>
+<li>Package static assets into a jar</li>
+<li>And/or build them as part of a very thin back end</li>
+<li>Spring Boot CLI makes a great lightweight back end in production or for Java devs</li>
+</ul>
+
+<!--
+Demo NPM toolchain. Show Spring Boot CLI app for backend.
+-->
+
+</div><div class="slide" id="slide7"><h2 id="static-content---wro4j">Static Content - wro4j</h2>
+
+<ul>
+<li>Great for Java developers</li>
+<li>Often good enough
+
+<ul>
+<li>JsHint</li>
+<li>CssLint</li>
+<li>JsMin</li>
+<li>Google Closure compressor</li>
+<li>UglifyJs</li>
+<li>Less</li>
+<li>Sass</li>
+</ul></li>
+</ul>
+
+</div><div class="slide" id="slide8"><h2 id="static-content---wro4j-with-maven">Static Content - Wro4j with Maven</h2>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>ro.isdc.wro4j<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>wro4j-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>${wro4j.version}<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;executions&gt;&lt;execution&gt;</span>
+      <span class="nt">&lt;phase&gt;</span>generate-resources<span class="nt">&lt;/phase&gt;</span>
+      <span class="nt">&lt;goals&gt;&lt;goal&gt;</span>run<span class="nt">&lt;/goal&gt;&lt;/goals&gt;</span>
+    <span class="nt">&lt;/execution&gt;&lt;/executions&gt;</span>
+    <span class="nt">&lt;configuration&gt;</span>
+        <span class="nt">&lt;wroManagerFactory&gt;</span>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory<span class="nt">&lt;/wroManagerFactory&gt;</span>
+        <span class="nt">&lt;destinationFolder&gt;</span>${basedir}/target/generated-resources/static/<span class="nt">&lt;/destinationFolder&gt;</span>
+        <span class="nt">&lt;wroFile&gt;</span>${basedir}/src/main/wro/wro.xml<span class="nt">&lt;/wroFile&gt;</span>
+        <span class="nt">&lt;extraConfigFile&gt;</span>${basedir}/src/main/wro/wro.properties<span class="nt">&lt;/extraConfigFile&gt;</span>
+    <span class="nt">&lt;/configuration&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</code></pre></div>
+</div><div class="slide" id="slide9"><h2 id="static-content---wro4j-with-maven">Static Content - Wro4j with Maven</h2>
+
+<p><code>src/main/wro/wro.xml</code></p>
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;groups</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.isdc.ro/wro&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;group</span> <span class="na">name=</span><span class="s">&quot;wro&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;css&gt;</span>file:./src/main/wro/main.less<span class="nt">&lt;/css&gt;</span>
+  <span class="nt">&lt;/group&gt;</span>
+<span class="nt">&lt;/groups&gt;</span>
+</code></pre></div>
+<p><p/></p>
+
+<p><code>src/main/wro/wro.properties</code></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">postProcessors=less4j
+</code></pre></div>
+<!---
+We can jump to a wro4j demo here 
+-->
+
+</div><div class="slide" id="slide10"><h2 id="dynamic-content---templating-support">Dynamic Content - Templating Support</h2>
+
+<ul>
+<li>Thymeleaf</li>
+<li>Groovy Template Language</li>
+<li>Freemarker</li>
+<li>Velocity</li>
+<li>JSP (not recommended)</li>
+</ul>
+
+</div><div class="slide" id="slide11"><h2 id="dynamic-content---template-conventions">Dynamic Content - Template Conventions</h2>
+
+<ul>
+<li>Templates live in <code>src/main/resources/templates</code></li>
+<li>and are accessed via <code>classpath:/templates/</code></li>
+<li>Default Extensions are:
+
+<ul>
+<li><code>*.html</code> - Thymeleaf</li>
+<li><code>*.tpl</code> - Groovy</li>
+<li><code>*.ftl</code> - Freemarker</li>
+<li><code>*.vm</code> - Velocity</li>
+</ul></li>
+</ul>
+
+</div><div class="slide" id="slide12"><h2 id="dynamic-content---template-customization">Dynamic Content - Template Customization</h2>
+
+<ul>
+<li>User <code>spring.xxx.prefix</code> and <code>spring.xxx.suffix</code></li>
+<li>eg. <code>spring.freemarker.suffix=fm</code></li>
+</ul>
+
+</div><div class="slide" id="slide13"><h2 id="demo---templating">Demo - Templating</h2>
+
+<!--
+Demo Groovy templates. Showing groovy code in-line.
+-->
+
+</div><div class="slide" id="slide14"><h2 id="dynamic-content---custom-support">Dynamic Content - Custom Support</h2>
+
+<ul>
+<li>Add a <code>ViewResolver</code></li>
+<li>Optionally add a <code>TemplateAvailabilityProvider</code></li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GroovyTemplateAvailabilityProvider</span> <span class="kd">implements</span> <span class="n">TemplateAvailabilityProvider</span> <span class="o">{</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isTemplateAvailable</span><span class="o">(</span><span class="n">String</span> <span class="n">view</span><span class="o">,</span> <span class="n">Environment</span> <span class="n">environment</span><span class="o">,</span>
+      <span class="n">ClassLoader</span> <span class="n">classLoader</span><span class="o">,</span> <span class="n">ResourceLoader</span> <span class="n">resourceLoader</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">ClassUtils</span><span class="o">.</span><span class="na">isPresent</span><span class="o">(</span><span class="s">&quot;groovy.text.TemplateEngine&quot;</span><span class="o">,</span> <span class="n">classLoader</span><span class="o">))</span> <span class="o">{</span>
+      <span class="n">String</span> <span class="n">prefix</span> <span class="o">=</span> <span class="n">environment</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;spring.groovy.template.prefix&quot;</span><span class="o">,</span>
+          <span class="n">GroovyTemplateProperties</span><span class="o">.</span><span class="na">DEFAULT_PREFIX</span><span class="o">);</span>
+      <span class="n">String</span> <span class="n">suffix</span> <span class="o">=</span> <span class="n">environment</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;spring.groovy.template.suffix&quot;</span><span class="o">,</span>
+          <span class="n">GroovyTemplateProperties</span><span class="o">.</span><span class="na">DEFAULT_SUFFIX</span><span class="o">);</span>
+      <span class="k">return</span> <span class="n">resourceLoader</span><span class="o">.</span><span class="na">getResource</span><span class="o">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">view</span> <span class="o">+</span> <span class="n">suffix</span><span class="o">).</span><span class="na">exists</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div>
+</div><div class="slide" id="slide15"><h2 id="dynamic-content---internationalization">Dynamic Content - Internationalization</h2>
+
+<ul>
+<li>A <code>MessageSource</code> bean is added when <code>src/main/resources/messages.properties</code> exists</li>
+<li>Use <code>messages_LOCALE.properties</code> to add additional locales
+
+<ul>
+<li>e.g. <code>messages_FR.properties</code></li>
+</ul></li>
+<li>Choose a specific locale using the <code>spring.mvc.locale</code> property</li>
+<li>Choose a specific date format using the <code>spring.mvc.date-format</code> property</li>
+</ul>
+
+<!-- We can demo adding messages to the template here -->
+
+</div><div class="slide" id="slide16"><h2 id="dynamic-content---httpmessageconverter">Dynamic Content - HttpMessageConverter</h2>
+
+<ul>
+<li>Add <code>HttpMessageConverter</code> beans and Spring Boot will try to do the right thing</li>
+<li>It tries to be intelligent about the order</li>
+<li>Add a <code>HttpMessageConverters</code> bean if you need more control</li>
+</ul>
+
+</div><div class="slide" id="slide17"><h2 id="dynamic-content---rest">Dynamic Content - Rest</h2>
+
+<ul>
+<li>Use the <code>@RestContoller</code> annotation</li>
+<li>Use ResponseEntity builder methods with Spring Framework 4.1</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ResponseEntity.
+    accepted().
+    contentLength(3).
+    contentType(MediaType.TEXT_PLAIN).
+    body(&quot;Yo!&quot;);
+</code></pre></div>
+</div><div class="slide" id="slide18"><h2 id="demo---httpmessageconverter">Demo - HttpMessageConverter</h2>
+
+<!-- 
+  Here we will demo a simple rest service then show adding a HtmlMessageConverter 
+-->
+
+</div><div class="slide" id="slide19"><h2 id="dynamic-content---hidden-gems">Dynamic Content - Hidden Gems</h2>
+
+<ul>
+<li>You can get the <code>RequestContext</code> from <code>RequestContextHolder</code> anywhere</li>
+<li>The request has some useful things in it (from Spring), e.g. <code>HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE</code></li>
+<li>All <code>Converter</code>, <code>Formatter</code>, <code>GenericConverter</code> beans are automatically added</li>
+<li>Use <code>spring.mvc.message-codes-resolver-format</code> to add a <code>MessageCodesResolver</code>
+
+<ul>
+<li><code>prefix_error_code</code> or <code>postfix_error_code</code> </li>
+</ul></li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text"># prefix_error_code
+empty.customer.name=Customer name is required
+</code></pre></div>
+<p><br/></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"># postfix_error_code
+customer.name.empty=Customer name is required
+</code></pre></div>
+</div><div class="slide" id="slide20"><h2 id="embedded-server">Embedded Server</h2>
+
+<ul>
+<li>When using WARs a <code>ServletContainerInitializer</code> creates the Spring <code>ApplicationContext</code></li>
+<li>When running embedded the <code>ApplicationContext</code> creates the Server</li>
+<li>Expects a single <code>EmbeddedServletContainerFactory</code> bean</li>
+<li>Odd dance for <code>WebApplicationContext.getServletContext()</code> and <code>ServletConfigAware</code></li>
+</ul>
+
+</div><div class="slide" id="slide21"><h2 id="embedded-server---initialization">Embedded Server - Initialization</h2>
+
+<ul>
+<li>The following beans are used to configure the server:
+
+<ul>
+<li><code>Servlet</code></li>
+<li><code>Filter</code></li>
+<li><code>ServletRequestListener</code></li>
+<li><code>ServletRequestAttributeListener</code></li>
+<li><code>HttpSessionAttributeListener</code></li>
+<li><code>HttpSessionListener</code></li>
+<li><code>ServletContextListener</code></li>
+</ul></li>
+</ul>
+
+</div><div class="slide" id="slide22"><h2 id="embedded-server---initialization">Embedded Server - Initialization</h2>
+
+<ul>
+<li>For more control use 
+
+<ul>
+<li><code>ServletRegistrationBean</code></li>
+<li><code>FilterRegistrationBean</code></li>
+<li><code>ServletListenerRegistrationBean</code></li>
+</ul></li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">ServletRegistrationBean</span> <span class="nf">myServlet</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">ServletRegistrationBean</span> <span class="n">bean</span> <span class="o">=</span> 
+        <span class="k">new</span> <span class="nf">ServletRegistrationBean</span><span class="o">(</span><span class="k">new</span> <span class="nf">MyServlet</span><span class="o">(),</span> <span class="s">&quot;/mine&quot;</span><span class="o">);</span>
+    <span class="n">bean</span><span class="o">.</span><span class="na">setAsyncSupported</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+    <span class="n">bean</span><span class="o">.</span><span class="na">setInitParameters</span><span class="o">(</span><span class="n">Collections</span><span class="o">.</span><span class="na">singletonMap</span><span class="o">(</span><span class="s">&quot;debug&quot;</span><span class="o">,</span> <span class="s">&quot;true&quot;</span><span class="o">));</span>
+    <span class="k">return</span> <span class="n">bean</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">FilterRegistrationBean</span> <span class="nf">myFilter</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">FilterRegistrationBean</span><span class="o">(</span><span class="k">new</span> <span class="nf">MyFilter</span><span class="o">(),</span> <span class="n">myServlet</span><span class="o">());</span>
+<span class="o">}</span>
+</code></pre></div>
+</div><div class="slide" id="slide23"><h2 id="embedded-server---initialization">Embedded Server - Initialization</h2>
+
+<ul>
+<li>By design the following are not called with embedded servers:
+
+<ul>
+<li><code>javax.servlet.ServletContainerInitializer</code></li>
+<li><code>org.springframework.web.WebApplicationInitializer</code></li>
+</ul></li>
+<li>Use <code>o.s.boot.context.embedded.ServletContextInitializer</code></li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java">  <span class="cm">/**</span>
+<span class="cm">   * Configure the given {@link ServletContext} with any servlets, filters, listeners</span>
+<span class="cm">   * context-params and attributes necessary for initialization.</span>
+<span class="cm">   * @param servletContext the {@code ServletContext} to initialize</span>
+<span class="cm">   * @throws ServletException if any call against the given {@code ServletContext}</span>
+<span class="cm">   * throws a {@code ServletException}</span>
+<span class="cm">   */</span>
+  <span class="kt">void</span> <span class="nf">onStartup</span><span class="o">(</span><span class="n">ServletContext</span> <span class="n">servletContext</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">;</span>
+</code></pre></div>
+</div><div class="slide" id="slide24"><h2 id="embedded-server---customization">Embedded Server - Customization</h2>
+
+<ul>
+<li>Use <code>ServerProperties</code> (e.g. <code>server.port=8080</code>)</li>
+<li><code>EmbeddedServletContainerCustomizer</code>
+
+<ul>
+<li>Customize common things (e.g. the <code>port</code>, <code>error-pages</code>, <code>context-path</code>)</li>
+</ul></li>
+<li>Tomcat Specific
+
+<ul>
+<li><code>TomcatConnectorCustomizer</code></li>
+<li><code>TomcatContextCustomizer</code></li>
+</ul></li>
+<li>Jetty Specific
+
+<ul>
+<li><code>JettyServerCustomizer</code></li>
+</ul></li>
+</ul>
+
+</div><div class="slide" id="slide25"><h2 id="embedded-server---customization">Embedded Server - Customization</h2>
+
+<ul>
+<li>If all else fails subclass <code>EmbeddedServletContainerFactory</code></li>
+<li>Lots of protected methods to override</li>
+<li><code>TomcatEmbeddedServletContainerFactory</code></li>
+<li><code>JettyEmbeddedServletContainerFactory</code></li>
+</ul>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">TomcatEmbeddedServletContainerFactory</span> <span class="nf">tomcatFactory</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">TomcatEmbeddedServletContainerFactory</span><span class="o">(</span><span class="mi">7070</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">customizeConnector</span><span class="o">(</span><span class="n">Connector</span> <span class="n">connector</span><span class="o">)</span> <span class="o">{</span>
+          <span class="c1">// Something with the connector</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">configureSsl</span><span class="o">(</span><span class="n">AbstractHttp11JsseProtocol</span><span class="o">&lt;?&gt;</span> 
+              <span class="n">protocol</span><span class="o">,</span> <span class="n">Ssl</span> <span class="n">ssl</span><span class="o">)</span> <span class="o">{</span>
+          <span class="c1">// Something with ssl</span>
+        <span class="o">}</span>
+    <span class="o">};</span>
+<span class="o">}</span>
+</code></pre></div>
+</div><div class="slide" id="slide26"><h2 id="embedded-server---tomcat-behind-httpd">Embedded Server - Tomcat Behind HTTPD</h2>
+
+<ul>
+<li>Running behind Apache HTTPD is a common option</li>
+<li>Especially useful with SSL termination</li>
+<li>Real IP and SSL information is passed in headers</li>
+</ul>
+<div class="highlight"><pre><code class="language-text" data-lang="text">server.tomcat.protocol-header=x-forwarded-proto
+server.tomcat.remote-ip-header=x-forwarded-for
+</code></pre></div>
+</div><div class="slide" id="slide27"><h2 id="embedded-server---tomcat-behind-httpd">Embedded Server - Tomcat Behind HTTPD</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;VirtualHost *:80&gt;
+  ServerName example.spring.io
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+  ProxyPass / http://${TOMCAT_IP}:8080/
+  ProxyPassReverse / http://${TOMCAT_IP}:8080/
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:443&gt;
+  SSLEngine on
+  SSLCertificateFile /etc/apache2/ssl/apache.crt
+  SSLCertificateKeyFile /etc/apache2/ssl/apache.key
+  ProxyPass / http://${TOMCAT_IP}:8080/
+  ProxyPassReverse / http://${TOMCAT_IP}:8080/
+  RequestHeader set X-Forwarded-Proto &quot;https&quot;
+  RequestHeader set X-Forwarded-Port &quot;443&quot;
+&lt;/VirtualHost&gt;
+</code></pre></div>
+</div><div class="slide" id="slide28"><h2 id="demo---running-behind-https">Demo - Running Behind HTTPS</h2>
+
+<!-- Here we demo HTTPD running in docker -->
+
+</div><div class="slide" id="slide29"><h2 id="other-stacks">Other Stacks</h2>
+
+<ul>
+<li>JAX-RS: Jersey 1.x, Jersey 2.x <a href="https://github.com/dsyer/spring-boot-jersey">dsyer/spring-boot-jersey</a>, CXF (allegedly works)</li>
+<li>Netty and NIO: Ratpack <a href="https://github.com/dsyer/spring-boot-ratpack">dsyer/spring-boot-ratpack</a></li>
+<li>Servlet 2.5 <a href="https://github.com/scratches/spring-boot-legacy">scratches/spring-boot-legacy</a></li>
+<li>Vaadin <a href="https://github.com/peholmst/vaadin4spring/tree/master/spring-boot-vaadin">peholmst/vaadin4spring</a></li>
+</ul>
+
+</div><div class="slide" id="slide30"><h2 id="jersey-1.x">Jersey 1.x</h2>
+
+<p>Easy to integrate with Spring Boot using <code>Filter</code> (or <code>Servlet</code>), e.g.</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Configuration</span>
+<span class="nd">@EnableAutoConfiguration</span>
+<span class="nd">@Path</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Application</span> <span class="o">{</span>
+
+    <span class="nd">@GET</span>
+    <span class="nd">@Produces</span><span class="o">(</span><span class="s">&quot;text/plain&quot;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello World&quot;</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">FilterRegistrationBean</span> <span class="nf">jersey</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">FilterRegistrationBean</span> <span class="n">bean</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FilterRegistrationBean</span><span class="o">();</span>
+        <span class="n">bean</span><span class="o">.</span><span class="na">setFilter</span><span class="o">(</span><span class="k">new</span> <span class="nf">ServletContainer</span><span class="o">());</span>
+        <span class="n">bean</span><span class="o">.</span><span class="na">addInitParameter</span><span class="o">(</span><span class="s">&quot;com.sun.jersey.config.property.packages&quot;</span><span class="o">,</span>
+      <span class="s">&quot;com.mycompany.myapp&quot;</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">bean</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div>
+<p>(N.B. with fat jar you need to explicitly list the nested jars that have JAX-RS resources in them.)</p>
+
+</div><div class="slide" id="slide31"><h2 id="jersey-2.x">Jersey 2.x</h2>
+
+<p>Spring integration is provided out of the box, but a little bit tricky
+to use with Spring Boot, so some autoconfiguration is useful. Example
+app:</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Configuration</span>
+<span class="nd">@Path</span><span class="o">(</span><span class="s">&quot;/&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Application</span> <span class="kd">extends</span> <span class="n">ResourceConfig</span> <span class="o">{</span>
+
+    <span class="nd">@GET</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">message</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello&quot;</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">Application</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">register</span><span class="o">(</span><span class="n">Application</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div>
+</div><div class="slide" id="slide32"><h2 id="ratpack">Ratpack</h2>
+
+<blockquote>
+<p>Originally inspired by Sinatra, but now pretty much
+diverged. Provides a nice programming model on top of Netty
+(potentially taking advantage of non-blocking IO).</p>
+</blockquote>
+
+<p>2 approaches:</p>
+
+<ul>
+<li>Ratpack embeds Spring (and uses it as a <code>Registry</code>), supported natively in Ratpack 0.9.9</li>
+<li>Spring embeds Ratpack (and uses it as an HTTP listener) = spring-boot-ratpack</li>
+</ul>
+
+</div><div class="slide" id="slide33"><h2 id="spring-boot-embedding-ratpack">Spring Boot embedding Ratpack</h2>
+
+<p>Trivial example (single <code>Handler</code>):</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">Handler</span> <span class="nf">handler</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="o">(</span><span class="n">context</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+        <span class="n">context</span><span class="o">.</span><span class="na">render</span><span class="o">(</span><span class="s">&quot;Hello World&quot;</span><span class="o">);</span>
+    <span class="o">};</span>
+<span class="o">}</span>
+</code></pre></div>
+</div><div class="slide" id="slide34"><h2 id="spring-boot-embedding-ratpack">Spring Boot embedding Ratpack</h2>
+
+<p>More interesting example (<code>Action&lt;Chain&gt;</code> registers <code>Handlers</code>):</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">Handler</span> <span class="nf">hello</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="o">(</span><span class="n">context</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+        <span class="n">context</span><span class="o">.</span><span class="na">render</span><span class="o">(</span><span class="s">&quot;Hello World&quot;</span><span class="o">);</span>
+    <span class="o">};</span>
+<span class="o">}</span>
+
+<span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">Action</span><span class="o">&lt;</span><span class="n">Chain</span><span class="o">&gt;</span> <span class="nf">handlers</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="o">(</span><span class="n">chain</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+        <span class="n">chain</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">hello</span><span class="o">());</span>
+    <span class="o">};</span>
+<span class="o">}</span>
+</code></pre></div>
+</div><div class="slide" id="slide35"><h2 id="spring-boot-ratpack-dsl">Spring Boot Ratpack DSL</h2>
+
+<p>A valid Ratpack Groovy application:</p>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="n">ratpack</span> <span class="o">{</span>
+  <span class="n">handlers</span> <span class="o">{</span>
+    <span class="n">get</span> <span class="o">{</span>
+      <span class="n">render</span> <span class="s2">&quot;Hello World&quot;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>launched with Spring Boot:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ spring run app.groovy
+</code></pre></div>
+</div><div class="slide" id="slide36"><h2 id="questions?">Questions?</h2>
+
+<ul>
+<li><a href="http://projects.spring.io/spring-boot/">http://projects.spring.io/spring-boot/</a></li>
+<li><a href="https://github.com/SpringOne2GX-2014/spring-boot-for-the-web-tier">https://github.com/SpringOne2GX-2014/spring-boot-for-the-web-tier</a></li>
+</ul>
+</div>
+
+
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="number" name="slidenum" id="goto-slide">
+	<input type="submit" value="Go">
+</form>
+
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="../jquery-1.7.2.min.js"><\/script>')</script>
+
+<!-- Deck Core and extensions -->
+<script src="../core/deck.core.js"></script>
+<script src="../extensions/menu/deck.menu.js"></script>
+<script src="../extensions/goto/deck.goto.js"></script>
+<script src="../extensions/status/deck.status.js"></script>
+<script src="../extensions/navigation/deck.navigation.js"></script>
+<script src="../extensions/hash/deck.hash.js"></script>
+
+<script type="text/javascript">
+$(function() {
+	// Deck initialization
+	$.deck('.slide');
+	
+	$('#style-themes').change(function() {
+		$('#style-theme-link').attr('href', $(this).val());
+	});
+	
+	$('#transition-themes').change(function() {
+		$('#transition-theme-link').attr('href', $(this).val());
+	});
+
+    $('pre').click(function (){
+	$(this).toggleClass('highlighted');
+    });
+});
+</script>
+
+</body>
+</html>
