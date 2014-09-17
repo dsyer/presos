@@ -73,7 +73,7 @@ and you don't get much more convenient than that.
 ## Continuous Delivery
 
 * Microservices lend themselves to continuous delivery.
-* You *need* continuous delivery
+* You actually *need* continuous delivery to extract maximum value.
 
 Book (Humble and Farley): [http://continuousdelivery.com](http://continuousdelivery.com/)
 Netflix Blog: [http://techblog.netflix.com/2013/08/deploying-netflix-api.html](http://techblog.netflix.com/2013/08/deploying-netflix-api.html)
@@ -106,6 +106,10 @@ Coordination of distributed systems leads to boiler plate patterns
 * Circuit Breaker
 * Asynchronous
 * Distributed messaging
+
+## Spring IO Platform
+
+![spring-io-tree](images/spring-io-tree.png)
 
 ## Example: Coordination Boiler Plate
 

@@ -6,7 +6,7 @@ layout: home
 # Presentations
 
 * [Spring Cloud and Netflix OSS](decks/cloud-boot-netflix.html) (with Spencer Gibb)
-* [Spring Bot in the Web Tier](decks/spring-boot-for-the-web-tier.html) (with Phil Webb)
+* [Spring Boot in the Web Tier](decks/spring-boot-for-the-web-tier.html) (with Phil Webb)
 * [Security for Microservices](decks/microservice-security.html)
 * [OAuth2 REST](decks/oauth-rest.html)
 * [OAuth2 REST (S2GX 2012)](decks/oauth-rest-s2gx.html) - Long version from SpringOne</li>
