@@ -16,24 +16,11 @@ email: dsyer@pivotal.io
 or _Spring Cloud Components_)
 
 ## Outline
-* Define microservices
 * Outline some distributed system problems
 * Introduce Netflix OSS and its integration with Spring Boot
 * Spring Cloud demos
 
-## What are micro-services?
-* Not monolithic :-)
-* Smaller units of a larger system
-* Runs in its own process
-* Lightweight communication protocols
-* Single Responsibility Principle
-* The UNIX way
-
-[http://www.slideshare.net/ewolff/micro-services-small-is-beautiful](http://www.slideshare.net/ewolff/micro-services-small-is-beautiful)
-[http://martinfowler.com/articles/microservices.html](http://martinfowler.com/articles/microservices.html)
-[http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html](http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html)
-
-## Spring Boot
+## Spring Boot and Microservices
 
 It needs to be super easy to implement and update a service:
 
@@ -82,21 +69,22 @@ Netflix Blog: [http://techblog.netflix.com/2013/08/deploying-netflix-api.html](h
 > (Spring Boot), but building a system that way surfaces
 > "non-functional" requirements that you otherwise didn't have.
 
-There are laws of physics that make some problems unsolvable
-(consistency, latency), but brittleness and manageability can be
-addressed with *generic*, *boiler plate* patterns.
+There are laws of physics and probability that make some problems
+unsolvable (consistency, availability, latency), but brittleness and
+manageability can be addressed with *generic*, *boiler plate*
+patterns.
 
 ## Emergent features of micro-services systems
 
 Coordination of distributed systems leads to boiler plate patterns
 
 * Distributed/versioned configuration
+* Service-to-service calls
 * Service registration and discovery
 * Routing
-* Service-to-service calls
 * Load balancing
 * Circuit Breaker
-* Asynchronous
+* Asynchronous + reactive
 * Distributed messaging
 
 ## Spring IO Platform
@@ -135,48 +123,66 @@ Coordination of distributed systems leads to boiler plate patterns
 * Git implementation
 * Versioned
 * Rollback-able
-* Configuration client auto-configured via starter
+* Strong encryption
+
+## Config Client
+Consumers of config server can use client library as Spring Boot plugin
+
+Features:
+
+* Bootstrap `Environment` from server
+* POST to /env to change `Environment`
+* `@RefreshScope` for atomic changes to beans via Spring lifecycle
+* POST to /refresh
+* POST to /restart
 
 ## Discovery: Eureka
 * Service Registration Server
 * Highly Available
+* Services have metadata
 * In AWS terms, multi Availability Zone and Region aware
 
 ## Circuit Breaker: Hystrix
+
+Reilience pattern:
+
 * latency and fault tolerance
 * isolates access to other services
 * stops cascading failures
-* enables resilience
-* circuit breaker pattern
 * dashboard
 
 Release It!: [https://pragprog.com/book/mnee/release-it](https://pragprog.com/book/mnee/release-it)
 
-## Hystrix Observable
+## Hystrix Fallback
+
+<style>img[alt=hystrix] { width: 92%; }</style>
+
+![hystrix](images/HystrixFallback.svg)
+
+
+## Declarative Hystrix Commands
 
 ```java
 @HystrixCommand(fallbackMethod="getDefaultMessage")
-public Observable<String> getMessageRx() {
-  return new ObservableResult<String>() {
-    public String invoke() {
-      return restTemplate.getForObject(/*...*/);
-    }
-  };
+public String getMessage() {
+  return restTemplate.getForObject(/*...*/);
 }
 
+private String getDefaultMessage() {
+  return "Hello World Default";
+}
+```
+
+```java
 //somewhere else
-helloService.getMessageRx().subscribe(new Observer<String>() {
-    @Override public void onCompleted() {} 
-    @Override public void onError(Throwable e) {} 
-    @Override public void onNext(String s) {}
-});
+helloService.getMessage();
 ```
 
 ## Circuit Breaker Metrics
 
 * Via actuator `/metrics`
 * Server side event stream `/hystrix.stream`
-* Dashboard app via `@EnableHystrixDashboard`
+* Dashboard app with `@EnableHystrixDashboard`
 * Aggregation via Spring Cloud Bus Turbine
 
 ## Routing: Zuul
@@ -218,7 +224,6 @@ class Application {
 * Can be used as "sidecar" (or standalone edge server) via `@EnableSidecar`
 
 ## Links
-
 
 * [http://github.com/spring-cloud](http://github.com/spring-cloud)
 * [http://github.com/spring-cloud-samples](http://github.com/spring-cloud-samples)

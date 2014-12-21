@@ -1,10 +1,10 @@
 ---
-title: OAuth REST
-layout: springone14
+title: Security for Microservices with Spring
+layout: pivotal
 ---
 # Security for Microservices with Spring
 
-Dave Syer, 2012  
+Dave Syer, 2014  
 Twitter: @david_syer  
 Email: dsyer@pivotal.io
 
@@ -31,17 +31,6 @@ lightweight architectures
 [cf]: http://www.cloudfoundry.com
 [oauth2wiki]: http://en.wikipedia.org/wiki/OAuth#OAuth_2.0
 [intro-uaa-blog]: http://blog.cloudfoundry.com/2012/07/10/intro-uaa/
-
-## What is a Microservice?
-* HTTP transport (usually).
-* Text-based message content, usually [JSON][JSON].
-* Small, compact messages, and quick responses.
-* REST-ful, or at least inspired by the [REST][REST]
-* Some degree of statelessness
-* Interoperability.
-
-[REST]: http://en.wikipedia.org/wiki/Representational_state_transfer
-[JSON]: http://en.wikipedia.org/wiki/JSON
 
 ## What Are the Security Requirements
 
@@ -94,21 +83,6 @@ class Application {
 * Only covers authentication
 * No distinction between users and machines
 
-## Network Security
-
-* Microservice endpoints not visible outside an internal network
-* Very secure
-* Very flexible (e.g. using virtual networks)
-* Suits architecture based on "edge" server
-
-## So what's wrong with that?
-
-* Nothing, but...
-* Annoying to debug and a little bit fiddly to maintain
-* Configuration is out of the control of developers in many cases for
-  organizational reasons
-* There's no identity or authentication
-
 ## Certificate Based Security
 
 * Set up SSL on server so that request has to contain certificate
@@ -121,6 +95,9 @@ Example:
 ```
 $ curl -k --cert rod.pem:password https://localhost:8443/hello
 ```
+
+<br/>
+[https://github.com/SpringOne2GX-2014/microservice-security/tree/master/certs](https://github.com/SpringOne2GX-2014/microservice-security/tree/master/certs)
   
 ## So what's wrong with that?
 
@@ -142,6 +119,8 @@ $ curl -k --cert rod.pem:password https://localhost:8443/hello
 * Even easier: Spring Session identifier
 * Github example: token is temporary password in HTTP Basic
 
+[https://github.com/SpringOne2GX-2014/microservice-security/tree/master/pairs/spring-session](https://github.com/SpringOne2GX-2014/microservice-security/tree/master/pairs/spring-session)
+
 ## So what's wrong with that?
 
 * Nothing, but...
@@ -152,43 +131,18 @@ $ curl -k --cert rod.pem:password https://localhost:8443/hello
 
 ## OAuth2 Key Features
 
-* Extremely simple for clients
+* IETF standard
+* Extremely simple for clients (and developers)
 * Access tokens carry information (beyond identity)
+* Clear separation between users and machines
+* Strong emphasis on not collecting user credentials in client app
+* Machines act on their own or on behalf of users
 * Resources are free to interpret token content
 
 ## So what's wrong with that?
 
 * Nothing, but...
 * No standard (yet) for request signing
-
-## Quick Introduction to OAuth2
-
-> A Client application, often web application, acts on behalf of a
-> User, but with the User's approval
-
-* Authorization Server
-* Resource Server
-* Client application
-
-Common examples of Authorization Servers and Resource Servers on the internet:
-
-* [Facebook][] - Graph API
-* [Google][] - Google APIs
-* [Cloud Foundry][cfuaa] - Cloud Controller
-
-[Facebook]: http://developers.facebook.com
-[Google]: http://code.google.com/apis/accounts/docs/OAuth2.html
-[cfuaa]: http://uaa.cloudfoundry.com
-
-## OAuth2 Bearer Tokens
-
-Centralizing account management and permissions:
-
-* OAuth 2.0 adds an extra dimension - more information for the access
-  decision
-* Standards always help in security
-* Lightweight - easy to `curl`
-* Requires HTTPS for secure operation, but you can test with HTTP
 
 ## OAuth2 and the Microservice
 
@@ -199,6 +153,24 @@ Example command line Client:
 * `https://myhost` is a Resource Server
 * `TOKEN` is a Bearer Token
 * it came from an Authorization Server
+
+## Simple Resource Server
+
+```groovy
+@EnableResourceServer
+class ResourceServer {
+	@Bean
+	JwtTokenStore tokenStore() throws Exception {
+		JwtAccessTokenConverter enhancer = 
+            new JwtAccessTokenConverter()
+		enhancer.afterPropertiesSet()
+		new JwtTokenStore(enhancer)
+	}
+}
+```
+
+> N.B. in a real system you would have to configure the verifierKey
+> (or use JdbcTokenStore)
 
 ## Simple Authorization Server
 
@@ -239,186 +211,7 @@ class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
            "user_id":"52147673-9d60-4674-a6d9-225b94d7a64e",
            "email":"tester@vmware.com",
            "jti":"f724ae9a-7c6f-41f2-9c4a-526cea84e614" }
-
-## JWT Authorization Server
-
-```groovy
-@EnableAuthorizationServer
-class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
-
-   @Bean
-   public JwtAccessTokenConverter accessTokenConverter() {
-      return new JwtAccessTokenConverter();
-   }
-   
-   @Override
-   public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-      endpoints.authenticationManager(authenticationManager)
-         .accessTokenConverter(accessTokenConverter());
-   }
-   
-   ... // client config
-}
-```
-
-## User Approvals
-
-An access token represents a user approval:
-
-![token-model](images/token-model.png)
-
-## User Approvals as Token
-
-An access token represents a user approval:
-
-![token-as-approval](images/token-as-approval.png)
-
-## Formal Model for User Approvals
-
-It can be an advantage to store individual approvals independently
-(e.g. for explicit revokes of individual scopes):
-
-![](images/token-with-approvals.png)
-
-## Spring OAuth Support
-
-```groovy
-@EnableAuthorizationServer
-class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
-
-		@Override
-		public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-			endpoints.tokenStore(tokenStore());
-		}
-		
-		@Bean
-		public ApprovalStore approvalStore() throws Exception {
-			TokenApprovalStore store = new TokenApprovalStore();
-			store.setTokenStore(tokenStore());
-			return store;
-		}
-
-   ... // client config and tokenStore() defined here
-}
-```
-
-## Simple Resource Server
-
-```groovy
-@EnableResourceServer
-class ResourceServer {
-   @Bean
-   TokenStore tokenStore() throws Exception {
-      ...
-   }
-}
-```
-
-or
-
-```groovy
-@EnableResourceServer
-class ResourceServer {
-   @Bean
-   ResourceServerTokenServices tokenServices() throws Exception {
-      ...
-   }
-}
-```
-
-## Simple Client Application
-
-```groovy
-@EnableOAuth2Client
-class ClientApplication {
-
-   @Autowired // session-scoped
-   private OAuth2ClientContext clientContext
-
-   @Bean
-   OAuth2RestOperations restTemplate() {
-      new OAuth2RestTemplate(resource, clientContext)
-   }
-
-   ...
-
-}
-```
-
-## Authorization Code Grant Summary
-
-1. Authorization Server authenticates the User
-
-2. Client starts the authorization flow and obtain User's approval
-
-3. Authorization Server issues an authorization code (opaque one-time
-token)
-
-4. Client exchanges the authorization code for an access token.
-
-## Role of Resource Server
-
-1. Extract token from request and decode it
-2. Make access control decision
-    * Scope
-    * Audience
-    * User account information (id, roles etc.)
-    * Client information (id, roles etc.)
-3. Send 403 (FORBIDDEN) if token not sufficient
-
-## Role of the Authorization Server
-
-1. Grant tokens
-2. Interface for users to confirm that they authorize the Client to act
-on their behalf
-3. Authenticate users (`/authorize`)
-4. Authenticate clients (`/token`)
-
-\#1 and \#4 are covered thoroughly by the spec; \#2 and \#3 not (for
-good reasons).
-
-## Client Registration and Scopes
-
-For secure channels a client has to authenticate itself to obtain a
-token, so it has to be known to the Authorization Server.
-Registration provides at a mimimum:
-
-* authentication (shared secret)
-* registered redirect URI (optional but essential to prevent attacks)
-* allowed scopes (clients are not permitted access to all resources)
-
-Also useful:
-
-* a way to identify which resources can be accessed
-* ownership information (which user registered the client)
-
-## More on Scopes
-
-Per the spec they are arbitrary strings.  The Authorization Server and
-the Resource Servers agree on the content and meanings.
-
-Examples:
-
-* Google: `https://www.googleapis.com/auth/userinfo.profile`
-* Facebook: `email`, `read_stream`, `write_stream`
-* UAA: `cloud_controller.read`, `cloud_controller.write`, `scim.read`,
-  `openid`
-  
-Authorization Server has to decide whether to grant a token to a given
-client and user based on the requested scope (if any).
-
-## Authentication and the Authorization Server
-
-* Authentication (checking user credentials) is orthogonal to
-  authorization (granting tokens)
-* They don't have to be handled in the same component of a large
-  system
-* Authentication is often deferred to existing systems (SSO)
-* Authorization Server has to be able to authenticate the OAuth
-  endpoints (`/authorize` and `/token`)
-* It _does not_ have to collect credentials (except for
-  `grant_type=password`)
-  
+           
 ## OAuth2 and the Microservice
 
 * Resource Servers might be microservices
@@ -426,6 +219,70 @@ client and user based on the requested scope (if any).
 * Browser clients (single page app): authorization code grant (better) or implicit grant
 * Mobile and non-browser clients: password grant (maybe with mods for multifactor etc.)
 * Service clients (intra-system): client credentials or relay user token
+
+## Spring Cloud Security
+
+> A further level of abstraction to make common microservice security
+> use cases really easy to implement
+
+* Convention over configuration
+* UX for deployment on Cloud Foundry very smooth
+
+## Simple SSO Client
+
+```groovy
+@EnableOAuth2Sso
+@Controller
+class Demo {
+}
+```
+
+```
+$ spring jar app.jar app.groovy
+$ cf push -p app.jar
+```
+
+(That's it.)
+
+## How Does that Work?
+
+Answer: configuration conventions. The app was bound to a service
+
+```
+$ cf bind-service app sso
+```
+
+and the service provides credentials.
+
+To create the same bindings manually (e.g. in `application.yml`):
+
+```yaml
+oauth2:
+  client:
+    tokenUri: https://login.run.pivotal.io/oauth/token
+    authorizationUri: https://login.run.pivotal.io/oauth/authorize
+    clientId: acme
+    clientSecret: ${CLIENT_SECRET}
+  resource:
+    tokenInfoUri: http://uaa.run.pivotal.io/check_token
+    id: openid
+    serviceId: ${PREFIX:}resource
+```
+
+## Resource Server with Spring Cloud
+
+```groovy
+@EnableOAuth2Resource
+@EnableEurekaClient
+@RestController
+class Demo {
+  @RequestMapping("/")
+  def home() { [id: UUID.randomUUID().toString(), content: "Hello Remote"] }
+}
+```
+
+How does it work? Same as `@EnableOAuth2Sso` (bind to service
+providing credentials for conventional external configuration).
 
 ## Single Page Apps
 
@@ -435,7 +292,7 @@ Then you can acquire tokens in the client app and relay them to back end.
 With no backend services, don't be shy, **use the session** (authorization code flow is vastly
 superior).
 
-Spring Session helps a lot.
+[Spring Session](https://github.com/spring-projects/spring-session) helps a lot too.
 
 ## Relaying User Tokens
 
@@ -450,44 +307,33 @@ other things to allow it access to the back ends.
 Idea: exchange (with full authentication) the incoming token for an
 outgoing one with different permissions (client but not scope). Can
 use password grant (e.g. with the incoming token as a password).
-  
-## OAuth 1.0
 
-* Another (slightly older) standard
-* Includes request signing
-* Common in early wave public APIs (e.g. Twitter)
-* Spring Security OAuth is full solution at framework level
-  
-## So What's Wrong with That?
+## Token Relay with Spring Cloud
 
-Nothing but...
+```groovy
+@EnableOAuth2Sso
+@EnableZuulProxy
+@Controller
+class Demo {
+}
+```
 
-* It's hard work for client app developers (crypto)
-* (Notionally at least) superseded by OAuth2
+* Autoconfiguration for `@EnableZuulProxy` combined with `@EnableOAuth2Sso`
+* Adds `ZuulFilter` that attaches the current user token to downstream requests
 
-## SAML Assertions
+## Other Options
 
-* Another standard with similar features to OAuth2
-* XML based
-* Common infrastructure in enterprise
-* Spring Security SAML provides SP and Consumer roles (not IDP)
-* Request signing is standadized
-
-## So What's Wrong with That?
-
-Nothing but...
-
-* Painful to set up for servers and client
-* Large amounts of XML data in HTTP headers
-* Huge complexity for developers
-
-N.B. exchanging SAML assertion for OAuth2 token is quote normal
+* OAuth 1.0
+* SAML assertions
+* Physical network security IP tables etc.
+* Kerberos
+* Combinations of the above (including OAuth 2.0)
 
 ## In Conclusion
 
 * Lightweight services demand lightweight infrastructure
 * Security is important, but should be unobtrusive
-* Spring Security makes it all easier
+* Spring Security and Spring Cloud make it all easier
 * Special mention for Spring Session
 * OAuth 2.0 is a standard, and has a lot of useful features
 * [Spring Security OAuth][SECOAUTH] aims to be a complete OAuth2
@@ -498,9 +344,12 @@ N.B. exchanging SAML assertion for OAuth2 token is quote normal
 
 ## Links
 
-* [http://github.com/spring-projects/spring-security-oauth](http://github.com/spring-projects/spring-security-oauth)
-* [http://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation](http://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation)
-* [http://github.com/cloudfoundry/uaa](http://github.com/cloudfoundry/uaa)
+* [https://github.com/spring-projects/spring-security-oauth](https://github.com/spring-projects/spring-security-oauth)
+* [https://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation](https://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation)
+* [https://github.com/spring-cloud/spring-cloud-security](https://github.com/spring-cloud/spring-cloud-security)
+* [http://github.com/spring-cloud-samples/scripts](https://github.com/spring-cloud-samples/scripts)
+* [https://github.com/SpringOne2GX-2014/microservice-security](https://github.com/SpringOne2GX-2014/microservice-security)
+* [https://github.com/cloudfoundry/uaa](https://github.com/cloudfoundry/uaa)
 * [http://blog.spring.io](http://blog.spring.io)
 * [http://blog.cloudfoundry.org](http://blog.cloudfoundry.org)
 * [http://presos.dsyer.com/decks/microservice-security.html](http://presos.dsyer.com/decks/microservice-security.html)

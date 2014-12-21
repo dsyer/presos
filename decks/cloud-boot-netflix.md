@@ -58,7 +58,7 @@ class ThisWillActuallyRun {
 
 and you don't get much more "micro" than that.
 
-## Cloudfoundry
+## Cloud Foundry
 
 Deploying services needs to be simple and reproducible
 
@@ -324,7 +324,7 @@ helloService.getMessageRx().subscribe(new Observer<String>() {
 * Via actuator `/metrics`
 * Server side event stream `/hystrix.stream`
 * Dashboard app via `@EnableHystrixDashboard`
-* More coming...
+* Aggregation via Spring Cloud Bus Turbine
 
 DEMO
 
