@@ -37,21 +37,14 @@
   color: #888;
 }
 .deck-container .deck-status {
-  position: absolute;
-  bottom: 4px;
-  left: 48px;
+  vertical-align:middle;
   color: #888;
-  z-index: 4;
-  margin: 0;
+}
+.deck-status span.deck-status-current {
+  padding-left: 10px;
 }
 #footer {
-    position: fixed;
-	height: 40px;
-	bottom: 0px;
-    left: 0px;
-	padding: 0;
 	width: 100%;
-    z-index: 3;
 }
 @media print {
   #footer {

@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
     
     
-	<link rel="stylesheet" id="style-theme-link" href="../themes/style/springone14.css">
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/pivotal.css">
 	<link rel="stylesheet" id="transition-theme-link" href="../themes/transition/horizontal-slide.css">
 	
 	<script src="../modernizr.custom.js"></script>
@@ -35,7 +35,7 @@
 
 <div class="slide" id="slide1"><h1 id="security-for-microservices-with-spring">Security for Microservices with Spring</h1>
 
-<p>Dave Syer, 2012<br>
+<p>Dave Syer, 2014<br>
 Twitter: @david_syer<br>
 Email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p>
 
@@ -64,18 +64,7 @@ lightweight architectures</li>
 <li>So what are people doing about security in such systems?</li>
 </ul>
 
-</div><div class="slide" id="slide4"><h2 id="what-is-a-microservice?">What is a Microservice?</h2>
-
-<ul>
-<li>HTTP transport (usually).</li>
-<li>Text-based message content, usually <a href="http://en.wikipedia.org/wiki/JSON">JSON</a>.</li>
-<li>Small, compact messages, and quick responses.</li>
-<li>REST-ful, or at least inspired by the <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">REST</a></li>
-<li>Some degree of statelessness</li>
-<li>Interoperability.</li>
-</ul>
-
-</div><div class="slide" id="slide5"><h2 id="what-are-the-security-requirements">What Are the Security Requirements</h2>
+</div><div class="slide" id="slide4"><h2 id="what-are-the-security-requirements">What Are the Security Requirements</h2>
 
 <blockquote>
 <p>Stop bad guys from accessing your resources</p>
@@ -93,7 +82,7 @@ retrieving it?</li>
 <li>How can you verify that the request hasn&#39;t been tampered with?</li>
 </ul>
 
-</div><div class="slide" id="slide6"><h2 id="http-basic-authentication">HTTP Basic Authentication</h2>
+</div><div class="slide" id="slide5"><h2 id="http-basic-authentication">HTTP Basic Authentication</h2>
 
 <ul>
 <li>Something of a lowest common denominator</li>
@@ -106,7 +95,7 @@ retrieving it?</li>
 <p>Example:</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">    $ curl &quot;https://$username:$password@myhost/resource&quot;
 </code></pre></div>
-</div><div class="slide" id="slide7"><h2 id="simple-service">Simple Service</h2>
+</div><div class="slide" id="slide6"><h2 id="simple-service">Simple Service</h2>
 <div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@Grab</span><span class="o">(</span><span class="s1">&#39;spring-boot-starter-security&#39;</span><span class="o">)</span>
 <span class="nd">@RestController</span>
 <span class="kd">class</span> <span class="nc">Application</span> <span class="o">{</span>
@@ -118,7 +107,7 @@ retrieving it?</li>
 
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide8"><h2 id="so-what&#39;s-wrong-with-that?">So what&#39;s wrong with that?</h2>
+</div><div class="slide" id="slide7"><h2 id="so-what&#39;s-wrong-with-that?">So what&#39;s wrong with that?</h2>
 
 <ul>
 <li>Nothing, but...</li>
@@ -130,26 +119,7 @@ retrieving it?</li>
 <li>No distinction between users and machines</li>
 </ul>
 
-</div><div class="slide" id="slide9"><h2 id="network-security">Network Security</h2>
-
-<ul>
-<li>Microservice endpoints not visible outside an internal network</li>
-<li>Very secure</li>
-<li>Very flexible (e.g. using virtual networks)</li>
-<li>Suits architecture based on &quot;edge&quot; server</li>
-</ul>
-
-</div><div class="slide" id="slide10"><h2 id="so-what&#39;s-wrong-with-that?">So what&#39;s wrong with that?</h2>
-
-<ul>
-<li>Nothing, but...</li>
-<li>Annoying to debug and a little bit fiddly to maintain</li>
-<li>Configuration is out of the control of developers in many cases for
-organizational reasons</li>
-<li>There&#39;s no identity or authentication</li>
-</ul>
-
-</div><div class="slide" id="slide11"><h2 id="certificate-based-security">Certificate Based Security</h2>
+</div><div class="slide" id="slide8"><h2 id="certificate-based-security">Certificate Based Security</h2>
 
 <ul>
 <li>Set up SSL on server so that request has to contain certificate</li>
@@ -161,7 +131,10 @@ then you have a keystore anyway</li>
 <p>Example:</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">$ curl -k --cert rod.pem:password https://localhost:8443/hello
 </code></pre></div>
-</div><div class="slide" id="slide12"><h2 id="so-what&#39;s-wrong-with-that?">So what&#39;s wrong with that?</h2>
+<p><br/>
+<a href="https://github.com/SpringOne2GX-2014/microservice-security/tree/master/certs">https://github.com/SpringOne2GX-2014/microservice-security/tree/master/certs</a></p>
+
+</div><div class="slide" id="slide9"><h2 id="so-what&#39;s-wrong-with-that?">So what&#39;s wrong with that?</h2>
 
 <ul>
 <li>Nothing, but...</li>
@@ -173,7 +146,7 @@ require it anyway)</li>
 <li>No fine distinction between users and machines</li>
 </ul>
 
-</div><div class="slide" id="slide13"><h2 id="custom-authentication-token">Custom Authentication Token</h2>
+</div><div class="slide" id="slide10"><h2 id="custom-authentication-token">Custom Authentication Token</h2>
 
 <ul>
 <li>Random identifier per authentication</li>
@@ -185,7 +158,9 @@ require it anyway)</li>
 <li>Github example: token is temporary password in HTTP Basic</li>
 </ul>
 
-</div><div class="slide" id="slide14"><h2 id="so-what&#39;s-wrong-with-that?">So what&#39;s wrong with that?</h2>
+<p><a href="https://github.com/SpringOne2GX-2014/microservice-security/tree/master/pairs/spring-session">https://github.com/SpringOne2GX-2014/microservice-security/tree/master/pairs/spring-session</a></p>
+
+</div><div class="slide" id="slide11"><h2 id="so-what&#39;s-wrong-with-that?">So what&#39;s wrong with that?</h2>
 
 <ul>
 <li>Nothing, but...</li>
@@ -195,55 +170,26 @@ require it anyway)</li>
 <li>For user authentication, need to collect user credentials in app</li>
 </ul>
 
-</div><div class="slide" id="slide15"><h2 id="oauth2-key-features">OAuth2 Key Features</h2>
+</div><div class="slide" id="slide12"><h2 id="oauth2-key-features">OAuth2 Key Features</h2>
 
 <ul>
-<li>Extremely simple for clients</li>
+<li>IETF standard</li>
+<li>Extremely simple for clients (and developers)</li>
 <li>Access tokens carry information (beyond identity)</li>
+<li>Clear separation between users and machines</li>
+<li>Strong emphasis on not collecting user credentials in client app</li>
+<li>Machines act on their own or on behalf of users</li>
 <li>Resources are free to interpret token content</li>
 </ul>
 
-</div><div class="slide" id="slide16"><h2 id="so-what&#39;s-wrong-with-that?">So what&#39;s wrong with that?</h2>
+</div><div class="slide" id="slide13"><h2 id="so-what&#39;s-wrong-with-that?">So what&#39;s wrong with that?</h2>
 
 <ul>
 <li>Nothing, but...</li>
 <li>No standard (yet) for request signing</li>
 </ul>
 
-</div><div class="slide" id="slide17"><h2 id="quick-introduction-to-oauth2">Quick Introduction to OAuth2</h2>
-
-<blockquote>
-<p>A Client application, often web application, acts on behalf of a
-User, but with the User&#39;s approval</p>
-</blockquote>
-
-<ul>
-<li>Authorization Server</li>
-<li>Resource Server</li>
-<li>Client application</li>
-</ul>
-
-<p>Common examples of Authorization Servers and Resource Servers on the internet:</p>
-
-<ul>
-<li><a href="http://developers.facebook.com">Facebook</a> - Graph API</li>
-<li><a href="http://code.google.com/apis/accounts/docs/OAuth2.html">Google</a> - Google APIs</li>
-<li><a href="http://uaa.cloudfoundry.com">Cloud Foundry</a> - Cloud Controller</li>
-</ul>
-
-</div><div class="slide" id="slide18"><h2 id="oauth2-bearer-tokens">OAuth2 Bearer Tokens</h2>
-
-<p>Centralizing account management and permissions:</p>
-
-<ul>
-<li>OAuth 2.0 adds an extra dimension - more information for the access
-decision</li>
-<li>Standards always help in security</li>
-<li>Lightweight - easy to <code>curl</code></li>
-<li>Requires HTTPS for secure operation, but you can test with HTTP</li>
-</ul>
-
-</div><div class="slide" id="slide19"><h2 id="oauth2-and-the-microservice">OAuth2 and the Microservice</h2>
+</div><div class="slide" id="slide14"><h2 id="oauth2-and-the-microservice">OAuth2 and the Microservice</h2>
 
 <p>Example command line Client:</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">$ curl -H &quot;Authorization: Bearer $TOKEN&quot; https://myhost/resource
@@ -254,7 +200,24 @@ decision</li>
 <li>it came from an Authorization Server</li>
 </ul>
 
-</div><div class="slide" id="slide20"><h2 id="simple-authorization-server">Simple Authorization Server</h2>
+</div><div class="slide" id="slide15"><h2 id="simple-resource-server">Simple Resource Server</h2>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableResourceServer</span>
+<span class="kd">class</span> <span class="nc">ResourceServer</span> <span class="o">{</span>
+    <span class="nd">@Bean</span>
+    <span class="n">JwtTokenStore</span> <span class="nf">tokenStore</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">JwtAccessTokenConverter</span> <span class="n">enhancer</span> <span class="o">=</span> 
+            <span class="k">new</span> <span class="nf">JwtAccessTokenConverter</span><span class="o">()</span>
+        <span class="n">enhancer</span><span class="o">.</span><span class="na">afterPropertiesSet</span><span class="o">()</span>
+        <span class="k">new</span> <span class="nf">JwtTokenStore</span><span class="o">(</span><span class="n">enhancer</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<blockquote>
+<p>N.B. in a real system you would have to configure the verifierKey
+(or use JdbcTokenStore)</p>
+</blockquote>
+
+</div><div class="slide" id="slide16"><h2 id="simple-authorization-server">Simple Authorization Server</h2>
 <div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableAuthorizationServer</span>
 <span class="kd">class</span> <span class="nc">AuthorizationServer</span> <span class="kd">extends</span> <span class="n">AuthorizationServerConfigurerAdapter</span> <span class="o">{</span>
 
@@ -266,7 +229,7 @@ decision</li>
 
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide21"><h2 id="example-token-contents">Example token contents</h2>
+</div><div class="slide" id="slide17"><h2 id="example-token-contents">Example token contents</h2>
 
 <ul>
 <li>Client id</li>
@@ -276,7 +239,7 @@ decision</li>
 <li>Role assignments</li>
 </ul>
 
-</div><div class="slide" id="slide22"><h2 id="jwt-bearer-tokens">JWT Bearer Tokens</h2>
+</div><div class="slide" id="slide18"><h2 id="jwt-bearer-tokens">JWT Bearer Tokens</h2>
 
 <ul>
 <li>OAuth 2.0 tokens are opaque to clients</li>
@@ -295,185 +258,7 @@ base64-encoded, JSON):</p>
 </code></pre></div></li>
 </ul>
 
-</div><div class="slide" id="slide23"><h2 id="jwt-authorization-server">JWT Authorization Server</h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableAuthorizationServer</span>
-<span class="kd">class</span> <span class="nc">AuthorizationServer</span> <span class="kd">extends</span> <span class="n">AuthorizationServerConfigurerAdapter</span> <span class="o">{</span>
-
-   <span class="nd">@Bean</span>
-   <span class="kd">public</span> <span class="n">JwtAccessTokenConverter</span> <span class="nf">accessTokenConverter</span><span class="o">()</span> <span class="o">{</span>
-      <span class="k">return</span> <span class="k">new</span> <span class="nf">JwtAccessTokenConverter</span><span class="o">();</span>
-   <span class="o">}</span>
-
-   <span class="nd">@Override</span>
-   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="n">AuthorizationServerEndpointsConfigurer</span> <span class="n">endpoints</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-      <span class="n">endpoints</span><span class="o">.</span><span class="na">authenticationManager</span><span class="o">(</span><span class="n">authenticationManager</span><span class="o">)</span>
-         <span class="o">.</span><span class="na">accessTokenConverter</span><span class="o">(</span><span class="n">accessTokenConverter</span><span class="o">());</span>
-   <span class="o">}</span>
-
-   <span class="o">...</span> <span class="c1">// client config</span>
-<span class="o">}</span>
-</code></pre></div>
-</div><div class="slide" id="slide24"><h2 id="user-approvals">User Approvals</h2>
-
-<p>An access token represents a user approval:</p>
-
-<p><img src="images/token-model.png" alt="token-model"></p>
-
-</div><div class="slide" id="slide25"><h2 id="user-approvals-as-token">User Approvals as Token</h2>
-
-<p>An access token represents a user approval:</p>
-
-<p><img src="images/token-as-approval.png" alt="token-as-approval"></p>
-
-</div><div class="slide" id="slide26"><h2 id="formal-model-for-user-approvals">Formal Model for User Approvals</h2>
-
-<p>It can be an advantage to store individual approvals independently
-(e.g. for explicit revokes of individual scopes):</p>
-
-<p><img src="images/token-with-approvals.png" alt=""></p>
-
-</div><div class="slide" id="slide27"><h2 id="spring-oauth-support">Spring OAuth Support</h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableAuthorizationServer</span>
-<span class="kd">class</span> <span class="nc">AuthorizationServer</span> <span class="kd">extends</span> <span class="n">AuthorizationServerConfigurerAdapter</span> <span class="o">{</span>
-
-        <span class="nd">@Override</span>
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">configure</span><span class="o">(</span><span class="n">AuthorizationServerEndpointsConfigurer</span> <span class="n">endpoints</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-            <span class="n">endpoints</span><span class="o">.</span><span class="na">tokenStore</span><span class="o">(</span><span class="n">tokenStore</span><span class="o">());</span>
-        <span class="o">}</span>
-
-        <span class="nd">@Bean</span>
-        <span class="kd">public</span> <span class="n">ApprovalStore</span> <span class="nf">approvalStore</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-            <span class="n">TokenApprovalStore</span> <span class="n">store</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TokenApprovalStore</span><span class="o">();</span>
-            <span class="n">store</span><span class="o">.</span><span class="na">setTokenStore</span><span class="o">(</span><span class="n">tokenStore</span><span class="o">());</span>
-            <span class="k">return</span> <span class="n">store</span><span class="o">;</span>
-        <span class="o">}</span>
-
-   <span class="o">...</span> <span class="c1">// client config and tokenStore() defined here</span>
-<span class="o">}</span>
-</code></pre></div>
-</div><div class="slide" id="slide28"><h2 id="simple-resource-server">Simple Resource Server</h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableResourceServer</span>
-<span class="kd">class</span> <span class="nc">ResourceServer</span> <span class="o">{</span>
-   <span class="nd">@Bean</span>
-   <span class="n">TokenStore</span> <span class="nf">tokenStore</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-      <span class="o">...</span>
-   <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-<p>or</p>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableResourceServer</span>
-<span class="kd">class</span> <span class="nc">ResourceServer</span> <span class="o">{</span>
-   <span class="nd">@Bean</span>
-   <span class="n">ResourceServerTokenServices</span> <span class="nf">tokenServices</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-      <span class="o">...</span>
-   <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
-</div><div class="slide" id="slide29"><h2 id="simple-client-application">Simple Client Application</h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableOAuth2Client</span>
-<span class="kd">class</span> <span class="nc">ClientApplication</span> <span class="o">{</span>
-
-   <span class="nd">@Autowired</span> <span class="c1">// session-scoped</span>
-   <span class="kd">private</span> <span class="n">OAuth2ClientContext</span> <span class="n">clientContext</span>
-
-   <span class="nd">@Bean</span>
-   <span class="n">OAuth2RestOperations</span> <span class="nf">restTemplate</span><span class="o">()</span> <span class="o">{</span>
-      <span class="k">new</span> <span class="nf">OAuth2RestTemplate</span><span class="o">(</span><span class="n">resource</span><span class="o">,</span> <span class="n">clientContext</span><span class="o">)</span>
-   <span class="o">}</span>
-
-   <span class="o">...</span>
-
-<span class="o">}</span>
-</code></pre></div>
-</div><div class="slide" id="slide30"><h2 id="authorization-code-grant-summary">Authorization Code Grant Summary</h2>
-
-<ol>
-<li><p>Authorization Server authenticates the User</p></li>
-<li><p>Client starts the authorization flow and obtain User&#39;s approval</p></li>
-<li><p>Authorization Server issues an authorization code (opaque one-time
-token)</p></li>
-<li><p>Client exchanges the authorization code for an access token.</p></li>
-</ol>
-
-</div><div class="slide" id="slide31"><h2 id="role-of-resource-server">Role of Resource Server</h2>
-
-<ol>
-<li>Extract token from request and decode it</li>
-<li>Make access control decision
-
-<ul>
-<li>Scope</li>
-<li>Audience</li>
-<li>User account information (id, roles etc.)</li>
-<li>Client information (id, roles etc.)</li>
-</ul></li>
-<li>Send 403 (FORBIDDEN) if token not sufficient</li>
-</ol>
-
-</div><div class="slide" id="slide32"><h2 id="role-of-the-authorization-server">Role of the Authorization Server</h2>
-
-<ol>
-<li>Grant tokens</li>
-<li>Interface for users to confirm that they authorize the Client to act
-on their behalf</li>
-<li>Authenticate users (<code>/authorize</code>)</li>
-<li>Authenticate clients (<code>/token</code>)</li>
-</ol>
-
-<p>#1 and #4 are covered thoroughly by the spec; #2 and #3 not (for
-good reasons).</p>
-
-</div><div class="slide" id="slide33"><h2 id="client-registration-and-scopes">Client Registration and Scopes</h2>
-
-<p>For secure channels a client has to authenticate itself to obtain a
-token, so it has to be known to the Authorization Server.
-Registration provides at a mimimum:</p>
-
-<ul>
-<li>authentication (shared secret)</li>
-<li>registered redirect URI (optional but essential to prevent attacks)</li>
-<li>allowed scopes (clients are not permitted access to all resources)</li>
-</ul>
-
-<p>Also useful:</p>
-
-<ul>
-<li>a way to identify which resources can be accessed</li>
-<li>ownership information (which user registered the client)</li>
-</ul>
-
-</div><div class="slide" id="slide34"><h2 id="more-on-scopes">More on Scopes</h2>
-
-<p>Per the spec they are arbitrary strings.  The Authorization Server and
-the Resource Servers agree on the content and meanings.</p>
-
-<p>Examples:</p>
-
-<ul>
-<li>Google: <code>https://www.googleapis.com/auth/userinfo.profile</code></li>
-<li>Facebook: <code>email</code>, <code>read_stream</code>, <code>write_stream</code></li>
-<li>UAA: <code>cloud_controller.read</code>, <code>cloud_controller.write</code>, <code>scim.read</code>,
-<code>openid</code></li>
-</ul>
-
-<p>Authorization Server has to decide whether to grant a token to a given
-client and user based on the requested scope (if any).</p>
-
-</div><div class="slide" id="slide35"><h2 id="authentication-and-the-authorization-server">Authentication and the Authorization Server</h2>
-
-<ul>
-<li>Authentication (checking user credentials) is orthogonal to
-authorization (granting tokens)</li>
-<li>They don&#39;t have to be handled in the same component of a large
-system</li>
-<li>Authentication is often deferred to existing systems (SSO)</li>
-<li>Authorization Server has to be able to authenticate the OAuth
-endpoints (<code>/authorize</code> and <code>/token</code>)</li>
-<li>It <em>does not</em> have to collect credentials (except for
-<code>grant_type=password</code>)</li>
-</ul>
-
-</div><div class="slide" id="slide36"><h2 id="oauth2-and-the-microservice">OAuth2 and the Microservice</h2>
+</div><div class="slide" id="slide19"><h2 id="oauth2-and-the-microservice">OAuth2 and the Microservice</h2>
 
 <ul>
 <li>Resource Servers might be microservices</li>
@@ -483,7 +268,60 @@ endpoints (<code>/authorize</code> and <code>/token</code>)</li>
 <li>Service clients (intra-system): client credentials or relay user token</li>
 </ul>
 
-</div><div class="slide" id="slide37"><h2 id="single-page-apps">Single Page Apps</h2>
+</div><div class="slide" id="slide20"><h2 id="spring-cloud-security">Spring Cloud Security</h2>
+
+<blockquote>
+<p>A further level of abstraction to make common microservice security
+use cases really easy to implement</p>
+</blockquote>
+
+<ul>
+<li>Convention over configuration</li>
+<li>UX for deployment on Cloud Foundry very smooth</li>
+</ul>
+
+</div><div class="slide" id="slide21"><h2 id="simple-sso-client">Simple SSO Client</h2>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableOAuth2Sso</span>
+<span class="nd">@Controller</span>
+<span class="kd">class</span> <span class="nc">Demo</span> <span class="o">{</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text">$ spring jar app.jar app.groovy
+$ cf push -p app.jar
+</code></pre></div>
+<p>(That&#39;s it.)</p>
+
+</div><div class="slide" id="slide22"><h2 id="how-does-that-work?">How Does that Work?</h2>
+
+<p>Answer: configuration conventions. The app was bound to a service</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ cf bind-service app sso
+</code></pre></div>
+<p>and the service provides credentials.</p>
+
+<p>To create the same bindings manually (e.g. in <code>application.yml</code>):</p>
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">oauth2</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">client</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">tokenUri</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">https://login.run.pivotal.io/oauth/token</span>
+    <span class="l-Scalar-Plain">authorizationUri</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">https://login.run.pivotal.io/oauth/authorize</span>
+    <span class="l-Scalar-Plain">clientId</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">acme</span>
+    <span class="l-Scalar-Plain">clientSecret</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">${CLIENT_SECRET}</span>
+  <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">tokenInfoUri</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">http://uaa.run.pivotal.io/check_token</span>
+    <span class="l-Scalar-Plain">id</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">openid</span>
+    <span class="l-Scalar-Plain">serviceId</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">${PREFIX:}resource</span>
+</code></pre></div>
+</div><div class="slide" id="slide23"><h2 id="resource-server-with-spring-cloud">Resource Server with Spring Cloud</h2>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableOAuth2Resource</span>
+<span class="nd">@EnableEurekaClient</span>
+<span class="nd">@RestController</span>
+<span class="kd">class</span> <span class="nc">Demo</span> <span class="o">{</span>
+  <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s2">&quot;/&quot;</span><span class="o">)</span>
+  <span class="kt">def</span> <span class="nf">home</span><span class="o">()</span> <span class="o">{</span> <span class="o">[</span><span class="nl">id:</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">(),</span> <span class="nl">content:</span> <span class="s2">&quot;Hello Remote&quot;</span><span class="o">]</span> <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>How does it work? Same as <code>@EnableOAuth2Sso</code> (bind to service
+providing credentials for conventional external configuration).</p>
+
+</div><div class="slide" id="slide24"><h2 id="single-page-apps">Single Page Apps</h2>
 
 <p>With backend services CORS restrictions make reverse proxy useful (<code>@EnableZuulProxy</code>).
 Then you can acquire tokens in the client app and relay them to back end.</p>
@@ -491,9 +329,9 @@ Then you can acquire tokens in the client app and relay them to back end.</p>
 <p>With no backend services, don&#39;t be shy, <strong>use the session</strong> (authorization code flow is vastly
 superior).</p>
 
-<p>Spring Session helps a lot.</p>
+<p><a href="https://github.com/spring-projects/spring-session">Spring Session</a> helps a lot too.</p>
 
-</div><div class="slide" id="slide38"><h2 id="relaying-user-tokens">Relaying User Tokens</h2>
+</div><div class="slide" id="slide25"><h2 id="relaying-user-tokens">Relaying User Tokens</h2>
 
 <blockquote>
 <p>Front end app sends SSO token with user credentials to authenticate
@@ -509,52 +347,34 @@ other things to allow it access to the back ends.</p>
 outgoing one with different permissions (client but not scope). Can
 use password grant (e.g. with the incoming token as a password).</p>
 
-</div><div class="slide" id="slide39"><h2 id="oauth-1.0">OAuth 1.0</h2>
-
+</div><div class="slide" id="slide26"><h2 id="token-relay-with-spring-cloud">Token Relay with Spring Cloud</h2>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableOAuth2Sso</span>
+<span class="nd">@EnableZuulProxy</span>
+<span class="nd">@Controller</span>
+<span class="kd">class</span> <span class="nc">Demo</span> <span class="o">{</span>
+<span class="o">}</span>
+</code></pre></div>
 <ul>
-<li>Another (slightly older) standard</li>
-<li>Includes request signing</li>
-<li>Common in early wave public APIs (e.g. Twitter)</li>
-<li>Spring Security OAuth is full solution at framework level</li>
+<li>Autoconfiguration for <code>@EnableZuulProxy</code> combined with <code>@EnableOAuth2Sso</code></li>
+<li>Adds <code>ZuulFilter</code> that attaches the current user token to downstream requests</li>
 </ul>
 
-</div><div class="slide" id="slide40"><h2 id="so-what&#39;s-wrong-with-that?">So What&#39;s Wrong with That?</h2>
-
-<p>Nothing but...</p>
+</div><div class="slide" id="slide27"><h2 id="other-options">Other Options</h2>
 
 <ul>
-<li>It&#39;s hard work for client app developers (crypto)</li>
-<li>(Notionally at least) superseded by OAuth2</li>
+<li>OAuth 1.0</li>
+<li>SAML assertions</li>
+<li>Physical network security IP tables etc.</li>
+<li>Kerberos</li>
+<li>Combinations of the above (including OAuth 2.0)</li>
 </ul>
 
-</div><div class="slide" id="slide41"><h2 id="saml-assertions">SAML Assertions</h2>
-
-<ul>
-<li>Another standard with similar features to OAuth2</li>
-<li>XML based</li>
-<li>Common infrastructure in enterprise</li>
-<li>Spring Security SAML provides SP and Consumer roles (not IDP)</li>
-<li>Request signing is standadized</li>
-</ul>
-
-</div><div class="slide" id="slide42"><h2 id="so-what&#39;s-wrong-with-that?">So What&#39;s Wrong with That?</h2>
-
-<p>Nothing but...</p>
-
-<ul>
-<li>Painful to set up for servers and client</li>
-<li>Large amounts of XML data in HTTP headers</li>
-<li>Huge complexity for developers</li>
-</ul>
-
-<p>N.B. exchanging SAML assertion for OAuth2 token is quote normal</p>
-
-</div><div class="slide" id="slide43"><h2 id="in-conclusion">In Conclusion</h2>
+</div><div class="slide" id="slide28"><h2 id="in-conclusion">In Conclusion</h2>
 
 <ul>
 <li>Lightweight services demand lightweight infrastructure</li>
 <li>Security is important, but should be unobtrusive</li>
-<li>Spring Security makes it all easier</li>
+<li>Spring Security and Spring Cloud make it all easier</li>
 <li>Special mention for Spring Session</li>
 <li>OAuth 2.0 is a standard, and has a lot of useful features</li>
 <li><a href="http://github.com/springsource/spring-security-oauth">Spring Security OAuth</a> aims to be a complete OAuth2
@@ -562,12 +382,15 @@ solution at the framework level</li>
 <li>Cloudfoundry has an open source, OAuth2 identity service (UAA)</li>
 </ul>
 
-</div><div class="slide" id="slide44"><h2 id="links">Links</h2>
+</div><div class="slide" id="slide29"><h2 id="links">Links</h2>
 
 <ul>
-<li><a href="http://github.com/spring-projects/spring-security-oauth">http://github.com/spring-projects/spring-security-oauth</a></li>
-<li><a href="http://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation">http://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation</a></li>
-<li><a href="http://github.com/cloudfoundry/uaa">http://github.com/cloudfoundry/uaa</a></li>
+<li><a href="https://github.com/spring-projects/spring-security-oauth">https://github.com/spring-projects/spring-security-oauth</a></li>
+<li><a href="https://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation">https://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation</a></li>
+<li><a href="https://github.com/spring-cloud/spring-cloud-security">https://github.com/spring-cloud/spring-cloud-security</a></li>
+<li><a href="https://github.com/spring-cloud-samples/scripts">http://github.com/spring-cloud-samples/scripts</a></li>
+<li><a href="https://github.com/SpringOne2GX-2014/microservice-security">https://github.com/SpringOne2GX-2014/microservice-security</a></li>
+<li><a href="https://github.com/cloudfoundry/uaa">https://github.com/cloudfoundry/uaa</a></li>
 <li><a href="http://blog.spring.io">http://blog.spring.io</a></li>
 <li><a href="http://blog.cloudfoundry.org">http://blog.cloudfoundry.org</a></li>
 <li><a href="http://presos.dsyer.com/decks/microservice-security.html">http://presos.dsyer.com/decks/microservice-security.html</a></li>
@@ -580,10 +403,8 @@ solution at the framework level</li>
 <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
 <a href="#" class="deck-next-link" title="Next">&#8594;</a>
 
-<p class="deck-status">
-	<span class="deck-status-current"></span>
-	/
-	<span class="deck-status-total"></span>
+<p id="footer" class="deck-status">
+	<span class="deck-status-current"></span>/<span class="deck-status-total"></span>
 </p>
 
 <form action="." method="get" class="goto-form">

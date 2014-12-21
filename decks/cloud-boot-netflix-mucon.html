@@ -49,28 +49,12 @@ or <em>Spring Cloud Components</em>)</p>
 </div><div class="slide" id="slide2"><h2 id="outline">Outline</h2>
 
 <ul>
-<li>Define microservices</li>
 <li>Outline some distributed system problems</li>
 <li>Introduce Netflix OSS and its integration with Spring Boot</li>
 <li>Spring Cloud demos</li>
 </ul>
 
-</div><div class="slide" id="slide3"><h2 id="what-are-micro-services?">What are micro-services?</h2>
-
-<ul>
-<li>Not monolithic :-)</li>
-<li>Smaller units of a larger system</li>
-<li>Runs in its own process</li>
-<li>Lightweight communication protocols</li>
-<li>Single Responsibility Principle</li>
-<li>The UNIX way</li>
-</ul>
-
-<p><a href="http://www.slideshare.net/ewolff/micro-services-small-is-beautiful">http://www.slideshare.net/ewolff/micro-services-small-is-beautiful</a>
-<a href="http://martinfowler.com/articles/microservices.html">http://martinfowler.com/articles/microservices.html</a>
-<a href="http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html">http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html</a></p>
-
-</div><div class="slide" id="slide4"><h2 id="spring-boot">Spring Boot</h2>
+</div><div class="slide" id="slide3"><h2 id="spring-boot-and-microservices">Spring Boot and Microservices</h2>
 
 <p>It needs to be super easy to implement and update a service:</p>
 <div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@RestController</span>
@@ -83,7 +67,7 @@ or <em>Spring Cloud Components</em>)</p>
 </code></pre></div>
 <p>and you don&#39;t get much more &quot;micro&quot; than that.</p>
 
-</div><div class="slide" id="slide5"><h2 id="cloud-foundry">Cloud Foundry</h2>
+</div><div class="slide" id="slide4"><h2 id="cloud-foundry">Cloud Foundry</h2>
 
 <p>Deploying services needs to be simple and reproducible</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">$ cf push app.groovy
@@ -92,7 +76,7 @@ or <em>Spring Cloud Components</em>)</p>
 
 <p>(Same argument for other PaaS solutions)</p>
 
-</div><div class="slide" id="slide6"><h2 id="continuous-delivery">Continuous Delivery</h2>
+</div><div class="slide" id="slide5"><h2 id="continuous-delivery">Continuous Delivery</h2>
 
 <ul>
 <li>Microservices lend themselves to continuous delivery.</li>
@@ -103,13 +87,13 @@ or <em>Spring Cloud Components</em>)</p>
 <p>Book (Humble and Farley): <a href="http://continuousdelivery.com/">http://continuousdelivery.com</a>
 Netflix Blog: <a href="http://techblog.netflix.com/2013/08/deploying-netflix-api.html">http://techblog.netflix.com/2013/08/deploying-netflix-api.html</a></p>
 
-</div><div class="slide" id="slide7"><h2 id="example-distributed-system:-minified">Example Distributed System: Minified</h2>
+</div><div class="slide" id="slide6"><h2 id="example-distributed-system:-minified">Example Distributed System: Minified</h2>
 
 <style>img[alt=customer-stores-blank] { width: 80%; }</style>
 
 <p><img src="images/CustomersStoresBlank.svg" alt="customer-stores-blank"></p>
 
-</div><div class="slide" id="slide8"><h2 id="no-man-(microservice)-is-an-island">No Man (Microservice) is an Island</h2>
+</div><div class="slide" id="slide7"><h2 id="no-man-(microservice)-is-an-island">No Man (Microservice) is an Island</h2>
 
 <blockquote>
 <p>It&#39;s excellent to be able to implement a microservice really easily
@@ -117,36 +101,37 @@ Netflix Blog: <a href="http://techblog.netflix.com/2013/08/deploying-netflix-api
 &quot;non-functional&quot; requirements that you otherwise didn&#39;t have.</p>
 </blockquote>
 
-<p>There are laws of physics that make some problems unsolvable
-(consistency, latency), but brittleness and manageability can be
-addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
+<p>There are laws of physics and probability that make some problems
+unsolvable (consistency, availability, latency), but brittleness and
+manageability can be addressed with <em>generic</em>, <em>boiler plate</em>
+patterns.</p>
 
-</div><div class="slide" id="slide9"><h2 id="emergent-features-of-micro-services-systems">Emergent features of micro-services systems</h2>
+</div><div class="slide" id="slide8"><h2 id="emergent-features-of-micro-services-systems">Emergent features of micro-services systems</h2>
 
 <p>Coordination of distributed systems leads to boiler plate patterns</p>
 
 <ul>
 <li>Distributed/versioned configuration</li>
+<li>Service-to-service calls</li>
 <li>Service registration and discovery</li>
 <li>Routing</li>
-<li>Service-to-service calls</li>
 <li>Load balancing</li>
 <li>Circuit Breaker</li>
-<li>Asynchronous</li>
+<li>Asynchronous + reactive</li>
 <li>Distributed messaging</li>
 </ul>
 
-</div><div class="slide" id="slide10"><h2 id="spring-io-platform">Spring IO Platform</h2>
+</div><div class="slide" id="slide9"><h2 id="spring-io-platform">Spring IO Platform</h2>
 
 <p><img src="images/spring-io-tree.png" alt="spring-io-tree"></p>
 
-</div><div class="slide" id="slide11"><h2 id="example:-coordination-boiler-plate">Example: Coordination Boiler Plate</h2>
+</div><div class="slide" id="slide10"><h2 id="example:-coordination-boiler-plate">Example: Coordination Boiler Plate</h2>
 
 <style>img[alt=customer-stores-system] { width: 72%; }</style>
 
 <p><img src="images/CustomersStoresSystem.svg" alt="customer-stores-system"></p>
 
-</div><div class="slide" id="slide12"><h2 id="netflix-oss">Netflix OSS</h2>
+</div><div class="slide" id="slide11"><h2 id="netflix-oss">Netflix OSS</h2>
 
 <ul>
 <li>Eureka</li>
@@ -162,20 +147,34 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 
 <p><a href="http://goo.gl/M159zi">Mikey Cohen Netflix edge architecture, http://goo.gl/M159zi</a></p>
 
-</div><div class="slide" id="slide13"><h2 id="example:-spring-cloud-and-netflix">Example: Spring Cloud and Netflix</h2>
+</div><div class="slide" id="slide12"><h2 id="example:-spring-cloud-and-netflix">Example: Spring Cloud and Netflix</h2>
 
 <style>img[alt=customer-stores] { width: 72%; }</style>
 
 <p><img src="images/CustomersStores.svg" alt="customer-stores"></p>
 
-</div><div class="slide" id="slide14"><h2 id="configuration-server">Configuration Server</h2>
+</div><div class="slide" id="slide13"><h2 id="configuration-server">Configuration Server</h2>
 
 <ul>
 <li>Pluggable source</li>
 <li>Git implementation</li>
 <li>Versioned</li>
 <li>Rollback-able</li>
-<li>Configuration client auto-configured via starter</li>
+<li>Strong encryption</li>
+</ul>
+
+</div><div class="slide" id="slide14"><h2 id="config-client">Config Client</h2>
+
+<p>Consumers of config server can use client library as Spring Boot plugin</p>
+
+<p>Features:</p>
+
+<ul>
+<li>Bootstrap <code>Environment</code> from server</li>
+<li>POST to /env to change <code>Environment</code></li>
+<li><code>@RefreshScope</code> for atomic changes to beans via Spring lifecycle</li>
+<li>POST to /refresh</li>
+<li>POST to /restart</li>
 </ul>
 
 </div><div class="slide" id="slide15"><h2 id="discovery:-eureka">Discovery: Eureka</h2>
@@ -183,49 +182,51 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <ul>
 <li>Service Registration Server</li>
 <li>Highly Available</li>
+<li>Services have metadata</li>
 <li>In AWS terms, multi Availability Zone and Region aware</li>
 </ul>
 
 </div><div class="slide" id="slide16"><h2 id="circuit-breaker:-hystrix">Circuit Breaker: Hystrix</h2>
 
+<p>Reilience pattern:</p>
+
 <ul>
 <li>latency and fault tolerance</li>
 <li>isolates access to other services</li>
 <li>stops cascading failures</li>
-<li>enables resilience</li>
-<li>circuit breaker pattern</li>
 <li>dashboard</li>
 </ul>
 
 <p>Release It!: <a href="https://pragprog.com/book/mnee/release-it">https://pragprog.com/book/mnee/release-it</a></p>
 
-</div><div class="slide" id="slide17"><h2 id="hystrix-observable">Hystrix Observable</h2>
+</div><div class="slide" id="slide17"><h2 id="hystrix-fallback">Hystrix Fallback</h2>
+
+<style>img[alt=hystrix] { width: 92%; }</style>
+
+<p><img src="images/HystrixFallback.svg" alt="hystrix"></p>
+
+</div><div class="slide" id="slide18"><h2 id="declarative-hystrix-commands">Declarative Hystrix Commands</h2>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
-<span class="kd">public</span> <span class="n">Observable</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">getMessageRx</span><span class="o">()</span> <span class="o">{</span>
-  <span class="k">return</span> <span class="k">new</span> <span class="n">ObservableResult</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">invoke</span><span class="o">()</span> <span class="o">{</span>
-      <span class="k">return</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="cm">/*...*/</span><span class="o">);</span>
-    <span class="o">}</span>
-  <span class="o">};</span>
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">getMessage</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">return</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="cm">/*...*/</span><span class="o">);</span>
 <span class="o">}</span>
 
-<span class="c1">//somewhere else</span>
-<span class="n">helloService</span><span class="o">.</span><span class="na">getMessageRx</span><span class="o">().</span><span class="na">subscribe</span><span class="o">(</span><span class="k">new</span> <span class="n">Observer</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
-    <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCompleted</span><span class="o">()</span> <span class="o">{}</span> 
-    <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onError</span><span class="o">(</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{}</span> 
-    <span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onNext</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{}</span>
-<span class="o">});</span>
+<span class="kd">private</span> <span class="n">String</span> <span class="nf">getDefaultMessage</span><span class="o">()</span> <span class="o">{</span>
+  <span class="k">return</span> <span class="s">&quot;Hello World Default&quot;</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//somewhere else</span>
+<span class="n">helloService</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
 </code></pre></div>
-</div><div class="slide" id="slide18"><h2 id="circuit-breaker-metrics">Circuit Breaker Metrics</h2>
+</div><div class="slide" id="slide19"><h2 id="circuit-breaker-metrics">Circuit Breaker Metrics</h2>
 
 <ul>
 <li>Via actuator <code>/metrics</code></li>
 <li>Server side event stream <code>/hystrix.stream</code></li>
-<li>Dashboard app via <code>@EnableHystrixDashboard</code></li>
+<li>Dashboard app with <code>@EnableHystrixDashboard</code></li>
 <li>Aggregation via Spring Cloud Bus Turbine</li>
 </ul>
 
-</div><div class="slide" id="slide19"><h2 id="routing:-zuul">Routing: Zuul</h2>
+</div><div class="slide" id="slide20"><h2 id="routing:-zuul">Routing: Zuul</h2>
 
 <ul>
 <li>JVM based router and filter</li>
@@ -236,7 +237,7 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <li>Any JVM language</li>
 </ul>
 
-</div><div class="slide" id="slide20"><h2 id="how-netflix-uses-zuul">How Netflix uses Zuul</h2>
+</div><div class="slide" id="slide21"><h2 id="how-netflix-uses-zuul">How Netflix uses Zuul</h2>
 
 <ul>
 <li>Authentication</li>
@@ -251,7 +252,7 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <li>Active/Active traffic management</li>
 </ul>
 
-</div><div class="slide" id="slide21"><h2 id="spring-cloud-zuul-proxy">Spring Cloud Zuul Proxy</h2>
+</div><div class="slide" id="slide22"><h2 id="spring-cloud-zuul-proxy">Spring Cloud Zuul Proxy</h2>
 
 <ul>
 <li>Store routing rules in config server<br>
@@ -271,7 +272,7 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <li>Can be used as &quot;sidecar&quot; (or standalone edge server) via <code>@EnableSidecar</code></li>
 </ul>
 
-</div><div class="slide" id="slide22"><h2 id="links">Links</h2>
+</div><div class="slide" id="slide23"><h2 id="links">Links</h2>
 
 <ul>
 <li><a href="http://github.com/spring-cloud">http://github.com/spring-cloud</a></li>
