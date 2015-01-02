@@ -21,7 +21,8 @@ back end. Application and security architecture variations:
 | Single backend with local user login and backend service Standard | JSESSIONID cookie for all authentications after login, optional use of Spring Session to distribute data and/or change cookie name|
 | Backend split between UI (with login) and services in separate JVM, client calls services directly | JSESSIONID used for UI as cookie and for backends as custom token|
 | Backend split between UI (with login) and services in separate JVM, client calls services through UI acting as proxy| JSESSIONID cookie used for all calls (proxy forwards cookie header), distributed via Spring Session|
-| Add OAuth2 SSO with a separate authentication server | JSESSIONID used for UI as cookie and acecss token for backends|
+| Add OAuth2 SSO with a separate authentication server | JSESSIONID used for UI as cookie and access token for backends|
+| Use JWT for OAuth2 token | Show that sessions are still needed for CSRF protection |
 
 [SECOAUTH]: http://github.com/springsource/spring-security-oauth
 
