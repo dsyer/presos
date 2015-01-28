@@ -17,7 +17,7 @@ Email: dsyer@pivotal.io
 * What's the easiest way to get something working?
 
 ## Introduction
-* There is a [strong trend][indeed] in distributed systems with
+* There's a [strong trend][indeed] in distributed systems with
 lightweight architectures
 * People have started to call them "microservices"
 
