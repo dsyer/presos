@@ -4,7 +4,8 @@
   margin-bottom: 4px;
 }
 #footer {
-	background: url("footer.png") bottom left;
+	background: url("footer.png") no-repeat bottom right;
+    height: 65px;
 }
 #slide1 {
   background: url("cover.png") no-repeat top;
