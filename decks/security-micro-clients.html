@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
     
     
-	<link rel="stylesheet" id="style-theme-link" href="../themes/style/springone13.css">
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/spring.css">
 	<link rel="stylesheet" id="transition-theme-link" href="../deck.js/themes/transition/horizontal-slide.css">
 	
 	<script src="../deck.js/modernizr.custom.js"></script>
@@ -33,98 +33,58 @@
 
 <body class="deck-container">
 
-<div class="slide" id="slide1"><h1 id="spring-io-platform">Spring IO Platform</h1>
+<div class="slide" id="slide1"><h1 id="security-for-browser-applications-with-spring">Security for Browser Applications with Spring</h1>
 
-<p>Adrian Colyer,
-Dave Syer,<br>
-Jergen Hoeller,
-Chris Beams  </p>
+<p>Dave Syer, 2012<br>
+Twitter: @david_syer<br>
+Email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p>
 
-<p>Twitter:<br>
-  @adriancolyer<br>
-  @david_syer<br>
-  @cbeams  </p>
+<p>(Security for Browser Applications with Spring)</p>
 
-<p>Email: [acolyer,<br>
-  dsyer,<br>
-  jhoeller,
-  cbeams]@gopivotal.com</p>
+</div><div class="slide" id="slide2"><h2 id="outline">Outline</h2>
 
-</div><div class="slide" id="slide2"><h2 id="agenda">Agenda</h2>
+<p>Imagine several physical implementations of the same system with an
+identical Javascript client (single page application) and a secure
+back end. Application and security architecture variations:</p>
 
-<ul>
-<li>Big picture: What is Spring IO?</li>
-<li>Spring Boot overview</li>
-<li>Spring Boot demo</li>
-<li>Spring 4.0</li>
-<li>Spring website</li>
-</ul>
+<table><thead>
+<tr>
+<th>Application</th>
+<th>Security</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Single backend with local user login and backend service Standard</td>
+<td>JSESSIONID cookie for all authentications after login, optional use of Spring Session to distribute data and/or change cookie name</td>
+</tr>
+<tr>
+<td>Backend split between UI (with login) and services in separate JVM, client calls services directly</td>
+<td>JSESSIONID used for UI as cookie and for backends as custom token</td>
+</tr>
+<tr>
+<td>Backend split between UI (with login) and services in separate JVM, client calls services through UI acting as proxy</td>
+<td>JSESSIONID cookie used for all calls (proxy forwards cookie header), distributed via Spring Session</td>
+</tr>
+<tr>
+<td>Add OAuth2 SSO with a separate authentication server</td>
+<td>JSESSIONID used for UI as cookie and access token for backends</td>
+</tr>
+<tr>
+<td>Use JWT for OAuth2 token</td>
+<td>Show that sessions are still needed for CSRF protection</td>
+</tr>
+</tbody></table>
 
-</div><div class="slide" id="slide3"><h2 id="spring-io-platform">Spring IO Platform</h2>
-
-<p><img src="images/spring-io.png" alt="Spring IO Platform Picture"></p>
-
-</div><div class="slide" id="slide4"><h2 id="spring-boot-overview">Spring Boot Overview</h2>
-
-<blockquote>
-<p>Spring Boot makes it easy to create Spring-powered, production-grade
-applications and services with absolute minimum fuss. It takes an
-opinionated view of the Spring platform so that new and existing
-users can quickly get to the bits they need.</p>
-</blockquote>
-
-<p><img src="images/boot-focus.png" width="60%"/></p>
-
-</div><div class="slide" id="slide5"><h2 id="spring-boot-goals">Spring Boot Goals</h2>
-
-<ul>
-<li>Provide a radically faster and widely accessible getting started experience</li>
-<li>Be opinionated out of the box, but get out of the way quickly as requirements start to
-diverge from the defaults</li>
-<li>Provide a range of non-functional features that are common to large classes of projects
-(e.g. embedded servers, security, metrics, health checks, externalized configuration)</li>
-<li>Absolutely no code generation and no requirement for XML configuration</li>
-</ul>
-
-</div><div class="slide" id="slide6"><h2 id="spring-boot-demo">Spring Boot Demo</h2>
-
-<div id="center">
-<div>Spring Boot Demo</div>
-</div>
-
-</div><div class="slide" id="slide7"><h2 id="spring-boot-faq">Spring Boot FAQ</h2>
-
-<p><br/><br/>
-<i class="icon-comment-alt icon-3x pull-left"></i> 
-Cool! Now what else can I do with it?  </p>
-
-<p><br/><br/></p>
-
-<ol>
-<li>How can I extend it?<br></li>
-<li>Can I use a traditional WAR deployment?</li>
-</ol>
-
-</div><div class="slide" id="slide8"><h2 id="spring-boot-modules">Spring Boot Modules</h2>
-
-<p><img src="images/boot-modules.png" alt="Spring Boot Modules"></p>
-
-</div><div class="slide" id="slide9"><h2 id="spring-4.0">Spring 4.0</h2>
+</div><div class="slide" id="slide3"><h2 id="links">Links</h2>
 
 <ul>
-<li>New Baseline = JDK 6+, Servlet 3.0, and other 3rd pary OS libraries</li>
-<li>Latest of specs - JPA 2.1, Bean Valid 2.1, JMS 2.0, JSR-356, JSR-236</li>
-<li>Java 8: Lambda, method references</li>
-<li>WebSocket</li>
-<li>Messaging (and WebSocket support)</li>
-<li>Web improvements: async, HATEOAS, cache busting</li>
+<li><a href="http://github.com/spring-projects/spring-security-oauth%5Bhttp://github.com/spring-projects/spring-security-oauth%5D">http://github.com/spring-projects/spring-security-oauth[http://github.com/spring-projects/spring-security-oauth]</a></li>
+<li><a href="http://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation%5Bhttp://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation%5D">http://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation[http://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation]</a></li>
+<li><a href="http://blog.spring.io%5Bhttp://blog.spring.io%5D">http://blog.spring.io[http://blog.spring.io]</a></li>
+<li><a href="http://presos.dsyer.com/decks/microservice-security.html%5Bhttp://presos.dsyer.com/decks/microservice-security.html%5D">http://presos.dsyer.com/decks/microservice-security.html[http://presos.dsyer.com/decks/microservice-security.html]</a></li>
+<li>Twitter: @david_syer<br></li>
+<li>Email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></li>
 </ul>
-
-</div><div class="slide" id="slide10"><h2 id="spring-website">Spring Website</h2>
-
-<div id="center">
-<div>Spring Website Demo</div>
-</div>
 </div>
 
 

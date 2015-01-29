@@ -3,7 +3,8 @@
   font-size: 90%;
 }
 #footer {
-	background: url("footer.png") bottom left;
+	background: url("footer.png") no-repeat bottom right;
+    height: 65px;
 }
 #slide1 {
   background: url("badge13.jpg") no-repeat top;

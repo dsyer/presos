@@ -1,64 +1,37 @@
-#deck.js
+Presentations for conferences and user groups etc. Source code is in a
+mixture of Markdown and [Asciidoctor](http://asciidoctor.org), and is
+best viewed for presentation using
+[deck.js](https://github.com/imakewebthings/deck.js) and
+[asciidoctor-backends](https://github.com/asciidoctor/asciidoctor-backends). Local
+deck.js themes are provided in the `/themes` directory. The deck.js
+and asciidoctor templates are provided as a submodules.
 
-A JavaScript library for building modern HTML presentations. deck.js is flexible enough to let advanced CSS and JavaScript authors craft highly customized decks, but also provides templates and themes for the HTML novice to build a standard slideshow.
+## Github Co-ordinates
 
-## Quick Start
+The slides sources are all in github at
+[https://github.com/dsyer/presos](https://github.com/dsyer/presos). Clone
+them (read only) like this:
 
-This repository includes a `boilerplate.html` as a starting point, with all the extensions included. Just [download it](https://github.com/imakewebthings/deck.js/zipball/stable), open `boilerplate.html`, and start editing your slides.
+    $ git clone https://github.com/dsyer/presos
+    $ git submodule update --init
 
-## Documentation
+## Building the Site
 
-Check out the [documentation page](http://imakewebthings.github.com/deck.js/docs) for more information on the methods, events, and options available in core and all the included extensions.  A sample standard slide deck is included in the package under the `introduction` folder.  You can also [view that sample deck](http://imakewebthings.github.com/deck.js/introduction) online to play with the available style and transition themes.
+Use Ruby 1.9.3 and make sure you have `bundle` on your `PATH` 
 
-## Extensions, Themes, and Related Projects
+    $ cd presos
+    $ bundle 
+    $ bundle exec jekyll build
+    ...
+    
+This builds all slides and puts them in `_site`. 
 
-Take a look at [the wiki](https://github.com/imakewebthings/deck.js/wiki) for lists of extensions, themes, and other related goodies.  If you have a publicly available project of your own, feel free to add to the list.
+If you run `guard` instead of `jekyll` it also rebuilds each deck as
+you reload it. You can also use `jekyll serve -w` to run a server on
+port 4000 that rebuilds the site on changes (I prefer to use `guard`
+because I can browse the files using a `file:...` URL).
 
-## Dependencies (included in this repository)
+## Static Website
 
-- [jQuery](http://jquery.com)
-- [Modernizr](http://modernizr.com)
-
-## Tests & Support
-
-Unit tests are written with [Jasmine](http://pivotal.github.com/jasmine/) and [jasmine-jquery](https://github.com/velesin/jasmine-jquery). You can [run them here](http://imakewebthings.github.com/deck.js/test).
-
-deck.js has been tested with jQuery 1.6+ and works in IE7+, Chrome, FF, Safari, and Opera. The more capable browsers receive greater enhancements, but a basic cutaway slideshow will work for all browsers listed above. Please don't give your presentations in IE6.
-
-For any questions or general discussion about deck.js please direct your attention to the [mailing list](http://groups.google.com/group/deckjs) (uses Google groups.)  If you would like to report a bug, please see the [issues page](https://github.com/imakewebthings/deck.js/issues).
-
-## Known Bug(s)
-
-There is an issue with certain builds of Chrome that result in a solid blue background and generally broken decks.  This is a bug in Chrome ([Issue 91518](http://code.google.com/p/chromium/issues/detail?id=91518)) that stems from hardware acceleration of 3d transforms.  Current workarounds:
-
-- Use a different browser. This problem doesn't exist in Safari, FF, Opera.
-- Disable hardware compositing by setting `--disable-accelerated-compositing` in the Chrome loading options
-- Replace instances of `translate3d` with `translate` in the CSS of your decks (though this will slow down performance on iOS devices and Safari.)
-
-Firefox contains a bug that allows users to scroll horizontally using the trackpad despite `overflow-x:hidden`. ([Bug 664275](https://bugzilla.mozilla.org/show_bug.cgi?id=664275) and [Bug 325942](https://bugzilla.mozilla.org/show_bug.cgi?id=325942).) If anyone knows of any workarounds to this issue please contact me.
-
-## Printing
-
-Core includes stripped down black and white print styles for the standard slide template that is suitable for handouts.
-
-## Awesome Contributors
-
-- [jbuck](https://github.com/jbuck)
-- [cykod](https://github.com/cykod)
-- [dougireton](https://github.com/dougireton)
-- [awirick](https://github.com/awirick)
-- Daniel Knittl-Frank
-- [alexch](https://github.com/alexch)
-
-If you would like to contribute a patch to deck.js please do as much as you can of the following:
-
-- Add or amend Jasmine tests.
-- Add inline documentation.
-- If the standard snippet of an extension changes, please change it in both the introduction deck and the snippet html in the extension folder.
-- If the API changes, it would be awesome to receive a parallel pull request to the gh-pages branch which updates the public-facing documentation.
-
-## License
-
-Copyright (c) 2011-2012 Caleb Troughton
-
-Dual licensed under the [MIT license](https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt) and [GPL license](https://github.com/imakewebthings/deck.js/blob/master/GPL-license.txt).
+The decks are all in `gh-pages` at
+[http://presos.dsyer.com](http://presos.dsyer.com).

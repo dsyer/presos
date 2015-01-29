@@ -1,0 +1,227 @@
+= Spring Cloud, Spring Boot and Netflix OSS
+Spencer Gibb, Dave Syer, 2015
+:backend: deckjs
+:deckjs_transition: fade
+:navigation:
+:menu:
+:status:
+:source-highlighter: pygments
+:deckjs_theme: spring
+:deckjsdir: ../deck.js
+
+== Authors
+
+Spencer Gibb, +
+http://twitter.com/spencerbgibb[@spencerbgibb], +
+sgibb@pivotal.io   
+
+Dave Syer, +
+http://twitter.com/david_syer[@david_syer], +
+dsyer@pivotal.io   
+
+== Outline
+* Define microservices
+* Outline some distributed system problems
+* Introduce Netflix OSS and its integration with Spring Boot
+* Spring Cloud demos
+
+== What are micro-services?
+* Not monolithic :-)
+* Smaller units of a larger system
+* Runs in its own process
+* Lightweight communication protocols
+* Single Responsibility Principle
+* The UNIX way
+
+http://www.slideshare.net/ewolff/micro-services-small-is-beautiful +
+http://martinfowler.com/articles/microservices.html +
+http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html
+
+== Spring Boot
+
+It needs to be super easy to implement and update a service:
+
+[source,groovy]
+----
+@RestController
+class ThisWillActuallyRun {
+    @RequestMapping("/")
+    String home() {
+        Hello World!
+    }
+}
+----
+
+and you don't get much more "micro" than that.
+
+== Cloud Foundry
+
+Deploying services needs to be simple and reproducible
+
+[source,console]
+----
+$ cf push app.groovy
+----
+
+and you don't get much more convenient than that.
+
+(Same argument for other PaaS solutions)
+
+== Continuous Delivery
+
+* Microservices lend themselves to continuous delivery.
+* You actually *need* continuous delivery to extract maximum value.
+* **New:** ALM support in Cloudfoundry from Cloudbees
+
+Book (Humble and Farley): http://continuousdelivery.com
+
+Netflix Blog: http://techblog.netflix.com/2013/08/deploying-netflix-api.html
+
+== Example Distributed System: Minified
+
+image::images/CustomersStoresBlank.svg[Example Distributed System: Minified]
+
+== No Man (Microservice) is an Island
+
+> It's excellent to be able to implement a microservice really easily
+> (Spring Boot), but building a system that way surfaces
+> "non-functional" requirements that you otherwise didn't have.
+
+There are laws of physics that make some problems unsolvable
+(consistency, latency), but brittleness and manageability can be
+addressed with *generic*, *boiler plate* patterns.
+
+== Emergent features of micro-services systems
+
+Coordination of distributed systems leads to boiler plate patterns
+
+* Distributed/versioned configuration
+* Service registration and discovery
+* Routing
+* Service-to-service calls
+* Load balancing
+* Circuit Breaker
+* Asynchronous
+* Distributed messaging
+
+== Spring IO Platform
+
+image::images/spring-io-tree.png[spring-io-tree]
+
+== Example: Coordination Boiler Plate
+
+image::images/CustomersStoresSystem.svg[customer-stores-system]
+
+== Netflix OSS
+
+* Eureka
+* Hystrix & Turbine
+* Ribbon
+* Feign
+* Zuul
+* Archaius
+
+* Curator
+* Asgaard
+* ...
+
+http://goo.gl/M159zi[Mikey Cohen Netflix edge architecture, http://goo.gl/M159zi]
+
+== Example: Spring Cloud and Netflix
+
+image::images/CustomersStores.svg[customer-stores]
+
+== Configuration Server
+* Pluggable source
+* Git implementation
+* Versioned
+* Rollback-able
+* Configuration client auto-configured via starter
+
+== Discovery: Eureka
+* Service Registration Server
+* Highly Available
+* In AWS terms, multi Availability Zone and Region aware
+
+== Circuit Breaker: Hystrix
+* latency and fault tolerance
+* isolates access to other services
+* stops cascading failures
+* enables resilience
+* circuit breaker pattern
+* dashboard
+
+Release It!: https://pragprog.com/book/mnee/release-it[https://pragprog.com/book/mnee/release-it]
+
+== Hystrix Observable
+
+[source,java]
+----
+@HystrixCommand(fallbackMethod="getDefaultMessage")
+public String getMessage() {
+  return restTemplate.getForObject(/*...*/);
+}
+
+public String getDefaultMessage() {
+  return "Hello World Default";
+}
+
+// somewhere else
+helloService.getMessage();
+----
+
+== Circuit Breaker Metrics
+
+* Via actuator `/metrics`
+* Server side event stream `/hystrix.stream`
+* Dashboard app via `@EnableHystrixDashboard`
+* Aggregation via Spring Cloud Turbine
+
+== Routing: Zuul
+* JVM based router and filter
+* Similar routing role as httpd, nginx, or CF go router
+* Fully programmable rules and filters
+* Groovy
+* Java
+* Any JVM language
+
+== How Netflix uses Zuul
+* Authentication
+* Insights
+* Stress Testing
+* Canary Testing
+* Dynamic Routing
+* Service Migration
+* Load Shedding
+* Security
+* Static Response handling
+* Active/Active traffic management
+
+== Spring Cloud Zuul Proxy
+* Store routing rules in config server   
+   `zuul.proxy.route.customers: /customers`
+* Uses `Hystrix->Ribbon->Eureka` to forward requests to appropriate service
+
+[source,groovy]
+----
+@EnableZuulProxy
+@Controller
+class Application {
+  @RequestMapping("/")
+  String home() { 
+    return 'redirect:/index.html#/customers'
+  }
+}
+----
+
+* Can be used as "sidecar" (or standalone edge server) via `@EnableSidecar`
+
+== Links
+
+
+* http://github.com/spring-cloud
+* http://github.com/spring-cloud-samples
+* http://blog.spring.io
+* http://presos.dsyer.com/decks/cloud-boot-netflix.html
+* Twitter: http://twitter.com/spencerbgibb[@spencerbgibb], http://twitter.com/david_syer[@david_syer]
+* Email: sgibb@pivotal.io, dsyer@pivotal.io
