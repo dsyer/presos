@@ -3,15 +3,21 @@ Spencer Gibb, Dave Syer, 2015
 :backend: deckjs
 :deckjs_transition: fade
 :navigation:
+:menu:
+:status:
 :source-highlighter: pygments
 :deckjs_theme: spring
 :deckjsdir: ../deck.js
 
 == Authors
 
-Spencer Gibb, http://twitter.com/spencerbgibb[@spencerbgibb], sgibb@pivotal.io   
+Spencer Gibb, +
+http://twitter.com/spencerbgibb[@spencerbgibb], +
+sgibb@pivotal.io   
 
-Dave Syer, http://twitter.com/david_syer[@david_syer], dsyer@pivotal.io   
+Dave Syer, +
+http://twitter.com/david_syer[@david_syer], +
+dsyer@pivotal.io   
 
 == Outline
 * Define microservices
@@ -27,17 +33,15 @@ Dave Syer, http://twitter.com/david_syer[@david_syer], dsyer@pivotal.io
 * Single Responsibility Principle
 * The UNIX way
 
-http://www.slideshare.net/ewolff/micro-services-small-is-beautiful
-
-http://martinfowler.com/articles/microservices.html
-
+http://www.slideshare.net/ewolff/micro-services-small-is-beautiful +
+http://martinfowler.com/articles/microservices.html +
 http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html
 
 == Spring Boot
 
 It needs to be super easy to implement and update a service:
 
-[source,java]
+[source,groovy]
 ----
 @RestController
 class ThisWillActuallyRun {
@@ -54,9 +58,10 @@ and you don't get much more "micro" than that.
 
 Deploying services needs to be simple and reproducible
 
-```
+[source,console]
+----
 $ cf push app.groovy
-```
+----
 
 and you don't get much more convenient than that.
 
@@ -197,7 +202,7 @@ helloService.getMessage();
    `zuul.proxy.route.customers: /customers`
 * Uses `Hystrix->Ribbon->Eureka` to forward requests to appropriate service
 
-[source,java]
+[source,groovy]
 ----
 @EnableZuulProxy
 @Controller
