@@ -5,6 +5,7 @@ progress/
 *#
 *~
 .#*
-_includes/README.md
+_includes/
 _site/
+deck.js
 asciidoctor-backends/
