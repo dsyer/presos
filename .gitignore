@@ -7,5 +7,5 @@ progress/
 .#*
 _includes/README.md
 _site/
-deck.js/
+deck.js/.git
 asciidoctor-backends/
