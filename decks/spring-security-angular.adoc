@@ -1,53 +1,325 @@
 = Spring Security and Angular
-Dave Syer, 2014
+Dave Syer, 2015
 :backend: deckjs
 :deckjs_transition: fade
 :navigation:
+:menu:
+:status:
+:source-highlighter: pygments
 :deckjs_theme: spring
 :deckjsdir: ../deck.js
 
-== Outline
+== Agenda
+
+* Really quick introduction to Spring Security, Spring Session, Angular JS
+* Focus on features that build secure, modern, single-page applications
+* High level view of sample apps presented in https://spring.io/blog/2015/01/12/spring-and-angular-js-a-secure-single-page-application[blog series]
+* More detailed look at some of the sample apps
+
+== Spring Security
+
+* Generic, `Filter` based solution for Servlet applications
+* Authentication (a.k.a. identity) and Authorization (a.k.a. access decisions)
+* OAuth2 module useful for SSO and token-based API authentication
+* lots of other features
+* http://projects.spring.io/spring-security
+
+== Spring Session
+
+* Not tied to Spring Security, but works well with it
+* Easy, declarative, distributed sessions
+* Redis works out of the box, other backends easy to add
+* Servlet `Filter`
+* http://projects.spring.io/spring-session
+
+== Angular JS
+
+* JavaScript framework
+* "Magic" binding (dependency injection and MVC)
+* Has a lot of traction in the enterprise
+* Nothing about the architecture of the apps presented here requires Angular JS
+* Really basic usage in samples, but representative
+
+== Security Features in Modern Browers
+
+* HTTP Basic
+* X.509
+* Kerberos
+* Cookies
+* CORS
+* HSTS
+
+== Spring Cloud
+
+* Toolbox for building distributed systems (a.k.a. microservices)
+* Most relevant pattern here is Gateway (a.k.a. reverse micro-proxy)
+* Also useful for configuration management, service discovery, load balancing, circuit breaker, etc.
+* http://cloud.spring.io
+
+== Overview of Sample Apps
 
 Imagine several physical implementations of the same system with an identical Javascript client (single page application) and a secure back end. Application and security architecture variations:
 
 |===
-| Application | Description | Security
+| Application | Description | Security | Blog
 
 | `basic`
-| Single backend with local user login and backend service
-| HTTP Basic for all authentications
+| Single backend
+| HTTP Basic
+| Part I
 
 | `single`
-| Adds form authentication, but static HTML and an API resource still in the same server
-| Session cookie for all authentications after login, optional use of Spring Session to distribute data and/or change cookie name
-
-| `vanilla`
-| Backend split between UI (with login) and services in separate JVM, client calls services directly. 
-| Session cookie used for UI as cookie. Backend is unsecured.
+| Adds form authentication
+| Session cookie
+| Part II
 
 | `spring-session`
-| Adds secure backend with custom token.
-| Form login and session cookie for UI, using session ID for backends as custom token. Spring Session ID is the token.
+| Adds secure backend with custom token
+| Spring Session ID as token
+| Part III
 
 | `proxy`
-| Client calls services through UI acting as proxy. UI (with login) and services in separate JVM.
-| Session cookie used for all calls (proxy forwards cookie header), distributed via Spring Session
-
-| `vanilla-oauth2`
-| Add OAuth2 SSO with a separate authentication server
-| Session cookie used for UI and access token for backends
+| UI acts as proxy.
+| Session cookie, Spring Session
+| Part IV
 
 | `oauth2`
-| Use JWT for OAuth2 token and add form login to authorization server
-| Show that sessions are still needed for CSRF protection
+| Add OAuth2 SSO with a separate authentication server
+| Session cookie in UI and access token for backends
+| Part V
+
+| `double`
+| Add "admin" UI behind Gateway
+| Session cookie, Spring Session
+| Part VI
 |===
+
+== Basic Sample
+
+image::images/angular/basic.png['Basic' Sample]
+
+(c.f. "basic": https://github.com/dsyer/spring-security-angular/tree/master/basic[https://github.com/.../basic], Part I)
+
+== A Single Page Application
+
+`index.html`
+```html
+  <html>
+...
+  <body ng-app="hello">
+    <div class="container">
+      <h1>Greeting</h1>
+      <div ng-controller="home" ng-cloak class="ng-cloak">
+        <p>The ID is {{greeting.id}}</p>
+        <p>The content is {{greeting.content}}</p>
+      </div>
+    </div>
+    <script src="js/angular-bootstrap.js" type="text/javascript"></script>
+    <script src="js/hello.js"></script>
+  </body>
+</html>
+```
+
+== Compleletly Minimal JavaScript
+
+`hello.js`
+```javascript
+angular.module('hello', [])
+  .controller('home', function($scope, $http) {
+    $http.get('/resource/').success(function(data) {
+      $scope.greeting = data;
+    })
+  }
+);
+```
+
+== Add HTTP Basic Security
+
+With Spring Boot you get a secure application out of the box, but it is easy to customize for a custom user details store (e.g. directory).
+
+`pom.xml`
+```xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-security</artifactId>
+/dependency>
+```
+
+or `build.gradle`
+```groovy
+dependencies {
+  compile('org.springframework.boot:spring-boot-starter-security')
+}
+```
+
+== Basic Sample with Authentication
+
+image::images/angular/basic-auth.png['Basic' Sample with Authentication]
+
+== Spring Security: Login Form
+
+To be able to add a login form to the app we need to make some HTML static resources accessible anonymously
+
+```java
+@Configuration
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http
+      .httpBasic()
+    .and()
+      .authorizeRequests()
+        .antMatchers("/index.html", "/home.html",
+           "/login.html", "/").permitAll()
+        .anyRequest().authenticated();
+  }
+}
+```
+
+(c.f. "single": https://github.com/dsyer/spring-security-angular/tree/master/single[https://github.com/.../single], Part I)
+
+== Client Side Login Form
+
+```html
+<form role="form" ng-submit="login()">
+  ...
+</form>
+```
+
+```javascript
+$scope.credentials = {};
+$scope.login = function() {
+  authenticate($scope.credentials, function(authenticated) {
+    if (authenticated) {
+      console.log("Login succeeded")
+      ...            
+    } else {
+      console.log("Login failed")
+      ...
+    }
+  })
+}
+```
+
+* The `authenticate()` function sends HTTP Basic credentials and checks the "/user" endpoint.
+* Subsequent requests are authenticated by a cookie - standard Spring Security and browser behaviour
+
+== One More Thing
+
+* When the browser gets a 401 with "WWW-Authenticate: Basic ..." it pops up a dialog. 
+* Spring Security sends that header unless it sees "X-Requested-With" in the request.
+
+So:
+
+```javascript
+angular.module('hello', []).config(function($httpProvider) {
+
+  $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+
+})
+...
+```
+
+== Login Form Summary
+
+image::images/angular/single.png['Single' Sample]
+
+(c.f. "single": https://github.com/dsyer/spring-security-angular/tree/master/single[https://github.com/.../single], Part II)
+
+== Cross Site Request Forgery (CSRF)
+
+* Spring Security and Angular JS have good support for CSRF protection
+
+|===
+| | To Client | Name | From Client | Name
+
+| **Spring Security**
+| Request attribute
+| _csrf
+| Request header
+| X-CSRF-TOKEN
+
+| **Angular JS**
+| Cookie
+| XSRF-TOKEN
+| Request header
+| X-XSRF-TOKEN
+
+|===
+
+* They don't talk to each other by default
+
+== Spring Security for Angular "XSRF"
+
+```java
+@Configuration
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+      http
+        ...
+      .and()
+        .csrf()
+          .csrfTokenRepository(csrfTokenRepository())
+      .and()
+          .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
+    }
+
+    private CsrfTokenRepository csrfTokenRepository() {
+      HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+      repository.setHeaderName("X-XSRF-TOKEN");
+      return repository;
+    }
+
+    private Filter csrfHeaderFilter() {
+      return new FilterThatSendsCookie("XSRF-TOKEN");
+    }
+
+  }
+
+}
+```
+
+== Add Resource Server
+
+image::images/angular/vanilla.png['Vanilla' Sample]
+
+(c.f. "vanilla": https://github.com/dsyer/spring-security-angular/tree/master/vanilla[https://github.com/.../vanilla], Part III)
+
+== Add Spring Session
+
+image::images/angular/spring-session.png['Spring Session' Sample]
+
+(c.f. "spring-session": https://github.com/dsyer/spring-security-angular/tree/master/spring-session[https://github.com/.../spring-session], Part III)
+
+== Add Gateway
+
+image::images/angular/proxy.png['Proxy' Sample]
+
+(c.f. "proxy": https://github.com/dsyer/spring-security-angular/tree/master/proxy[https://github.com/.../proxy], Part IV)
+
+== Push UI Below Gateway
+
+image::images/angular/double-basic.png['Basic' Sample with Gateway]
+
+== Add Resource Server
+
+image::images/angular/double-simple.png[Simplified 'Double' Sample]
+
+== Full "Double" Sample
+
+image::images/angular/double-components.png['Double' System Components]
+
+(c.f. "double": https://github.com/dsyer/spring-security-angular/tree/master/double[https://github.com/.../double], Part VI)
 
 == Links
 
+* http://presos.dsyer.com/decks/spring-security-angular.html
 * http://github.com/dsyer/spring-security-angular
 * http://github.com/spring-projects/spring-security-oauth
-* http://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation
-* http://blog.spring.io
-* http://presos.dsyer.com/decks/spring-security-angular.html
+* http://cloud.spring.io/spring-cloud-netflix (for `@EnableZuulProxy`)
+* http://spring.io/blog/2015/01/12/spring-and-angular-js-a-secure-single-page-application
 * Twitter: @david_syer  
 * Email: dsyer@pivotal.io
+
