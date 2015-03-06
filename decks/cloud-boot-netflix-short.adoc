@@ -19,6 +19,16 @@ Dave Syer, +
 http://twitter.com/david_syer[@david_syer], +
 dsyer@pivotal.io   
 
+== Links
+
+
+* http://github.com/spring-cloud
+* http://github.com/spring-cloud-samples
+* http://blog.spring.io
+* http://presos.dsyer.com/decks/cloud-boot-netflix.html
+* Twitter: http://twitter.com/spencerbgibb[@spencerbgibb], http://twitter.com/david_syer[@david_syer]
+* Email: sgibb@pivotal.io, dsyer@pivotal.io
+
 == Outline
 * Define microservices
 * Outline some distributed system problems
@@ -60,7 +70,7 @@ Deploying services needs to be simple and reproducible
 
 [source,console]
 ----
-$ cf push app.groovy
+$ cf push app -p app.groovy
 ----
 
 and you don't get much more convenient than that.
@@ -101,7 +111,7 @@ Coordination of distributed systems leads to boiler plate patterns
 * Service-to-service calls
 * Load balancing
 * Circuit Breaker
-* Asynchronous
+* Asynchronous patterns
 * Distributed messaging
 
 == Spring IO Platform
@@ -207,10 +217,6 @@ helloService.getMessage();
 @EnableZuulProxy
 @Controller
 class Application {
-  @RequestMapping("/")
-  String home() { 
-    return 'redirect:/index.html#/customers'
-  }
 }
 ----
 

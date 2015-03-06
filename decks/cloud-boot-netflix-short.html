@@ -33,6 +33,19 @@
 <a href="http://twitter.com/david_syer">@david_syer</a>,<br>
 <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p></div>
 </section>
+<section class="slide" id="_links">
+<h2>Links</h2>
+<div class="ulist">
+<ul>
+<li><a class="bare" href="http://github.com/spring-cloud">http://github.com/spring-cloud</a></li>
+<li><a class="bare" href="http://github.com/spring-cloud-samples">http://github.com/spring-cloud-samples</a></li>
+<li><a class="bare" href="http://blog.spring.io">http://blog.spring.io</a></li>
+<li><a class="bare" href="http://presos.dsyer.com/decks/cloud-boot-netflix.html">http://presos.dsyer.com/decks/cloud-boot-netflix.html</a></li>
+<li>Twitter: <a href="http://twitter.com/spencerbgibb">@spencerbgibb</a>, <a href="http://twitter.com/david_syer">@david_syer</a></li>
+<li>Email: <a href="mailto:sgibb@pivotal.io">sgibb@pivotal.io</a>, <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></li>
+</ul>
+</div>
+</section>
 <section class="slide" id="_outline">
 <h2>Outline</h2>
 <div class="ulist">
@@ -81,7 +94,7 @@
 <div class="paragraph"><p>Deploying services needs to be simple and reproducible</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="console language-console"><span class="tok-gp">$</span> cf push app.groovy</code></pre>
+<pre class="pygments highlight"><code class="console language-console"><span class="tok-gp">$</span> cf push app -p app.groovy</code></pre>
 </div>
 </div>
 <div class="paragraph"><p>and you don&#8217;t get much more convenient than that.</p></div>
@@ -131,7 +144,7 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 <li>Service-to-service calls</li>
 <li>Load balancing</li>
 <li>Circuit Breaker</li>
-<li>Asynchronous</li>
+<li>Asynchronous patterns</li>
 <li>Distributed messaging</li>
 </ul>
 </div>
@@ -286,10 +299,6 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 <pre class="pygments highlight"><code class="groovy language-groovy"><span class="tok-nd">@EnableZuulProxy</span>
 <span class="tok-nd">@Controller</span>
 <span class="tok-kd">class</span> <span class="tok-nc">Application</span> <span class="tok-o">{</span>
-  <span class="tok-nd">@RequestMapping</span><span class="tok-o">(</span><span class="tok-s2">&quot;/&quot;</span><span class="tok-o">)</span>
-  <span class="tok-n">String</span> <span class="tok-nf">home</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-    <span class="tok-k">return</span> <span class="tok-s1">&#39;redirect:/index.html#/customers&#39;</span>
-  <span class="tok-o">}</span>
 <span class="tok-o">}</span></code></pre>
 </div>
 </div>
@@ -299,7 +308,7 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 </ul>
 </div>
 </section>
-<section class="slide" id="_links">
+<section class="slide" id="_links_2">
 <h2>Links</h2>
 <div class="ulist">
 <ul>

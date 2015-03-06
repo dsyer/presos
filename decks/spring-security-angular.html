@@ -4,11 +4,14 @@
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta content="Asciidoctor 1.5.1" name="generator">
-<meta content="Dave Syer, 2014" name="author">
+<meta content="Dave Syer, 2015" name="author">
 <title>Spring Security and Angular</title>
+<link href="./asciidoctor-pygments.css" rel="stylesheet">
 <link href="../deck.js/core/deck.core.css" rel="stylesheet">
 <link href="../deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
 <link href="../deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
 <link href="../deck.js/themes/style/spring.css" media="screen" rel="stylesheet">
 <link href="../deck.js/themes/transition/fade.css" media="screen" rel="stylesheet">
 <link href="../deck.js/core/print.css" media="print" rel="stylesheet">
@@ -18,73 +21,438 @@
 <div class="deck-container">
 <section class="slide" id="title-slide">
 <h1>Spring Security and Angular</h1>
-<span id="author">Dave Syer, 2014</span>
+<span id="author">Dave Syer, 2015</span>
 <br>
 </section>
-<section class="slide" id="_outline">
-<h2>Outline</h2>
+<section class="slide" id="_agenda">
+<h2>Agenda</h2>
+<div class="ulist">
+<ul>
+<li>Really quick introduction to Spring Security, Spring Session, Angular JS</li>
+<li>Focus on features that build secure, modern, single-page applications</li>
+<li>High level view of sample apps presented in <a href="https://spring.io/blog/2015/01/12/spring-and-angular-js-a-secure-single-page-application">blog series</a></li>
+<li>More detailed look at some of the sample apps</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_spring_security">
+<h2>Spring Security</h2>
+<div class="ulist">
+<ul>
+<li>Generic, <code>Filter</code> based solution for Servlet applications</li>
+<li>Authentication (a.k.a. identity) and Authorization (a.k.a. access decisions)</li>
+<li>OAuth2 module useful for SSO and token-based API authentication</li>
+<li>lots of other features</li>
+<li><a class="bare" href="http://projects.spring.io/spring-security">http://projects.spring.io/spring-security</a></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_spring_session">
+<h2>Spring Session</h2>
+<div class="ulist">
+<ul>
+<li>Not tied to Spring Security, but works well with it</li>
+<li>Easy, declarative, distributed sessions</li>
+<li>Redis works out of the box, other backends easy to add</li>
+<li>Servlet <code>Filter</code></li>
+<li><a class="bare" href="http://projects.spring.io/spring-session">http://projects.spring.io/spring-session</a></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_angular_js">
+<h2>Angular JS</h2>
+<div class="ulist">
+<ul>
+<li>JavaScript framework</li>
+<li>"Magic" binding (dependency injection and MVC)</li>
+<li>Has a lot of traction in the enterprise</li>
+<li>Nothing about the architecture of the apps presented here requires Angular JS</li>
+<li>Really basic usage in samples, but representative</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_security_features_in_modern_browers">
+<h2>Security Features in Modern Browers</h2>
+<div class="ulist">
+<ul>
+<li>HTTP Basic</li>
+<li>X.509</li>
+<li>Kerberos</li>
+<li>Cookies</li>
+<li>CORS</li>
+<li>HSTS</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_spring_cloud">
+<h2>Spring Cloud</h2>
+<div class="ulist">
+<ul>
+<li>Toolbox for building distributed systems (a.k.a. microservices)</li>
+<li>Most relevant pattern here is Gateway (a.k.a. reverse micro-proxy)</li>
+<li>Also useful for configuration management, service discovery, load balancing, circuit breaker, etc.</li>
+<li><a class="bare" href="http://cloud.spring.io">http://cloud.spring.io</a></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_overview_of_sample_apps">
+<h2>Overview of Sample Apps</h2>
 <div class="paragraph"><p>Imagine several physical implementations of the same system with an identical Javascript client (single page application) and a secure back end. Application and security architecture variations:</p></div>
 <table class="tableblock frame-all grid-all" style="width:100%">
 <colgroup>
-<col style="width:33%">
-<col style="width:33%">
-<col style="width:33%">
+<col style="width:25%">
+<col style="width:25%">
+<col style="width:25%">
+<col style="width:25%">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Application</th>
 <th class="tableblock halign-left valign-top">Description</th>
 <th class="tableblock halign-left valign-top">Security</th>
+<th class="tableblock halign-left valign-top">Blog</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>basic</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Single backend with local user login and backend service</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP Basic for all authentications</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Single backend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP Basic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Part I</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>single</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Adds form authentication, but static HTML and an API resource still in the same server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie for all authentications after login, optional use of Spring Session to distribute data and/or change cookie name</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vanilla</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Backend split between UI (with login) and services in separate JVM, client calls services directly.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie used for UI as cookie. Backend is unsecured.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Adds form authentication</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Part II</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring-session</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Adds secure backend with custom token.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Form login and session cookie for UI, using session ID for backends as custom token. Spring Session ID is the token.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Adds secure backend with custom token</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Spring Session ID as token</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Part III</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>proxy</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Client calls services through UI acting as proxy. UI (with login) and services in separate JVM.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie used for all calls (proxy forwards cookie header), distributed via Spring Session</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vanilla-oauth2</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Add OAuth2 SSO with a separate authentication server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie used for UI and access token for backends</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UI acts as proxy.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie, Spring Session</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Part IV</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>oauth2</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Use JWT for OAuth2 token and add form login to authorization server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Show that sessions are still needed for CSRF protection</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add OAuth2 SSO with a separate authentication server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie in UI and access token for backends</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Part V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>double</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add "admin" UI behind Gateway</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie, Spring Session</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Part VI</p></td>
 </tr>
 </tbody>
 </table>
+</section>
+<section class="slide" id="_basic_sample">
+<h2>Basic Sample</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="Basic" src="images/angular/basic.png" width="Sample">
+</div>
+</div>
+<div class="paragraph"><p>(c.f. "basic": <a href="https://github.com/dsyer/spring-security-angular/tree/master/basic">https://github.com/&#8230;&#8203;/basic</a>, Part I)</p></div>
+</section>
+<section class="slide" id="_a_single_page_application">
+<h2>A Single Page Application</h2>
+<div class="paragraph"><p><code>index.html</code></p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="html language-html"><span class="tok-nt">&lt;html&gt;</span>
+...
+  <span class="tok-nt">&lt;body</span> <span class="tok-na">ng-app=</span><span class="tok-s">&quot;hello&quot;</span><span class="tok-nt">&gt;</span>
+    <span class="tok-nt">&lt;div</span> <span class="tok-na">class=</span><span class="tok-s">&quot;container&quot;</span><span class="tok-nt">&gt;</span>
+      <span class="tok-nt">&lt;h1&gt;</span>Greeting<span class="tok-nt">&lt;/h1&gt;</span>
+      <span class="tok-nt">&lt;div</span> <span class="tok-na">ng-controller=</span><span class="tok-s">&quot;home&quot;</span> <span class="tok-na">ng-cloak</span> <span class="tok-na">class=</span><span class="tok-s">&quot;ng-cloak&quot;</span><span class="tok-nt">&gt;</span>
+        <span class="tok-nt">&lt;p&gt;</span>The ID is {{greeting.id}}<span class="tok-nt">&lt;/p&gt;</span>
+        <span class="tok-nt">&lt;p&gt;</span>The content is {{greeting.content}}<span class="tok-nt">&lt;/p&gt;</span>
+      <span class="tok-nt">&lt;/div&gt;</span>
+    <span class="tok-nt">&lt;/div&gt;</span>
+    <span class="tok-nt">&lt;script </span><span class="tok-na">src=</span><span class="tok-s">&quot;js/angular-bootstrap.js&quot;</span> <span class="tok-na">type=</span><span class="tok-s">&quot;text/javascript&quot;</span><span class="tok-nt">&gt;&lt;/script&gt;</span>
+    <span class="tok-nt">&lt;script </span><span class="tok-na">src=</span><span class="tok-s">&quot;js/hello.js&quot;</span><span class="tok-nt">&gt;&lt;/script&gt;</span>
+  <span class="tok-nt">&lt;/body&gt;</span>
+<span class="tok-nt">&lt;/html&gt;</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_compleletly_minimal_javascript">
+<h2>Compleletly Minimal JavaScript</h2>
+<div class="paragraph"><p><code>hello.js</code></p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="javascript language-javascript"><span class="tok-nx">angular</span><span class="tok-p">.</span><span class="tok-nx">module</span><span class="tok-p">(</span><span class="tok-s1">&#39;hello&#39;</span><span class="tok-p">,</span> <span class="tok-p">[])</span>
+  <span class="tok-p">.</span><span class="tok-nx">controller</span><span class="tok-p">(</span><span class="tok-s1">&#39;home&#39;</span><span class="tok-p">,</span> <span class="tok-kd">function</span><span class="tok-p">(</span><span class="tok-nx">$scope</span><span class="tok-p">,</span> <span class="tok-nx">$http</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+    <span class="tok-nx">$http</span><span class="tok-p">.</span><span class="tok-nx">get</span><span class="tok-p">(</span><span class="tok-s1">&#39;/resource/&#39;</span><span class="tok-p">).</span><span class="tok-nx">success</span><span class="tok-p">(</span><span class="tok-kd">function</span><span class="tok-p">(</span><span class="tok-nx">data</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+      <span class="tok-nx">$scope</span><span class="tok-p">.</span><span class="tok-nx">greeting</span> <span class="tok-o">=</span> <span class="tok-nx">data</span><span class="tok-p">;</span>
+    <span class="tok-p">})</span>
+  <span class="tok-p">}</span>
+<span class="tok-p">);</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_add_http_basic_security">
+<h2>Add HTTP Basic Security</h2>
+<div class="paragraph"><p>With Spring Boot you get a secure application out of the box, but it is easy to customize for a custom user details store (e.g. directory).</p></div>
+<div class="paragraph"><p><code>pom.xml</code></p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="xml language-xml"><span class="tok-nt">&lt;dependency&gt;</span>
+  <span class="tok-nt">&lt;groupId&gt;</span>org.springframework.boot<span class="tok-nt">&lt;/groupId&gt;</span>
+  <span class="tok-nt">&lt;artifactId&gt;</span>spring-boot-starter-security<span class="tok-nt">&lt;/artifactId&gt;</span>
+/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>or <code>build.gradle</code></p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="groovy language-groovy"><span class="tok-n">dependencies</span> <span class="tok-o">{</span>
+  <span class="tok-n">compile</span><span class="tok-o">(</span><span class="tok-s1">&#39;org.springframework.boot:spring-boot-starter-security&#39;</span><span class="tok-o">)</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_basic_sample_with_authentication">
+<h2>Basic Sample with Authentication</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="Basic" src="images/angular/basic-auth.png" width="Sample with Authentication">
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_security_login_form">
+<h2>Spring Security: Login Form</h2>
+<div class="paragraph"><p>To be able to add a login form to the app we need to make some HTML static resources accessible anonymously</p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Configuration</span>
+<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">SecurityConfiguration</span> <span class="tok-kd">extends</span> <span class="tok-n">WebSecurityConfigurerAdapter</span> <span class="tok-o">{</span>
+  <span class="tok-nd">@Override</span>
+  <span class="tok-kd">protected</span> <span class="tok-kt">void</span> <span class="tok-nf">configure</span><span class="tok-o">(</span><span class="tok-n">HttpSecurity</span> <span class="tok-n">http</span><span class="tok-o">)</span> <span class="tok-kd">throws</span> <span class="tok-n">Exception</span> <span class="tok-o">{</span>
+    <span class="tok-n">http</span>
+      <span class="tok-o">.</span><span class="tok-na">httpBasic</span><span class="tok-o">()</span>
+    <span class="tok-o">.</span><span class="tok-na">and</span><span class="tok-o">()</span>
+      <span class="tok-o">.</span><span class="tok-na">authorizeRequests</span><span class="tok-o">()</span>
+        <span class="tok-o">.</span><span class="tok-na">antMatchers</span><span class="tok-o">(</span><span class="tok-s">&quot;/index.html&quot;</span><span class="tok-o">,</span> <span class="tok-s">&quot;/home.html&quot;</span><span class="tok-o">,</span>
+           <span class="tok-s">&quot;/login.html&quot;</span><span class="tok-o">,</span> <span class="tok-s">&quot;/&quot;</span><span class="tok-o">).</span><span class="tok-na">permitAll</span><span class="tok-o">()</span>
+        <span class="tok-o">.</span><span class="tok-na">anyRequest</span><span class="tok-o">().</span><span class="tok-na">authenticated</span><span class="tok-o">();</span>
+  <span class="tok-o">}</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph"><p>(c.f. "single": <a href="https://github.com/dsyer/spring-security-angular/tree/master/single">https://github.com/&#8230;&#8203;/single</a>, Part I)</p></div>
+</section>
+<section class="slide" id="_client_side_login_form">
+<h2>Client Side Login Form</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="html language-html"><span class="tok-nt">&lt;form</span> <span class="tok-na">role=</span><span class="tok-s">&quot;form&quot;</span> <span class="tok-na">ng-submit=</span><span class="tok-s">&quot;login()&quot;</span><span class="tok-nt">&gt;</span>
+  ...
+<span class="tok-nt">&lt;/form&gt;</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="javascript language-javascript"><span class="tok-nx">$scope</span><span class="tok-p">.</span><span class="tok-nx">credentials</span> <span class="tok-o">=</span> <span class="tok-p">{};</span>
+<span class="tok-nx">$scope</span><span class="tok-p">.</span><span class="tok-nx">login</span> <span class="tok-o">=</span> <span class="tok-kd">function</span><span class="tok-p">()</span> <span class="tok-p">{</span>
+  <span class="tok-nx">authenticate</span><span class="tok-p">(</span><span class="tok-nx">$scope</span><span class="tok-p">.</span><span class="tok-nx">credentials</span><span class="tok-p">,</span> <span class="tok-kd">function</span><span class="tok-p">(</span><span class="tok-nx">authenticated</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+    <span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-nx">authenticated</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+      <span class="tok-nx">console</span><span class="tok-p">.</span><span class="tok-nx">log</span><span class="tok-p">(</span><span class="tok-s2">&quot;Login succeeded&quot;</span><span class="tok-p">)</span>
+      <span class="tok-p">...</span>
+    <span class="tok-p">}</span> <span class="tok-k">else</span> <span class="tok-p">{</span>
+      <span class="tok-nx">console</span><span class="tok-p">.</span><span class="tok-nx">log</span><span class="tok-p">(</span><span class="tok-s2">&quot;Login failed&quot;</span><span class="tok-p">)</span>
+      <span class="tok-p">...</span>
+    <span class="tok-p">}</span>
+  <span class="tok-p">})</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>The <code>authenticate()</code> function sends HTTP Basic credentials and checks the "/user" endpoint.</li>
+<li>Subsequent requests are authenticated by a cookie - standard Spring Security and browser behaviour</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_one_more_thing">
+<h2>One More Thing</h2>
+<div class="ulist">
+<ul>
+<li>When the browser gets a 401 with "WWW-Authenticate: Basic &#8230;&#8203;" it pops up a dialog.</li>
+<li>Spring Security sends that header unless it sees "X-Requested-With" in the request.</li>
+</ul>
+</div>
+<div class="paragraph"><p>So:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="javascript language-javascript"><span class="tok-nx">angular</span><span class="tok-p">.</span><span class="tok-nx">module</span><span class="tok-p">(</span><span class="tok-s1">&#39;hello&#39;</span><span class="tok-p">,</span> <span class="tok-p">[]).</span><span class="tok-nx">config</span><span class="tok-p">(</span><span class="tok-kd">function</span><span class="tok-p">(</span><span class="tok-nx">$httpProvider</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+
+  <span class="tok-nx">$httpProvider</span><span class="tok-p">.</span><span class="tok-nx">defaults</span><span class="tok-p">.</span><span class="tok-nx">headers</span><span class="tok-p">.</span><span class="tok-nx">common</span><span class="tok-p">[</span><span class="tok-s2">&quot;X-Requested-With&quot;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;XMLHttpRequest&#39;</span><span class="tok-p">;</span>
+
+<span class="tok-p">})</span>
+<span class="tok-p">...</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_login_form_summary">
+<h2>Login Form Summary</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="Single" src="images/angular/single.png" width="Sample">
+</div>
+</div>
+<div class="paragraph"><p>(c.f. "single": <a href="https://github.com/dsyer/spring-security-angular/tree/master/single">https://github.com/&#8230;&#8203;/single</a>, Part II)</p></div>
+</section>
+<section class="slide" id="_cross_site_request_forgery_csrf">
+<h2>Cross Site Request Forgery (CSRF)</h2>
+<div class="ulist">
+<ul>
+<li>Spring Security and Angular JS have good support for CSRF protection</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-all" style="width:100%">
+<colgroup>
+<col style="width:20%">
+<col style="width:20%">
+<col style="width:20%">
+<col style="width:20%">
+<col style="width:20%">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-left valign-top">To Client</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">From Client</th>
+<th class="tableblock halign-left valign-top">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Spring Security</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Request attribute</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_csrf</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Request header</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X-CSRF-TOKEN</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Angular JS</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cookie</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">XSRF-TOKEN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Request header</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X-XSRF-TOKEN</p></td>
+</tr>
+</tbody>
+</table>
+<div class="ulist">
+<ul>
+<li>They don&#8217;t talk to each other by default</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_spring_security_for_angular_xsrf">
+<h2>Spring Security for Angular "XSRF"</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Configuration</span>
+<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">SecurityConfiguration</span> <span class="tok-kd">extends</span> <span class="tok-n">WebSecurityConfigurerAdapter</span> <span class="tok-o">{</span>
+
+  <span class="tok-nd">@Override</span>
+  <span class="tok-kd">protected</span> <span class="tok-kt">void</span> <span class="tok-nf">configure</span><span class="tok-o">(</span><span class="tok-n">HttpSecurity</span> <span class="tok-n">http</span><span class="tok-o">)</span> <span class="tok-kd">throws</span> <span class="tok-n">Exception</span> <span class="tok-o">{</span>
+      <span class="tok-n">http</span>
+        <span class="tok-o">...</span>
+      <span class="tok-o">.</span><span class="tok-na">and</span><span class="tok-o">()</span>
+        <span class="tok-o">.</span><span class="tok-na">csrf</span><span class="tok-o">()</span>
+          <span class="tok-o">.</span><span class="tok-na">csrfTokenRepository</span><span class="tok-o">(</span><span class="tok-n">csrfTokenRepository</span><span class="tok-o">())</span>
+      <span class="tok-o">.</span><span class="tok-na">and</span><span class="tok-o">()</span>
+          <span class="tok-o">.</span><span class="tok-na">addFilterAfter</span><span class="tok-o">(</span><span class="tok-n">csrfHeaderFilter</span><span class="tok-o">(),</span> <span class="tok-n">CsrfFilter</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">);</span>
+    <span class="tok-o">}</span>
+
+    <span class="tok-kd">private</span> <span class="tok-n">CsrfTokenRepository</span> <span class="tok-nf">csrfTokenRepository</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+      <span class="tok-n">HttpSessionCsrfTokenRepository</span> <span class="tok-n">repository</span> <span class="tok-o">=</span> <span class="tok-k">new</span> <span class="tok-nf">HttpSessionCsrfTokenRepository</span><span class="tok-o">();</span>
+      <span class="tok-n">repository</span><span class="tok-o">.</span><span class="tok-na">setHeaderName</span><span class="tok-o">(</span><span class="tok-s">&quot;X-XSRF-TOKEN&quot;</span><span class="tok-o">);</span>
+      <span class="tok-k">return</span> <span class="tok-n">repository</span><span class="tok-o">;</span>
+    <span class="tok-o">}</span>
+
+    <span class="tok-kd">private</span> <span class="tok-n">Filter</span> <span class="tok-nf">csrfHeaderFilter</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+      <span class="tok-k">return</span> <span class="tok-k">new</span> <span class="tok-nf">FilterThatSendsCookie</span><span class="tok-o">(</span><span class="tok-s">&quot;XSRF-TOKEN&quot;</span><span class="tok-o">);</span>
+    <span class="tok-o">}</span>
+
+  <span class="tok-o">}</span>
+
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_add_resource_server">
+<h2>Add Resource Server</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="Vanilla" src="images/angular/vanilla.png" width="Sample">
+</div>
+</div>
+<div class="paragraph"><p>(c.f. "vanilla": <a href="https://github.com/dsyer/spring-security-angular/tree/master/vanilla">https://github.com/&#8230;&#8203;/vanilla</a>, Part III)</p></div>
+</section>
+<section class="slide" id="_add_spring_session">
+<h2>Add Spring Session</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="Spring Session" src="images/angular/spring-session.png" width="Sample">
+</div>
+</div>
+<div class="paragraph"><p>(c.f. "spring-session": <a href="https://github.com/dsyer/spring-security-angular/tree/master/spring-session">https://github.com/&#8230;&#8203;/spring-session</a>, Part III)</p></div>
+</section>
+<section class="slide" id="_add_gateway">
+<h2>Add Gateway</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="Proxy" src="images/angular/proxy.png" width="Sample">
+</div>
+</div>
+<div class="paragraph"><p>(c.f. "proxy": <a href="https://github.com/dsyer/spring-security-angular/tree/master/proxy">https://github.com/&#8230;&#8203;/proxy</a>, Part IV)</p></div>
+</section>
+<section class="slide" id="_push_ui_below_gateway">
+<h2>Push UI Below Gateway</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="Basic" src="images/angular/double-basic.png" width="Sample with Gateway">
+</div>
+</div>
+</section>
+<section class="slide" id="_add_resource_server_2">
+<h2>Add Resource Server</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="Simplified 'Double' Sample" src="images/angular/double-simple.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_full_double_sample">
+<h2>Full "Double" Sample</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="Double" src="images/angular/double-components.png" width="System Components">
+</div>
+</div>
+<div class="paragraph"><p>(c.f. "double": <a href="https://github.com/dsyer/spring-security-angular/tree/master/double">https://github.com/&#8230;&#8203;/double</a>, Part VI)</p></div>
 </section>
 <section class="slide" id="_links">
 <h2>Links</h2>
 <div class="ulist">
 <ul>
+<li><a class="bare" href="http://presos.dsyer.com/decks/spring-security-angular.html">http://presos.dsyer.com/decks/spring-security-angular.html</a></li>
 <li><a class="bare" href="http://github.com/dsyer/spring-security-angular">http://github.com/dsyer/spring-security-angular</a></li>
 <li><a class="bare" href="http://github.com/spring-projects/spring-security-oauth">http://github.com/spring-projects/spring-security-oauth</a></li>
-<li><a class="bare" href="http://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation">http://github.com/spring-projects/spring-security-oauth/tree/master/tests/annotation</a></li>
-<li><a class="bare" href="http://blog.spring.io">http://blog.spring.io</a></li>
-<li><a class="bare" href="http://presos.dsyer.com/decks/spring-security-angular.html">http://presos.dsyer.com/decks/spring-security-angular.html</a></li>
+<li><a class="bare" href="http://cloud.spring.io/spring-cloud-netflix">http://cloud.spring.io/spring-cloud-netflix</a> (for <code>@EnableZuulProxy</code>)</li>
+<li><a class="bare" href="http://spring.io/blog/2015/01/12/spring-and-angular-js-a-secure-single-page-application">http://spring.io/blog/2015/01/12/spring-and-angular-js-a-secure-single-page-application</a></li>
 <li>Twitter: @david_syer</li>
 <li>Email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></li>
 </ul>
@@ -94,11 +462,18 @@
 <a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
 <a class="deck-next-link" href="#" title="Next">&#8594;</a>
 </div>
+<p aria-role="status" class="deck-status">
+<span class="deck-status-current"></span>
+/
+<span class="deck-status-total"></span>
+</p>
 </div>
 <script src="../deck.js/jquery.min.js"></script>
 <script src="../deck.js/core/deck.core.js"></script>
 <script src="../deck.js/extensions/scale/deck.scale.js"></script>
+<script src="../deck.js/extensions/menu/deck.menu.js"></script>
 <script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="../deck.js/extensions/status/deck.status.js"></script>
 <script>
   (function($, deck, undefined) {
     $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
