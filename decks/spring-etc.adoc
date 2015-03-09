@@ -1,0 +1,25 @@
+= Spring at Pivotal
+Dave Syer, Stéphane Maldini, 2015
+:backend: deckjs
+:deckjs_transition: fade
+:navigation:
+:menu:
+:status:
+:source-highlighter: pygments
+:deckjs_theme: spring
+:deckjsdir: ../deck.js
+
+== Agenda
+
+* What's happening in Spring
+* How does it fit in at Pivotal?
+
+== Links
+
+* Spring Boot: http://projects.spring.io/boot
+* Spring Cloud: http://cloud.spring.io
+* Reactor: http://projectreactor.io
+* Cloud Foundry (PWS): http://run.pivotal.io
+* Pivotal Cloud Foundry (PCF): http://pivotal.io/cloud
+* http://12factor.net
+* http://www.reactive-streams.org
