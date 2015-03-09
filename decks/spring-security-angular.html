@@ -31,7 +31,7 @@
 <li>Really quick introduction to Spring Security, Spring Session, Angular JS</li>
 <li>Focus on features to build secure, modern, single-page applications</li>
 <li>High level view of sample apps presented in <a href="https://spring.io/blog/2015/01/12/spring-and-angular-js-a-secure-single-page-application">blog series</a></li>
-<li>More detailed look at some of the sample apps</li>
+<li>More detailed look at some of the apps</li>
 </ul>
 </div>
 </section>
@@ -44,18 +44,6 @@
 <li>OAuth2 module useful for SSO and token-based API authentication</li>
 <li>lots of other features</li>
 <li><a class="bare" href="http://projects.spring.io/spring-security">http://projects.spring.io/spring-security</a></li>
-</ul>
-</div>
-</section>
-<section class="slide" id="_spring_session">
-<h2>Spring Session</h2>
-<div class="ulist">
-<ul>
-<li>Not tied to Spring Security, but works well with it</li>
-<li>Easy, declarative, distributed sessions</li>
-<li>Redis works out of the box, other backends easy to add</li>
-<li>Servlet <code>Filter</code></li>
-<li><a class="bare" href="http://projects.spring.io/spring-session">http://projects.spring.io/spring-session</a></li>
 </ul>
 </div>
 </section>
@@ -76,11 +64,25 @@
 <div class="ulist">
 <ul>
 <li>HTTP Basic</li>
-<li>X.509</li>
+<li>X.509 authentication</li>
 <li>Kerberos</li>
 <li>Cookies</li>
-<li>CORS</li>
-<li>HSTS</li>
+<li>CORS (Common Origin Resource Sharing)</li>
+<li>HSTS (HTTP Strict Transport Security)</li>
+<li>CSP (Content Security Policy)</li>
+</ul>
+</div>
+<div class="paragraph"><p>Sub-text: "use them, they&#8217;re reliable and free".</p></div>
+</section>
+<section class="slide" id="_spring_session">
+<h2>Spring Session</h2>
+<div class="ulist">
+<ul>
+<li>Not tied to Spring Security, but works well with it</li>
+<li>Easy, declarative, distributed sessions</li>
+<li>Redis works out of the box, other backends easy to add</li>
+<li>Servlet <code>Filter</code></li>
+<li><a class="bare" href="http://projects.spring.io/spring-session">http://projects.spring.io/spring-session</a></li>
 </ul>
 </div>
 </section>
@@ -263,7 +265,9 @@
 <div class="content">
 <pre class="pygments highlight"><code class="javascript language-javascript"><span class="tok-nx">$scope</span><span class="tok-p">.</span><span class="tok-nx">credentials</span> <span class="tok-o">=</span> <span class="tok-p">{};</span>
 <span class="tok-nx">$scope</span><span class="tok-p">.</span><span class="tok-nx">login</span> <span class="tok-o">=</span> <span class="tok-kd">function</span><span class="tok-p">()</span> <span class="tok-p">{</span>
+
   <span class="tok-nx">authenticate</span><span class="tok-p">(</span><span class="tok-nx">$scope</span><span class="tok-p">.</span><span class="tok-nx">credentials</span><span class="tok-p">,</span> <span class="tok-kd">function</span><span class="tok-p">(</span><span class="tok-nx">authenticated</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+
     <span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-nx">authenticated</span><span class="tok-p">)</span> <span class="tok-p">{</span>
       <span class="tok-nx">console</span><span class="tok-p">.</span><span class="tok-nx">log</span><span class="tok-p">(</span><span class="tok-s2">&quot;Login succeeded&quot;</span><span class="tok-p">)</span>
       <span class="tok-p">...</span>
@@ -271,7 +275,9 @@
       <span class="tok-nx">console</span><span class="tok-p">.</span><span class="tok-nx">log</span><span class="tok-p">(</span><span class="tok-s2">&quot;Login failed&quot;</span><span class="tok-p">)</span>
       <span class="tok-p">...</span>
     <span class="tok-p">}</span>
+
   <span class="tok-p">})</span>
+
 <span class="tok-p">}</span></code></pre>
 </div>
 </div>
@@ -418,6 +424,15 @@
 </div>
 </div>
 <div class="paragraph"><p>(c.f. "proxy": <a href="https://github.com/dsyer/spring-security-angular/tree/master/proxy">https://github.com/&#8230;&#8203;/proxy</a>, Part IV)</p></div>
+</section>
+<section class="slide" id="_externalize_authentication_sso">
+<h2>Externalize Authentication (SSO)</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="OAuth2" src="images/angular/oauth2.png" width="System Components">
+</div>
+</div>
+<div class="paragraph"><p>(c.f. "oauth2": <a href="https://github.com/dsyer/spring-security-angular/tree/master/proxy">https://github.com/&#8230;&#8203;/oauth2</a>, Part V)</p></div>
 </section>
 <section class="slide" id="_push_ui_below_gateway">
 <h2>Push UI Below Gateway</h2>

@@ -14,7 +14,7 @@ Dave Syer, 2015
 * Really quick introduction to Spring Security, Spring Session, Angular JS
 * Focus on features to build secure, modern, single-page applications
 * High level view of sample apps presented in https://spring.io/blog/2015/01/12/spring-and-angular-js-a-secure-single-page-application[blog series]
-* More detailed look at some of the sample apps
+* More detailed look at some of the apps
 
 == Spring Security
 
@@ -23,14 +23,6 @@ Dave Syer, 2015
 * OAuth2 module useful for SSO and token-based API authentication
 * lots of other features
 * http://projects.spring.io/spring-security
-
-== Spring Session
-
-* Not tied to Spring Security, but works well with it
-* Easy, declarative, distributed sessions
-* Redis works out of the box, other backends easy to add
-* Servlet `Filter`
-* http://projects.spring.io/spring-session
 
 == Angular JS
 
@@ -43,11 +35,22 @@ Dave Syer, 2015
 == Security Features in Modern Browers
 
 * HTTP Basic
-* X.509
+* X.509 authentication
 * Kerberos
 * Cookies
-* CORS
-* HSTS
+* CORS (Common Origin Resource Sharing)
+* HSTS (HTTP Strict Transport Security)
+* CSP (Content Security Policy)
+
+Sub-text: "use them, they're reliable and free".
+
+== Spring Session
+
+* Not tied to Spring Security, but works well with it
+* Easy, declarative, distributed sessions
+* Redis works out of the box, other backends easy to add
+* Servlet `Filter`
+* http://projects.spring.io/spring-session
 
 == Spring Cloud
 
@@ -189,7 +192,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 ```javascript
 $scope.credentials = {};
 $scope.login = function() {
+
   authenticate($scope.credentials, function(authenticated) {
+
     if (authenticated) {
       console.log("Login succeeded")
       ...            
@@ -197,7 +202,9 @@ $scope.login = function() {
       console.log("Login failed")
       ...
     }
+
   })
+
 }
 ```
 
@@ -298,6 +305,12 @@ image::images/angular/spring-session.png['Spring Session' Sample]
 image::images/angular/proxy.png['Proxy' Sample]
 
 (c.f. "proxy": https://github.com/dsyer/spring-security-angular/tree/master/proxy[https://github.com/.../proxy], Part IV)
+
+== Externalize Authentication (SSO)
+
+image::images/angular/oauth2.png['OAuth2' System Components]
+
+(c.f. "oauth2": https://github.com/dsyer/spring-security-angular/tree/master/proxy[https://github.com/.../oauth2], Part V)
 
 == Push UI Below Gateway
 

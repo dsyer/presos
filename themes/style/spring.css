@@ -1,0 +1,113 @@
+.deck-container {
+  font-family: "Arial", sans-serif;
+  font-size: 1.75em;
+  background: #fff;
+}
+.deck-container .slide {
+  background: #fff;
+}
+.deck-container .slide h2 {
+  border-bottom: 4px solid #267b42;
+}
+.deck-container .slide pre {
+  border-color: #ccc;
+  font-size: 70%;
+  padding: 8px;
+  margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+.deck-container .slide code {
+  color: #888;
+}
+.deck-container .slide blockquote {
+  font-size: 0.90em;
+  font-style: italic;
+  padding: 1em 2em;
+  color: #000;
+  border-left: 5px solid #ccc;
+}
+.deck-container .slide blockquote p {
+  margin: 0;
+}
+.deck-container .slide blockquote cite {
+  font-size: .5em;
+  font-style: normal;
+  font-weight: bold;
+  color: #888;
+}
+.deck-container .deck-status {
+  vertical-align:middle;
+  color: #888;
+}
+.deck-status span.deck-status-current {
+  padding-left: 10px;
+}
+#footer {
+	width: 100%;
+}
+@media print {
+  #footer {
+    display: none;
+  }
+}
+#slide1 {
+  background: none;
+  height: 720px;
+}
+#slide1 > h1 {
+  border: none;
+  font-weight: normal;
+  text-align: center;
+  padding-top: 420px;
+  font-size: 1.5em;
+}
+#slide1 > p {
+	font-size: 0.8em;
+	margin-top: 12px;
+	margin-bottom: 12px;
+}
+
+.slide ul ul, .slide ol ol {
+    margin-bottom: 0px;
+}
+
+ul > li {
+	font-size: 1.0em;
+}
+
+.slide ul p {
+    margin: 0px;
+    margin-top: 4px;
+}
+
+.slide > ul > li > ul > li {
+	font-size: 0.95em;
+    margin: 0px;
+    padding: 0px;
+}
+
+.slide > ul > li > ul > li,
+.slide > ul > li > ul > li > ul > li > ul > li {
+	list-style-image: url("dash.png");
+}
+
+.slide table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.slide table th {font-weight:bold}
+.slide table th, .slide table td {border:1px solid #ddd;padding:6px 13px}
+.slide table tr {border-top:1px solid #ccc;background-color:#fff}
+.slide table tr:nth-child(2n) {background-color:#f8f8f8}
+
+#center {display:table;width:100%;height:600px;overflow:hidden}
+#center div {display:table-cell;margin:0px auto;text-align:center;vertical-align:middle}
+
+div.demo {
+  color: #AAAAAA;
+  font-size: 120%;
+  font-style: italic;
+  margin-top: 150px;
+  text-align: center;
+}
