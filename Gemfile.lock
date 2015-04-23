@@ -8,7 +8,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    asciidoctor (1.5.1)
+    asciidoctor (1.5.2)
     blankslate (2.1.2.4)
     celluloid (0.16.0)
       timers (~> 4.0.0)
