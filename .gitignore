@@ -7,5 +7,5 @@ progress/
 .#*
 _includes/
 _site/
-deck.js
+tmp/
 asciidoctor-backends/
