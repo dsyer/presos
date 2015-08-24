@@ -1,0 +1,56 @@
+= Developer Experience with Spring Cloud
+Spencer Gibb, Dave Syer, 2015
+:backend: deckjs
+:deckjs_transition: fade
+:navigation:
+:menu:
+:status:
+:source-highlighter: pygments
+:deckjs_theme: spring
+:deckjsdir: ../deck.js
+
+== Authors
+
+Spencer Gibb, +
+http://twitter.com/spencerbgibb[@spencerbgibb], +
+sgibb@pivotal.io
+
+Dave Syer, +
+http://twitter.com/david_syer[@david_syer], +
+dsyer@pivotal.io
+
+== Lattice native discovery, Eureka
+
+== Routing from lattice to IDE (ie local dev experience)
+
+== Configuration models:
+
+* flag to enable local route
+* prefer route that “looks local”
+* Flag a request (e.g. header with correlation ID)
+
+== Stubbing (e.g. see micro-infra “forced stubbing”)
+
+== Hot reloading
+
+Hot reloading of “local” application code deployed on Cloud Foundry / Lattice
+
+== ALM
+
+how does new code enter a build pipeline and get promoted to production?
+
+== Ability to debug http requests
+
+* distributed tracing
+* cf/lattice logs
+* https://ngrok.com
+
+== Docker volumes and database/middleware services
+
+== Discovery and DI of database/middleware services
+
+== Provisioning a system for testing
+
+* Docker compose
+* Locally with VirtualBox
+* Remotely Lattice AWS, PCF, etc.
