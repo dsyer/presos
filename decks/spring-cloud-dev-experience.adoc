@@ -29,7 +29,10 @@ dsyer@pivotal.io
 * prefer route that “looks local”
 * Flag a request (e.g. header with correlation ID)
 
-== Stubbing (e.g. see micro-infra “forced stubbing”)
+== Stubbing
+
+* Greenfield (dependent services don't exist yet, write stubs)
+* Brownfield (dependent services exist and have published stubs)
 
 == Hot reloading
 
