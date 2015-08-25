@@ -34,6 +34,66 @@ dsyer@pivotal.io
 * Greenfield (dependent services don't exist yet, write stubs)
 * Brownfield (dependent services exist and have published stubs)
 
+== Stubbing Brownfield Services
+
+* Create http://wiremock.org/stubbing.html[Wiremock] stubs using tests or dsl
+** https://github.com/Codearte/accurest[AccuREST] uses a groovy dsl to create integration tests and stubs.
+** https://github.com/spring-projects/spring-restdocs[Spring REST Docs] uses tests to generate snippets for documentation and can be used to create stubs.
+* Run Wiremock using generated stubs
+* Run consuming services against Wiremock stubs
+
+== Stubbing: AccuREST DSL
+
+Generates a MockMVC test and a Wiremock stub
+
+[source,groovy]
+----
+import io.codearte.accurest.dsl.GroovyDsl
+
+GroovyDsl groovyDsl = GroovyDsl.make {
+    request {
+        method 'GET'
+        url '/foo'
+    }
+    response {
+        status 200
+        headers {
+            header 'Content-Type' : 'application/json;charset=UTF-8'
+        }
+        body '''{ "value" : 42 }'''
+    }
+}
+----
+
+== Stubbing: Wiremock Stub
+
+[source,json]
+----
+{
+    "request": {
+        "method": "GET",
+        "url": "/foo"
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+        "body": "{\"value\":42}"
+    }
+}
+----
+
+== Stubbing: 4finance stubrunner
+
+* Publish stub files to nexus repository (or local maven repo)
+* Describe a services dependencies in `application.yml`
+* Stubrunner using list of dependencies
+** Grabs stubs from repository
+** Runs a wiremock server for each dependency using fetched stubs
+** Registers server in service discovery
+* Consuming service can function against stubs *(DEMO)*
+
 == Hot reloading
 
 Hot reloading of “local” application code deployed on Cloud Foundry / Lattice
