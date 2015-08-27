@@ -4,6 +4,7 @@ Spencer Gibb, Dave Syer, 2015
 :deckjs_transition: fade
 :navigation:
 :menu:
+:goto:
 :status:
 :source-highlighter: pygments
 :deckjs_theme: spring
@@ -19,18 +20,59 @@ Dave Syer, +
 http://twitter.com/david_syer[@david_syer], +
 dsyer@pivotal.io
 
+== Devops open data
+
+* "if you build it you run it"
+* 12-factor principles
+* logs
+* actuator endpoints: /trace, /routes, /mappings, /env, /configprops. /beans, /autoconfig
+
+== Service discovery background
+
+image::images/CustomersStoresSystem.svg[customer-stores-system]
+
+== Spring Cloud Discovery
+
+* `spring-cloud-commons`: useful abstractions `DiscoveryClient`, `LoadBalancer`, `@EnableServiceDiscovery`
+* `spring-cloud-netflix`: Eureka and Ribbon
+* `spring-cloud-consul`: Hashicorp Caonsul
+* `spring-cloud-zookeeper`: Zookeeper
+
 == Lattice native discovery, Eureka
 
-== Routing from lattice to IDE (ie local dev experience)
+== Cloud Foundry native discovery, Eureka
 
-== Configuration models:
+== Debugging and fault finding
+
+> Your app won't always work first time. How to diagnose the problem?
+
+* collecting logs from remote system (/logs endpoint and `cf logs`)
+* changing log levels at runtime
+* feature switches
+* remote debugger (see later: Spring Boot Devtools)
+* deploy locally
+
+== Routing from remote system to IDE
+
+image::images/LocalDev.svg[TODO: Local dev architecture]
+
+* local dev experience
+* use proxy to tunnel back to IDE (e.g. ngrok)
+* demo with Boot Dashboard
+
+== Loadbalancer configuration models
 
 * flag to enable local route
 * prefer route that “looks local”
-* Flag a request (e.g. header with correlation ID)
+* flag a request (e.g. header with correlation ID)
+
+== Customizing Ribbon
 
 == Stubbing
 
+* “forced stubbing” (see micro-infra from 4financeIT)
+* ad-hoc stubbing: wiremock, stubby4j, Spring MVC
+* embedded stubs vs. remote stubs
 * Greenfield (dependent services don't exist yet, write stubs)
 * Brownfield (dependent services exist and have published stubs)
 
@@ -96,21 +138,43 @@ GroovyDsl groovyDsl = GroovyDsl.make {
 
 == Hot reloading
 
-Hot reloading of “local” application code deployed on Cloud Foundry / Lattice
+> Hot reloading of “local” application code deployed on Cloud Foundry / Lattice
+
+image::images/DevToolsHotReload.svg[TODO: Hot reload architecture]
+
+* Spring Boot support via devtools
+* classloader flushes dirty resources
+* remote debug also possible (but slow)
 
 == ALM
 
-how does new code enter a build pipeline and get promoted to production?
+> How does new code enter a build pipeline and get promoted to production?
 
-== Ability to debug http requests
+* always automated
+* always part of CI process
+* stay close to production platform (e.g. use Cloud Foundry for everything)
 
-* distributed tracing
-* cf/lattice logs
-* https://ngrok.com
+== Debugging requests
 
-== Docker volumes and database/middleware services
+* live vs. historic
+* /trace endpoint
+* distributed tracing (http and messages)
+* cf/lattice logs (http and messages)
+* https://ngrok.com (http)
 
-== Discovery and DI of database/middleware services
+== Database/middleware: Docker
+
+* standard docker images exist for all common middleware
+* perfect for development
+* can be used in production with care
+
+== Middleware: Discovery and DI
+
+> How to wire up your application code to required middleware, and make the same code run in all environments?
+
+* use autoconfiguration
+* use Spring Cloud Connectors (a bit)
+* use Spring Cloud Stream for messaging middleware
 
 == Provisioning a system for testing
 
