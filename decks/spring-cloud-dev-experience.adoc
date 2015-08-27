@@ -107,6 +107,30 @@ GroovyDsl groovyDsl = GroovyDsl.make {
 }
 ----
 
+== Stubbing: Spring REST Docs
+
+[source,java]
+----
+@Before
+public void setup() {
+    this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
+        .apply(documentationConfiguration()
+                .snippets().withDefaults(curlRequest(),
+                    httpRequest(),
+                    httpResponse(),
+                    new WiremockStubSnippet()))
+        .build();
+}
+
+@Test
+public void foo() {
+    this.mockMvc.perform(get("/foo")
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andDo(document("foo"));
+}
+----
+
 == Stubbing: Wiremock Stub
 
 [source,json]
