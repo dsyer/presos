@@ -5,6 +5,7 @@ layout: home
 
 # Presentations
 
+* [Spring CLoud Developer Experience](decks/spring-cloud-dev-experience.html) (with Spencer Gibb)
 * [Spring Security and Angular JS](decks/spring-security-angular.html)
 * [Spring Cloud and Netflix OSS](decks/cloud-boot-netflix.html) (with Spencer Gibb)
 * [Spring Boot in the Web Tier](decks/spring-boot-for-the-web-tier.html) (with Phil Webb)

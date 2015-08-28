@@ -20,12 +20,30 @@ Dave Syer, +
 http://twitter.com/david_syer[@david_syer], +
 dsyer@pivotal.io
 
+== Developer Experience
+
+* Microservices lead to a very open flexible architecture
+* Developer needs to work on isolated codebase
+* No-one wants to re-deploy the universe for every commit
+* What tools and techniques are available to help?
+* How can Spring, Spring Cloud, Cloud Foundry play a role?
+
 == Devops open data
 
 * "if you build it you run it"
 * 12-factor principles
 * logs
-* actuator endpoints: /trace, /routes, /mappings, /env, /configprops. /beans, /autoconfig
+* actuator endpoints: /trace, /routes, /mappings, /env, /configprops, /beans, /autoconfig
+
+== Debugging and fault finding
+
+> Your app won't always work first time. How to diagnose the problem?
+
+* collecting logs from remote system (/logs endpoint and `cf logs`)
+* changing log levels at runtime
+* feature switches
+* remote debugger (see later: Spring Boot Devtools)
+* deploy locally
 
 == Service discovery background
 
@@ -41,16 +59,6 @@ image::images/CustomersStoresSystem.svg[customer-stores-system]
 == Lattice native discovery, Eureka
 
 == Cloud Foundry native discovery, Eureka
-
-== Debugging and fault finding
-
-> Your app won't always work first time. How to diagnose the problem?
-
-* collecting logs from remote system (/logs endpoint and `cf logs`)
-* changing log levels at runtime
-* feature switches
-* remote debugger (see later: Spring Boot Devtools)
-* deploy locally
 
 == Routing from remote system to IDE
 
@@ -70,9 +78,12 @@ image::images/LocalDev.svg[TODO: Local dev architecture]
 
 == Stubbing
 
-* “forced stubbing” (see micro-infra from 4financeIT)
-* ad-hoc stubbing: wiremock, stubby4j, Spring MVC
+* “forced stubbing” (see micro-infra from 4finance)
+* ad-hoc stubbing: accurest, wiremock, stubby4j, Spring MVC
 * embedded stubs vs. remote stubs
+
+High level:
+
 * Greenfield (dependent services don't exist yet, write stubs)
 * Brownfield (dependent services exist and have published stubs)
 
@@ -150,6 +161,26 @@ public void foo() {
 }
 ----
 
+== Stubbing: Spring MVC
+
+[source,java]
+----
+@Controller
+public class StubFleetLocationServiceApplication {
+
+	@RequestMapping("/locations")
+	public String home() {
+		return "forward:/stubs/locations.json";
+	}
+
+	...
+
+}
+----
+
+Nice side effect: mock MVC and restdocs for tests and docs can be used
+to verify real service contract as well
+
 == Stubbing: 4finance stubrunner
 
 * Publish stub files to nexus repository (or local maven repo)
@@ -177,6 +208,7 @@ image::images/DevToolsHotReload.svg[TODO: Hot reload architecture]
 * always automated
 * always part of CI process
 * stay close to production platform (e.g. use Cloud Foundry for everything)
+* don't redeploy the universe for every change
 
 == Debugging requests
 
