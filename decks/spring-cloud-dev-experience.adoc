@@ -76,6 +76,48 @@ image::images/LocalDev.svg[TODO: Local dev architecture]
 
 == Customizing Ribbon
 
+* Ribbon is a client side smart load-balancer from Netflix OSS
+* `IRule`: Load-balancing algorithm (round-robin, random, etc...)
+* `ServerList`: Where to get the list of servers to load-balance.
+** `ConfigurationBasedServerList`: via `ribbon.<clientname>.listOfServers` property
+** `DiscoveryEnabledNIWSServerList`: via eureka
+** `ConsulServerList`: via hashicorp consul
+** `ZookeeperServerList`: ...
+* `ServerListFilter`: filter obtained list of servers.
+
+== Ribbon Annotations
+
+* `@RibbonClients`
+** Optionally defines default java config classes for all ribbon clients.
+** Allows multiple `@RibbonClient` annotations.
+* `@RibbonClient`: allows configuration for a named ribbon client.
+
+== Ribbon in Integration Tests
+
+[source,java]
+----
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = MyTests.Application.class)
+@WebIntegrationTest(randomPort = true)
+public class MyTests { /*...*/
+  @Configuration
+  @RibbonClient(name = "localapp",
+       configuration = LocalRibbonClientConfig.class)
+  protected static class Application { /*...*/ }
+
+  @Configuration
+  static class LocalRibbonClientConfig {
+    @Value("${local.server.port}")
+    private int port = 0;
+
+    @Bean
+    public ServerList<Server> ribbonServerList() {
+      return new StaticServerList<>(new Server("localhost", this.port));
+    }
+  }
+}
+----
+
 == Stubbing
 
 * “forced stubbing” (see micro-infra from 4finance)
