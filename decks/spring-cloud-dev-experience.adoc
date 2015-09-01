@@ -20,6 +20,12 @@ Dave Syer, +
 http://twitter.com/david_syer[@david_syer], +
 dsyer@pivotal.io
 
+== Cloud Native Contracts
+
+image::images/cnc.svg[cloud-native-contracts]
+
+> With thanks to @littleidea
+
 == Developer Experience
 
 * Microservices lead to a very open flexible architecture
