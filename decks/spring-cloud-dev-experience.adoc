@@ -22,7 +22,7 @@ dsyer@pivotal.io
 
 == Cloud Native Contracts
 
-image::images/cnc.svg[cloud-native-contracts]
+image::images/cnc.png[cloud-native-contracts]
 
 > With thanks to @littleidea
 
@@ -85,10 +85,10 @@ image::images/LocalDev.svg[TODO: Local dev architecture]
 * Ribbon is a client side smart load-balancer from Netflix OSS
 * `IRule`: Load-balancing algorithm (round-robin, random, etc...)
 * `ServerList`: Where to get the list of servers to load-balance.
-** `ConfigurationBasedServerList`: via `ribbon.<clientname>.listOfServers` property
+** `ConfigurationBasedServerList`:
+*** `ribbon.<clientname>.listOfServers` property
 ** `DiscoveryEnabledNIWSServerList`: via eureka
-** `ConsulServerList`: via hashicorp consul
-** `ZookeeperServerList`: ...
+** `ConsulServerList`, `ZookeeperServerList` etc...
 * `ServerListFilter`: filter obtained list of servers.
 
 == Ribbon Annotations
