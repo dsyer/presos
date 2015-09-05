@@ -59,12 +59,14 @@ image::images/CustomersStoresSystem.svg[customer-stores-system]
 
 * `spring-cloud-commons`: useful abstractions `DiscoveryClient`, `LoadBalancer`, `@EnableServiceDiscovery`
 * `spring-cloud-netflix`: Eureka and Ribbon
-* `spring-cloud-consul`: Hashicorp Caonsul
+* `spring-cloud-consul`: Hashicorp Consul
 * `spring-cloud-zookeeper`: Zookeeper
-
-== Lattice native discovery, Eureka
+* `spring-cloud-cloudfoundry`: cloud controller API
+* `spring-cloud-lattice`: receptor (diego controller) API
 
 == Cloud Foundry native discovery, Eureka
+
+== Lattice native discovery, Eureka
 
 == Routing from remote system to IDE
 
@@ -88,8 +90,9 @@ image::images/LocalDev.svg[TODO: Local dev architecture]
 ** `ConfigurationBasedServerList`:
 *** `ribbon.<clientname>.listOfServers` property
 ** `DiscoveryEnabledNIWSServerList`: via eureka
-** `ConsulServerList`, `ZookeeperServerList` etc...
-* `ServerListFilter`: filter obtained list of servers.
+** `ConsulServerList`: via hashicorp consul
+** `ZookeeperServerList`: ...
+* `ServerListFilter`: filters list of servers.
 
 == Ribbon Annotations
 
@@ -126,7 +129,7 @@ public class MyTests { /*...*/
 
 == Stubbing
 
-* “forced stubbing” (see micro-infra from 4finance)
+* “forced stubbing”: micro-infra from 4finance
 * ad-hoc stubbing: accurest, wiremock, stubby4j, Spring MVC
 * embedded stubs vs. remote stubs
 
@@ -227,7 +230,7 @@ public class StubFleetLocationServiceApplication {
 ----
 
 Nice side effect: mock MVC and restdocs for tests and docs can be used
-to verify real service contract as well
+to verify real service contract
 
 == Stubbing: 4finance stubrunner
 
