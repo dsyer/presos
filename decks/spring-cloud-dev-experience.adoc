@@ -285,6 +285,7 @@ image::images/DevToolsHotReload.svg[TODO: Hot reload architecture]
 
 == Provisioning a system for testing
 
-* Docker compose
+* Docker compose (great for repeatability)
 * Locally with VirtualBox
 * Remotely Lattice AWS, PCF, etc.
+* CI systems native support (travis, bamboo, etc.)
