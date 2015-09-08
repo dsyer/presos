@@ -64,9 +64,15 @@ image::images/CustomersStoresSystem.svg[customer-stores-system]
 * `spring-cloud-cloudfoundry`: cloud controller API
 * `spring-cloud-lattice`: receptor (diego controller) API
 
-== Cloud Foundry native discovery, Eureka
+== Cloud Foundry native discovery
 
-== Lattice native discovery, Eureka
+== Lattice native discovery
+
+* Uses the Receptor API from Diego
+* Discovery only, no registration
+* Adds 'cloud' and 'lattice' profiles
+* Connectors (using service name)
+** Mysql, Redis & Rabbitmq
 
 == Routing from remote system to IDE
 
