@@ -66,6 +66,10 @@ image::images/CustomersStoresSystem.svg[customer-stores-system]
 
 == Cloud Foundry native discovery
 
+* Uses the Cloud Controller API
+* Discovery only, no registration
+* Requests are made through gorouter
+
 == Lattice native discovery
 
 * Uses the Receptor API from Diego
@@ -73,6 +77,12 @@ image::images/CustomersStoresSystem.svg[customer-stores-system]
 * Adds 'cloud' and 'lattice' profiles
 * Connectors (using service name)
 ** Mysql, Redis & Rabbitmq
+
+== Eureka on Lattice & Cloud Foundry
+
+* Eureka can run on Lattice and CF
+* Provides discovery and registration
+* Can be managed on Pivotal Cloud Foundry (Commercial)
 
 == Routing from remote system to IDE
 
