@@ -228,7 +228,7 @@ public void foo() {
 }
 ----
 
-== Stubbing: Spring MVC
+== Greenfield Stubbing: Spring MVC
 
 [source,java]
 ----
