@@ -37,8 +37,8 @@ image::images/cnc.png[cloud-native-contracts]
 == Devops open data
 
 * "if you build it you run it"
-* 12-factor principles
-* logs
+* 12-factor principles, Spring Boot and Spring Cloud Environment support
+* logs (sensible defaults, stdout)
 * actuator endpoints: /trace, /routes, /mappings, /env, /configprops, /beans, /autoconfig
 
 == Debugging and fault finding
@@ -86,7 +86,7 @@ image::images/CustomersStoresSystem.svg[customer-stores-system]
 
 == Routing from remote system to IDE
 
-image::images/LocalDev.svg[TODO: Local dev architecture]
+image::images/local-dev-arch.svg[Local dev architecture]
 
 * local dev experience
 * use proxy to tunnel back to IDE (e.g. ngrok)
@@ -258,11 +258,23 @@ to verify real service contract
 ** Registers server in service discovery
 * Consuming service can function against stubs *(DEMO)*
 
-== Hot reloading
+== Hot reloading locally
+
+> App monitors its classpath and restarts when changes detected:
+
+image::images/hot-reload-local-arch-no-browser-plugin.svg[Hot reload local architecture no browser plugin]
+
+== Hot reloading with browser
+
+> Browser plugin automatically refreshes views:
+
+image::images/hot-reload-local-arch.svg[Hot reload local architecture]
+
+== Hot reloading and debugging
 
 > Hot reloading of “local” application code deployed on Cloud Foundry / Lattice
 
-image::images/DevToolsHotReload.svg[TODO: Hot reload architecture]
+image::images/hot-reload-arch.svg[TODO: Hot reload architecture]
 
 * Spring Boot support via devtools
 * classloader flushes dirty resources
