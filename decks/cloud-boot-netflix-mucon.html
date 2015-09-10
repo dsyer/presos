@@ -33,7 +33,7 @@
 
 <body class="deck-container">
 
-<div class="slide" id="slide1"><h1 id="spring-cloud,-spring-boot-and-netflix-oss">Spring Cloud, Spring Boot and Netflix OSS</h1>
+<div class="slide" id="slide1"><h1 id="toc_0">Spring Cloud, Spring Boot and Netflix OSS</h1>
 
 <p>Spencer Gibb<br>
 twitter: <a href="http://twitter.com/spencerbgibb">@spencerbgibb</a><br>
@@ -43,10 +43,10 @@ email: <a href="mailto:sgibb@pivotal.io">sgibb@pivotal.io</a>   </p>
 twitter: <a href="http://twitter.com/david_syer">@david_syer</a><br>
 email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a>   </p>
 
-<p>(<em>Spring Boot and Netflix OSS</em><br>
+<p>(_Spring Boot and Netflix OSS_<br>
 or <em>Spring Cloud Components</em>)</p>
 
-</div><div class="slide" id="slide2"><h2 id="outline">Outline</h2>
+</div><div class="slide" id="slide2"><h2 id="toc_1">Outline</h2>
 
 <ul>
 <li>Outline some distributed system problems</li>
@@ -54,10 +54,10 @@ or <em>Spring Cloud Components</em>)</p>
 <li>Spring Cloud demos</li>
 </ul>
 
-</div><div class="slide" id="slide3"><h2 id="spring-boot-and-microservices">Spring Boot and Microservices</h2>
+</div><div class="slide" id="slide3"><h2 id="toc_2">Spring Boot and Microservices</h2>
 
 <p>It needs to be super easy to implement and update a service:</p>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@RestController</span>
+<div class="highlight"><pre><code class="groovy language-groovy" data-lang="groovy"><span class="nd">@RestController</span>
 <span class="kd">class</span> <span class="nc">ThisWillActuallyRun</span> <span class="o">{</span>
     <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s2">&quot;/&quot;</span><span class="o">)</span>
     <span class="n">String</span> <span class="nf">home</span><span class="o">()</span> <span class="o">{</span>
@@ -67,16 +67,16 @@ or <em>Spring Cloud Components</em>)</p>
 </code></pre></div>
 <p>and you don&#39;t get much more &quot;micro&quot; than that.</p>
 
-</div><div class="slide" id="slide4"><h2 id="cloud-foundry">Cloud Foundry</h2>
+</div><div class="slide" id="slide4"><h2 id="toc_3">Cloud Foundry</h2>
 
 <p>Deploying services needs to be simple and reproducible</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ cf push app.groovy
+<div class="highlight"><pre><code class="text language-text" data-lang="text">$ cf push app.groovy
 </code></pre></div>
 <p>and you don&#39;t get much more convenient than that.</p>
 
 <p>(Same argument for other PaaS solutions)</p>
 
-</div><div class="slide" id="slide5"><h2 id="continuous-delivery">Continuous Delivery</h2>
+</div><div class="slide" id="slide5"><h2 id="toc_4">Continuous Delivery</h2>
 
 <ul>
 <li>Microservices lend themselves to continuous delivery.</li>
@@ -87,13 +87,13 @@ or <em>Spring Cloud Components</em>)</p>
 <p>Book (Humble and Farley): <a href="http://continuousdelivery.com/">http://continuousdelivery.com</a>
 Netflix Blog: <a href="http://techblog.netflix.com/2013/08/deploying-netflix-api.html">http://techblog.netflix.com/2013/08/deploying-netflix-api.html</a></p>
 
-</div><div class="slide" id="slide6"><h2 id="example-distributed-system:-minified">Example Distributed System: Minified</h2>
+</div><div class="slide" id="slide6"><h2 id="toc_5">Example Distributed System: Minified</h2>
 
 <style>img[alt=customer-stores-blank] { width: 80%; }</style>
 
 <p><img src="images/CustomersStoresBlank.svg" alt="customer-stores-blank"></p>
 
-</div><div class="slide" id="slide7"><h2 id="no-man-(microservice)-is-an-island">No Man (Microservice) is an Island</h2>
+</div><div class="slide" id="slide7"><h2 id="toc_6">No Man (Microservice) is an Island</h2>
 
 <blockquote>
 <p>It&#39;s excellent to be able to implement a microservice really easily
@@ -106,7 +106,7 @@ unsolvable (consistency, availability, latency), but brittleness and
 manageability can be addressed with <em>generic</em>, <em>boiler plate</em>
 patterns.</p>
 
-</div><div class="slide" id="slide8"><h2 id="emergent-features-of-micro-services-systems">Emergent features of micro-services systems</h2>
+</div><div class="slide" id="slide8"><h2 id="toc_7">Emergent features of micro-services systems</h2>
 
 <p>Coordination of distributed systems leads to boiler plate patterns</p>
 
@@ -121,17 +121,17 @@ patterns.</p>
 <li>Distributed messaging</li>
 </ul>
 
-</div><div class="slide" id="slide9"><h2 id="spring-io-platform">Spring IO Platform</h2>
+</div><div class="slide" id="slide9"><h2 id="toc_8">Spring IO Platform</h2>
 
 <p><img src="images/spring-io-tree.png" alt="spring-io-tree"></p>
 
-</div><div class="slide" id="slide10"><h2 id="example:-coordination-boiler-plate">Example: Coordination Boiler Plate</h2>
+</div><div class="slide" id="slide10"><h2 id="toc_9">Example: Coordination Boiler Plate</h2>
 
 <style>img[alt=customer-stores-system] { width: 72%; }</style>
 
 <p><img src="images/CustomersStoresSystem.svg" alt="customer-stores-system"></p>
 
-</div><div class="slide" id="slide11"><h2 id="netflix-oss">Netflix OSS</h2>
+</div><div class="slide" id="slide11"><h2 id="toc_10">Netflix OSS</h2>
 
 <ul>
 <li>Eureka</li>
@@ -147,13 +147,13 @@ patterns.</p>
 
 <p><a href="http://goo.gl/M159zi">Mikey Cohen Netflix edge architecture, http://goo.gl/M159zi</a></p>
 
-</div><div class="slide" id="slide12"><h2 id="example:-spring-cloud-and-netflix">Example: Spring Cloud and Netflix</h2>
+</div><div class="slide" id="slide12"><h2 id="toc_11">Example: Spring Cloud and Netflix</h2>
 
 <style>img[alt=customer-stores] { width: 72%; }</style>
 
 <p><img src="images/CustomersStores.svg" alt="customer-stores"></p>
 
-</div><div class="slide" id="slide13"><h2 id="configuration-server">Configuration Server</h2>
+</div><div class="slide" id="slide13"><h2 id="toc_12">Configuration Server</h2>
 
 <ul>
 <li>Pluggable source</li>
@@ -163,7 +163,7 @@ patterns.</p>
 <li>Strong encryption</li>
 </ul>
 
-</div><div class="slide" id="slide14"><h2 id="config-client">Config Client</h2>
+</div><div class="slide" id="slide14"><h2 id="toc_13">Config Client</h2>
 
 <p>Consumers of config server can use client library as Spring Boot plugin</p>
 
@@ -177,7 +177,7 @@ patterns.</p>
 <li>POST to /restart</li>
 </ul>
 
-</div><div class="slide" id="slide15"><h2 id="discovery:-eureka">Discovery: Eureka</h2>
+</div><div class="slide" id="slide15"><h2 id="toc_14">Discovery: Eureka</h2>
 
 <ul>
 <li>Service Registration Server</li>
@@ -186,7 +186,7 @@ patterns.</p>
 <li>In AWS terms, multi Availability Zone and Region aware</li>
 </ul>
 
-</div><div class="slide" id="slide16"><h2 id="circuit-breaker:-hystrix">Circuit Breaker: Hystrix</h2>
+</div><div class="slide" id="slide16"><h2 id="toc_15">Circuit Breaker: Hystrix</h2>
 
 <p>Reilience pattern:</p>
 
@@ -199,14 +199,14 @@ patterns.</p>
 
 <p>Release It!: <a href="https://pragprog.com/book/mnee/release-it">https://pragprog.com/book/mnee/release-it</a></p>
 
-</div><div class="slide" id="slide17"><h2 id="hystrix-fallback">Hystrix Fallback</h2>
+</div><div class="slide" id="slide17"><h2 id="toc_16">Hystrix Fallback</h2>
 
 <style>img[alt=hystrix] { width: 92%; }</style>
 
 <p><img src="images/HystrixFallback.svg" alt="hystrix"></p>
 
-</div><div class="slide" id="slide18"><h2 id="declarative-hystrix-commands">Declarative Hystrix Commands</h2>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
+</div><div class="slide" id="slide18"><h2 id="toc_17">Declarative Hystrix Commands</h2>
+<div class="highlight"><pre><code class="java language-java" data-lang="java"><span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="n">String</span> <span class="nf">getMessage</span><span class="o">()</span> <span class="o">{</span>
   <span class="k">return</span> <span class="n">restTemplate</span><span class="o">.</span><span class="na">getForObject</span><span class="o">(</span><span class="cm">/*...*/</span><span class="o">);</span>
 <span class="o">}</span>
@@ -214,10 +214,10 @@ patterns.</p>
 <span class="kd">private</span> <span class="n">String</span> <span class="nf">getDefaultMessage</span><span class="o">()</span> <span class="o">{</span>
   <span class="k">return</span> <span class="s">&quot;Hello World Default&quot;</span><span class="o">;</span>
 <span class="o">}</span>
-</code></pre></div><div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//somewhere else</span>
+</code></pre></div><div class="highlight"><pre><code class="java language-java" data-lang="java"><span class="c1">//somewhere else</span>
 <span class="n">helloService</span><span class="o">.</span><span class="na">getMessage</span><span class="o">();</span>
 </code></pre></div>
-</div><div class="slide" id="slide19"><h2 id="circuit-breaker-metrics">Circuit Breaker Metrics</h2>
+</div><div class="slide" id="slide19"><h2 id="toc_18">Circuit Breaker Metrics</h2>
 
 <ul>
 <li>Via actuator <code>/metrics</code></li>
@@ -226,7 +226,7 @@ patterns.</p>
 <li>Aggregation via Spring Cloud Bus Turbine</li>
 </ul>
 
-</div><div class="slide" id="slide20"><h2 id="routing:-zuul">Routing: Zuul</h2>
+</div><div class="slide" id="slide20"><h2 id="toc_19">Routing: Zuul</h2>
 
 <ul>
 <li>JVM based router and filter</li>
@@ -237,7 +237,7 @@ patterns.</p>
 <li>Any JVM language</li>
 </ul>
 
-</div><div class="slide" id="slide21"><h2 id="how-netflix-uses-zuul">How Netflix uses Zuul</h2>
+</div><div class="slide" id="slide21"><h2 id="toc_20">How Netflix uses Zuul</h2>
 
 <ul>
 <li>Authentication</li>
@@ -252,14 +252,14 @@ patterns.</p>
 <li>Active/Active traffic management</li>
 </ul>
 
-</div><div class="slide" id="slide22"><h2 id="spring-cloud-zuul-proxy">Spring Cloud Zuul Proxy</h2>
+</div><div class="slide" id="slide22"><h2 id="toc_21">Spring Cloud Zuul Proxy</h2>
 
 <ul>
 <li>Store routing rules in config server<br>
 <code>zuul.proxy.route.customers: /customers</code></li>
 <li>Uses <code>Hystrix-&gt;Ribbon-&gt;Eureka</code> to forward requests to appropriate service</li>
 </ul>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableZuulProxy</span>
+<div class="highlight"><pre><code class="groovy language-groovy" data-lang="groovy"><span class="nd">@EnableZuulProxy</span>
 <span class="nd">@Controller</span>
 <span class="kd">class</span> <span class="nc">Application</span> <span class="o">{</span>
   <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s2">&quot;/&quot;</span><span class="o">)</span>
@@ -272,7 +272,7 @@ patterns.</p>
 <li>Can be used as &quot;sidecar&quot; (or standalone edge server) via <code>@EnableSidecar</code></li>
 </ul>
 
-</div><div class="slide" id="slide23"><h2 id="links">Links</h2>
+</div><div class="slide" id="slide23"><h2 id="toc_22">Links</h2>
 
 <ul>
 <li><a href="http://github.com/spring-cloud">http://github.com/spring-cloud</a></li>

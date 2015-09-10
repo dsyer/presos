@@ -4,6 +4,7 @@ Spencer Gibb, Dave Syer, 2015
 :deckjs_transition: fade
 :navigation:
 :menu:
+:goto:
 :status:
 :source-highlighter: pygments
 :deckjs_theme: spring
@@ -35,7 +36,7 @@ dsyer@pivotal.io
 * Introduce Netflix OSS and its integration with Spring Boot
 * Spring Cloud demos
 
-== What are micro-services?
+== What are microservices?
 * Not monolithic :-)
 * Smaller units of a larger system
 * Runs in its own process
@@ -195,18 +196,6 @@ helloService.getMessage();
 * Java
 * Any JVM language
 
-== How Netflix uses Zuul
-* Authentication
-* Insights
-* Stress Testing
-* Canary Testing
-* Dynamic Routing
-* Service Migration
-* Load Shedding
-* Security
-* Static Response handling
-* Active/Active traffic management
-
 == Spring Cloud Zuul Proxy
 * Store routing rules in config server   
    `zuul.proxy.route.customers: /customers`
@@ -221,6 +210,14 @@ class Application {
 ----
 
 * Can be used as "sidecar" (or standalone edge server) via `@EnableSidecar`
+
+== Developer Experience
+
+> As a microservice developer, I want to write code and run it locally, but have a hight confidence that it will work in the target system.
+
+* Stubbing and contract-driven development
+* Remote debugging, e.g. Spring Boot live reload
+* Register local app with remote service catalog
 
 == Links
 

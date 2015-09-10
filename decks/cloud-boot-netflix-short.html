@@ -9,12 +9,12 @@
 <link href="./asciidoctor-pygments.css" rel="stylesheet">
 <link href="../deck.js/core/deck.core.css" rel="stylesheet">
 <link href="../deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/goto/deck.goto.css" media="screen" rel="stylesheet">
 <link href="../deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
 <link href="../deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
 <link href="../deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
 <link href="../deck.js/themes/style/spring.css" media="screen" rel="stylesheet">
 <link href="../deck.js/themes/transition/fade.css" media="screen" rel="stylesheet">
-<link href="../deck.js/core/print.css" media="print" rel="stylesheet">
 <script src="../deck.js/modernizr.custom.js"></script>
 </head>
 <body class="article">
@@ -57,8 +57,8 @@
 </ul>
 </div>
 </section>
-<section class="slide" id="_what_are_micro_services">
-<h2>What are micro-services?</h2>
+<section class="slide" id="_what_are_microservices">
+<h2>What are microservices?</h2>
 <div class="ulist">
 <ul>
 <li>Not monolithic :-)</li>
@@ -268,23 +268,6 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 </ul>
 </div>
 </section>
-<section class="slide" id="_how_netflix_uses_zuul">
-<h2>How Netflix uses Zuul</h2>
-<div class="ulist">
-<ul>
-<li>Authentication</li>
-<li>Insights</li>
-<li>Stress Testing</li>
-<li>Canary Testing</li>
-<li>Dynamic Routing</li>
-<li>Service Migration</li>
-<li>Load Shedding</li>
-<li>Security</li>
-<li>Static Response handling</li>
-<li>Active/Active traffic management</li>
-</ul>
-</div>
-</section>
 <section class="slide" id="_spring_cloud_zuul_proxy">
 <h2>Spring Cloud Zuul Proxy</h2>
 <div class="ulist">
@@ -305,6 +288,21 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 <div class="ulist">
 <ul>
 <li>Can be used as "sidecar" (or standalone edge server) via <code>@EnableSidecar</code></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_developer_experience">
+<h2>Developer Experience</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>As a microservice developer, I want to write code and run it locally, but have a hight confidence that it will work in the target system.</p></div>
+</blockquote>
+</div>
+<div class="ulist">
+<ul>
+<li>Stubbing and contract-driven development</li>
+<li>Remote debugging, e.g. Spring Boot live reload</li>
+<li>Register local app with remote service catalog</li>
 </ul>
 </div>
 </section>
@@ -330,10 +328,17 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 /
 <span class="deck-status-total"></span>
 </p>
+<form action="." class="goto-form" method="get">
+<label for="goto-slide">Go to Slide:</label>
+<input id="goto-slide" list="goto-datalist" name="slidenum" type="text">
+<datalist id="goto-data-list"></datalist>
+<input type="submit" value="Go">
+</form>
 </div>
 <script src="../deck.js/jquery.min.js"></script>
 <script src="../deck.js/core/deck.core.js"></script>
 <script src="../deck.js/extensions/scale/deck.scale.js"></script>
+<script src="../deck.js/extensions/goto/deck.goto.js"></script>
 <script src="../deck.js/extensions/menu/deck.menu.js"></script>
 <script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
 <script src="../deck.js/extensions/status/deck.status.js"></script>

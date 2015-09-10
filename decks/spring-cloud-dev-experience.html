@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="Asciidoctor 1.5.2" name="generator">
+<meta content="Spencer Gibb, Dave Syer, 2015" name="author">
+<title>Developer Experience with Spring Cloud</title>
+<link href="./asciidoctor-pygments.css" rel="stylesheet">
+<link href="../deck.js/core/deck.core.css" rel="stylesheet">
+<link href="../deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/goto/deck.goto.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
+<link href="../deck.js/themes/style/spring.css" media="screen" rel="stylesheet">
+<link href="../deck.js/themes/transition/fade.css" media="screen" rel="stylesheet">
+<script src="../deck.js/modernizr.custom.js"></script>
+</head>
+<body class="article">
+<div class="deck-container">
+<section class="slide" id="title-slide">
+<h1>Developer Experience with Spring Cloud</h1>
+<span id="author">Spencer Gibb, Dave Syer, 2015</span>
+<br>
+</section>
+<section class="slide" id="_authors">
+<h2>Authors</h2>
+<div class="paragraph"><p>Spencer Gibb,<br>
+<a href="http://twitter.com/spencerbgibb">@spencerbgibb</a>,<br>
+<a href="mailto:sgibb@pivotal.io">sgibb@pivotal.io</a></p></div>
+<div class="paragraph"><p>Dave Syer,<br>
+<a href="http://twitter.com/david_syer">@david_syer</a>,<br>
+<a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p></div>
+</section>
+<section class="slide" id="_cloud_native_contracts">
+<h2>Cloud Native Contracts</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="cloud-native-contracts" src="images/cnc.png">
+</div>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>With thanks to @littleidea</p></div>
+</blockquote>
+</div>
+</section>
+<section class="slide" id="_developer_experience">
+<h2>Developer Experience</h2>
+<div class="ulist">
+<ul>
+<li>Microservices lead to a very open flexible architecture</li>
+<li>Developer needs to work on isolated codebase</li>
+<li>No-one wants to re-deploy the universe for every commit</li>
+<li>What tools and techniques are available to help?</li>
+<li>How can Spring, Spring Cloud, Cloud Foundry play a role?</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_devops_open_data">
+<h2>Devops open data</h2>
+<div class="ulist">
+<ul>
+<li>"if you build it you run it"</li>
+<li>12-factor principles, Spring Boot and Spring Cloud Environment support</li>
+<li>logs (sensible defaults, stdout)</li>
+<li>actuator endpoints: /trace, /routes, /mappings, /env, /configprops, /beans, /autoconfig</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_debugging_and_fault_finding">
+<h2>Debugging and fault finding</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>Your app won&#8217;t always work first time. How to diagnose the problem?</p></div>
+</blockquote>
+</div>
+<div class="ulist">
+<ul>
+<li>collecting logs from remote system (/logs endpoint and <code>cf logs</code>)</li>
+<li>changing log levels at runtime</li>
+<li>feature switches</li>
+<li>remote debugger (see later: Spring Boot Devtools)</li>
+<li>deploy locally</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_service_discovery_background">
+<h2>Service discovery background</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="customer-stores-system" src="images/CustomersStoresSystem.svg">
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_cloud_discovery">
+<h2>Spring Cloud Discovery</h2>
+<div class="ulist">
+<ul>
+<li><code>spring-cloud-commons</code>: useful abstractions <code>DiscoveryClient</code>, <code>LoadBalancer</code>, <code>@EnableServiceDiscovery</code></li>
+<li><code>spring-cloud-netflix</code>: Eureka and Ribbon</li>
+<li><code>spring-cloud-consul</code>: Hashicorp Consul</li>
+<li><code>spring-cloud-zookeeper</code>: Zookeeper</li>
+<li><code>spring-cloud-cloudfoundry</code>: cloud controller API</li>
+<li><code>spring-cloud-lattice</code>: receptor (diego controller) API</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_cloud_foundry_native_discovery">
+<h2>Cloud Foundry native discovery</h2>
+<div class="ulist">
+<ul>
+<li>Uses the Cloud Controller API</li>
+<li>Discovery only, no registration</li>
+<li>Requests are made through gorouter</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_lattice_native_discovery">
+<h2>Lattice native discovery</h2>
+<div class="ulist">
+<ul>
+<li>Uses the Receptor API from Diego</li>
+<li>Discovery only, no registration</li>
+<li>Adds 'cloud' and 'lattice' profiles</li>
+<li><p>
+Connectors (using service name)<div class="ulist">
+<ul>
+<li>Mysql, Redis &amp; Rabbitmq</li>
+</ul>
+</div></p></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_eureka_on_lattice_cloud_foundry">
+<h2>Eureka on Lattice &amp; Cloud Foundry</h2>
+<div class="ulist">
+<ul>
+<li>Eureka can run on Lattice and CF</li>
+<li>Provides discovery and registration</li>
+<li>Can be managed on Pivotal Cloud Foundry (Commercial)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_routing_from_remote_system_to_ide">
+<h2>Routing from remote system to IDE</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="Local dev architecture" src="images/local-dev-arch.svg">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>local dev experience</li>
+<li>use proxy to tunnel back to IDE (e.g. ngrok)</li>
+<li>demo with Boot Dashboard</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_loadbalancer_configuration_models">
+<h2>Loadbalancer configuration models</h2>
+<div class="ulist">
+<ul>
+<li>flag to enable local route</li>
+<li>prefer route that “looks local”</li>
+<li>flag a request (e.g. header with correlation ID)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_customizing_ribbon">
+<h2>Customizing Ribbon</h2>
+<div class="ulist">
+<ul>
+<li>Ribbon is a client side smart load-balancer from Netflix OSS</li>
+<li><code>IRule</code>: Load-balancing algorithm (round-robin, random, etc&#8230;&#8203;)</li>
+<li><p>
+<code>ServerList</code>: Where to get the list of servers to load-balance.<div class="ulist">
+<ul>
+<li><p>
+<code>ConfigurationBasedServerList</code>:<div class="ulist">
+<ul>
+<li><code>ribbon.&lt;clientname&gt;.listOfServers</code> property</li>
+</ul>
+</div></p></li>
+<li><code>DiscoveryEnabledNIWSServerList</code>: via eureka</li>
+<li><code>ConsulServerList</code>: via hashicorp consul</li>
+<li><code>ZookeeperServerList</code>: &#8230;&#8203;</li>
+</ul>
+</div></p></li>
+<li><code>ServerListFilter</code>: filters list of servers.</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_ribbon_annotations">
+<h2>Ribbon Annotations</h2>
+<div class="ulist">
+<ul>
+<li><p>
+<code>@RibbonClients</code><div class="ulist">
+<ul>
+<li>Optionally defines default java config classes for all ribbon clients.</li>
+<li>Allows multiple <code>@RibbonClient</code> annotations.</li>
+</ul>
+</div></p></li>
+<li><code>@RibbonClient</code>: allows configuration for a named ribbon client.</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_ribbon_in_integration_tests">
+<h2>Ribbon in Integration Tests</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@RunWith</span><span class="tok-o">(</span><span class="tok-n">SpringJUnit4ClassRunner</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">)</span>
+<span class="tok-nd">@SpringApplicationConfiguration</span><span class="tok-o">(</span><span class="tok-n">classes</span> <span class="tok-o">=</span> <span class="tok-n">MyTests</span><span class="tok-o">.</span><span class="tok-na">Application</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">)</span>
+<span class="tok-nd">@WebIntegrationTest</span><span class="tok-o">(</span><span class="tok-n">randomPort</span> <span class="tok-o">=</span> <span class="tok-kc">true</span><span class="tok-o">)</span>
+<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">MyTests</span> <span class="tok-o">{</span> <span class="tok-cm">/*...*/</span>
+  <span class="tok-nd">@Configuration</span>
+  <span class="tok-nd">@RibbonClient</span><span class="tok-o">(</span><span class="tok-n">name</span> <span class="tok-o">=</span> <span class="tok-s">&quot;localapp&quot;</span><span class="tok-o">,</span>
+       <span class="tok-n">configuration</span> <span class="tok-o">=</span> <span class="tok-n">LocalRibbonClientConfig</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">)</span>
+  <span class="tok-kd">protected</span> <span class="tok-kd">static</span> <span class="tok-kd">class</span> <span class="tok-nc">Application</span> <span class="tok-o">{</span> <span class="tok-cm">/*...*/</span> <span class="tok-o">}</span>
+
+  <span class="tok-nd">@Configuration</span>
+  <span class="tok-kd">static</span> <span class="tok-kd">class</span> <span class="tok-nc">LocalRibbonClientConfig</span> <span class="tok-o">{</span>
+    <span class="tok-nd">@Value</span><span class="tok-o">(</span><span class="tok-s">&quot;${local.server.port}&quot;</span><span class="tok-o">)</span>
+    <span class="tok-kd">private</span> <span class="tok-kt">int</span> <span class="tok-n">port</span> <span class="tok-o">=</span> <span class="tok-mi">0</span><span class="tok-o">;</span>
+
+    <span class="tok-nd">@Bean</span>
+    <span class="tok-kd">public</span> <span class="tok-n">ServerList</span><span class="tok-o">&lt;</span><span class="tok-n">Server</span><span class="tok-o">&gt;</span> <span class="tok-nf">ribbonServerList</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+      <span class="tok-k">return</span> <span class="tok-k">new</span> <span class="tok-n">StaticServerList</span><span class="tok-o">&lt;&gt;(</span><span class="tok-k">new</span> <span class="tok-n">Server</span><span class="tok-o">(</span><span class="tok-s">&quot;localhost&quot;</span><span class="tok-o">,</span> <span class="tok-k">this</span><span class="tok-o">.</span><span class="tok-na">port</span><span class="tok-o">));</span>
+    <span class="tok-o">}</span>
+  <span class="tok-o">}</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_stubbing">
+<h2>Stubbing</h2>
+<div class="ulist">
+<ul>
+<li>“forced stubbing”: micro-infra from 4finance</li>
+<li>ad-hoc stubbing: accurest, wiremock, stubby4j, Spring MVC</li>
+<li>embedded stubs vs. remote stubs</li>
+</ul>
+</div>
+<div class="paragraph"><p>High level:</p></div>
+<div class="ulist">
+<ul>
+<li>Greenfield (dependent services don&#8217;t exist yet, write stubs)</li>
+<li>Brownfield (dependent services exist and have published stubs)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_stubbing_brownfield_services">
+<h2>Stubbing Brownfield Services</h2>
+<div class="ulist">
+<ul>
+<li><p>
+Create <a href="http://wiremock.org/stubbing.html">Wiremock</a> stubs using tests or dsl<div class="ulist">
+<ul>
+<li><a href="https://github.com/Codearte/accurest">AccuREST</a> uses a groovy dsl to create integration tests and stubs.</li>
+<li><a href="https://github.com/spring-projects/spring-restdocs">Spring REST Docs</a> uses tests to generate snippets for documentation and can be used to create stubs.</li>
+</ul>
+</div></p></li>
+<li>Run Wiremock using generated stubs</li>
+<li>Run consuming services against Wiremock stubs</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_stubbing_accurest_dsl">
+<h2>Stubbing: AccuREST DSL</h2>
+<div class="paragraph"><p>Generates a MockMVC test and a Wiremock stub</p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="groovy language-groovy"><span class="tok-kn">import</span> <span class="tok-nn">io.codearte.accurest.dsl.GroovyDsl</span>
+
+<span class="tok-n">GroovyDsl</span> <span class="tok-n">groovyDsl</span> <span class="tok-o">=</span> <span class="tok-n">GroovyDsl</span><span class="tok-o">.</span><span class="tok-na">make</span> <span class="tok-o">{</span>
+    <span class="tok-n">request</span> <span class="tok-o">{</span>
+        <span class="tok-n">method</span> <span class="tok-s1">&#39;GET&#39;</span>
+        <span class="tok-n">url</span> <span class="tok-s1">&#39;/foo&#39;</span>
+    <span class="tok-o">}</span>
+    <span class="tok-n">response</span> <span class="tok-o">{</span>
+        <span class="tok-n">status</span> <span class="tok-mi">200</span>
+        <span class="tok-n">headers</span> <span class="tok-o">{</span>
+            <span class="tok-n">header</span> <span class="tok-s1">&#39;Content-Type&#39;</span> <span class="tok-o">:</span> <span class="tok-s1">&#39;application/json;charset=UTF-8&#39;</span>
+        <span class="tok-o">}</span>
+        <span class="tok-n">body</span> <span class="tok-s1">&#39;&#39;&#39;{ &quot;value&quot; : 42 }&#39;&#39;&#39;</span>
+    <span class="tok-o">}</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_stubbing_spring_rest_docs">
+<h2>Stubbing: Spring REST Docs</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Before</span>
+<span class="tok-kd">public</span> <span class="tok-kt">void</span> <span class="tok-nf">setup</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+    <span class="tok-k">this</span><span class="tok-o">.</span><span class="tok-na">mockMvc</span> <span class="tok-o">=</span> <span class="tok-n">MockMvcBuilders</span><span class="tok-o">.</span><span class="tok-na">webAppContextSetup</span><span class="tok-o">(</span><span class="tok-k">this</span><span class="tok-o">.</span><span class="tok-na">context</span><span class="tok-o">)</span>
+        <span class="tok-o">.</span><span class="tok-na">apply</span><span class="tok-o">(</span><span class="tok-n">documentationConfiguration</span><span class="tok-o">()</span>
+                <span class="tok-o">.</span><span class="tok-na">snippets</span><span class="tok-o">().</span><span class="tok-na">withDefaults</span><span class="tok-o">(</span><span class="tok-n">curlRequest</span><span class="tok-o">(),</span>
+                    <span class="tok-n">httpRequest</span><span class="tok-o">(),</span>
+                    <span class="tok-n">httpResponse</span><span class="tok-o">(),</span>
+                    <span class="tok-k">new</span> <span class="tok-nf">WiremockStubSnippet</span><span class="tok-o">()))</span>
+        <span class="tok-o">.</span><span class="tok-na">build</span><span class="tok-o">();</span>
+<span class="tok-o">}</span>
+
+<span class="tok-nd">@Test</span>
+<span class="tok-kd">public</span> <span class="tok-kt">void</span> <span class="tok-nf">foo</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+    <span class="tok-k">this</span><span class="tok-o">.</span><span class="tok-na">mockMvc</span><span class="tok-o">.</span><span class="tok-na">perform</span><span class="tok-o">(</span><span class="tok-n">get</span><span class="tok-o">(</span><span class="tok-s">&quot;/foo&quot;</span><span class="tok-o">)</span>
+        <span class="tok-o">.</span><span class="tok-na">accept</span><span class="tok-o">(</span><span class="tok-n">MediaType</span><span class="tok-o">.</span><span class="tok-na">APPLICATION_JSON</span><span class="tok-o">))</span>
+        <span class="tok-o">.</span><span class="tok-na">andExpect</span><span class="tok-o">(</span><span class="tok-n">status</span><span class="tok-o">().</span><span class="tok-na">isOk</span><span class="tok-o">())</span>
+        <span class="tok-o">.</span><span class="tok-na">andDo</span><span class="tok-o">(</span><span class="tok-n">document</span><span class="tok-o">(</span><span class="tok-s">&quot;foo&quot;</span><span class="tok-o">));</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_stubbing_wiremock_stub">
+<h2>Stubbing: Wiremock Stub</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="json language-json"><span class="tok-p">{</span>
+    <span class="tok-nt">&quot;request&quot;</span><span class="tok-p">:</span> <span class="tok-p">{</span>
+        <span class="tok-nt">&quot;method&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;GET&quot;</span><span class="tok-p">,</span>
+        <span class="tok-nt">&quot;url&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;/foo&quot;</span>
+    <span class="tok-p">},</span>
+    <span class="tok-nt">&quot;response&quot;</span><span class="tok-p">:</span> <span class="tok-p">{</span>
+        <span class="tok-nt">&quot;status&quot;</span><span class="tok-p">:</span> <span class="tok-mi">200</span><span class="tok-p">,</span>
+        <span class="tok-nt">&quot;headers&quot;</span><span class="tok-p">:</span> <span class="tok-p">{</span>
+            <span class="tok-nt">&quot;Content-Type&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;application/json;charset=UTF-8&quot;</span>
+        <span class="tok-p">},</span>
+        <span class="tok-nt">&quot;body&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;{\&quot;value\&quot;:42}&quot;</span>
+    <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_greenfield_stubbing_spring_mvc">
+<h2>Greenfield Stubbing: Spring MVC</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Controller</span>
+<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">StubFleetLocationServiceApplication</span> <span class="tok-o">{</span>
+
+	<span class="tok-nd">@RequestMapping</span><span class="tok-o">(</span><span class="tok-s">&quot;/locations&quot;</span><span class="tok-o">)</span>
+	<span class="tok-kd">public</span> <span class="tok-n">String</span> <span class="tok-nf">home</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+		<span class="tok-k">return</span> <span class="tok-s">&quot;forward:/stubs/locations.json&quot;</span><span class="tok-o">;</span>
+	<span class="tok-o">}</span>
+
+	<span class="tok-o">...</span>
+
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph"><p>Nice side effect: mock MVC and restdocs for tests and docs can be used
+to verify real service contract</p></div>
+</section>
+<section class="slide" id="_stubbing_4finance_stubrunner">
+<h2>Stubbing: 4finance stubrunner</h2>
+<div class="ulist">
+<ul>
+<li>Publish stub files to nexus repository (or local maven repo)</li>
+<li>Describe a services dependencies in <code>application.yml</code></li>
+<li><p>
+Stubrunner using list of dependencies<div class="ulist">
+<ul>
+<li>Grabs stubs from repository</li>
+<li>Runs a wiremock server for each dependency using fetched stubs</li>
+<li>Registers server in service discovery</li>
+</ul>
+</div></p></li>
+<li>Consuming service can function against stubs <strong>(DEMO)</strong></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_hot_reloading_locally">
+<h2>Hot reloading locally</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>App monitors its classpath and restarts when changes detected:</p></div>
+</blockquote>
+</div>
+<div class="imageblock">
+<div class="content">
+<img alt="Hot reload local architecture no browser plugin" src="images/hot-reload-local-arch-no-browser-plugin.svg">
+</div>
+</div>
+</section>
+<section class="slide" id="_hot_reloading_with_browser">
+<h2>Hot reloading with browser</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>Browser plugin automatically refreshes views:</p></div>
+</blockquote>
+</div>
+<div class="imageblock">
+<div class="content">
+<img alt="Hot reload local architecture" src="images/hot-reload-local-arch.svg">
+</div>
+</div>
+</section>
+<section class="slide" id="_hot_reloading_and_debugging">
+<h2>Hot reloading and debugging</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>Hot reloading of “local” application code deployed on Cloud Foundry / Lattice</p></div>
+</blockquote>
+</div>
+<div class="imageblock">
+<div class="content">
+<img alt="TODO: Hot reload architecture" src="images/hot-reload-arch.svg">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>Spring Boot support via devtools</li>
+<li>classloader flushes dirty resources</li>
+<li>remote debug also possible (but slow)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_alm">
+<h2>ALM</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>How does new code enter a build pipeline and get promoted to production?</p></div>
+</blockquote>
+</div>
+<div class="ulist">
+<ul>
+<li>always automated</li>
+<li>always part of CI process</li>
+<li>stay close to production platform (e.g. use Cloud Foundry for everything)</li>
+<li>don&#8217;t redeploy the universe for every change</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_debugging_requests">
+<h2>Debugging requests</h2>
+<div class="ulist">
+<ul>
+<li>live vs. historic</li>
+<li>/trace endpoint</li>
+<li>distributed tracing (http and messages)</li>
+<li>cf/lattice logs (http and messages)</li>
+<li><a class="bare" href="https://ngrok.com">https://ngrok.com</a> (http)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_database_middleware_docker">
+<h2>Database/middleware: Docker</h2>
+<div class="ulist">
+<ul>
+<li>standard docker images exist for all common middleware</li>
+<li>perfect for development</li>
+<li>can be used in production with care</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_middleware_discovery_and_di">
+<h2>Middleware: Discovery and DI</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>How to wire up your application code to required middleware, and make the same code run in all environments?</p></div>
+</blockquote>
+</div>
+<div class="ulist">
+<ul>
+<li>use autoconfiguration</li>
+<li>use Spring Cloud Connectors (a bit)</li>
+<li>use Spring Cloud Stream for messaging middleware</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_provisioning_a_system_for_testing">
+<h2>Provisioning a system for testing</h2>
+<div class="ulist">
+<ul>
+<li>Docker compose (great for repeatability)</li>
+<li>Locally with VirtualBox</li>
+<li>Remotely Lattice AWS, PCF, etc.</li>
+<li>CI systems native support (travis, bamboo, etc.)</li>
+</ul>
+</div>
+</section>
+<div aria-role="navigation">
+<a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
+<a class="deck-next-link" href="#" title="Next">&#8594;</a>
+</div>
+<p aria-role="status" class="deck-status">
+<span class="deck-status-current"></span>
+/
+<span class="deck-status-total"></span>
+</p>
+<form action="." class="goto-form" method="get">
+<label for="goto-slide">Go to Slide:</label>
+<input id="goto-slide" list="goto-datalist" name="slidenum" type="text">
+<datalist id="goto-data-list"></datalist>
+<input type="submit" value="Go">
+</form>
+</div>
+<script src="../deck.js/jquery.min.js"></script>
+<script src="../deck.js/core/deck.core.js"></script>
+<script src="../deck.js/extensions/scale/deck.scale.js"></script>
+<script src="../deck.js/extensions/goto/deck.goto.js"></script>
+<script src="../deck.js/extensions/menu/deck.menu.js"></script>
+<script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="../deck.js/extensions/status/deck.status.js"></script>
+<script>
+  (function($, deck, undefined) {
+    $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
+    $.deck.defaults.keys['next'] = [13, 32, 34, 39];
+  
+    $.extend(true, $[deck].defaults, {
+        countNested: false
+    });
+  
+    $.deck('.slide');
+  })(jQuery, 'deck');
+</script>
+<style>
+  .slide.canvas-image {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-box;
+  display: box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -moz-box-align: start;
+  -webkit-box-align: start;
+  -ms-box-align: start;
+  box-align: start;
+  -moz-box-pack: start;
+  -webkit-box-pack: start;
+  -ms-box-pack: start;
+  box-pack: start;}
+  
+  .bottom-left {
+    left: 1%;
+    bottom: 20%; }
+  
+  .top-left {
+    left: 1%;
+    top: 20%; }
+  
+  .bottom-right {
+    right: 1%;
+    bottom: 20%; }
+  
+  .top-right {
+    right: 1%;
+    top: 20%; }
+  
+  .center-up {
+    right: 50%;
+    top: 1%;
+  }
+  
+  .center-down {
+    right: 50%;
+    bottom: 1%;
+  }
+  .canvas-image .canvas-caption p {
+    text-align: center;
+    padding-top: 0;
+    padding: 0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    display: inline;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 58px;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    -moz-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+    padding: 1rem;
+    color: white; }
+  kbd.keyseq { color: #555555; }
+  kbd:not(.keyseq) {
+    display: inline-block;
+    color: #222222;
+    font-size: 0.7em;
+    line-height: 1.4;
+    background-color: #F7F7F7;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    margin: -0.15em 0.15em 0 0.15em;
+    padding: 0.2em 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  kbd kbd:first-child { margin-left: 0; }
+  kbd kbd:last-child { margin-right: 0; }
+</style>
+</body>
+</html>

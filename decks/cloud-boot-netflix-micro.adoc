@@ -1,0 +1,70 @@
+= Spring Cloud and Spring Boot
+Dave Syer, 2015
+:backend: deckjs
+:deckjs_transition: fade
+:navigation:
+:menu:
+:goto:
+:status:
+:source-highlighter: pygments
+:deckjs_theme: spring
+:deckjsdir: ../deck.js
+
+== Links
+
+* http://cloud.spring.io
+* http://github.com/spring-cloud
+* http://github.com/spring-cloud-samples
+* http://blog.spring.io
+* http://presos.dsyer.com/decks/cloud-boot-netflix.html
+* Twitter: http://twitter.com/david_syer[@david_syer]
+* Email: dsyer@pivotal.io
+
+== Spring IO Platform
+
+image::images/spring-io-tree.png[spring-io-tree]
+
+== Spring Boot
+
+It needs to be super easy to implement and update a service:
+
+[source,groovy]
+----
+@RestController
+class ThisWillActuallyRun {
+    @RequestMapping("/")
+    String home() {
+        'Hello World!'
+    }
+}
+----
+
+and you don't get much more "micro" than that.
+
+== Emergent features of micro-services systems
+
+Coordination of distributed systems leads to boiler plate patterns
+
+* Distributed/versioned configuration
+* Service registration and discovery
+* Routing
+* Declarative REST clients
+* Load balancing
+* Circuit Breaker
+* Asynchronous patterns (choreography)
+* Distributed messaging
+
+== Example: Spring Cloud and Netflix
+
+image::images/CustomersStores.svg[customer-stores]
+
+== Links
+
+
+* http://cloud.spring.io
+* http://github.com/spring-cloud
+* http://github.com/spring-cloud-samples
+* http://blog.spring.io
+* http://presos.dsyer.com/decks/cloud-boot-netflix.html
+* Twitter: http://twitter.com/david_syer[@david_syer]
+* Email: dsyer@pivotal.io

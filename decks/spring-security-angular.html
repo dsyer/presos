@@ -14,7 +14,6 @@
 <link href="../deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
 <link href="../deck.js/themes/style/spring.css" media="screen" rel="stylesheet">
 <link href="../deck.js/themes/transition/fade.css" media="screen" rel="stylesheet">
-<link href="../deck.js/core/print.css" media="print" rel="stylesheet">
 <script src="../deck.js/modernizr.custom.js"></script>
 </head>
 <body class="article">
@@ -383,7 +382,7 @@
     <span class="tok-o">}</span>
 
     <span class="tok-kd">private</span> <span class="tok-n">CsrfTokenRepository</span> <span class="tok-nf">csrfTokenRepository</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-      <span class="tok-n">HttpSessionCsrfTokenRepository</span> <span class="tok-n">repository</span> <span class="tok-o">=</span> <span class="tok-k">new</span> <span class="tok-nf">HttpSessionCsrfTokenRepository</span><span class="tok-o">();</span>
+      <span class="tok-n">HttpSessionCsrfTokenRepository</span> <span class="tok-n">repository</span> <span class="tok-o">=</span> <span class="tok-k">new</span> <span class="tok-n">HttpSessionCsrfTokenRepository</span><span class="tok-o">();</span>
       <span class="tok-n">repository</span><span class="tok-o">.</span><span class="tok-na">setHeaderName</span><span class="tok-o">(</span><span class="tok-s">&quot;X-XSRF-TOKEN&quot;</span><span class="tok-o">);</span>
       <span class="tok-k">return</span> <span class="tok-n">repository</span><span class="tok-o">;</span>
     <span class="tok-o">}</span>
