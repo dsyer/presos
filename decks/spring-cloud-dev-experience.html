@@ -62,7 +62,7 @@
 <h2>Devops open data</h2>
 <div class="ulist">
 <ul>
-<li>"if you build it you run it"</li>
+<li>"if you build it you run it" (or at least "own it")</li>
 <li>12-factor principles, Spring Boot and Spring Cloud Environment support</li>
 <li>logs (sensible defaults, stdout)</li>
 <li>actuator endpoints: /trace, /routes, /mappings, /env, /configprops, /beans, /autoconfig</li>
@@ -80,6 +80,7 @@
 <ul>
 <li>collecting logs from remote system (/logs endpoint and <code>cf logs</code>)</li>
 <li>changing log levels at runtime</li>
+<li>other useful actuator endpoints: /env, /trace, /mappings, /autoconfig</li>
 <li>feature switches</li>
 <li>remote debugger (see later: Spring Boot Devtools)</li>
 <li>deploy locally</li>
@@ -236,18 +237,20 @@ Connectors (using service name)<div class="ulist">
 </section>
 <section class="slide" id="_stubbing">
 <h2>Stubbing</h2>
-<div class="ulist">
-<ul>
-<li>“forced stubbing”: micro-infra from 4finance</li>
-<li>ad-hoc stubbing: accurest, wiremock, stubby4j, Spring MVC</li>
-<li>embedded stubs vs. remote stubs</li>
-</ul>
-</div>
 <div class="paragraph"><p>High level:</p></div>
 <div class="ulist">
 <ul>
 <li>Greenfield (dependent services don&#8217;t exist yet, write stubs)</li>
 <li>Brownfield (dependent services exist and have published stubs)</li>
+</ul>
+</div>
+<div class="paragraph"><p>Example tools/approaches:</p></div>
+<div class="ulist">
+<ul>
+<li>publish producer stubs vs. consumer tests</li>
+<li>"forced stubbing": micro-infra from 4finance</li>
+<li>ad-hoc stubbing: accurest, wiremock, stubby4j, Spring MVC</li>
+<li>embedded stubs vs. remote stubs</li>
 </ul>
 </div>
 </section>
@@ -360,9 +363,9 @@ to verify real service contract</p></div>
 <div class="ulist">
 <ul>
 <li>Publish stub files to nexus repository (or local maven repo)</li>
-<li>Describe a services dependencies in <code>application.yml</code></li>
+<li>Describe all services dependencies in <code>application.yml</code></li>
 <li><p>
-Stubrunner using list of dependencies<div class="ulist">
+Stubrunner uses list of dependencies<div class="ulist">
 <ul>
 <li>Grabs stubs from repository</li>
 <li>Runs a wiremock server for each dependency using fetched stubs</li>
@@ -370,6 +373,18 @@ Stubrunner using list of dependencies<div class="ulist">
 </ul>
 </div></p></li>
 <li>Consuming service can function against stubs <strong>(DEMO)</strong></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_hot_reloading_and_code_swapping">
+<h2>Hot reloading and code swapping</h2>
+<div class="ulist">
+<ul>
+<li>Basic IDE features (JVM hotswap and resource reload)</li>
+<li>Spring Boot devtools - app restart and browser plugin</li>
+<li>STS</li>
+<li>Spring Loaded (Grails, JHipster)</li>
+<li>JRebel</li>
 </ul>
 </div>
 </section>
@@ -428,7 +443,8 @@ Stubrunner using list of dependencies<div class="ulist">
 </div>
 <div class="ulist">
 <ul>
-<li>always automated</li>
+<li>adhoc deployment and mixed local-remote is great for dev time</li>
+<li>always automated downstream</li>
 <li>always part of CI process</li>
 <li>stay close to production platform (e.g. use Cloud Foundry for everything)</li>
 <li>don&#8217;t redeploy the universe for every change</li>
@@ -468,7 +484,7 @@ Stubrunner using list of dependencies<div class="ulist">
 <ul>
 <li>use autoconfiguration</li>
 <li>use Spring Cloud Connectors (a bit)</li>
-<li>use Spring Cloud Stream for messaging middleware</li>
+<li>use Spring Cloud Stream for messaging</li>
 </ul>
 </div>
 </section>
@@ -478,8 +494,21 @@ Stubrunner using list of dependencies<div class="ulist">
 <ul>
 <li>Docker compose (great for repeatability)</li>
 <li>Locally with VirtualBox</li>
-<li>Remotely Lattice AWS, PCF, etc.</li>
+<li>Remotely: Lattice AWS, PCF, etc.</li>
 <li>CI systems native support (travis, bamboo, etc.)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_links">
+<h2>Links</h2>
+<div class="ulist">
+<ul>
+<li><a class="bare" href="http://presos.dsyer.com/decks/spring-cloud-dev-experience.html">http://presos.dsyer.com/decks/spring-cloud-dev-experience.html</a></li>
+<li><a class="bare" href="http://cloud.spring.io">http://cloud.spring.io</a></li>
+<li><a class="bare" href="http://spring.io/blog">http://spring.io/blog</a></li>
+<li><a class="bare" href="https://github.com/spring-cloud">https://github.com/spring-cloud</a></li>
+<li><a class="bare" href="https://github.com/spring-cloud-samples">https://github.com/spring-cloud-samples</a></li>
+<li><a class="bare" href="https://github.com/springone2gx2015">https://github.com/springone2gx2015</a></li>
 </ul>
 </div>
 </section>

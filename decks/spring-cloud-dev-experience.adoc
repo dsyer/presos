@@ -36,7 +36,7 @@ image::images/cnc.png[cloud-native-contracts]
 
 == Devops open data
 
-* "if you build it you run it"
+* "if you build it you run it" (or at least "own it")
 * 12-factor principles, Spring Boot and Spring Cloud Environment support
 * logs (sensible defaults, stdout)
 * actuator endpoints: /trace, /routes, /mappings, /env, /configprops, /beans, /autoconfig
@@ -47,6 +47,7 @@ image::images/cnc.png[cloud-native-contracts]
 
 * collecting logs from remote system (/logs endpoint and `cf logs`)
 * changing log levels at runtime
+* other useful actuator endpoints: /env, /trace, /mappings, /autoconfig
 * feature switches
 * remote debugger (see later: Spring Boot Devtools)
 * deploy locally
@@ -145,14 +146,17 @@ public class MyTests { /*...*/
 
 == Stubbing
 
-* “forced stubbing”: micro-infra from 4finance
-* ad-hoc stubbing: accurest, wiremock, stubby4j, Spring MVC
-* embedded stubs vs. remote stubs
-
 High level:
 
 * Greenfield (dependent services don't exist yet, write stubs)
 * Brownfield (dependent services exist and have published stubs)
+
+Example tools/approaches:
+
+* publish producer stubs vs. consumer tests
+* "forced stubbing": micro-infra from 4finance
+* ad-hoc stubbing: accurest, wiremock, stubby4j, Spring MVC
+* embedded stubs vs. remote stubs
 
 == Stubbing Brownfield Services
 
@@ -251,12 +255,20 @@ to verify real service contract
 == Stubbing: 4finance stubrunner
 
 * Publish stub files to nexus repository (or local maven repo)
-* Describe a services dependencies in `application.yml`
-* Stubrunner using list of dependencies
+* Describe all services dependencies in `application.yml`
+* Stubrunner uses list of dependencies
 ** Grabs stubs from repository
 ** Runs a wiremock server for each dependency using fetched stubs
 ** Registers server in service discovery
 * Consuming service can function against stubs *(DEMO)*
+
+== Hot reloading and code swapping
+
+* Basic IDE features (JVM hotswap and resource reload)
+* Spring Boot devtools - app restart and browser plugin
+* STS
+* Spring Loaded (Grails, JHipster)
+* JRebel
 
 == Hot reloading locally
 
@@ -284,7 +296,8 @@ image::images/hot-reload-arch.svg[TODO: Hot reload architecture]
 
 > How does new code enter a build pipeline and get promoted to production?
 
-* always automated
+* adhoc deployment and mixed local-remote is great for dev time
+* always automated downstream
 * always part of CI process
 * stay close to production platform (e.g. use Cloud Foundry for everything)
 * don't redeploy the universe for every change
@@ -309,11 +322,20 @@ image::images/hot-reload-arch.svg[TODO: Hot reload architecture]
 
 * use autoconfiguration
 * use Spring Cloud Connectors (a bit)
-* use Spring Cloud Stream for messaging middleware
+* use Spring Cloud Stream for messaging
 
 == Provisioning a system for testing
 
 * Docker compose (great for repeatability)
 * Locally with VirtualBox
-* Remotely Lattice AWS, PCF, etc.
+* Remotely: Lattice AWS, PCF, etc.
 * CI systems native support (travis, bamboo, etc.)
+
+== Links
+
+* http://presos.dsyer.com/decks/spring-cloud-dev-experience.html
+* http://cloud.spring.io
+* http://spring.io/blog
+* https://github.com/spring-cloud
+* https://github.com/spring-cloud-samples
+* https://github.com/springone2gx2015
