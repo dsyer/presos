@@ -111,3 +111,8 @@ div.demo {
   margin-top: 150px;
   text-align: center;
 }
+
+.icon {
+  font-family: 'FontAwesome' !important;
+  font-style: normal;
+}
