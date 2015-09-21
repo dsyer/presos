@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="Asciidoctor 1.5.2" name="generator">
+<meta content="Dave Syer, 2015" name="author">
+<title>Cloud Native Application Architecture</title>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+<style>
+.conum { display: inline-block; color: white !important; background-color: #222222; -webkit-border-radius: 100px; border-radius: 100px; text-align: center; width: 1.2em; height: 1.2em; font-size: 0.9em; font-weight: bold; line-height: 1.2; font-family: Arial, sans-serif; font-style: normal; position: relative; top: -0.1em; }
+.conum * { color: white !important; }
+.conum + b { display: none; }
+.conum:after { content: attr(data-value); }
+.conum:not([data-value]):empty { display: none; }
+.colist table td:first-of-type { padding-right: 0.25em; }
+</style>
+<link href="./asciidoctor-pygments.css" rel="stylesheet">
+<link href="../deck.js/core/deck.core.css" rel="stylesheet">
+<link href="../deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/goto/deck.goto.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
+<link href="../deck.js/themes/style/spring.css" media="screen" rel="stylesheet">
+<link href="../deck.js/themes/transition/fade.css" media="screen" rel="stylesheet">
+<script src="../deck.js/modernizr.custom.js"></script>
+</head>
+<body class="article">
+<div class="deck-container">
+<section class="slide" id="title-slide">
+<h1>Cloud Native Application Architecture</h1>
+<span id="author">Dave Syer, 2015</span>
+<br>
+</section>
+<section class="slide" id="_authors">
+<h2>Authors</h2>
+<div class="paragraph"><p>Dave Syer,<br>
+<a href="http://twitter.com/david_syer">@david_syer</a>,<br>
+<a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p></div>
+<div class="paragraph"><p>(with thanks to @mstine)</p></div>
+</section>
+<section class="slide" id="_why_cloud_native">
+<h2>Why Cloud Native?</h2>
+<div class="ulist">
+<ul>
+<li>Speed</li>
+<li>Safety</li>
+<li>Scale</li>
+<li>Mobility</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_what_is_cloud_native">
+<h2>What is Cloud Native?</h2>
+<div class="ulist">
+<ul>
+<li>Twelve Factor Apps (<a class="bare" href="http://12factor.net">http://12factor.net</a>)</li>
+<li>Microservices</li>
+<li>Self-service, agile infrastructure</li>
+<li>Contract-based collaboration (APIs, messages)</li>
+<li>Antifragility</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_is_there_maybe_some_hype">
+<h2>Is There Maybe Some Hype?</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="cat-with-unicorn" src="images/cat_with_a_gun_riding_a_unicorn.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_microservice">
+<h2>Microservice</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>Loosely coupled service oriented architecture with bounded contexts&#8230;&#8203;</p></div>
+<div class="attribution">
+<cite>Adrian Cockcroft</cite>
+</div>
+</blockquote>
+</div>
+<div class="paragraph"><p>If every service has to be updated in concert, it&#8217;s not loosely coupled.</p></div>
+<div class="paragraph"><p>If you have to know about the internals of surrounding services you don&#8217;t have a bounded context.</p></div>
+</section>
+<section class="slide" id="_enabling_continuous_delivery">
+<h2>Enabling Continuous Delivery</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="cont-deliv" src="images/cloud-native/cont_deliv.png" width="400">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li><strong>Deliver</strong> (Day One)</li>
+<li><strong>Continuously</strong> (Day Two and Beyond)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_cloud_native_is_not">
+<h2>Cloud Native is NOT:</h2>
+<div class="ulist">
+<ul>
+<li>Configuring infrastructure</li>
+<li>Orchestrating containers</li>
+<li>Composing distributed systems</li>
+<li>Supporting ad-hoc general purpose automation</li>
+</ul>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>ad hoc automation is a problem masquerading as a solution</p></div>
+<div class="attribution">
+<cite>https://twitter.com/littleidea/status/626767188653797376</cite>
+</div>
+</blockquote>
+</div>
+</section>
+<section class="slide" id="_i_regret_to_inform_you_but">
+<h2>I Regret to Inform You, but&#8230;&#8203;</h2>
+<div class="ulist">
+<ul>
+<li>You&#8217;re not that smart</li>
+<li>You&#8217;re not different</li>
+<li>You&#8217;re not special</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_cloud_native_objective">
+<h2>Cloud Native Objective</h2>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph"><p>Get out of the business of infrastructure <strong>and</strong> automation<br>
+(a.k.a. "undifferentiated heavy lifting")</p></div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph"><p>&#160;<br>
+&#160;<br></p></div>
+<div class="ulist">
+<ul>
+<li>Internet giants, ratio of app to infra developers = 10:1</li>
+<li>What is left that is special? Your business = your apps.</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_12_factor_application_patterns">
+<h2>12-Factor Application Patterns</h2>
+<div class="ulist">
+<ul>
+<li>Cloud-native application architectures</li>
+<li>Optimized for speed, safety, &amp; scale</li>
+<li>Declarative configuration</li>
+<li>Stateless/shared-nothing processes</li>
+<li>Loose coupling to application environment</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_conway_s_law">
+<h2>Conway&#8217;s Law</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization&#8217;s communication structure.</p></div>
+<div class="attribution">
+<cite>Melvyn Conway, 1967</cite>
+</div>
+</blockquote>
+</div>
+</section>
+<section class="slide" id="_the_inverse_conway_manoeuver">
+<h2>The Inverse Conway Manoeuver</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="inverse-conway" src="images/cloud-native/inverse_conway.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_platform_should_remind_us">
+<h2>Platform Should Remind Us:</h2>
+<div class="ulist">
+<ul>
+<li>We&#8217;re not that smart</li>
+<li>We&#8217;re not different</li>
+<li>We&#8217;re not special</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_cloud_native_contracts">
+<h2>Cloud Native Contracts</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="cloud-native-contracts" src="images/cnc.png">
+</div>
+</div>
+<div class="paragraph"><p>(With thanks to @littleidea)</p></div>
+</section>
+<section class="slide" id="_links">
+<h2>Links</h2>
+<div class="ulist">
+<ul>
+<li><a class="bare" href="http://presos.dsyer.com/decks/spring-cloud-dev-experience.html">http://presos.dsyer.com/decks/spring-cloud-dev-experience.html</a></li>
+<li><a class="bare" href="http://cloud.spring.io">http://cloud.spring.io</a></li>
+<li><a class="bare" href="http://spring.io/blog">http://spring.io/blog</a></li>
+<li><a class="bare" href="https://github.com/spring-cloud">https://github.com/spring-cloud</a></li>
+<li><a class="bare" href="https://github.com/spring-cloud-samples">https://github.com/spring-cloud-samples</a></li>
+<li><a class="bare" href="https://github.com/springone2gx2015">https://github.com/springone2gx2015</a></li>
+</ul>
+</div>
+</section>
+<div aria-role="navigation">
+<a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
+<a class="deck-next-link" href="#" title="Next">&#8594;</a>
+</div>
+<p aria-role="status" class="deck-status">
+<span class="deck-status-current"></span>
+/
+<span class="deck-status-total"></span>
+</p>
+<form action="." class="goto-form" method="get">
+<label for="goto-slide">Go to Slide:</label>
+<input id="goto-slide" list="goto-datalist" name="slidenum" type="text">
+<datalist id="goto-data-list"></datalist>
+<input type="submit" value="Go">
+</form>
+</div>
+<script src="../deck.js/jquery-1.7.2.min.js"></script>
+<script src="../deck.js/core/deck.core.js"></script>
+<script src="../deck.js/extensions/scale/deck.scale.js"></script>
+<script src="../deck.js/extensions/goto/deck.goto.js"></script>
+<script src="../deck.js/extensions/menu/deck.menu.js"></script>
+<script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="../deck.js/extensions/status/deck.status.js"></script>
+<script>
+  (function($, deck, undefined) {
+    $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
+    $.deck.defaults.keys['next'] = [13, 32, 34, 39];
+  
+    $.extend(true, $[deck].defaults, {
+        countNested: false
+    });
+  
+    $.deck('.slide');
+  })(jQuery, 'deck');
+</script>
+<style>
+  .slide.canvas-image {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-box;
+  display: box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -moz-box-align: start;
+  -webkit-box-align: start;
+  -ms-box-align: start;
+  box-align: start;
+  -moz-box-pack: start;
+  -webkit-box-pack: start;
+  -ms-box-pack: start;
+  box-pack: start;}
+  
+  .bottom-left {
+    left: 1%;
+    bottom: 20%; }
+  
+  .top-left {
+    left: 1%;
+    top: 20%; }
+  
+  .bottom-right {
+    right: 1%;
+    bottom: 20%; }
+  
+  .top-right {
+    right: 1%;
+    top: 20%; }
+  
+  .center-up {
+    right: 50%;
+    top: 1%;
+  }
+  
+  .center-down {
+    right: 50%;
+    bottom: 1%;
+  }
+  .canvas-image .canvas-caption p {
+    text-align: center;
+    padding-top: 0;
+    padding: 0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    display: inline;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 58px;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    -moz-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+    padding: 1rem;
+    color: white; }
+  kbd.keyseq { color: #555555; }
+  kbd:not(.keyseq) {
+    display: inline-block;
+    color: #222222;
+    font-size: 0.7em;
+    line-height: 1.4;
+    background-color: #F7F7F7;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    margin: -0.15em 0.15em 0 0.15em;
+    padding: 0.2em 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  kbd kbd:first-child { margin-left: 0; }
+  kbd kbd:last-child { margin-right: 0; }
+</style>
+</body>
+</html>

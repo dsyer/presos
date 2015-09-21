@@ -1,0 +1,126 @@
+= Cloud Native Application Architecture
+Dave Syer, 2015
+:backend: deckjs
+:deckjs_transition: fade
+:navigation:
+:icons: font
+:menu:
+:goto:
+:hash:
+:status:
+:scale:
+:source-highlighter: pygments
+:deckjs_theme: spring
+:deckjsdir: ../deck.js
+
+== Authors
+
+Dave Syer, +
+http://twitter.com/david_syer[@david_syer], +
+dsyer@pivotal.io
+
+(with thanks to @mstine)
+
+== Why Cloud Native?
+
+* Speed
+* Safety
+* Scale
+* Mobility
+
+== What is Cloud Native?
+
+* Twelve Factor Apps (http://12factor.net)
+* Microservices
+* Self-service, agile infrastructure
+* Contract-based collaboration (APIs, messages)
+* Antifragility
+
+== Is There Maybe Some Hype?
+
+image::images/cat_with_a_gun_riding_a_unicorn.jpg[cat-with-unicorn]
+
+== Microservice
+
+> Loosely coupled service oriented architecture with bounded contexts...
+-- Adrian Cockcroft
+
+If every service has to be updated in concert, it's not loosely coupled.
+
+If you have to know about the internals of surrounding services you don't have a bounded context.
+
+== Enabling Continuous Delivery
+
+image::images/cloud-native/cont_deliv.png[cont-deliv,400]
+
+- **Deliver** (Day One)
+- **Continuously** (Day Two and Beyond)
+
+== Cloud Native is NOT:
+
+* Configuring infrastructure
+* Orchestrating containers
+* Composing distributed systems
+* Supporting ad-hoc general purpose automation
+
+> ad hoc automation is a problem masquerading as a solution
+-- https://twitter.com/littleidea/status/626767188653797376
+
+== I Regret to Inform You, but...
+
+* You're not that smart
+* You're not different
+* You're not special
+
+== Cloud Native Objective
+
+[NOTE]
+====
+Get out of the business of infrastructure *and* automation +
+(a.k.a. "undifferentiated heavy lifting")
+====
+
+{nbsp} +
+{nbsp} +
+
+- Internet giants, ratio of app to infra developers = 10:1
+- What is left that is special? Your business = your apps.
+
+
+== 12-Factor Application Patterns
+
+- Cloud-native application architectures
+- Optimized for speed, safety, & scale
+- Declarative configuration
+- Stateless/shared-nothing processes
+- Loose coupling to application environment
+
+== Conway's Law
+
+> Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization's communication structure.
+-- Melvyn Conway, 1967
+
+== The Inverse Conway Manoeuver
+
+image::images/cloud-native/inverse_conway.png[inverse-conway]
+
+== Platform Should Remind Us:
+
+* We're not that smart
+* We're not different
+* We're not special
+
+== Cloud Native Contracts
+
+image::images/cnc.png[cloud-native-contracts]
+
+(With thanks to @littleidea)
+
+== Links
+
+* http://presos.dsyer.com/decks/spring-cloud-dev-experience.html
+* http://cloud.spring.io
+* http://spring.io/blog
+* https://github.com/spring-cloud
+* https://github.com/spring-cloud-samples
+* https://github.com/springone2gx2015
