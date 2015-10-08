@@ -1,0 +1,228 @@
+= Spring Boot for the Web Tier
+Dave Syer, 2015
+:backend: deckjs
+:deckjs_transition: fade
+:navigation:
+:menu:
+:goto:
+:status:
+:source-highlighter: pygments
+:deckjs_theme: spring
+:deckjsdir: ../deck.js
+
+== Author
+
+Dave Syer   
+twitter: [@david_syer](http://twitter.com/david_syer)   
+email: dsyer@pivotal.io   
+
+
+== Presentation Overview
+* Part 1 - Static Content
+* Part 2 - Dynamic Content
+* Part 3 - Embedded Server
+* Part 4 - Other Stacks
+
+== Static Content - Serving Files
+* Can't use `/src/main/webapp` for jar deployments
+* Put static files from `src/main/resources/static`
+* or `.../public` or `.../resources` or `.../META-INF/resources`
+* Imported "webjars" are automatically mapped
+
+// Demo here will show a simple index.html and webjar
+
+== Static Content: NPM Toolchain
+For serious front end developers the best choice is a Javascript
+toolchain.
+
+* Good community, lots of tools
+* Package static assets into a jar
+* And/or build them as part of a very thin back end
+* Spring Boot CLI makes a great lightweight back end in production or for Java devs
+
+// Demo NPM toolchain. Show Spring Boot CLI app for backend.
+
+== Static Content - wro4j
+* Great for Java developers
+* Often good enough
+* Tutorial (with AngularJS): https://spring.io/guides/tutorials/spring-security-and-angular-js/
+
+== Dynamic Content - Templating Support
+* Thymeleaf
+* Mustache
+* Groovy Template Language
+* Freemarker
+* Velocity (deprecated in Spring 4.3)
+* JSP (not recommended)
+
+// Demo Mustache templates.
+
+== Dynamic Content - HttpMessageConverter
+* Add `HttpMessageConverter` beans and Spring Boot will try to do the right thing
+* It tries to be intelligent about the order
+* Add a `HttpMessageConverters` bean if you need more control
+
+== Hot Reload
+
+* IDEs support reloading static resources
+* Also small changes to Java classes
+* No agent: Spring Boot devtools
+* Agent: spring-loaded (Grails, JHipster), JRebel
+* Live reload (browser plugin)
+
+== Embedded Server
+* When using WARs a `ServletContainerInitializer` creates the Spring `ApplicationContext`
+* When running embedded the `ApplicationContext` creates the Server
+* Expects a single `EmbeddedServletContainerFactory` bean
+* Odd dance for `WebApplicationContext.getServletContext()` and `ServletConfigAware`
+
+== Embedded Server - Initialization
+* The following beans are used to configure the server:
+  * `Servlet`
+  * `Filter`
+  * `ServletRequestListener`
+  * `ServletRequestAttributeListener`
+  * `HttpSessionAttributeListener`
+  * `HttpSessionListener`
+  * `ServletContextListener`
+
+== Embedded Server - Initialization
+* For more control use 
+  * `ServletRegistrationBean`
+  * `FilterRegistrationBean`
+  * `ServletListenerRegistrationBean`
+
+```java
+@Bean
+public ServletRegistrationBean myServlet() {
+    ServletRegistrationBean bean = 
+        new ServletRegistrationBean(new MyServlet(), "/mine");
+    bean.setAsyncSupported(false);
+    bean.setInitParameters(Collections.singletonMap("debug", "true"));
+    return bean;
+}
+
+@Bean
+public FilterRegistrationBean myFilter() {
+    return new FilterRegistrationBean(new MyFilter(), myServlet());
+}
+```
+
+== Embedded Server - Initialization
+* By design the following are not called with embedded servers:
+  * `javax.servlet.ServletContainerInitializer`
+  * `org.springframework.web.WebApplicationInitializer`
+* Use `o.s.boot.context.embedded.ServletContextInitializer`
+
+```java
+  /**
+   * Configure the given {@link ServletContext} with any servlets, filters, listeners
+   * context-params and attributes necessary for initialization.
+   * @param servletContext the {@code ServletContext} to initialize
+   * @throws ServletException if any call against the given {@code ServletContext}
+   * throws a {@code ServletException}
+   */
+  void onStartup(ServletContext servletContext) throws ServletException;
+```
+
+== Embedded Server - Customization
+* Use `ServerProperties` (e.g. `server.port=8080`)
+* `EmbeddedServletContainerCustomizer`
+  * Customize common things (e.g. the `port`, `error-pages`, `context-path`)
+* Tomcat Specific
+  * `TomcatConnectorCustomizer`
+  * `TomcatContextCustomizer`
+* Jetty Specific
+  * `JettyServerCustomizer`
+* Undertow Specific
+  * `UndertowBuilderCustomizer`
+
+== Embedded Server - Tomcat Behind Proxy
+* Running behind nginx or Apache HTTPD is a common option
+* Especially useful with SSL termination
+* Real IP and SSL information is passed in headers
+
+```
+server.tomcat.protocol-header=x-forwarded-proto
+server.tomcat.remote-ip-header=x-forwarded-for
+```
+
+> Spring Boot 1.3.0 supports other containers in a similar way
+
+== Other Stacks
+
+* JAX-RS: Jersey 1.x, Jersey 2.x, CXF (allegedly works)
+* Netty and NIO: Ratpack [dsyer/spring-boot-ratpack](https://github.com/dsyer/spring-boot-ratpack)
+* Servlet 2.5 [scratches/spring-boot-legacy](https://github.com/scratches/spring-boot-legacy)
+* Vaadin [peholmst/vaadin4spring](https://github.com/peholmst/vaadin4spring/tree/master/spring-boot-vaadin)
+
+== Ratpack
+
+> Originally inspired by Sinatra, but now pretty much
+> diverged. Provides a nice programming model on top of Netty
+> (potentially taking advantage of non-blocking IO).
+
+2 approaches:
+
+* Ratpack embeds Spring (and uses it as a `Registry`), supported natively in Ratpack
+* Spring embeds Ratpack (and uses it as an HTTP listener) = spring-boot-ratpack
+
+== Spring Boot embedding Ratpack
+
+Trivial example (single `Handler`):
+
+```java
+@Bean
+public Handler handler() {
+    return (context) -> {
+        context.render("Hello World");
+    };
+}
+```
+
+== Spring Boot embedding Ratpack
+
+More interesting example (`Action<Chain>` registers `Handlers`):
+
+```java
+@Bean
+public Handler hello() {
+    return (context) -> {
+        context.render("Hello World");
+    };
+}
+
+@Bean
+public Action<Chain> handlers() {
+    return (chain) -> {
+        chain.get(hello());
+    };
+}
+```
+
+== Spring Boot Ratpack DSL
+
+A valid Ratpack Groovy application:
+
+```groovy
+ratpack {
+  handlers {
+    get {
+      render "Hello World"
+    }
+  }
+}
+```
+
+launched with Spring Boot:
+
+```
+$ spring run app.groovy
+```
+
+
+== Questions?
+
+* http://projects.spring.io/spring-boot/
+* https://github.com/scratches/spring-boot-4tw
+* https://github.com/SpringOne2GX-2014/spring-boot-for-the-web-tier
