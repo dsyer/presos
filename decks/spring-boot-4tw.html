@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="Asciidoctor 1.5.2" name="generator">
+<meta content="Dave Syer, 2015" name="author">
+<title>Spring Boot for the Web Tier</title>
+<link href="./asciidoctor-pygments.css" rel="stylesheet">
+<link href="../deck.js/core/deck.core.css" rel="stylesheet">
+<link href="../deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/goto/deck.goto.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
+<link href="../deck.js/themes/style/spring.css" media="screen" rel="stylesheet">
+<link href="../deck.js/themes/transition/fade.css" media="screen" rel="stylesheet">
+<script src="../deck.js/modernizr.custom.js"></script>
+</head>
+<body class="article">
+<div class="deck-container">
+<section class="slide" id="title-slide">
+<h1>Spring Boot for the Web Tier</h1>
+<span id="author">Dave Syer, 2015</span>
+<br>
+</section>
+<section class="slide" id="_author">
+<h2>Author</h2>
+<div class="paragraph"><p>Dave Syer
+twitter: [@david_syer](<a class="bare" href="http://twitter.com/david_syer">http://twitter.com/david_syer</a>)
+email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p></div>
+</section>
+<section class="slide" id="_presentation_overview">
+<h2>Presentation Overview</h2>
+<div class="ulist">
+<ul>
+<li>Part 1 - Static Content</li>
+<li>Part 2 - Dynamic Content</li>
+<li>Part 3 - Embedded Server</li>
+<li>Part 4 - Other Stacks</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_static_content_serving_files">
+<h2>Static Content - Serving Files</h2>
+<div class="ulist">
+<ul>
+<li>Can&#8217;t use <code>/src/main/webapp</code> for jar deployments</li>
+<li>Put static files from <code>src/main/resources/static</code></li>
+<li>or <code>&#8230;&#8203;/public</code> or <code>&#8230;&#8203;/resources</code> or <code>&#8230;&#8203;/META-INF/resources</code></li>
+<li>Imported "webjars" are automatically mapped</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_static_content_npm_toolchain">
+<h2>Static Content: NPM Toolchain</h2>
+<div class="paragraph"><p>For serious front end developers the best choice is a Javascript
+toolchain.</p></div>
+<div class="ulist">
+<ul>
+<li>Good community, lots of tools</li>
+<li>Package static assets into a jar</li>
+<li>And/or build them as part of a very thin back end</li>
+<li>Spring Boot CLI makes a great lightweight back end in production or for Java devs</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_static_content_wro4j">
+<h2>Static Content - wro4j</h2>
+<div class="ulist">
+<ul>
+<li>Great for Java developers</li>
+<li>Often good enough</li>
+<li>Tutorial (with AngularJS): <a class="bare" href="https://spring.io/guides/tutorials/spring-security-and-angular-js/">https://spring.io/guides/tutorials/spring-security-and-angular-js/</a></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_dynamic_content_templating_support">
+<h2>Dynamic Content - Templating Support</h2>
+<div class="ulist">
+<ul>
+<li>Thymeleaf</li>
+<li>Mustache</li>
+<li>Groovy Template Language</li>
+<li>Freemarker</li>
+<li>Velocity (deprecated in Spring 4.3)</li>
+<li>JSP (not recommended)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_dynamic_content_httpmessageconverter">
+<h2>Dynamic Content - HttpMessageConverter</h2>
+<div class="ulist">
+<ul>
+<li>Add <code>HttpMessageConverter</code> beans and Spring Boot will try to do the right thing</li>
+<li>It tries to be intelligent about the order</li>
+<li>Add a <code>HttpMessageConverters</code> bean if you need more control</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_hot_reload">
+<h2>Hot Reload</h2>
+<div class="ulist">
+<ul>
+<li>IDEs support reloading static resources</li>
+<li>Also small changes to Java classes</li>
+<li>No agent: Spring Boot devtools</li>
+<li>Agent: spring-loaded (Grails, JHipster), JRebel</li>
+<li>Live reload (browser plugin)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_embedded_server">
+<h2>Embedded Server</h2>
+<div class="ulist">
+<ul>
+<li>When using WARs a <code>ServletContainerInitializer</code> creates the Spring <code>ApplicationContext</code></li>
+<li>When running embedded the <code>ApplicationContext</code> creates the Server</li>
+<li>Expects a single <code>EmbeddedServletContainerFactory</code> bean</li>
+<li>Odd dance for <code>WebApplicationContext.getServletContext()</code> and <code>ServletConfigAware</code></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_embedded_server_initialization">
+<h2>Embedded Server - Initialization</h2>
+<div class="ulist">
+<ul>
+<li>The following beans are used to configure the server:</li>
+<li><code>Servlet</code></li>
+<li><code>Filter</code></li>
+<li><code>ServletRequestListener</code></li>
+<li><code>ServletRequestAttributeListener</code></li>
+<li><code>HttpSessionAttributeListener</code></li>
+<li><code>HttpSessionListener</code></li>
+<li><code>ServletContextListener</code></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_embedded_server_initialization_2">
+<h2>Embedded Server - Initialization</h2>
+<div class="ulist">
+<ul>
+<li>For more control use</li>
+<li><code>ServletRegistrationBean</code></li>
+<li><code>FilterRegistrationBean</code></li>
+<li><code>ServletListenerRegistrationBean</code></li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Bean</span>
+<span class="tok-kd">public</span> <span class="tok-n">ServletRegistrationBean</span> <span class="tok-nf">myServlet</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+    <span class="tok-n">ServletRegistrationBean</span> <span class="tok-n">bean</span> <span class="tok-o">=</span>
+        <span class="tok-k">new</span> <span class="tok-nf">ServletRegistrationBean</span><span class="tok-o">(</span><span class="tok-k">new</span> <span class="tok-n">MyServlet</span><span class="tok-o">(),</span> <span class="tok-s">&quot;/mine&quot;</span><span class="tok-o">);</span>
+    <span class="tok-n">bean</span><span class="tok-o">.</span><span class="tok-na">setAsyncSupported</span><span class="tok-o">(</span><span class="tok-kc">false</span><span class="tok-o">);</span>
+    <span class="tok-n">bean</span><span class="tok-o">.</span><span class="tok-na">setInitParameters</span><span class="tok-o">(</span><span class="tok-n">Collections</span><span class="tok-o">.</span><span class="tok-na">singletonMap</span><span class="tok-o">(</span><span class="tok-s">&quot;debug&quot;</span><span class="tok-o">,</span> <span class="tok-s">&quot;true&quot;</span><span class="tok-o">));</span>
+    <span class="tok-k">return</span> <span class="tok-n">bean</span><span class="tok-o">;</span>
+<span class="tok-o">}</span>
+
+<span class="tok-nd">@Bean</span>
+<span class="tok-kd">public</span> <span class="tok-n">FilterRegistrationBean</span> <span class="tok-nf">myFilter</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+    <span class="tok-k">return</span> <span class="tok-k">new</span> <span class="tok-nf">FilterRegistrationBean</span><span class="tok-o">(</span><span class="tok-k">new</span> <span class="tok-n">MyFilter</span><span class="tok-o">(),</span> <span class="tok-n">myServlet</span><span class="tok-o">());</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_embedded_server_initialization_3">
+<h2>Embedded Server - Initialization</h2>
+<div class="ulist">
+<ul>
+<li>By design the following are not called with embedded servers:</li>
+<li><code>javax.servlet.ServletContainerInitializer</code></li>
+<li><code>org.springframework.web.WebApplicationInitializer</code></li>
+<li>Use <code>o.s.boot.context.embedded.ServletContextInitializer</code></li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-cm">/**</span>
+<span class="tok-cm">   * Configure the given {@link ServletContext} with any servlets, filters, listeners</span>
+<span class="tok-cm">   * context-params and attributes necessary for initialization.</span>
+<span class="tok-cm">   * @param servletContext the {@code ServletContext} to initialize</span>
+<span class="tok-cm">   * @throws ServletException if any call against the given {@code ServletContext}</span>
+<span class="tok-cm">   * throws a {@code ServletException}</span>
+<span class="tok-cm">   */</span>
+  <span class="tok-kt">void</span> <span class="tok-nf">onStartup</span><span class="tok-o">(</span><span class="tok-n">ServletContext</span> <span class="tok-n">servletContext</span><span class="tok-o">)</span> <span class="tok-kd">throws</span> <span class="tok-n">ServletException</span><span class="tok-o">;</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_embedded_server_customization">
+<h2>Embedded Server - Customization</h2>
+<div class="ulist">
+<ul>
+<li>Use <code>ServerProperties</code> (e.g. <code>server.port=8080</code>)</li>
+<li><code>EmbeddedServletContainerCustomizer</code></li>
+<li>Customize common things (e.g. the <code>port</code>, <code>error-pages</code>, <code>context-path</code>)</li>
+<li>Tomcat Specific</li>
+<li><code>TomcatConnectorCustomizer</code></li>
+<li><code>TomcatContextCustomizer</code></li>
+<li>Jetty Specific</li>
+<li><code>JettyServerCustomizer</code></li>
+<li>Undertow Specific</li>
+<li><code>UndertowBuilderCustomizer</code></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_embedded_server_tomcat_behind_proxy">
+<h2>Embedded Server - Tomcat Behind Proxy</h2>
+<div class="ulist">
+<ul>
+<li>Running behind nginx or Apache HTTPD is a common option</li>
+<li>Especially useful with SSL termination</li>
+<li>Real IP and SSL information is passed in headers</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>server.tomcat.protocol-header=x-forwarded-proto
+server.tomcat.remote-ip-header=x-forwarded-for</code></pre>
+</div>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>Spring Boot 1.3.0 supports other containers in a similar way</p></div>
+</blockquote>
+</div>
+</section>
+<section class="slide" id="_other_stacks">
+<h2>Other Stacks</h2>
+<div class="ulist">
+<ul>
+<li>JAX-RS: Jersey 1.x, Jersey 2.x, CXF (allegedly works)</li>
+<li>Netty and NIO: Ratpack [dsyer/spring-boot-ratpack](<a class="bare" href="https://github.com/dsyer/spring-boot-ratpack">https://github.com/dsyer/spring-boot-ratpack</a>)</li>
+<li>Servlet 2.5 [scratches/spring-boot-legacy](<a class="bare" href="https://github.com/scratches/spring-boot-legacy">https://github.com/scratches/spring-boot-legacy</a>)</li>
+<li>Vaadin [peholmst/vaadin4spring](<a class="bare" href="https://github.com/peholmst/vaadin4spring/tree/master/spring-boot-vaadin">https://github.com/peholmst/vaadin4spring/tree/master/spring-boot-vaadin</a>)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_ratpack">
+<h2>Ratpack</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>Originally inspired by Sinatra, but now pretty much
+diverged. Provides a nice programming model on top of Netty
+(potentially taking advantage of non-blocking IO).</p></div>
+</blockquote>
+</div>
+<div class="paragraph"><p>2 approaches:</p></div>
+<div class="ulist">
+<ul>
+<li>Ratpack embeds Spring (and uses it as a <code>Registry</code>), supported natively in Ratpack</li>
+<li>Spring embeds Ratpack (and uses it as an HTTP listener) = spring-boot-ratpack</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_spring_boot_embedding_ratpack">
+<h2>Spring Boot embedding Ratpack</h2>
+<div class="paragraph"><p>Trivial example (single <code>Handler</code>):</p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Bean</span>
+<span class="tok-kd">public</span> <span class="tok-n">Handler</span> <span class="tok-nf">handler</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+    <span class="tok-k">return</span> <span class="tok-o">(</span><span class="tok-n">context</span><span class="tok-o">)</span> <span class="tok-o">-&gt;</span> <span class="tok-o">{</span>
+        <span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">render</span><span class="tok-o">(</span><span class="tok-s">&quot;Hello World&quot;</span><span class="tok-o">);</span>
+    <span class="tok-o">};</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_boot_embedding_ratpack_2">
+<h2>Spring Boot embedding Ratpack</h2>
+<div class="paragraph"><p>More interesting example (<code>Action&lt;Chain&gt;</code> registers <code>Handlers</code>):</p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Bean</span>
+<span class="tok-kd">public</span> <span class="tok-n">Handler</span> <span class="tok-nf">hello</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+    <span class="tok-k">return</span> <span class="tok-o">(</span><span class="tok-n">context</span><span class="tok-o">)</span> <span class="tok-o">-&gt;</span> <span class="tok-o">{</span>
+        <span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">render</span><span class="tok-o">(</span><span class="tok-s">&quot;Hello World&quot;</span><span class="tok-o">);</span>
+    <span class="tok-o">};</span>
+<span class="tok-o">}</span>
+
+<span class="tok-nd">@Bean</span>
+<span class="tok-kd">public</span> <span class="tok-n">Action</span><span class="tok-o">&lt;</span><span class="tok-n">Chain</span><span class="tok-o">&gt;</span> <span class="tok-nf">handlers</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+    <span class="tok-k">return</span> <span class="tok-o">(</span><span class="tok-n">chain</span><span class="tok-o">)</span> <span class="tok-o">-&gt;</span> <span class="tok-o">{</span>
+        <span class="tok-n">chain</span><span class="tok-o">.</span><span class="tok-na">get</span><span class="tok-o">(</span><span class="tok-n">hello</span><span class="tok-o">());</span>
+    <span class="tok-o">};</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_boot_ratpack_dsl">
+<h2>Spring Boot Ratpack DSL</h2>
+<div class="paragraph"><p>A valid Ratpack Groovy application:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="groovy language-groovy"><span class="tok-n">ratpack</span> <span class="tok-o">{</span>
+  <span class="tok-n">handlers</span> <span class="tok-o">{</span>
+    <span class="tok-n">get</span> <span class="tok-o">{</span>
+      <span class="tok-n">render</span> <span class="tok-s2">&quot;Hello World&quot;</span>
+    <span class="tok-o">}</span>
+  <span class="tok-o">}</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph"><p>launched with Spring Boot:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ spring run app.groovy</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_questions">
+<h2>Questions?</h2>
+<div class="ulist">
+<ul>
+<li><a class="bare" href="http://projects.spring.io/spring-boot/">http://projects.spring.io/spring-boot/</a></li>
+<li><a class="bare" href="https://github.com/scratches/spring-boot-4tw">https://github.com/scratches/spring-boot-4tw</a></li>
+<li><a class="bare" href="https://github.com/SpringOne2GX-2014/spring-boot-for-the-web-tier">https://github.com/SpringOne2GX-2014/spring-boot-for-the-web-tier</a></li>
+</ul>
+</div>
+</section>
+<div aria-role="navigation">
+<a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
+<a class="deck-next-link" href="#" title="Next">&#8594;</a>
+</div>
+<p aria-role="status" class="deck-status">
+<span class="deck-status-current"></span>
+/
+<span class="deck-status-total"></span>
+</p>
+<form action="." class="goto-form" method="get">
+<label for="goto-slide">Go to Slide:</label>
+<input id="goto-slide" list="goto-datalist" name="slidenum" type="text">
+<datalist id="goto-data-list"></datalist>
+<input type="submit" value="Go">
+</form>
+</div>
+<script src="../deck.js/jquery-1.7.2.min.js"></script>
+<script src="../deck.js/core/deck.core.js"></script>
+<script src="../deck.js/extensions/scale/deck.scale.js"></script>
+<script src="../deck.js/extensions/goto/deck.goto.js"></script>
+<script src="../deck.js/extensions/menu/deck.menu.js"></script>
+<script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="../deck.js/extensions/status/deck.status.js"></script>
+<script>
+  (function($, deck, undefined) {
+    $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
+    $.deck.defaults.keys['next'] = [13, 32, 34, 39];
+  
+    $.extend(true, $[deck].defaults, {
+        countNested: false
+    });
+  
+    $.deck('.slide');
+  })(jQuery, 'deck');
+</script>
+<style>
+  .slide.canvas-image {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-box;
+  display: box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -moz-box-align: start;
+  -webkit-box-align: start;
+  -ms-box-align: start;
+  box-align: start;
+  -moz-box-pack: start;
+  -webkit-box-pack: start;
+  -ms-box-pack: start;
+  box-pack: start;}
+  
+  .bottom-left {
+    left: 1%;
+    bottom: 20%; }
+  
+  .top-left {
+    left: 1%;
+    top: 20%; }
+  
+  .bottom-right {
+    right: 1%;
+    bottom: 20%; }
+  
+  .top-right {
+    right: 1%;
+    top: 20%; }
+  
+  .center-up {
+    right: 50%;
+    top: 1%;
+  }
+  
+  .center-down {
+    right: 50%;
+    bottom: 1%;
+  }
+  .canvas-image .canvas-caption p {
+    text-align: center;
+    padding-top: 0;
+    padding: 0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    display: inline;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 58px;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    -moz-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+    padding: 1rem;
+    color: white; }
+  kbd.keyseq { color: #555555; }
+  kbd:not(.keyseq) {
+    display: inline-block;
+    color: #222222;
+    font-size: 0.7em;
+    line-height: 1.4;
+    background-color: #F7F7F7;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    margin: -0.15em 0.15em 0 0.15em;
+    padding: 0.2em 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  kbd kbd:first-child { margin-left: 0; }
+  kbd kbd:last-child { margin-right: 0; }
+</style>
+</body>
+</html>

@@ -30,6 +30,9 @@ dsyer@pivotal.io
 
 == What is Cloud Native?
 
+> If you make the rule that you own the code that you write, you soon get to know what #cloudnative means!
+-- @david_syer
+
 * Twelve Factor Apps (http://12factor.net)
 * Microservices
 * Self-service, agile infrastructure
@@ -43,11 +46,55 @@ image::images/cat_with_a_gun_riding_a_unicorn.jpg[cat-with-unicorn]
 == Microservice
 
 > Loosely coupled service oriented architecture with bounded contexts...
--- Adrian Cockcroft
+-- @adrianco
 
 If every service has to be updated in concert, it's not loosely coupled.
 
 If you have to know about the internals of surrounding services you don't have a bounded context.
+
+== Not Monoliths...
+
+image::images/cloud-native/monoliths.png[]
+
+== Not Traditional (ESB-centric) SOA...
+
+image::images/cloud-native/esb_soa.png[]
+
+== But Microservices!
+
+image::images/cloud-native/death_star.png[]
+
+== Monoliths
+
+* Complex / Easy
+* Modularity dependent on launguage / framework
+* Change cycle tightly coupled -> obstacle to frequent deploys
+* Inefficient scaling
+* Intimidating to new developers (and for old ones)
+* Obstacle to scaling feature development
+* Requires long-term commitment to stack
+
+== Microservices
+
+* Simple / Hard
+* Modularity based on component services
+* change cycle decoupled -> frequent deploys
+* Efficient scaling
+* Individual components easy to understand
+* Enables scaling development
+* Eliminates long-term commitment to stack
+
+== Wait, It's Hard?
+
+No such thing as a free lunch
+
+* Operations overhead
+* Devops skill shortage
+* Interface / context governance
+* Duplication of effort
+* Distributed system complexity
+* Asynchronous is difficult
+* Testability challenges
 
 == Enabling Continuous Delivery
 
@@ -55,22 +102,6 @@ image::images/cloud-native/cont_deliv.png[cont-deliv,400]
 
 - **Deliver** (Day One)
 - **Continuously** (Day Two and Beyond)
-
-== Cloud Native is NOT:
-
-* Configuring infrastructure
-* Orchestrating containers
-* Composing distributed systems
-* Supporting ad-hoc general purpose automation
-
-> ad hoc automation is a problem masquerading as a solution
--- https://twitter.com/littleidea/status/626767188653797376
-
-== I Regret to Inform You, but...
-
-* You're not that smart
-* You're not different
-* You're not special
 
 == Cloud Native Objective
 
@@ -84,8 +115,8 @@ Get out of the business of infrastructure *and* automation +
 {nbsp} +
 
 - Internet giants, ratio of app to infra developers = 10:1
-- What is left that is special? Your business = your apps.
-
+- Your business (= your apps) is special, your infrastructure is not
+- Don't try to differentiate on something that is a commodity
 
 == 12-Factor Application Patterns
 
@@ -95,20 +126,69 @@ Get out of the business of infrastructure *and* automation +
 - Stateless/shared-nothing processes
 - Loose coupling to application environment
 
-== Conway's Law
+== Microframeworks
 
-> Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization's communication structure.
--- Melvyn Conway, 1967
+image:images/cloud-native/dropwizard.png[dropwizard,100] image:images/cloud-native/spring-boot.png[spring-boot,300]
 
-== The Inverse Conway Manoeuver
+- Dropwizard (http://www.dropwizard.io/)
+- Spring Boot (http://projects.spring.io/spring-boot/)
 
-image::images/cloud-native/inverse_conway.png[inverse-conway]
+== Spring Boot
 
-== Platform Should Remind Us:
+- http://projects.spring.io/spring-boot
+- Opinionated convention over configuration
+- Production-ready Spring applications
+- Embed Tomcat, Jetty or Undertow
+- *STARTERS*
+- Actuator: Metrics, health checks, introspection
 
-* We're not that smart
-* We're not different
-* We're not special
+== No Microservice is an Island
+
+image::images/cloud-native/island-house.jpg[island-house]
+
+== Challenges of Distributed Systems
+
+* Configuration Management
+* Service Registration & Discovery
+* Routing & Load Balancing
+* Fault Tolerance (Circuit Breakers!)
+* Monitoring and Tracing
+* API Aggregation & Transformation
+
+== Spring Cloud
+
+- http://projects.spring.io/spring-cloud
+- Opinionated convention over configuration
+- Common patterns, pre-shaved yaks
+- Declarative distributed systems
+- Embed Netflix OSS and other popular tools (Zipkin, Kafka, Rabbit, Zookeeper, Consul, Hazelcast, Cloud Foundry)
+
+== You're Going to Need a Platform
+
+Pivotal platform features:
+
+[frame="none",grid="none"]
+|===
+| Cloud Foundry   image:images/cf_logo.png[cf,60] | Spring Cloud   image:images/spring-cloud.png[cloud,60]
+
+| Environment Provisioning
+| Distributed/Versioned Config
+
+| On-Demand/Automatic Scaling
+| Service Registration/Discovery
+
+| Failover Resilience
+| Routing/Load Balancing
+
+| Routing/Load Balancing
+| Service Integration
+
+| Data Service Operations
+| Fault Tolerance
+
+| Monitoring
+| Asynchronous Messaging
+|===
 
 == Cloud Native Contracts
 

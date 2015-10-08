@@ -5,7 +5,7 @@
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta content="Asciidoctor 1.5.2" name="generator">
 <meta content="Dave Syer, 2015" name="author">
-<title>Cloud Native Application Architecture</title>
+<title>Cloud Native Process</title>
 <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
 <style>
 .conum { display: inline-block; color: white !important; background-color: #222222; -webkit-border-radius: 100px; border-radius: 100px; text-align: center; width: 1.2em; height: 1.2em; font-size: 0.9em; font-weight: bold; line-height: 1.2; font-family: Arial, sans-serif; font-style: normal; position: relative; top: -0.1em; }
@@ -29,7 +29,7 @@
 <body class="article">
 <div class="deck-container">
 <section class="slide" id="title-slide">
-<h1>Cloud Native Application Architecture</h1>
+<h1>Cloud Native Process</h1>
 <span id="author">Dave Syer, 2015</span>
 <br>
 </section>
@@ -53,14 +53,6 @@
 </section>
 <section class="slide" id="_what_is_cloud_native">
 <h2>What is Cloud Native?</h2>
-<div class="quoteblock">
-<blockquote>
-<div class="paragraph"><p>If you make the rule that you own the code that you write, you soon get to know what #cloudnative means!</p></div>
-<div class="attribution">
-<cite>@david_syer</cite>
-</div>
-</blockquote>
-</div>
 <div class="ulist">
 <ul>
 <li>Twelve Factor Apps (<a class="bare" href="http://12factor.net">http://12factor.net</a>)</li>
@@ -71,105 +63,32 @@
 </ul>
 </div>
 </section>
-<section class="slide" id="_is_there_maybe_some_hype">
-<h2>Is There Maybe Some Hype?</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="cat-with-unicorn" src="images/cat_with_a_gun_riding_a_unicorn.jpg">
+<section class="slide" id="_cloud_native_is_not">
+<h2>Cloud Native is NOT:</h2>
+<div class="ulist">
+<ul>
+<li>Configuring infrastructure</li>
+<li>Orchestrating containers</li>
+<li>Composing distributed systems</li>
+<li>Supporting ad-hoc general purpose automation</li>
+</ul>
 </div>
-</div>
-</section>
-<section class="slide" id="_microservice">
-<h2>Microservice</h2>
 <div class="quoteblock">
 <blockquote>
-<div class="paragraph"><p>Loosely coupled service oriented architecture with bounded contexts&#8230;&#8203;</p></div>
+<div class="paragraph"><p>ad hoc automation is a problem masquerading as a solution</p></div>
 <div class="attribution">
-<cite>@adrianco</cite>
+<cite>https://twitter.com/littleidea/status/626767188653797376</cite>
 </div>
 </blockquote>
 </div>
-<div class="paragraph"><p>If every service has to be updated in concert, it&#8217;s not loosely coupled.</p></div>
-<div class="paragraph"><p>If you have to know about the internals of surrounding services you don&#8217;t have a bounded context.</p></div>
 </section>
-<section class="slide" id="_not_monoliths">
-<h2>Not Monoliths&#8230;&#8203;</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="monoliths" src="images/cloud-native/monoliths.png">
-</div>
-</div>
-</section>
-<section class="slide" id="_not_traditional_esb_centric_soa">
-<h2>Not Traditional (ESB-centric) SOA&#8230;&#8203;</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="esb soa" src="images/cloud-native/esb_soa.png">
-</div>
-</div>
-</section>
-<section class="slide" id="_but_microservices">
-<h2>But Microservices!</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="death star" src="images/cloud-native/death_star.png">
-</div>
-</div>
-</section>
-<section class="slide" id="_monoliths">
-<h2>Monoliths</h2>
+<section class="slide" id="_i_regret_to_inform_you_but">
+<h2>I Regret to Inform You, but&#8230;&#8203;</h2>
 <div class="ulist">
 <ul>
-<li>Complex / Easy</li>
-<li>Modularity dependent on launguage / framework</li>
-<li>Change cycle tightly coupled &#8594; obstacle to frequent deploys</li>
-<li>Inefficient scaling</li>
-<li>Intimidating to new developers (and for old ones)</li>
-<li>Obstacle to scaling feature development</li>
-<li>Requires long-term commitment to stack</li>
-</ul>
-</div>
-</section>
-<section class="slide" id="_microservices">
-<h2>Microservices</h2>
-<div class="ulist">
-<ul>
-<li>Simple / Hard</li>
-<li>Modularity based on component services</li>
-<li>change cycle decoupled &#8594; frequent deploys</li>
-<li>Efficient scaling</li>
-<li>Individual components easy to understand</li>
-<li>Enables scaling development</li>
-<li>Eliminates long-term commitment to stack</li>
-</ul>
-</div>
-</section>
-<section class="slide" id="_wait_it_s_hard">
-<h2>Wait, It&#8217;s Hard?</h2>
-<div class="paragraph"><p>No such thing as a free lunch</p></div>
-<div class="ulist">
-<ul>
-<li>Operations overhead</li>
-<li>Devops skill shortage</li>
-<li>Interface / context governance</li>
-<li>Duplication of effort</li>
-<li>Distributed system complexity</li>
-<li>Asynchronous is difficult</li>
-<li>Testability challenges</li>
-</ul>
-</div>
-</section>
-<section class="slide" id="_enabling_continuous_delivery">
-<h2>Enabling Continuous Delivery</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="cont-deliv" src="images/cloud-native/cont_deliv.png" width="400">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li><strong>Deliver</strong> (Day One)</li>
-<li><strong>Continuously</strong> (Day Two and Beyond)</li>
+<li>You&#8217;re not that smart</li>
+<li>You&#8217;re not different</li>
+<li>You&#8217;re not special</li>
 </ul>
 </div>
 </section>
@@ -193,8 +112,7 @@
 <div class="ulist">
 <ul>
 <li>Internet giants, ratio of app to infra developers = 10:1</li>
-<li>Your business (= your apps) is special, your infrastructure is not</li>
-<li>Don&#8217;t try to differentiate on something that is a commodity</li>
+<li>What is left that is special? Your business = your apps.</li>
 </ul>
 </div>
 </section>
@@ -210,103 +128,34 @@
 </ul>
 </div>
 </section>
-<section class="slide" id="_microframeworks">
-<h2>Microframeworks</h2>
-<div class="paragraph"><p><span class="image"><img alt="dropwizard" src="images/cloud-native/dropwizard.png" width="100"></span> <span class="image"><img alt="spring-boot" src="images/cloud-native/spring-boot.png" width="300"></span></p></div>
-<div class="ulist">
-<ul>
-<li>Dropwizard (<a class="bare" href="http://www.dropwizard.io/">http://www.dropwizard.io/</a>)</li>
-<li>Spring Boot (<a class="bare" href="http://projects.spring.io/spring-boot/">http://projects.spring.io/spring-boot/</a>)</li>
-</ul>
+<section class="slide" id="_conway_s_law">
+<h2>Conway&#8217;s Law</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization&#8217;s communication structure.</p></div>
+<div class="attribution">
+<cite>Melvyn Conway, 1967</cite>
+</div>
+</blockquote>
 </div>
 </section>
-<section class="slide" id="_spring_boot">
-<h2>Spring Boot</h2>
-<div class="ulist">
-<ul>
-<li><a class="bare" href="http://projects.spring.io/spring-boot">http://projects.spring.io/spring-boot</a></li>
-<li>Opinionated convention over configuration</li>
-<li>Production-ready Spring applications</li>
-<li>Embed Tomcat, Jetty or Undertow</li>
-<li><strong>STARTERS</strong></li>
-<li>Actuator: Metrics, health checks, introspection</li>
-</ul>
-</div>
-</section>
-<section class="slide" id="_no_microservice_is_an_island">
-<h2>No Microservice is an Island</h2>
+<section class="slide" id="_the_inverse_conway_manoeuver">
+<h2>The Inverse Conway Manoeuver</h2>
 <div class="imageblock">
 <div class="content">
-<img alt="island-house" src="images/cloud-native/island-house.jpg">
+<img alt="inverse-conway" src="images/cloud-native/inverse_conway.png">
 </div>
 </div>
 </section>
-<section class="slide" id="_challenges_of_distributed_systems">
-<h2>Challenges of Distributed Systems</h2>
+<section class="slide" id="_platform_should_remind_us">
+<h2>Platform Should Remind Us:</h2>
 <div class="ulist">
 <ul>
-<li>Configuration Management</li>
-<li>Service Registration &amp; Discovery</li>
-<li>Routing &amp; Load Balancing</li>
-<li>Fault Tolerance (Circuit Breakers!)</li>
-<li>Monitoring and Tracing</li>
-<li>API Aggregation &amp; Transformation</li>
+<li>We&#8217;re not that smart</li>
+<li>We&#8217;re not different</li>
+<li>We&#8217;re not special</li>
 </ul>
 </div>
-</section>
-<section class="slide" id="_spring_cloud">
-<h2>Spring Cloud</h2>
-<div class="ulist">
-<ul>
-<li><a class="bare" href="http://projects.spring.io/spring-cloud">http://projects.spring.io/spring-cloud</a></li>
-<li>Opinionated convention over configuration</li>
-<li>Common patterns, pre-shaved yaks</li>
-<li>Declarative distributed systems</li>
-<li>Embed Netflix OSS and other popular tools (Zipkin, Kafka, Rabbit, Zookeeper, Consul, Hazelcast, Cloud Foundry)</li>
-</ul>
-</div>
-</section>
-<section class="slide" id="_you_re_going_to_need_a_platform">
-<h2>You&#8217;re Going to Need a Platform</h2>
-<div class="paragraph"><p>Pivotal platform features:</p></div>
-<table class="tableblock frame-none grid-none" style="width:100%">
-<colgroup>
-<col style="width:50%">
-<col style="width:50%">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Cloud Foundry   <span class="image"><img alt="cf" src="images/cf_logo.png" width="60"></span></th>
-<th class="tableblock halign-left valign-top">Spring Cloud   <span class="image"><img alt="cloud" src="images/spring-cloud.png" width="60"></span></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Environment Provisioning</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Distributed/Versioned Config</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">On-Demand/Automatic Scaling</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Service Registration/Discovery</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Failover Resilience</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Routing/Load Balancing</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Routing/Load Balancing</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Service Integration</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Data Service Operations</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fault Tolerance</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Monitoring</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Asynchronous Messaging</p></td>
-</tr>
-</tbody>
-</table>
 </section>
 <section class="slide" id="_cloud_native_contracts">
 <h2>Cloud Native Contracts</h2>
