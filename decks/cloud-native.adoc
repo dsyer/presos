@@ -67,7 +67,7 @@ image::images/cloud-native/death_star.png[]
 == Monoliths
 
 * Complex / Easy
-* Modularity dependent on launguage / framework
+* Modularity dependent on language / framework
 * Change cycle tightly coupled -> obstacle to frequent deploys
 * Inefficient scaling
 * Intimidating to new developers (and for old ones)
@@ -165,11 +165,11 @@ image::images/cloud-native/island-house.jpg[island-house]
 
 == You're Going to Need a Platform
 
-Pivotal platform features:
+Platform features:
 
 [frame="none",grid="none"]
 |===
-| Cloud Foundry   image:images/cf_logo.png[cf,60] | Spring Cloud   image:images/spring-cloud.png[cloud,60]
+| **PaaS** | **Application**
 
 | Environment Provisioning
 | Distributed/Versioned Config
@@ -190,11 +190,9 @@ Pivotal platform features:
 | Asynchronous Messaging
 |===
 
-== Cloud Native Contracts
+== Anatomy of a Cloud Platform
 
-image::images/cnc.png[cloud-native-contracts]
-
-(With thanks to @littleidea)
+image::images/spring-stack.png[spring-stack]
 
 == Links
 
