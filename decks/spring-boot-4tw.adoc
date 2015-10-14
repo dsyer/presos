@@ -16,12 +16,25 @@ Dave Syer
 twitter: [@david_syer](http://twitter.com/david_syer)   
 email: dsyer@pivotal.io   
 
+> With thanks to: Stephane Nicoll (@snicoll) and Brian Clozel (@bclozel)
 
 == Presentation Overview
 * Part 1 - Static Content
 * Part 2 - Dynamic Content
 * Part 3 - Embedded Server
 * Part 4 - Other Stacks
+
+== Samples
+
+Spring Boot `@ConfigurationProperties` Difference Analyser
+
+https://github.com/dsyer/spring-boot-4tw
+
+1. Traditional server side rendering
+2. Assets in separate project
+3. Single project, webjars
+4. Single project, build time assembly
+5. Separate service and CORS
 
 == Static Content - Serving Files
 * Can't use `/src/main/webapp` for jar deployments
@@ -42,10 +55,29 @@ toolchain.
 
 // Demo NPM toolchain. Show Spring Boot CLI app for backend.
 
+== Static Content - webjars
+* Great for Java developers
+* No compilation or pre-processing
+* Huge range of Java Script and CSS libraries
+* Spring MVC support for webjars-locator
+
 == Static Content - wro4j
 * Great for Java developers
+* Minification, consolidation, compilation, etc.
 * Often good enough
 * Tutorial (with AngularJS): https://spring.io/guides/tutorials/spring-security-and-angular-js/
+
+== Dynamic Content - API Backend
+* JSON is trivial using Spring REST content negotiation
+* Add `HttpMessageConverter` beans and Spring Boot will try to do the right thing
+* It tries to be intelligent about the order
+* Add a `HttpMessageConverters` bean if you need more control
+* Spring Data REST is very popular for CRUD + query
+
+== Dynamic Content - API Documentation
+* Spring Restdocs: http://spring.io/projects/spring-restdocs
+* Generate documentation driven by test cases
+* Use (e.g.) asciidoctor to format and package it
 
 == Dynamic Content - Templating Support
 * Thymeleaf
@@ -56,11 +88,6 @@ toolchain.
 * JSP (not recommended)
 
 // Demo Mustache templates.
-
-== Dynamic Content - HttpMessageConverter
-* Add `HttpMessageConverter` beans and Spring Boot will try to do the right thing
-* It tries to be intelligent about the order
-* Add a `HttpMessageConverters` bean if you need more control
 
 == Hot Reload
 
@@ -152,15 +179,15 @@ server.tomcat.remote-ip-header=x-forwarded-for
 == Other Stacks
 
 * JAX-RS: Jersey 1.x, Jersey 2.x, CXF (allegedly works)
-* Netty and NIO: Ratpack [dsyer/spring-boot-ratpack](https://github.com/dsyer/spring-boot-ratpack)
-* Servlet 2.5 [scratches/spring-boot-legacy](https://github.com/scratches/spring-boot-legacy)
-* Vaadin [peholmst/vaadin4spring](https://github.com/peholmst/vaadin4spring/tree/master/spring-boot-vaadin)
+* Netty and NIO: Ratpack https://github.com/dsyer/spring-boot-ratpack[dsyer/spring-boot-ratpack]
+* Servlet 2.5 https://github.com/scratches/spring-boot-legacy[scratches/spring-boot-legacy]
+* Vaadin https://github.com/peholmst/vaadin4spring/tree/master/spring-boot-vaadin[peholmst/vaadin4spring]
 
 == Ratpack
 
 > Originally inspired by Sinatra, but now pretty much
 > diverged. Provides a nice programming model on top of Netty
-> (potentially taking advantage of non-blocking IO).
+> (taking advantage of non-blocking IO where possible).
 
 2 approaches:
 
@@ -220,9 +247,22 @@ launched with Spring Boot:
 $ spring run app.groovy
 ```
 
+== Samples
+
+Spring Boot `@ConfigurationProperties` Difference Analyser
+
+https://github.com/dsyer/spring-boot-4tw
+
+1. Traditional server side rendering: spring-boot-4tw
+2. Assets in separate project: spring-boot-4tw-webjs, spring-boot-4tw-client
+3. Single project, webjars: spring-boot-4tw-webjars
+4. Single project, build time assembly: spring-boot-4tw-wro4j
+5. Separate service and CORS: spring-boot-4tw-versions-provider
+
 
 == Questions?
 
 * http://projects.spring.io/spring-boot/
-* https://github.com/scratches/spring-boot-4tw
+* http://projects.spring.io/spring-restdocs/
+* https://github.com/dsyer/spring-boot-4tw
 * https://github.com/SpringOne2GX-2014/spring-boot-for-the-web-tier

@@ -29,6 +29,11 @@
 <div class="paragraph"><p>Dave Syer
 twitter: [@david_syer](<a class="bare" href="http://twitter.com/david_syer">http://twitter.com/david_syer</a>)
 email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p></div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>With thanks to: Stephane Nicoll (@snicoll) and Brian Clozel (@bclozel)</p></div>
+</blockquote>
+</div>
 </section>
 <section class="slide" id="_presentation_overview">
 <h2>Presentation Overview</h2>
@@ -39,6 +44,30 @@ email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p></div>
 <li>Part 3 - Embedded Server</li>
 <li>Part 4 - Other Stacks</li>
 </ul>
+</div>
+</section>
+<section class="slide" id="_samples">
+<h2>Samples</h2>
+<div class="paragraph"><p>Spring Boot <code>@ConfigurationProperties</code> Difference Analyser</p></div>
+<div class="paragraph"><p><a class="bare" href="https://github.com/dsyer/spring-boot-4tw">https://github.com/dsyer/spring-boot-4tw</a></p></div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+Traditional server side rendering
+</li>
+<li>
+Assets in separate project
+</li>
+<li>
+Single project, webjars
+</li>
+<li>
+Single project, build time assembly
+</li>
+<li>
+Separate service and CORS
+</li>
+</ol>
 </div>
 </section>
 <section class="slide" id="_static_content_serving_files">
@@ -65,13 +94,47 @@ toolchain.</p></div>
 </ul>
 </div>
 </section>
+<section class="slide" id="_static_content_webjars">
+<h2>Static Content - webjars</h2>
+<div class="ulist">
+<ul>
+<li>Great for Java developers</li>
+<li>No compilation or pre-processing</li>
+<li>Huge range of Java Script and CSS libraries</li>
+<li>Spring MVC support for webjars-locator</li>
+</ul>
+</div>
+</section>
 <section class="slide" id="_static_content_wro4j">
 <h2>Static Content - wro4j</h2>
 <div class="ulist">
 <ul>
 <li>Great for Java developers</li>
+<li>Minification, consolidation, compilation, etc.</li>
 <li>Often good enough</li>
 <li>Tutorial (with AngularJS): <a class="bare" href="https://spring.io/guides/tutorials/spring-security-and-angular-js/">https://spring.io/guides/tutorials/spring-security-and-angular-js/</a></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_dynamic_content_api_backend">
+<h2>Dynamic Content - API Backend</h2>
+<div class="ulist">
+<ul>
+<li>JSON is trivial using Spring REST content negotiation</li>
+<li>Add <code>HttpMessageConverter</code> beans and Spring Boot will try to do the right thing</li>
+<li>It tries to be intelligent about the order</li>
+<li>Add a <code>HttpMessageConverters</code> bean if you need more control</li>
+<li>Spring Data REST is very popular for CRUD + query</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_dynamic_content_api_documentation">
+<h2>Dynamic Content - API Documentation</h2>
+<div class="ulist">
+<ul>
+<li>Spring Restdocs: <a class="bare" href="http://spring.io/projects/spring-restdocs">http://spring.io/projects/spring-restdocs</a></li>
+<li>Generate documentation driven by test cases</li>
+<li>Use (e.g.) asciidoctor to format and package it</li>
 </ul>
 </div>
 </section>
@@ -85,16 +148,6 @@ toolchain.</p></div>
 <li>Freemarker</li>
 <li>Velocity (deprecated in Spring 4.3)</li>
 <li>JSP (not recommended)</li>
-</ul>
-</div>
-</section>
-<section class="slide" id="_dynamic_content_httpmessageconverter">
-<h2>Dynamic Content - HttpMessageConverter</h2>
-<div class="ulist">
-<ul>
-<li>Add <code>HttpMessageConverter</code> beans and Spring Boot will try to do the right thing</li>
-<li>It tries to be intelligent about the order</li>
-<li>Add a <code>HttpMessageConverters</code> bean if you need more control</li>
 </ul>
 </div>
 </section>
@@ -230,9 +283,9 @@ server.tomcat.remote-ip-header=x-forwarded-for</code></pre>
 <div class="ulist">
 <ul>
 <li>JAX-RS: Jersey 1.x, Jersey 2.x, CXF (allegedly works)</li>
-<li>Netty and NIO: Ratpack [dsyer/spring-boot-ratpack](<a class="bare" href="https://github.com/dsyer/spring-boot-ratpack">https://github.com/dsyer/spring-boot-ratpack</a>)</li>
-<li>Servlet 2.5 [scratches/spring-boot-legacy](<a class="bare" href="https://github.com/scratches/spring-boot-legacy">https://github.com/scratches/spring-boot-legacy</a>)</li>
-<li>Vaadin [peholmst/vaadin4spring](<a class="bare" href="https://github.com/peholmst/vaadin4spring/tree/master/spring-boot-vaadin">https://github.com/peholmst/vaadin4spring/tree/master/spring-boot-vaadin</a>)</li>
+<li>Netty and NIO: Ratpack <a href="https://github.com/dsyer/spring-boot-ratpack">dsyer/spring-boot-ratpack</a></li>
+<li>Servlet 2.5 <a href="https://github.com/scratches/spring-boot-legacy">scratches/spring-boot-legacy</a></li>
+<li>Vaadin <a href="https://github.com/peholmst/vaadin4spring/tree/master/spring-boot-vaadin">peholmst/vaadin4spring</a></li>
 </ul>
 </div>
 </section>
@@ -242,7 +295,7 @@ server.tomcat.remote-ip-header=x-forwarded-for</code></pre>
 <blockquote>
 <div class="paragraph"><p>Originally inspired by Sinatra, but now pretty much
 diverged. Provides a nice programming model on top of Netty
-(potentially taking advantage of non-blocking IO).</p></div>
+(taking advantage of non-blocking IO where possible).</p></div>
 </blockquote>
 </div>
 <div class="paragraph"><p>2 approaches:</p></div>
@@ -309,12 +362,37 @@ diverged. Provides a nice programming model on top of Netty
 </div>
 </div>
 </section>
+<section class="slide" id="_samples_2">
+<h2>Samples</h2>
+<div class="paragraph"><p>Spring Boot <code>@ConfigurationProperties</code> Difference Analyser</p></div>
+<div class="paragraph"><p><a class="bare" href="https://github.com/dsyer/spring-boot-4tw">https://github.com/dsyer/spring-boot-4tw</a></p></div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+Traditional server side rendering: spring-boot-4tw
+</li>
+<li>
+Assets in separate project: spring-boot-4tw-webjs, spring-boot-4tw-client
+</li>
+<li>
+Single project, webjars: spring-boot-4tw-webjars
+</li>
+<li>
+Single project, build time assembly: spring-boot-4tw-wro4j
+</li>
+<li>
+Separate service and CORS: spring-boot-4tw-versions-provider
+</li>
+</ol>
+</div>
+</section>
 <section class="slide" id="_questions">
 <h2>Questions?</h2>
 <div class="ulist">
 <ul>
 <li><a class="bare" href="http://projects.spring.io/spring-boot/">http://projects.spring.io/spring-boot/</a></li>
-<li><a class="bare" href="https://github.com/scratches/spring-boot-4tw">https://github.com/scratches/spring-boot-4tw</a></li>
+<li><a class="bare" href="http://projects.spring.io/spring-restdocs/">http://projects.spring.io/spring-restdocs/</a></li>
+<li><a class="bare" href="https://github.com/dsyer/spring-boot-4tw">https://github.com/dsyer/spring-boot-4tw</a></li>
 <li><a class="bare" href="https://github.com/SpringOne2GX-2014/spring-boot-for-the-web-tier">https://github.com/SpringOne2GX-2014/spring-boot-for-the-web-tier</a></li>
 </ul>
 </div>
