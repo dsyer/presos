@@ -116,3 +116,15 @@ div.demo {
   font-family: 'FontAwesome' !important;
   font-style: normal;
 }
+
+.small {
+  font-size: 70% !important;
+}
+
+.big {
+  font-size: 150% !important;
+}
+
+.jumbo {
+  font-size: 200% !important;
+}

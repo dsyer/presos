@@ -19,25 +19,30 @@ Dave Syer, +
 http://twitter.com/david_syer[@david_syer], +
 dsyer@pivotal.io
 
-(with thanks to @mstine)
+== Cloud Native
 
-== Why Cloud Native?
+* What is it?
+* Why do we need it?
+* How do we do it?
+
+== Does This Sound Good?
 
 * Speed
 * Safety
 * Scale
 * Mobility
 
-== What is Cloud Native?
+== Not Monoliths...
 
-> If you make the rule that you own the code that you write, you soon get to know what #cloudnative means!
--- @david_syer
+image::images/cloud-native/monoliths.png[]
 
-* Twelve Factor Apps (http://12factor.net)
-* Microservices
-* Self-service, agile infrastructure
-* Contract-based collaboration (APIs, messages)
-* Antifragility
+== Not Traditional (ESB-centric) SOA...
+
+image::images/cloud-native/esb_soa.png[]
+
+== But Microservices!
+
+image::images/cloud-native/death_star.png[]
 
 == Is There Maybe Some Hype?
 
@@ -52,21 +57,8 @@ If every service has to be updated in concert, it's not loosely coupled.
 
 If you have to know about the internals of surrounding services you don't have a bounded context.
 
-== Not Monoliths...
-
-image::images/cloud-native/monoliths.png[]
-
-== Not Traditional (ESB-centric) SOA...
-
-image::images/cloud-native/esb_soa.png[]
-
-== But Microservices!
-
-image::images/cloud-native/death_star.png[]
-
 == Monoliths
 
-* Complex / Easy
 * Modularity dependent on language / framework
 * Change cycle tightly coupled -> obstacle to frequent deploys
 * Inefficient scaling
@@ -74,15 +66,18 @@ image::images/cloud-native/death_star.png[]
 * Obstacle to scaling feature development
 * Requires long-term commitment to stack
 
+> *Easy* but Complex
+
 == Microservices
 
-* Simple / Hard
 * Modularity based on component services
 * change cycle decoupled -> frequent deploys
 * Efficient scaling
 * Individual components easy to understand
 * Enables scaling development
 * Eliminates long-term commitment to stack
+
+> Simple but *Hard*
 
 == Wait, It's Hard?
 
@@ -96,34 +91,12 @@ No such thing as a free lunch
 * Asynchronous is difficult
 * Testability challenges
 
-== Enabling Continuous Delivery
-
-image::images/cloud-native/cont_deliv.png[cont-deliv,400]
-
-- **Deliver** (Day One)
-- **Continuously** (Day Two and Beyond)
-
-== Cloud Native Objective
-
-[NOTE]
-====
-Get out of the business of infrastructure *and* automation +
-(a.k.a. "undifferentiated heavy lifting")
-====
-
-{nbsp} +
-{nbsp} +
-
-- Internet giants, ratio of app to infra developers = 10:1
-- Your business (= your apps) is special, your infrastructure is not
-- Don't try to differentiate on something that is a commodity
-
 == 12-Factor Application Patterns
 
-- Cloud-native application architectures
 - Optimized for speed, safety, & scale
 - Declarative configuration
 - Stateless/shared-nothing processes
+- Single binary distribution per process
 - Loose coupling to application environment
 
 == Microframeworks
@@ -163,13 +136,45 @@ image::images/cloud-native/island-house.jpg[island-house]
 - Declarative distributed systems
 - Embed Netflix OSS and other popular tools (Zipkin, Kafka, Rabbit, Zookeeper, Consul, Hazelcast, Cloud Foundry)
 
+== Phew! Spring Saves the World
+
+[.big]
+Q: There's a technology solution to all those problems? +
+ +
+A: _TL;DR_ Probably not
+
+== Process
+
+image::images/cloud-native/cont_deliv.png[cont-deliv,400]
+
+- **Deliver** (Day One)
+- **Continuously** (Day Two and Beyond)
+
+== Sociology
+
+image::images/cloud-native/inverse_conway.png[inverse-conway]
+
+== Some Practical Advice
+
+_Paraphrasing @adrianco:_
+
+[.big]
+Get out of the business of infrastructure *and* +
+automation (a.k.a. "undifferentiated heavy lifting")
+
+{nbsp} +
+
+- Internet giants, ratio of app to infra developers = 10:1
+- Your business (= your apps) is special, your infrastructure is not
+- Don't try to differentiate on something that is a commodity
+
 == You're Going to Need a Platform
 
 Platform features:
 
 [frame="none",grid="none"]
 |===
-| **PaaS** | **Application**
+| **Infrastructure** | **Application**
 
 | Environment Provisioning
 | Distributed/Versioned Config
@@ -194,10 +199,16 @@ Platform features:
 
 image::images/spring-stack.png[spring-stack]
 
+== What is Cloud Native?
+
+> If you make the rule that you own the code that you write, you soon get to know what #cloudnative means!
+-- @david_syer
+
 == Links
 
-* http://presos.dsyer.com/decks/spring-cloud-dev-experience.html
+* http://presos.dsyer.com/decks/cloud-native.html
 * http://cloud.spring.io
+* http://projects.spring.io/spring-boot
 * http://spring.io/blog
 * https://github.com/spring-cloud
 * https://github.com/spring-cloud-samples
