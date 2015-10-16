@@ -38,10 +38,19 @@
 <div class="paragraph"><p>Dave Syer,<br>
 <a href="http://twitter.com/david_syer">@david_syer</a>,<br>
 <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p></div>
-<div class="paragraph"><p>(with thanks to @mstine)</p></div>
 </section>
-<section class="slide" id="_why_cloud_native">
-<h2>Why Cloud Native?</h2>
+<section class="slide" id="_cloud_native">
+<h2>Cloud Native</h2>
+<div class="ulist">
+<ul>
+<li>What is it?</li>
+<li>Why do we need it?</li>
+<li>How do we do it?</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_does_this_sound_good">
+<h2>Does This Sound Good?</h2>
 <div class="ulist">
 <ul>
 <li>Speed</li>
@@ -50,47 +59,6 @@
 <li>Mobility</li>
 </ul>
 </div>
-</section>
-<section class="slide" id="_what_is_cloud_native">
-<h2>What is Cloud Native?</h2>
-<div class="quoteblock">
-<blockquote>
-<div class="paragraph"><p>If you make the rule that you own the code that you write, you soon get to know what #cloudnative means!</p></div>
-<div class="attribution">
-<cite>@david_syer</cite>
-</div>
-</blockquote>
-</div>
-<div class="ulist">
-<ul>
-<li>Twelve Factor Apps (<a class="bare" href="http://12factor.net">http://12factor.net</a>)</li>
-<li>Microservices</li>
-<li>Self-service, agile infrastructure</li>
-<li>Contract-based collaboration (APIs, messages)</li>
-<li>Antifragility</li>
-</ul>
-</div>
-</section>
-<section class="slide" id="_is_there_maybe_some_hype">
-<h2>Is There Maybe Some Hype?</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="cat-with-unicorn" src="images/cat_with_a_gun_riding_a_unicorn.jpg">
-</div>
-</div>
-</section>
-<section class="slide" id="_microservice">
-<h2>Microservice</h2>
-<div class="quoteblock">
-<blockquote>
-<div class="paragraph"><p>Loosely coupled service oriented architecture with bounded contexts&#8230;&#8203;</p></div>
-<div class="attribution">
-<cite>@adrianco</cite>
-</div>
-</blockquote>
-</div>
-<div class="paragraph"><p>If every service has to be updated in concert, it&#8217;s not loosely coupled.</p></div>
-<div class="paragraph"><p>If you have to know about the internals of surrounding services you don&#8217;t have a bounded context.</p></div>
 </section>
 <section class="slide" id="_not_monoliths">
 <h2>Not Monoliths&#8230;&#8203;</h2>
@@ -116,11 +84,31 @@
 </div>
 </div>
 </section>
+<section class="slide" id="_is_there_maybe_some_hype">
+<h2>Is There Maybe Some Hype?</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="cat-with-unicorn" src="images/cat_with_a_gun_riding_a_unicorn.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_microservice">
+<h2>Microservice</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>Loosely coupled service oriented architecture with bounded contexts&#8230;&#8203;</p></div>
+<div class="attribution">
+<cite>@adrianco</cite>
+</div>
+</blockquote>
+</div>
+<div class="paragraph"><p>If every service has to be updated in concert, it&#8217;s not loosely coupled.</p></div>
+<div class="paragraph"><p>If you have to know about the internals of surrounding services you don&#8217;t have a bounded context.</p></div>
+</section>
 <section class="slide" id="_monoliths">
 <h2>Monoliths</h2>
 <div class="ulist">
 <ul>
-<li>Complex / Easy</li>
 <li>Modularity dependent on language / framework</li>
 <li>Change cycle tightly coupled &#8594; obstacle to frequent deploys</li>
 <li>Inefficient scaling</li>
@@ -129,12 +117,16 @@
 <li>Requires long-term commitment to stack</li>
 </ul>
 </div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p><strong>Easy</strong> but Complex</p></div>
+</blockquote>
+</div>
 </section>
 <section class="slide" id="_microservices">
 <h2>Microservices</h2>
 <div class="ulist">
 <ul>
-<li>Simple / Hard</li>
 <li>Modularity based on component services</li>
 <li>change cycle decoupled &#8594; frequent deploys</li>
 <li>Efficient scaling</li>
@@ -142,6 +134,11 @@
 <li>Enables scaling development</li>
 <li>Eliminates long-term commitment to stack</li>
 </ul>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>Simple but <strong>Hard</strong></p></div>
+</blockquote>
 </div>
 </section>
 <section class="slide" id="_wait_it_s_hard">
@@ -159,53 +156,14 @@
 </ul>
 </div>
 </section>
-<section class="slide" id="_enabling_continuous_delivery">
-<h2>Enabling Continuous Delivery</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="cont-deliv" src="images/cloud-native/cont_deliv.png" width="400">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li><strong>Deliver</strong> (Day One)</li>
-<li><strong>Continuously</strong> (Day Two and Beyond)</li>
-</ul>
-</div>
-</section>
-<section class="slide" id="_cloud_native_objective">
-<h2>Cloud Native Objective</h2>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph"><p>Get out of the business of infrastructure <strong>and</strong> automation<br>
-(a.k.a. "undifferentiated heavy lifting")</p></div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph"><p>&#160;<br>
-&#160;<br></p></div>
-<div class="ulist">
-<ul>
-<li>Internet giants, ratio of app to infra developers = 10:1</li>
-<li>Your business (= your apps) is special, your infrastructure is not</li>
-<li>Don&#8217;t try to differentiate on something that is a commodity</li>
-</ul>
-</div>
-</section>
 <section class="slide" id="_12_factor_application_patterns">
 <h2>12-Factor Application Patterns</h2>
 <div class="ulist">
 <ul>
-<li>Cloud-native application architectures</li>
 <li>Optimized for speed, safety, &amp; scale</li>
 <li>Declarative configuration</li>
 <li>Stateless/shared-nothing processes</li>
+<li>Single binary distribution per process</li>
 <li>Loose coupling to application environment</li>
 </ul>
 </div>
@@ -266,6 +224,48 @@
 </ul>
 </div>
 </section>
+<section class="slide" id="_phew_spring_saves_the_world">
+<h2>Phew! Spring Saves the World</h2>
+<div class="paragraph big"><p>Q: There&#8217;s a technology solution to all those problems?<br>
+<br>
+A: <em>TL;DR</em> Probably not</p></div>
+</section>
+<section class="slide" id="_process">
+<h2>Process</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="cont-deliv" src="images/cloud-native/cont_deliv.png" width="400">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li><strong>Deliver</strong> (Day One)</li>
+<li><strong>Continuously</strong> (Day Two and Beyond)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_sociology">
+<h2>Sociology</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="inverse-conway" src="images/cloud-native/inverse_conway.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_some_practical_advice">
+<h2>Some Practical Advice</h2>
+<div class="paragraph"><p><em>Paraphrasing @adrianco:</em></p></div>
+<div class="paragraph big"><p>Get out of the business of infrastructure <strong>and</strong><br>
+automation (a.k.a. "undifferentiated heavy lifting")</p></div>
+<div class="paragraph"><p>&#160;<br></p></div>
+<div class="ulist">
+<ul>
+<li>Internet giants, ratio of app to infra developers = 10:1</li>
+<li>Your business (= your apps) is special, your infrastructure is not</li>
+<li>Don&#8217;t try to differentiate on something that is a commodity</li>
+</ul>
+</div>
+</section>
 <section class="slide" id="_you_re_going_to_need_a_platform">
 <h2>You&#8217;re Going to Need a Platform</h2>
 <div class="paragraph"><p>Platform features:</p></div>
@@ -276,7 +276,7 @@
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top"><strong>PaaS</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Infrastructure</strong></th>
 <th class="tableblock halign-left valign-top"><strong>Application</strong></th>
 </tr>
 </thead>
@@ -316,12 +316,24 @@
 </div>
 </div>
 </section>
+<section class="slide" id="_what_is_cloud_native">
+<h2>What is Cloud Native?</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>If you make the rule that you own the code that you write, you soon get to know what #cloudnative means!</p></div>
+<div class="attribution">
+<cite>@david_syer</cite>
+</div>
+</blockquote>
+</div>
+</section>
 <section class="slide" id="_links">
 <h2>Links</h2>
 <div class="ulist">
 <ul>
-<li><a class="bare" href="http://presos.dsyer.com/decks/spring-cloud-dev-experience.html">http://presos.dsyer.com/decks/spring-cloud-dev-experience.html</a></li>
+<li><a class="bare" href="http://presos.dsyer.com/decks/cloud-native.html">http://presos.dsyer.com/decks/cloud-native.html</a></li>
 <li><a class="bare" href="http://cloud.spring.io">http://cloud.spring.io</a></li>
+<li><a class="bare" href="http://projects.spring.io/spring-boot">http://projects.spring.io/spring-boot</a></li>
 <li><a class="bare" href="http://spring.io/blog">http://spring.io/blog</a></li>
 <li><a class="bare" href="https://github.com/spring-cloud">https://github.com/spring-cloud</a></li>
 <li><a class="bare" href="https://github.com/spring-cloud-samples">https://github.com/spring-cloud-samples</a></li>
