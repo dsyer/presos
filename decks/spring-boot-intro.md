@@ -216,11 +216,10 @@ app.run(args);
 * Can be a single line: `SpringApplication.run(MyApplication.class, args)`
 * Or customized (see later)...
 
-## @EnableAutoConfiguration
+## @SpringBootApplication and Auto Configuration
 
 ```java
-@Configuration
-@EnableAutoConfiguration
+@SpringBootApplication
 public class MyApplication {
 }
 ```

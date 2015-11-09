@@ -11,12 +11,6 @@ layout: spring
 > minimum fuss. It takes an opinionated view of the Spring platform so that new and existing users can quickly 
 > get to the bits they need.
 
-## Groovy Spring Script Demo
-
-<div class="demo">
-Demo of the Spring Command Line Tool.
-</div>
-
 ## Groovy Spring Script
 
 ```groovy
@@ -84,7 +78,7 @@ class Example {
 
 // @Grab("org.springframework.boot:spring-boot-starter:0.5.0")
 // @Grab("org.springframework.boot:spring-boot-web-starter:0.5.0")
-// @EnableAutoConfiguration
+// @SpringBootApplication
 @Controller
 class Example {
 
@@ -107,7 +101,7 @@ class Example {
 
 // @Grab("org.springframework.boot:spring-boot-starter:0.5.0")
 // @Grab("org.springframework.boot:spring-boot-web-starter:0.5.0")
-// @EnableAutoConfiguration
+// @SpringBootApplication
 @Controller
 class Example {
 
@@ -122,12 +116,6 @@ class Example {
 //  }
 }
 ```
-
-## Java Demo
-
-<div class="demo">
-Demo of Spring Boot with Java.
-</div>
 
 ## Starter POMs
 
@@ -145,11 +133,11 @@ Demo of Spring Boot with Java.
 
 ```java
 SpringApplication app = new SpringApplication(MyConf.class);
-app.setShowBanner(false);
+app.setBannerMode(Mode.OFF);
 app.run(args);
 ```
 
-## @EnableAutoConfigured
+## @SpringBootApplication
 
 * Attempts to auto-configure your application
 * Backs off as you define your own beans
@@ -159,23 +147,11 @@ app.run(args);
 
 ## Packaging for production
 
-<div class="demo">
-Demo of spring-boot-maven-plugin.
-</div>
-
-## Packaging for production
-
+* Encourages Coud Native (12 Factor Apps)
 * Easy to understand structure
 * No unpacking or start scripts required
 * Create using the Maven or Gradle plugins
-* Cloud Foundry friendly (works & fast to upload)
-
-## Properties
-
-<div class="demo">
-Demo of Properties.
-</div>
-
+* Cloud friendly (works & fast to upload)
 
 ## Properties
 
@@ -204,12 +180,6 @@ mine.location: classpath:mine.xml
 mine.skip: false
 ```
 
-## The Actuator
-
-<div class="demo">
-Demo of Actuator.
-</div>
-
 ## Actuator
 
 * Production-ready features
@@ -222,7 +192,7 @@ Demo of Actuator.
 * Quicker Spring (getting started guides will use Boot)
 * Easy stand-alone applications
 * Production ready (properties, actuator, logs)
-* Cloud Foundry ready
+* Cloud ready
 
 ## Questions?
 
