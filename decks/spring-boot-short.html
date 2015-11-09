@@ -33,7 +33,7 @@
 
 <body class="deck-container">
 
-<div class="slide" id="slide1"><h1 id="toc_0">Spring Boot</h1>
+<div class="slide" id="slide1"><h1 id="toc_0">Spring Boot Intro</h1>
 
 </div><div class="slide" id="slide2"><h2 id="toc_1">Overview</h2>
 
@@ -44,106 +44,116 @@ get to the bits they need.</p>
 </blockquote>
 
 </div><div class="slide" id="slide3"><h2 id="toc_2">Groovy Spring Script</h2>
-<div class="highlight"><pre><code class="groovy language-groovy" data-lang="groovy"><span class="nd">@Controller</span>
+<div class="highlight"><pre><code class="groovy language-groovy" data-lang="groovy"><span class="nd">@RestController</span>
 <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{</span>
 
-    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s2">&quot;/&quot;</span><span class="o">)</span>
-    <span class="nd">@ResponseBody</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="s2">&quot;Hello World!&quot;</span><span class="o">;</span>
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s1">&#39;/&#39;</span><span class="o">)</span>
+    <span class="n">String</span> <span class="nf">hello</span><span class="o">()</span> <span class="o">{</span>
+        <span class="s1">&#39;Hello World!&#39;</span>
     <span class="o">}</span>
 
 <span class="o">}</span>
 </code></pre></div>
 </div><div class="slide" id="slide4"><h2 id="toc_3">Groovy Spring Script</h2>
-<div class="highlight"><pre><code class="groovy language-groovy" data-lang="groovy"><span class="c1">// import org.springframework.stereotype.Controller</span>
-<span class="c1">// import org.springframework.context.annotation.Profile</span>
-<span class="c1">// import org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>
-<span class="c1">// // other imports ...</span>
+<div class="highlight"><pre><code class="groovy language-groovy" data-lang="groovy"><span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Profile</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>
+<span class="c1">// other imports ...</span>
 
 <span class="nd">@Controller</span>
+<span class="nd">@RestController</span>
 <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{</span>
 
-    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s2">&quot;/&quot;</span><span class="o">)</span>
-    <span class="nd">@ResponseBody</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="s2">&quot;Hello World!&quot;</span><span class="o">;</span>
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s1">&#39;/&#39;</span><span class="o">)</span>
+    <span class="n">String</span> <span class="nf">hello</span><span class="o">()</span> <span class="o">{</span>
+        <span class="s1">&#39;Hello World!&#39;</span>
     <span class="o">}</span>
 
 <span class="o">}</span>
 </code></pre></div>
 </div><div class="slide" id="slide5"><h2 id="toc_4">Groovy Spring Script</h2>
-<div class="highlight"><pre><code class="groovy language-groovy" data-lang="groovy"><span class="c1">// import org.springframework.stereotype.Controller</span>
-<span class="c1">// import org.springframework.context.annotation.Profile</span>
-<span class="c1">// import org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>
-<span class="c1">// // other imports ...</span>
+<div class="highlight"><pre><code class="groovy language-groovy" data-lang="groovy"><span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Profile</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>
+<span class="c1">// other imports ...</span>
 
-<span class="c1">// @Grab(&quot;org.springframework.boot:spring-boot-starter:0.5.0&quot;)</span>
-<span class="c1">// @Grab(&quot;org.springframework.boot:spring-boot-web-starter:0.5.0&quot;)</span>
-<span class="nd">@Controller</span>
+<span class="nd">@Grab</span><span class="o">(</span><span class="s1">&#39;spring-boot-web-starter&#39;</span><span class="o">)</span>
+<span class="nd">@RestController</span>
 <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{</span>
 
-    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s2">&quot;/&quot;</span><span class="o">)</span>
-    <span class="nd">@ResponseBody</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="s2">&quot;Hello World!&quot;</span><span class="o">;</span>
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s1">&#39;/&#39;</span><span class="o">)</span>
+    <span class="n">String</span> <span class="nf">hello</span><span class="o">()</span> <span class="o">{</span>
+        <span class="s1">&#39;Hello World!&#39;</span>
     <span class="o">}</span>
 
 <span class="o">}</span>
 </code></pre></div>
 </div><div class="slide" id="slide6"><h2 id="toc_5">Groovy Spring Script</h2>
-<div class="highlight"><pre><code class="groovy language-groovy" data-lang="groovy"><span class="c1">// import org.springframework.stereotype.Controller</span>
-<span class="c1">// import org.springframework.context.annotation.Profile</span>
-<span class="c1">// import org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>
+<div class="highlight"><pre><code class="groovy language-groovy" data-lang="groovy"><span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Profile</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>
 <span class="c1">// other imports ...</span>
 
-<span class="c1">// @Grab(&quot;org.springframework.boot:spring-boot-starter:0.5.0&quot;)</span>
-<span class="c1">// @Grab(&quot;org.springframework.boot:spring-boot-web-starter:0.5.0&quot;)</span>
-<span class="c1">// @SpringBootApplication</span>
-<span class="nd">@Controller</span>
+<span class="nd">@Grab</span><span class="o">(</span><span class="s1">&#39;org.springframework.boot:spring-boot-web-starter:1.3.0.RELEASE&#39;</span><span class="o">)</span>
+<span class="nd">@RestController</span>
 <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{</span>
 
-    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s2">&quot;/&quot;</span><span class="o">)</span>
-    <span class="nd">@ResponseBody</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="s2">&quot;Hello World!&quot;</span><span class="o">;</span>
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s1">&#39;/&#39;</span><span class="o">)</span>
+    <span class="n">String</span> <span class="nf">hello</span><span class="o">()</span> <span class="o">{</span>
+        <span class="s1">&#39;Hello World!&#39;</span>
     <span class="o">}</span>
 
 <span class="o">}</span>
 </code></pre></div>
 </div><div class="slide" id="slide7"><h2 id="toc_6">Groovy Spring Script</h2>
-<div class="highlight"><pre><code class="groovy language-groovy" data-lang="groovy"><span class="c1">// import org.springframework.stereotype.Controller</span>
-<span class="c1">// import org.springframework.context.annotation.Profile</span>
-<span class="c1">// import org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>
-<span class="c1">// // other imports ...</span>
+<div class="highlight"><pre><code class="groovy language-groovy" data-lang="groovy"><span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Profile</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>
+<span class="c1">// other imports ...</span>
 
-<span class="c1">// @Grab(&quot;org.springframework.boot:spring-boot-starter:0.5.0&quot;)</span>
-<span class="c1">// @Grab(&quot;org.springframework.boot:spring-boot-web-starter:0.5.0&quot;)</span>
-<span class="c1">// @SpringBootApplication</span>
-<span class="nd">@Controller</span>
+<span class="nd">@Grab</span><span class="o">(</span><span class="s1">&#39;org.springframework.boot:spring-boot-web-starter:1.3.0.RELEASE&#39;</span><span class="o">)</span>
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@RestController</span>
 <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{</span>
 
-    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s2">&quot;/&quot;</span><span class="o">)</span>
-    <span class="nd">@ResponseBody</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">hello</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="s2">&quot;Hello World!&quot;</span><span class="o">;</span>
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s1">&#39;/&#39;</span><span class="o">)</span>
+    <span class="n">String</span> <span class="nf">hello</span><span class="o">()</span> <span class="o">{</span>
+        <span class="s1">&#39;Hello World!&#39;</span>
     <span class="o">}</span>
 
-<span class="c1">//  public static void main(String[] args) {</span>
-<span class="c1">//      SpringApplication.run(Example.class, args);</span>
-<span class="c1">//  }</span>
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide8"><h2 id="toc_7">Starter POMs</h2>
+</div><div class="slide" id="slide8"><h2 id="toc_7">Groovy Spring Script</h2>
+<div class="highlight"><pre><code class="groovy language-groovy" data-lang="groovy"><span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Profile</span>
+<span class="kn">import</span> <span class="nn">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>
+<span class="c1">// other imports ...</span>
+
+<span class="nd">@Grab</span><span class="o">(</span><span class="s1">&#39;org.springframework.boot:spring-boot-web-starter:1.3.0.RELEASE&#39;</span><span class="o">)</span>
+<span class="nd">@SpringBootApplication</span>
+<span class="nd">@RestController</span>
+<span class="kd">class</span> <span class="nc">Example</span> <span class="o">{</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s1">&#39;/&#39;</span><span class="o">)</span>
+    <span class="n">String</span> <span class="nf">hello</span><span class="o">()</span> <span class="o">{</span>
+        <span class="s1">&#39;Hello World!&#39;</span>
+    <span class="o">}</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">Example</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+</div><div class="slide" id="slide9"><h2 id="toc_8">Starter POMs</h2>
 
 <ul>
 <li>Standard Maven POMs</li>
 <li>Define dependencies that we recommend</li>
-<li>Available for web, batch, integration, data</li>
-<li>e.g. data = hibernate + spring-data + JSR 303</li>
+<li>Available for web, batch, integration, data, etc.</li>
+<li>e.g. data-jpa = hibernate + spring-data + JSR 303</li>
 </ul>
 
-</div><div class="slide" id="slide9"><h2 id="toc_8">SpringApplication</h2>
+</div><div class="slide" id="slide10"><h2 id="toc_9">SpringApplication</h2>
 
 <ul>
 <li>Gets a running Spring <code>ApplicationContext</code></li>
@@ -155,17 +165,26 @@ get to the bits they need.</p>
 <span class="n">app</span><span class="o">.</span><span class="na">setBannerMode</span><span class="o">(</span><span class="n">Mode</span><span class="o">.</span><span class="na">OFF</span><span class="o">);</span>
 <span class="n">app</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
 </code></pre></div>
-</div><div class="slide" id="slide10"><h2 id="toc_9">@SpringBootApplication</h2>
+</div><div class="slide" id="slide11"><h2 id="toc_10">@SpringBootApplication</h2>
 
 <ul>
 <li>Attempts to auto-configure your application</li>
 <li>Backs off as you define your own beans</li>
-<li>Support for several spring-* projects (Web, Batch, Integration, etc)</li>
+<li>Support for foundation spring-* projects (Web, Batch, Integration, etc)</li>
 <li>Regular <code>@Configuration</code> classes</li>
 <li>Usually with <code>@ConditionalOnClass</code> and <code>@ConditionalOnMissingBean</code></li>
 </ul>
 
-</div><div class="slide" id="slide11"><h2 id="toc_10">Packaging for production</h2>
+</div><div class="slide" id="slide12"><h2 id="toc_11">Embedded Servlet Container</h2>
+
+<ul>
+<li>Tomcat, Jetty, Undertow</li>
+<li>Executable jar</li>
+<li>Abstraction over common configurations (e.g. SSL)</li>
+<li>Full access to platform APIs</li>
+</ul>
+
+</div><div class="slide" id="slide13"><h2 id="toc_12">Packaging for production</h2>
 
 <ul>
 <li>Encourages Coud Native (12 Factor Apps)</li>
@@ -175,7 +194,7 @@ get to the bits they need.</p>
 <li>Cloud friendly (works &amp; fast to upload)</li>
 </ul>
 
-</div><div class="slide" id="slide12"><h2 id="toc_11">Properties</h2>
+</div><div class="slide" id="slide14"><h2 id="toc_13">Properties</h2>
 
 <ul>
 <li>Externalize configuration</li>
@@ -184,7 +203,7 @@ get to the bits they need.</p>
 <li>Support for YAML</li>
 </ul>
 
-</div><div class="slide" id="slide13"><h2 id="toc_12">Binding To Beans</h2>
+</div><div class="slide" id="slide15"><h2 id="toc_14">Binding To Beans</h2>
 <div class="highlight"><pre><code class="java language-java" data-lang="java"><span class="nd">@ConfigurationProperties</span><span class="o">(</span><span class="n">prefix</span><span class="o">=</span><span class="s">&quot;mine&quot;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyPoperties</span> <span class="o">{</span>
 
@@ -195,10 +214,10 @@ get to the bits they need.</p>
 <span class="o">}</span>
 </code></pre></div>
 <p><br/></p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">mine.location: classpath:mine.xml
-mine.skip: false
+<div class="highlight"><pre><code class="properties language-properties" data-lang="properties"><span class="na">mine.location</span><span class="o">:</span> <span class="s">classpath:mine.xml</span>
+<span class="na">mine.skip</span><span class="o">:</span> <span class="s">false</span>
 </code></pre></div>
-</div><div class="slide" id="slide14"><h2 id="toc_13">Actuator</h2>
+</div><div class="slide" id="slide16"><h2 id="toc_15">Actuator</h2>
 
 <ul>
 <li>Production-ready features</li>
@@ -207,23 +226,20 @@ mine.skip: false
 <li>Can run on different port to main application</li>
 </ul>
 
-</div><div class="slide" id="slide15"><h2 id="toc_14">Conclusion</h2>
+</div><div class="slide" id="slide17"><h2 id="toc_16">Conclusion</h2>
 
 <ul>
-<li>Quicker Spring (getting started guides will use Boot)</li>
+<li>Quicker Spring (getting started guides use Boot)</li>
 <li>Easy stand-alone applications</li>
 <li>Production ready (properties, actuator, logs)</li>
 <li>Cloud ready</li>
 </ul>
 
-</div><div class="slide" id="slide16"><h2 id="toc_15">Questions?</h2>
+</div><div class="slide" id="slide18"><h2 id="toc_17">Questions?</h2>
 
 <p><a href="https://github.com/spring-projects/spring-boot">https://github.com/spring-projects/spring-boot</a></p>
 
-<ul>
-<li><a href="mailto:pwebb@gopivotal.com">pwebb@gopivotal.com</a></li>
-<li><a href="mailto:dsyer@gopivotal.com">dsyer@gopivotal.com</a></li>
-</ul>
+<p><a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p>
 </div>
 
 

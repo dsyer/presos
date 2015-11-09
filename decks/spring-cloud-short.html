@@ -4,8 +4,8 @@
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta content="Asciidoctor 1.5.2" name="generator">
-<meta content="Spencer Gibb, Dave Syer, 2015" name="author">
-<title>Spring Cloud, Spring Boot and Netflix OSS</title>
+<meta content="Dave Syer, 2015" name="author">
+<title>Introduction to Spring Cloud</title>
 <link href="./asciidoctor-pygments.css" rel="stylesheet">
 <link href="../deck.js/core/deck.core.css" rel="stylesheet">
 <link href="../deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
@@ -20,15 +20,12 @@
 <body class="article">
 <div class="deck-container">
 <section class="slide" id="title-slide">
-<h1>Spring Cloud, Spring Boot and Netflix OSS</h1>
-<span id="author">Spencer Gibb, Dave Syer, 2015</span>
+<h1>Introduction to Spring Cloud</h1>
+<span id="author">Dave Syer, 2015</span>
 <br>
 </section>
 <section class="slide" id="_authors">
 <h2>Authors</h2>
-<div class="paragraph"><p>Spencer Gibb,<br>
-<a href="http://twitter.com/spencerbgibb">@spencerbgibb</a>,<br>
-<a href="mailto:sgibb@pivotal.io">sgibb@pivotal.io</a></p></div>
 <div class="paragraph"><p>Dave Syer,<br>
 <a href="http://twitter.com/david_syer">@david_syer</a>,<br>
 <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p></div>
@@ -41,8 +38,8 @@
 <li><a class="bare" href="http://github.com/spring-cloud-samples">http://github.com/spring-cloud-samples</a></li>
 <li><a class="bare" href="http://blog.spring.io">http://blog.spring.io</a></li>
 <li><a class="bare" href="http://presos.dsyer.com/decks/cloud-boot-netflix.html">http://presos.dsyer.com/decks/cloud-boot-netflix.html</a></li>
-<li>Twitter: <a href="http://twitter.com/spencerbgibb">@spencerbgibb</a>, <a href="http://twitter.com/david_syer">@david_syer</a></li>
-<li>Email: <a href="mailto:sgibb@pivotal.io">sgibb@pivotal.io</a>, <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></li>
+<li>Twitter: <a href="http://twitter.com/david_syer">@david_syer</a></li>
+<li>Email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></li>
 </ul>
 </div>
 </section>
@@ -50,9 +47,9 @@
 <h2>Outline</h2>
 <div class="ulist">
 <ul>
-<li>Define microservices</li>
-<li>Outline some distributed system problems</li>
-<li>Introduce Netflix OSS and its integration with Spring Boot</li>
+<li>What are microservices?</li>
+<li>Some distributed system problems</li>
+<li>Introduce Spring Cloud</li>
 <li>Spring Cloud demos</li>
 </ul>
 </div>
@@ -72,41 +69,6 @@
 <div class="paragraph"><p><a class="bare" href="http://www.slideshare.net/ewolff/micro-services-small-is-beautiful">http://www.slideshare.net/ewolff/micro-services-small-is-beautiful</a><br>
 <a class="bare" href="http://martinfowler.com/articles/microservices.html">http://martinfowler.com/articles/microservices.html</a><br>
 <a class="bare" href="http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html">http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html</a></p></div>
-</section>
-<section class="slide" id="_spring_boot">
-<h2>Spring Boot</h2>
-<div class="paragraph"><p>It needs to be super easy to implement and update a service:</p></div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code class="groovy language-groovy"><span class="tok-nd">@RestController</span>
-<span class="tok-kd">class</span> <span class="tok-nc">ThisWillActuallyRun</span> <span class="tok-o">{</span>
-    <span class="tok-nd">@RequestMapping</span><span class="tok-o">(</span><span class="tok-s2">&quot;/&quot;</span><span class="tok-o">)</span>
-    <span class="tok-n">String</span> <span class="tok-nf">home</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-        <span class="tok-n">Hello</span> <span class="tok-n">World</span><span class="tok-o">!</span>
-    <span class="tok-o">}</span>
-<span class="tok-o">}</span></code></pre>
-</div>
-</div>
-<div class="paragraph"><p>and you don&#8217;t get much more "micro" than that.</p></div>
-</section>
-<section class="slide" id="_cloud_foundry">
-<h2>Cloud Foundry</h2>
-<div class="paragraph"><p>Deploying services needs to be simple and reproducible</p></div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code class="console language-console"><span class="tok-gp">$</span> cf push app -p app.groovy</code></pre>
-</div>
-</div>
-<div class="paragraph"><p>and you don&#8217;t get much more convenient than that.</p></div>
-<div class="paragraph"><p>(Same argument for other PaaS solutions)</p></div>
-</section>
-<section class="slide" id="_example_distributed_system_minified">
-<h2>Example Distributed System: Minified</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="Example Distributed System: Minified" src="images/CustomersStoresBlank.svg">
-</div>
-</div>
 </section>
 <section class="slide" id="_no_man_microservice_is_an_island">
 <h2>No Man (Microservice) is an Island</h2>
@@ -128,9 +90,10 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 <ul>
 <li>Distributed/versioned configuration</li>
 <li>Service registration and discovery</li>
-<li>Routing</li>
 <li>Service-to-service calls</li>
 <li>Load balancing</li>
+<li>Routing</li>
+<li>Tracing</li>
 <li>Circuit Breaker</li>
 <li>Asynchronous patterns</li>
 <li>Distributed messaging</li>
@@ -144,31 +107,6 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 <img alt="spring-io-tree" src="images/spring-io-tree.png">
 </div>
 </div>
-</section>
-<section class="slide" id="_example_coordination_boiler_plate">
-<h2>Example: Coordination Boiler Plate</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="customer-stores-system" src="images/CustomersStoresSystem.svg">
-</div>
-</div>
-</section>
-<section class="slide" id="_netflix_oss">
-<h2>Netflix OSS</h2>
-<div class="ulist">
-<ul>
-<li>Eureka</li>
-<li>Hystrix &amp; Turbine</li>
-<li>Ribbon</li>
-<li>Feign</li>
-<li>Zuul</li>
-<li>Archaius</li>
-<li>Curator - see Spring Cloud Zookeeper</li>
-<li>Asgaard - see Spinnaker (soon)</li>
-<li>&#8230;&#8203;</li>
-</ul>
-</div>
-<div class="paragraph"><p><a href="http://goo.gl/M159zi">Mikey Cohen Netflix edge architecture, http://goo.gl/M159zi</a></p></div>
 </section>
 <section class="slide" id="_example_spring_cloud_and_netflix">
 <h2>Example: Spring Cloud and Netflix</h2>
@@ -189,6 +127,7 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 <li>Configuration client auto-configured via starter</li>
 </ul>
 </div>
+<div class="paragraph"><p>Alternatives: Zookeeper, Consul</p></div>
 </section>
 <section class="slide" id="_discovery_eureka">
 <h2>Discovery: Eureka</h2>
@@ -197,6 +136,7 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 <li>Service Registration Server</li>
 <li>Highly Available</li>
 <li>In AWS terms, multi Availability Zone and Region aware</li>
+<li>Can be used as "sidecar" via <code>@EnableSidecar</code></li>
 </ul>
 </div>
 </section>
@@ -207,8 +147,6 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 <li>latency and fault tolerance</li>
 <li>isolates access to other services</li>
 <li>stops cascading failures</li>
-<li>enables resilience</li>
-<li>circuit breaker pattern</li>
 <li>dashboard</li>
 </ul>
 </div>
@@ -230,17 +168,6 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 <span class="tok-c1">// somewhere else</span>
 <span class="tok-n">helloService</span><span class="tok-o">.</span><span class="tok-na">getMessage</span><span class="tok-o">();</span></code></pre>
 </div>
-</div>
-</section>
-<section class="slide" id="_circuit_breaker_metrics">
-<h2>Circuit Breaker Metrics</h2>
-<div class="ulist">
-<ul>
-<li>Via actuator <code>/metrics</code></li>
-<li>Server side event stream <code>/hystrix.stream</code></li>
-<li>Dashboard app via <code>@EnableHystrixDashboard</code></li>
-<li>Aggregation via Spring Cloud Turbine</li>
-</ul>
 </div>
 </section>
 <section class="slide" id="_routing_zuul">
@@ -273,9 +200,38 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 <span class="tok-o">}</span></code></pre>
 </div>
 </div>
+</section>
+<section class="slide" id="_spring_cloud_stream">
+<h2>Spring Cloud Stream</h2>
 <div class="ulist">
 <ul>
-<li>Can be used as "sidecar" (or standalone edge server) via <code>@EnableSidecar</code></li>
+<li>Messaging for microservices</li>
+<li>Just write business logic</li>
+<li>Choice of transport, Rabbit, Kafka, Redis (defaults based on classpath)</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@EnableBinding</span><span class="tok-o">(</span><span class="tok-n">Sink</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">)</span>
+<span class="tok-nd">@MessageEndpoint</span>
+<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">Endpoint</span> <span class="tok-o">{</span>
+   <span class="tok-nd">@ServiceActivator</span><span class="tok-o">(</span><span class="tok-n">inputChannel</span><span class="tok-o">=</span><span class="tok-n">Sink</span><span class="tok-o">.</span><span class="tok-na">INPUT</span><span class="tok-o">)</span>
+   <span class="tok-kd">public</span> <span class="tok-kt">void</span> <span class="tok-nf">handle</span><span class="tok-o">(</span><span class="tok-n">Foo</span> <span class="tok-n">payload</span><span class="tok-o">)</span> <span class="tok-o">{</span>
+      <span class="tok-c1">// .. handle message</span>
+   <span class="tok-o">}</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_cloud_sleuth">
+<h2>Spring Cloud Sleuth</h2>
+<div class="ulist">
+<ul>
+<li>Tracing for microservices</li>
+<li>Transparent instrumentation for Spring apps</li>
+<li>Correlation IDs added to HTTP requests and messages</li>
+<li>Log support (ELK etc.)</li>
+<li>Zipkin</li>
 </ul>
 </div>
 </section>
@@ -283,7 +239,9 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 <h2>Developer Experience</h2>
 <div class="quoteblock">
 <blockquote>
-<div class="paragraph"><p>As a microservice developer, I want to write code and run it locally, but have a hight confidence that it will work in the target system.</p></div>
+<div class="paragraph"><p>As a microservice developer, I want to write code and run it
+locally, but have a high confidence that it will work in the target
+system.</p></div>
 </blockquote>
 </div>
 <div class="ulist">
@@ -302,8 +260,8 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 <li><a class="bare" href="http://github.com/spring-cloud-samples">http://github.com/spring-cloud-samples</a></li>
 <li><a class="bare" href="http://blog.spring.io">http://blog.spring.io</a></li>
 <li><a class="bare" href="http://presos.dsyer.com/decks/cloud-boot-netflix.html">http://presos.dsyer.com/decks/cloud-boot-netflix.html</a></li>
-<li>Twitter: <a href="http://twitter.com/spencerbgibb">@spencerbgibb</a>, <a href="http://twitter.com/david_syer">@david_syer</a></li>
-<li>Email: <a href="mailto:sgibb@pivotal.io">sgibb@pivotal.io</a>, <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></li>
+<li>Twitter: <a href="http://twitter.com/david_syer">@david_syer</a></li>
+<li>Email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></li>
 </ul>
 </div>
 </section>

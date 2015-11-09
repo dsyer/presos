@@ -1,0 +1,199 @@
+= Microservice Developer Experience
+Spencer Gibb, Dave Syer, 2015
+:backend: deckjs
+:deckjs_transition: fade
+:navigation:
+:menu:
+:goto:
+:status:
+:source-highlighter: pygments
+:deckjs_theme: spring
+:deckjsdir: ../deck.js
+
+== Authors
+
+Spencer Gibb, +
+http://twitter.com/spencerbgibb[@spencerbgibb], +
+sgibb@pivotal.io
+
+Dave Syer, +
+http://twitter.com/david_syer[@david_syer], +
+dsyer@pivotal.io
+
+== Developer Experience
+
+* Microservices lead to a very open flexible architecture
+* Developer needs to work on isolated codebase
+* No-one wants to re-deploy the universe for every commit
+* What tools and techniques are available to help?
+
+== Database/middleware: Docker
+
+* standard docker images exist for all common middleware
+* perfect for development
+* can be used in production with care
+* docker compose (great for repeatability)
+
+== Debugging and fault finding
+
+> Your app won't always work first time. How to diagnose the problem?
+
+* dynamic log levels at runtime
+* actuator endpoints: /env, /trace, /mappings, /autoconfig
+* distributed tracing (http and messages)
+* feature switches
+* remote debugger (see also: Spring Boot Devtools)
+* deploy locally
+* https://ngrok.com (http proxy with replay)
+
+== Stubbing
+
+High level:
+
+* Greenfield (dependent services don't exist yet, write stubs)
+* Brownfield (dependent services exist and have published artifacts)
+
+Example tools/approaches:
+
+* publish producer stubs vs. consumer tests
+* "forced stubbing": micro-infra from 4finance
+* ad-hoc stubbing: accurest, wiremock, stubby4j, Spring MVC
+* embedded stubs vs. remote stubs
+
+== Stubbing: AccuREST DSL
+
+Generates a MockMVC test and a Wiremock stub
+
+[source,groovy]
+----
+import io.codearte.accurest.dsl.GroovyDsl
+
+GroovyDsl groovyDsl = GroovyDsl.make {
+    request {
+        method 'GET'
+        url '/foo'
+    }
+    response {
+        status 200
+        headers {
+            header 'Content-Type' : 'application/json;charset=UTF-8'
+        }
+        body '''{ "value" : 42 }'''
+    }
+}
+----
+
+== Stubbing: Spring REST Docs
+
+[source,java,subs="verbatim,quotes"]
+----
+@Before
+public void setup() {
+    this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
+        .apply(_documentationConfiguration_()
+                .snippets().withDefaults(_curlRequest_(),
+                    _httpRequest_(),
+                    _httpResponse_(),
+                    new WiremockStubSnippet()))
+        .build();
+}
+
+@Test
+public void foo() {
+    this.mockMvc.perform(_get_("/foo")
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(_status()_.isOk())
+        .andDo(_document_("foo"));
+}
+----
+
+== Stubbing: Wiremock Stub
+
+[source,json]
+----
+{
+    "request": {
+        "method": "GET",
+        "url": "/foo"
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+        "body": "{\"value\":42}"
+    }
+}
+----
+
+== Stubbing: 4finance stubrunner
+
+* Publish stub files to nexus repository (or local maven repo)
+* Describe all services dependencies in `application.yml`
+* Stubrunner uses list of dependencies
+** Grabs stubs from repository
+** Runs a wiremock server for each dependency using fetched stubs
+** Registers server in service discovery
+* Consuming service can function against stubs
+
+== Greenfield Stubbing: Spring MVC
+
+[source,java]
+----
+@Controller
+public class StubFleetLocationServiceApplication {
+
+	@RequestMapping("/locations")
+	public String home() {
+		return "forward:/stubs/locations.json";
+	}
+
+	...
+
+}
+----
+
+Nice side effect: mock MVC and restdocs for tests and docs can be
+reused to verify real service contract
+
+== Hot reloading and code swapping
+
+* Basic IDE features (JVM hotswap and resource reload)
+* Spring Boot devtools - app restart and browser plugin
+* STS Spring Boot Dashboard
+* Spring Loaded (Grails, JHipster)
+* JRebel
+
+== Devtools locally
+
+> App monitors its classpath and restarts when changes detected:
+
+image::images/hot-reload-local-arch-no-browser-plugin.svg[Hot reload local architecture no browser plugin]
+
+== Hot reloading remotely
+
+> Hot reloading of “local” application code deployed on Cloud
+
+image::images/hot-reload-arch.svg[Hot reload architecture]
+
+* Spring Boot support via devtools
+* classloader flushes dirty resources
+* remote debug also possible (but slow)
+
+== Routing from remote system to IDE
+
+image::images/local-dev-arch.svg[Local dev architecture]
+
+* local dev experience
+* use proxy to tunnel back to IDE (e.g. ngrok)
+* Spring Tool Suite and Boot Dashboard
+
+== Links
+
+* http://presos.dsyer.com/decks/spring-cloud-dev-experience.html
+* http://cloud.spring.io
+* http://spring.io/blog
+* https://github.com/spring-cloud
+* https://github.com/spring-cloud-samples
+* https://github.com/springone2gx2015
+* https://github.com/spencergibb/spring-cloud-dependencies-sample

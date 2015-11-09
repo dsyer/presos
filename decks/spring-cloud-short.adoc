@@ -1,5 +1,5 @@
-= Spring Cloud, Spring Boot and Netflix OSS
-Spencer Gibb, Dave Syer, 2015
+= Introduction to Spring Cloud
+Dave Syer, 2015
 :backend: deckjs
 :deckjs_transition: fade
 :navigation:
@@ -12,10 +12,6 @@ Spencer Gibb, Dave Syer, 2015
 
 == Authors
 
-Spencer Gibb, +
-http://twitter.com/spencerbgibb[@spencerbgibb], +
-sgibb@pivotal.io   
-
 Dave Syer, +
 http://twitter.com/david_syer[@david_syer], +
 dsyer@pivotal.io   
@@ -27,13 +23,13 @@ dsyer@pivotal.io
 * http://github.com/spring-cloud-samples
 * http://blog.spring.io
 * http://presos.dsyer.com/decks/cloud-boot-netflix.html
-* Twitter: http://twitter.com/spencerbgibb[@spencerbgibb], http://twitter.com/david_syer[@david_syer]
-* Email: sgibb@pivotal.io, dsyer@pivotal.io
+* Twitter: http://twitter.com/david_syer[@david_syer]
+* Email: dsyer@pivotal.io
 
 == Outline
-* Define microservices
-* Outline some distributed system problems
-* Introduce Netflix OSS and its integration with Spring Boot
+* What are microservices?
+* Some distributed system problems
+* Introduce Spring Cloud
 * Spring Cloud demos
 
 == What are microservices?
@@ -47,40 +43,6 @@ dsyer@pivotal.io
 http://www.slideshare.net/ewolff/micro-services-small-is-beautiful +
 http://martinfowler.com/articles/microservices.html +
 http://davidmorgantini.blogspot.com/2013/08/micro-services-what-are-micro-services.html
-
-== Spring Boot
-
-It needs to be super easy to implement and update a service:
-
-[source,groovy]
-----
-@RestController
-class ThisWillActuallyRun {
-    @RequestMapping("/")
-    String home() {
-        Hello World!
-    }
-}
-----
-
-and you don't get much more "micro" than that.
-
-== Cloud Foundry
-
-Deploying services needs to be simple and reproducible
-
-[source,console]
-----
-$ cf push app -p app.groovy
-----
-
-and you don't get much more convenient than that.
-
-(Same argument for other PaaS solutions)
-
-== Example Distributed System: Minified
-
-image::images/CustomersStoresBlank.svg[Example Distributed System: Minified]
 
 == No Man (Microservice) is an Island
 
@@ -98,9 +60,10 @@ Coordination of distributed systems leads to boiler plate patterns
 
 * Distributed/versioned configuration
 * Service registration and discovery
-* Routing
 * Service-to-service calls
 * Load balancing
+* Routing
+* Tracing
 * Circuit Breaker
 * Asynchronous patterns
 * Distributed messaging
@@ -108,25 +71,6 @@ Coordination of distributed systems leads to boiler plate patterns
 == Spring IO Platform
 
 image::images/spring-io-tree.png[spring-io-tree]
-
-== Example: Coordination Boiler Plate
-
-image::images/CustomersStoresSystem.svg[customer-stores-system]
-
-== Netflix OSS
-
-* Eureka
-* Hystrix & Turbine
-* Ribbon
-* Feign
-* Zuul
-* Archaius
-
-* Curator - see Spring Cloud Zookeeper
-* Asgaard - see Spinnaker (soon)
-* ...
-
-http://goo.gl/M159zi[Mikey Cohen Netflix edge architecture, http://goo.gl/M159zi]
 
 == Example: Spring Cloud and Netflix
 
@@ -139,17 +83,18 @@ image::images/CustomersStores.svg[customer-stores]
 * Rollback-able
 * Configuration client auto-configured via starter
 
+Alternatives: Zookeeper, Consul
+
 == Discovery: Eureka
 * Service Registration Server
 * Highly Available
 * In AWS terms, multi Availability Zone and Region aware
+* Can be used as "sidecar" via `@EnableSidecar`
 
 == Circuit Breaker: Hystrix
 * latency and fault tolerance
 * isolates access to other services
 * stops cascading failures
-* enables resilience
-* circuit breaker pattern
 * dashboard
 
 Release It!: https://pragprog.com/book/mnee/release-it[https://pragprog.com/book/mnee/release-it]
@@ -171,13 +116,6 @@ public String getDefaultMessage() {
 helloService.getMessage();
 ----
 
-== Circuit Breaker Metrics
-
-* Via actuator `/metrics`
-* Server side event stream `/hystrix.stream`
-* Dashboard app via `@EnableHystrixDashboard`
-* Aggregation via Spring Cloud Turbine
-
 == Routing: Zuul
 * JVM based router and filter
 * Similar routing role as httpd, nginx, or CF go router
@@ -187,6 +125,7 @@ helloService.getMessage();
 * Any JVM language
 
 == Spring Cloud Zuul Proxy
+
 * Store routing rules in config server   
    `zuul.proxy.route.customers: /customers`
 * Uses `Hystrix->Ribbon->Eureka` to forward requests to appropriate service
@@ -199,11 +138,37 @@ class Application {
 }
 ----
 
-* Can be used as "sidecar" (or standalone edge server) via `@EnableSidecar`
+== Spring Cloud Stream
+
+* Messaging for microservices
+* Just write business logic
+* Choice of transport, Rabbit, Kafka, Redis (defaults based on classpath)
+
+[source,java]
+----
+@EnableBinding(Sink.class)
+@MessageEndpoint
+public class Endpoint {
+   @ServiceActivator(inputChannel=Sink.INPUT)
+   public void handle(Foo payload) {
+      // .. handle message
+   }
+}
+----
+
+== Spring Cloud Sleuth
+
+* Tracing for microservices
+* Transparent instrumentation for Spring apps
+* Correlation IDs added to HTTP requests and messages
+* Log support (ELK etc.)
+* Zipkin
 
 == Developer Experience
 
-> As a microservice developer, I want to write code and run it locally, but have a hight confidence that it will work in the target system.
+> As a microservice developer, I want to write code and run it
+> locally, but have a high confidence that it will work in the target
+> system.
 
 * Stubbing and contract-driven development
 * Remote debugging, e.g. Spring Boot live reload
@@ -216,5 +181,5 @@ class Application {
 * http://github.com/spring-cloud-samples
 * http://blog.spring.io
 * http://presos.dsyer.com/decks/cloud-boot-netflix.html
-* Twitter: http://twitter.com/spencerbgibb[@spencerbgibb], http://twitter.com/david_syer[@david_syer]
-* Email: sgibb@pivotal.io, dsyer@pivotal.io
+* Twitter: http://twitter.com/david_syer[@david_syer]
+* Email: dsyer@pivotal.io
