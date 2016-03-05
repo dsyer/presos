@@ -1,6 +1,6 @@
 ---
 title: Distributed Tracing with Sleuth
-layout: plain
+layout: spring
 ---
 # Distributed Tracing with Spring Cloud
 
