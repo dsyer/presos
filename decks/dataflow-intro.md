@@ -1,12 +1,16 @@
 ---
-title: Spring Cloud Data Flow
-layout: plain
+title: Messaging Microservices
+layout: spring
 ---
-# Spring Cloud Data Flow
+# Messaging Microservices with Spring Cloud
 
 Dave Syer, 2016  
 Twitter: @david_syer  
 Email: dsyer@pivotal.io
+
+## International Women's Day
+
+http://girlswhocode.com/
 
 ## Agenda
 
@@ -14,6 +18,13 @@ Email: dsyer@pivotal.io
 * Why do I care?
 * How do I make them and deploy them?
 * What about Streaming and Batch Processing?
+
+## Microservices
+
+
+
+
+*Life after REST*
 
 ## Messaging
 
@@ -36,6 +47,8 @@ Alan Kay
 
 ## A Simple Streaming Application
 
+
+
 ```java
 @EnableBinding(Source.class)
 @SpringBootApplication
@@ -56,6 +69,8 @@ public class Application {
 
 ## What's a Source?
 
+
+
 *Answer:* it's an interface...
 
 ```java
@@ -69,7 +84,35 @@ public interface Source {
 }
 ```
 
+## Source Sending Messages
+
+  
+  
+```
+
+   +--------+     +---------------------------+
+   | Source |---->| "output"                  |
+   +--------+     +---------------------------+
+
+```
+
+## Add a Sink
+
+
+
+
+```
+
+   +--------+     +---------------------------+     +---------+
+   | Source |---->| "output"                  |---->| Sink    |
+   +--------+     +---------------------------+     +---------+
+
+```
+
 ## Enable All the Things
+
+
+
 
 ```java
 @EnableBinding(Source.class)
@@ -78,20 +121,26 @@ public interface Source {
 ...
 @EnableBinding(Processor.class)
 ...
-@EnableBinding(MyCoffeeShop.class)
-...
 ```
 
-also
+or even
+
+```
+@EnableBinding(MyCoffeeShop.class)
+```
+
+see also
 
 ```
 @EnableRxJavaProcessor
-...
 ```
 
 ## Tasks as Well
 
-```
+
+
+
+```java
 @SpringBootApplication
 public class Task {
 
@@ -106,7 +155,9 @@ public class Task {
 
 ## Enable that Task!
 
-```
+
+
+```java
 @EnableTask
 @SpringBootApplication
 public class Task {
@@ -125,10 +176,19 @@ public class Task {
 > *A programming and operating model for*
 > *streams and tasks on a structured platform.*
 
-_Components:_ server (REST and UI), store (RDBMS and redis), shell, apps (streams and tasks), platform
+_Components:_
 
----
-"Structured platform" is an SPI. Examples:
+* server (REST and UI)
+* store (RDBMS and redis)
+* shell
+* apps (streams and tasks)
+* platform
+
+
+## Structured Platform?
+
+It's an SPI. _Examples:_
+
 * local (in or out of process)
 * cloud foundry
 * YARN
@@ -142,7 +202,7 @@ _Components:_ server (REST and UI), store (RDBMS and redis), shell, apps (stream
   +---------------------------------+
   |            Client               | (shell or browser)
   +---------------------------------+
-                |^
+                |^
   Platform      v|                    (cf, k8s, mesos, etc.)
   +---------------------------------+
   |       +------+ +------+         |
@@ -160,10 +220,10 @@ _Components:_ server (REST and UI), store (RDBMS and redis), shell, apps (stream
 
 Streams have a DSL, e.g. `http | transform | hdfs`, but fundamentally
 they are just apps sending each other messages. Each node in the
-pipeline is a Spring Boot app.
+pipeline is a Spring Boot app using Spring Cloud Stream.
 
-Tasks are short- (or finite-) lived apps. Data flow orchestrates them
-and records their exit status.
+Tasks are short- (or finite-) lived apps. Data Flow orchestrates them
+and uses Spring Cloud Task to record their exit status.
 
 ## EOF
 
