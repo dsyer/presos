@@ -1,12 +1,12 @@
 ---
 title: Distributed Tracing with Sleuth
-layout: spring
+layout: springio
 ---
 # Distributed Tracing with Spring Cloud
 
 Dave Syer, 2016  
 Twitter: @david_syer  
-Email: dsyer@pivotal.io
+Email: `dsyer@pivotal.io`
 
 ## Agenda
 
@@ -30,7 +30,7 @@ processes (e.g. in HTTP or message headers)
 
 > Correlated logs are a building block.
 
-But you can answer a lot of questions just with
+You can answer a lot of questions just with
 standard log analysis tools (ELK, Splunk, etc.)
 
 ## Spring Cloud Sleuth
@@ -54,7 +54,10 @@ standard log analysis tools (ELK, Splunk, etc.)
   Splunk, Sumologic, Papertrail, ...
 
 
-![Kibana UI](images/kibana.png)
+<style>
+img[alt=KibanaUI] { width: 50%; }
+</style>
+![KibanaUI](images/kibana.png)
 
 ## Distributed Tracing
 
@@ -307,18 +310,21 @@ to reduce overhead and allow for batching
 ## Zipkin
 
 * Tracers collect timing data and transport it over HTTP or
-  Kafka or (via Spring Cloud) Redis or Rabbit.
+  Kafka or (via Spring Cloud) Rabbit.
 
 * Collectors store spans in MySQL or Cassandra (or in memory).
 
 * Users query for traces via Zipkin's Web UI or Api.
 
 
-![Zipkin UI](images/zipkin-ui.png)
+<style>
+img[alt=ZipkinUI] { width: 50%; }
+</style>
+![ZipkinUI](images/zipkin-ui.png)
 
 ## Getting Started
 
-* Download the Zipkin JAR from Bintray:
+* Download the Zipkin JAR from Bintray (or Maven Central, [io.zipkin:zipkin-web:1.36.0:all@jar](http://repo1.maven.org/maven2/io/zipkin/zipkin-web/1.36.0/zipkin-web-1.36.0-all.jar)):
 
 ```
 $ java -jar zipkin-server.jar
@@ -340,7 +346,7 @@ public class ZipkinServer {
 
 Then:
 
-```
+ ```
 $ curl -s localhost:9411/api/v1/services | jq .
 [ "service1", "service2" ]
 ```
@@ -360,10 +366,16 @@ span data to a collector:
 
 ## Links
 
-* https://github.com/spring-cloud/spring-cloud-sleuth
+* Sleuth: https://github.com/spring-cloud/spring-cloud-sleuth
 
-* https://github.com/openzipkin/zipkin-java
+* Zipkin: https://github.com/openzipkin/zipkin-java
 
-* https://gitter.im/spring-cloud/spring-cloud-sleuth
+* Gitter for Sleuth: https://gitter.im/spring-cloud/spring-cloud-sleuth
 
-* https://gitter.im/openzipkin/zipkin
+* Gitter for Zipkin: https://gitter.im/openzipkin/zipkin
+
+* Spring IO Guides:  https://spring.io/guides
+
+* Get Started on Your Own:  https://start.spring.io
+
+
