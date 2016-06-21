@@ -71,19 +71,31 @@ public interface LockRegistry {
 }
 ```
 
+## Lizards
+
+```java
+...
+  if (acquired) {
+    // Don't assume only one process can do this
+  }
+...
+```
+
+All threads/processes are competing for the lock. If one
+drops it, accidentally or on purpose, another will grab it.
+
+> Tip: You need to guard the work inside the lock to make
+> it idempotent anyway.
+
 ## Dragons
 
 ```java
-try {
-  acquired = lock.tryLock(10, TimeUnit.SECONDS);
+...
   if (acquired) {
-    // Who is watching?
+    // Who is watching? How do they let you know
+    // if a lock expires?
   }
-} catch (InterruptedException e) {
-  ...
-} finally {
-  ...
-}
+...
 ```
 
 The lock has to be a shared resource across multiple processes.
@@ -92,7 +104,7 @@ aware of a lock being broken.
 
 > Important: you can tune the system to adjust the probability, or how
 > long it lasts, but fundamentally you cannot prevent the system from
-> ever allowing more than one holder.
+> ever allowing more than one holder of a lock.
 
 ## Leader Elections
 
