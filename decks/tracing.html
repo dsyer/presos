@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
     
     
-	<link rel="stylesheet" id="style-theme-link" href="../themes/style/spring.css">
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/springio.css">
 	<link rel="stylesheet" id="transition-theme-link" href="../deck.js/themes/transition/horizontal-slide.css">
 	
 	<script src="../deck.js/modernizr.custom.js"></script>
@@ -37,7 +37,7 @@
 
 <p>Dave Syer, 2016<br>
 Twitter: @david_syer<br>
-Email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p>
+Email: <code>dsyer@pivotal.io</code></p>
 
 </div><div class="slide" id="slide2"><h2 id="toc_1">Agenda</h2>
 
@@ -61,7 +61,7 @@ processes (e.g. in HTTP or message headers)</p>
 <p>Correlated logs are a building block.</p>
 </blockquote>
 
-<p>But you can answer a lot of questions just with
+<p>You can answer a lot of questions just with
 standard log analysis tools (ELK, Splunk, etc.)</p>
 
 </div><div class="slide" id="slide4"><h2 id="toc_3">Spring Cloud Sleuth</h2>
@@ -84,7 +84,11 @@ standard log analysis tools (ELK, Splunk, etc.)</p>
 Splunk, Sumologic, Papertrail, ...</p></li>
 </ul>
 
-<p><img src="images/kibana.png" alt="Kibana UI"></p>
+<style>
+img[alt=KibanaUI] { width: 50%; }
+</style>
+
+<p><img src="images/kibana.png" alt="KibanaUI"></p>
 
 </div><div class="slide" id="slide6"><h2 id="toc_5">Distributed Tracing</h2>
 
@@ -259,17 +263,21 @@ to reduce overhead and allow for batching</p>
 
 <ul>
 <li><p>Tracers collect timing data and transport it over HTTP or
-Kafka or (via Spring Cloud) Redis or Rabbit.</p></li>
+Kafka or (via Spring Cloud) Rabbit.</p></li>
 <li><p>Collectors store spans in MySQL or Cassandra (or in memory).</p></li>
 <li><p>Users query for traces via Zipkin&#39;s Web UI or Api.</p></li>
 </ul>
 
-<p><img src="images/zipkin-ui.png" alt="Zipkin UI"></p>
+<style>
+img[alt=ZipkinUI] { width: 50%; }
+</style>
+
+<p><img src="images/zipkin-ui.png" alt="ZipkinUI"></p>
 
 </div><div class="slide" id="slide21"><h2 id="toc_20">Getting Started</h2>
 
 <ul>
-<li>Download the Zipkin JAR from Bintray:</li>
+<li>Download the Zipkin JAR from Bintray (or Maven Central, <a href="http://repo1.maven.org/maven2/io/zipkin/zipkin-web/1.36.0/zipkin-web-1.36.0-all.jar">io.zipkin:zipkin-web:1.36.0:all@jar</a>):</li>
 </ul>
 <div class="highlight"><pre><code class="text language-text" data-lang="text">$ java -jar zipkin-server.jar
 </code></pre></div>
@@ -306,10 +314,12 @@ or <em>spring-cloud-sleuth-stream</em> (messaging transport)</p></li>
 </div><div class="slide" id="slide23"><h2 id="toc_22">Links</h2>
 
 <ul>
-<li><p><a href="https://github.com/spring-cloud/spring-cloud-sleuth">https://github.com/spring-cloud/spring-cloud-sleuth</a></p></li>
-<li><p><a href="https://github.com/openzipkin/zipkin-java">https://github.com/openzipkin/zipkin-java</a></p></li>
-<li><p><a href="https://gitter.im/spring-cloud/spring-cloud-sleuth">https://gitter.im/spring-cloud/spring-cloud-sleuth</a></p></li>
-<li><p><a href="https://gitter.im/openzipkin/zipkin">https://gitter.im/openzipkin/zipkin</a></p></li>
+<li><p>Sleuth: <a href="https://github.com/spring-cloud/spring-cloud-sleuth">https://github.com/spring-cloud/spring-cloud-sleuth</a></p></li>
+<li><p>Zipkin: <a href="https://github.com/openzipkin/zipkin-java">https://github.com/openzipkin/zipkin-java</a></p></li>
+<li><p>Gitter for Sleuth: <a href="https://gitter.im/spring-cloud/spring-cloud-sleuth">https://gitter.im/spring-cloud/spring-cloud-sleuth</a></p></li>
+<li><p>Gitter for Zipkin: <a href="https://gitter.im/openzipkin/zipkin">https://gitter.im/openzipkin/zipkin</a></p></li>
+<li><p>Spring IO Guides:  <a href="https://spring.io/guides">https://spring.io/guides</a></p></li>
+<li><p>Get Started on Your Own:  <a href="https://start.spring.io">https://start.spring.io</a></p></li>
 </ul>
 </div>
 

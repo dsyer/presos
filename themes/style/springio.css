@@ -1,0 +1,11 @@
+@import url("spring.css");
+.deck-container .slide pre {
+  font-size: 90%;
+  margin-bottom: 4px;
+}
+#slide1 {
+  padding-right: 20px;
+  background: rgb(141, 198, 63) url("springio.png") no-repeat top 1em right 2em;
+  background-size: 5em;
+  color: white;
+}
