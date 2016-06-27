@@ -71,6 +71,14 @@ public interface LockRegistry {
 }
 ```
 
+## Locks and Leases
+
+A distributed lock nearly almost has a shelf life (it expires).
+
+Technically, that makes it a "lease".
+
+You need the expiry in order to make progress when a lock holder dies.
+
 ## Lizards
 
 ```java
@@ -85,9 +93,19 @@ All threads/processes are competing for the lock. If one
 drops it, accidentally or on purpose, another will grab it.
 
 > Tip: You need to guard the work inside the lock to make
-> it idempotent anyway.
+> it idempotent anyway. (More later...)
 
 ## Dragons
+
+(At least) two problems are lurking:
+
+1. Acquiring a lock requires consensus.
+2. Leases expire and holder can never be sure when that happens.
+
+**Read this**:
+  [http://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html](http://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html)
+
+## What?
 
 ```java
 ...
@@ -98,13 +116,44 @@ drops it, accidentally or on purpose, another will grab it.
 ...
 ```
 
-The lock has to be a shared resource across multiple processes.
-Laws of physics prevent the lock holder from being immediately
-aware of a lock being broken.
+The lock has to be a shared resource across multiple processes.  Laws
+of physics prevent the lock holder from being immediately aware of a
+lock being broken, even supposing he is able to detect it.
 
 > Important: you can tune the system to adjust the probability, or how
 > long it lasts, but fundamentally you cannot prevent the system from
 > ever allowing more than one holder of a lock.
+
+## Writing Stale Data
+
+![writing-stale-data](images/writing-stale-data.png)
+
+## Fencing
+
+```java
+MyData data = getDataIncludingVersion();
+...
+  if (acquired) {
+    checkVersion(data); // Throw exception here if someone else updated the data
+    update(data);
+  }
+...
+```
+
+N.B. The version is not necessarily part of the lock; it's stored and
+checked in the shared resource that needs to be updated.
+
+## Fencing a Lock#
+
+From Martin Kleppmann:
+
+![fencing-a-lock](images/fencing-a-lock.png)
+
+BUT: The storage service has to be fully consistent (basically ACID).
+
+## Alternative View
+
+![lizard-protection](images/lizard-protection.png)
 
 ## Leader Elections
 
@@ -167,9 +216,20 @@ public LeaderInitiator leaderInitiator(CuratorFramework client,
 
 ## Summary
 
-* Locks can be shared
+* Locks can be shared and distributed
 * Leader election is an application of locks
-* Spring Integration has some useful abstractions
+* Spring Integration has some useful abstractions: [https://github.com/spring-projects/spring-integration](https://github.com/spring-projects/spring-integration)
 * Careful with the physics
-* Sample code:
+* Sample code: TBD
 * Spring Cloud Cluster: [https://github.com/spring-cloud/spring-cloud-cluster](https://github.com/spring-cloud/spring-cloud-cluster)
+
+## Links
+
+Optimistic Locks fencing and ping:
+
+https://www.websequencediagrams.com/?lz=CkNsaWVudDEtPlN0b3JhZ2VTZXJ2aWNlOiByZWFkKDMzKQAbBzIAASEyLT4rADUQc3RhcnRpbmcoMzQpCgBUDi0-LQBTBzogb2sAXApXZWJob29rOiBwaW5nAD8cdWNjZXNzADIoMQBnNzE6IGZhaWwKZGVzdHJveSAAgikHCgo&s=roundgreen
+
+https://www.websequencediagrams.com/?lz=CkNsaWVudDEtPlN0b3JhZ2VTZXJ2aWNlOiByZWFkKDMzKQAbBzIAASExLT4rADUQc3RhcnRpbmcoMzQpCgBUDi0-LQB1Bzogb2sAfgpXZWJob29rOiBwaW5nAD8cdWNjZXNzADIoMgBnNzI6IGZhaWwKZGVzdHJveSAAggcHCg&s=roundgreen
+
+https://www.websequencediagrams.com/?lz=CkNsaWVudDEtPlN0b3JhZ2VTZXJ2aWNlOiByZWFkKDMzKQAYCisAExBzdGFydGluZygzNCkKADIOLT4tAFMHOiBvawBfBzIAThg0KQpub3RlIHJpZ2h0IG9mIAApBzogcmVzdWx0IG5vdCByZWNvcmRlZApkZXN0cm95AB0IAIE5CldlYmhvb2s6IHBpbmcAgRwcdWNjZXNzAIEVIg&s=roundgreen
+
