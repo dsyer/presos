@@ -204,7 +204,7 @@ toolchain.</p></div>
 <pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Bean</span>
 <span class="tok-kd">public</span> <span class="tok-n">ServletRegistrationBean</span> <span class="tok-nf">myServlet</span><span class="tok-o">()</span> <span class="tok-o">{</span>
     <span class="tok-n">ServletRegistrationBean</span> <span class="tok-n">bean</span> <span class="tok-o">=</span>
-        <span class="tok-k">new</span> <span class="tok-nf">ServletRegistrationBean</span><span class="tok-o">(</span><span class="tok-k">new</span> <span class="tok-n">MyServlet</span><span class="tok-o">(),</span> <span class="tok-s">&quot;/mine&quot;</span><span class="tok-o">);</span>
+        <span class="tok-k">new</span> <span class="tok-nf">ServletRegistrationBean</span><span class="tok-o">(</span><span class="tok-k">new</span> <span class="tok-nf">MyServlet</span><span class="tok-o">(),</span> <span class="tok-s">&quot;/mine&quot;</span><span class="tok-o">);</span>
     <span class="tok-n">bean</span><span class="tok-o">.</span><span class="tok-na">setAsyncSupported</span><span class="tok-o">(</span><span class="tok-kc">false</span><span class="tok-o">);</span>
     <span class="tok-n">bean</span><span class="tok-o">.</span><span class="tok-na">setInitParameters</span><span class="tok-o">(</span><span class="tok-n">Collections</span><span class="tok-o">.</span><span class="tok-na">singletonMap</span><span class="tok-o">(</span><span class="tok-s">&quot;debug&quot;</span><span class="tok-o">,</span> <span class="tok-s">&quot;true&quot;</span><span class="tok-o">));</span>
     <span class="tok-k">return</span> <span class="tok-n">bean</span><span class="tok-o">;</span>
@@ -212,7 +212,7 @@ toolchain.</p></div>
 
 <span class="tok-nd">@Bean</span>
 <span class="tok-kd">public</span> <span class="tok-n">FilterRegistrationBean</span> <span class="tok-nf">myFilter</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-    <span class="tok-k">return</span> <span class="tok-k">new</span> <span class="tok-nf">FilterRegistrationBean</span><span class="tok-o">(</span><span class="tok-k">new</span> <span class="tok-n">MyFilter</span><span class="tok-o">(),</span> <span class="tok-n">myServlet</span><span class="tok-o">());</span>
+    <span class="tok-k">return</span> <span class="tok-k">new</span> <span class="tok-nf">FilterRegistrationBean</span><span class="tok-o">(</span><span class="tok-k">new</span> <span class="tok-nf">MyFilter</span><span class="tok-o">(),</span> <span class="tok-n">myServlet</span><span class="tok-o">());</span>
 <span class="tok-o">}</span></code></pre>
 </div>
 </div>

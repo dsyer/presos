@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
     
     
-	<link rel="stylesheet" id="style-theme-link" href="../themes/style/springio.css">
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/web-2.0.css">
 	<link rel="stylesheet" id="transition-theme-link" href="../deck.js/themes/transition/horizontal-slide.css">
 	
 	<script src="../deck.js/modernizr.custom.js"></script>
@@ -33,13 +33,13 @@
 
 <body class="deck-container">
 
-<div class="slide" id="slide1"><h1 id="toc_0">Distributed Tracing with Spring Cloud</h1>
+<div class="slide" id="slide1"><h1 id="distributed-tracing-with-spring-cloud">Distributed Tracing with Spring Cloud</h1>
 
 <p>Dave Syer, 2016<br>
 Twitter: @david_syer<br>
 Email: <code>dsyer@pivotal.io</code></p>
 
-</div><div class="slide" id="slide2"><h2 id="toc_1">Agenda</h2>
+</div><div class="slide" id="slide2"><h2 id="agenda">Agenda</h2>
 
 <ul>
 <li>What is a correlated log?</li>
@@ -48,11 +48,11 @@ Email: <code>dsyer@pivotal.io</code></p>
 <li>How do I do it?</li>
 </ul>
 
-</div><div class="slide" id="slide3"><h2 id="toc_2">Correlation</h2>
+</div><div class="slide" id="slide3"><h2 id="correlation">Correlation</h2>
 
 <p>Add a Correlation ID to logs, and propagate it between
 processes (e.g. in HTTP or message headers)</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">2016-03-05 12:07:03.748 INFO [service1,5b7b3ceafd06fceb,5b7b3ceafd06fceb,false] 18487 --- ...
+<div class="highlight"><pre><code class="language-text" data-lang="text">2016-03-05 12:07:03.748 INFO [service1,5b7b3ceafd06fceb,5b7b3ceafd06fceb,false] 18487 --- ...
 2016-03-05 12:07:03.748 INFO [service1,5b7b3ceafd06fceb,5b7b3ceafd06fceb,false] 18487 --- ...
 2016-03-05 12:07:05.540 INFO [service2,5b7b3ceafd06fceb,162e2f236273a756,false] 18487 --- ...
 2016-03-05 12:07:05.541 INFO [service2,5b7b3ceafd06fceb,162e2f236273a756,false] 18487 --- ...
@@ -64,7 +64,7 @@ processes (e.g. in HTTP or message headers)</p>
 <p>You can answer a lot of questions just with
 standard log analysis tools (ELK, Splunk, etc.)</p>
 
-</div><div class="slide" id="slide4"><h2 id="toc_3">Spring Cloud Sleuth</h2>
+</div><div class="slide" id="slide4"><h2 id="spring-cloud-sleuth">Spring Cloud Sleuth</h2>
 
 <p><em>Recipe:</em></p>
 
@@ -74,7 +74,7 @@ standard log analysis tools (ELK, Splunk, etc.)</p>
 <li>Logs ahoy!</li>
 </ul>
 
-</div><div class="slide" id="slide5"><h2 id="toc_4">Adding a Log Analayser</h2>
+</div><div class="slide" id="slide5"><h2 id="adding-a-log-analayser">Adding a Log Analayser</h2>
 
 <ul>
 <li><p>Apps send logs (stdout) to a central service</p></li>
@@ -90,16 +90,16 @@ img[alt=KibanaUI] { width: 50%; }
 
 <p><img src="images/kibana.png" alt="KibanaUI"></p>
 
-</div><div class="slide" id="slide6"><h2 id="toc_5">Distributed Tracing</h2>
+</div><div class="slide" id="slide6"><h2 id="distributed-tracing">Distributed Tracing</h2>
 
 <blockquote>
 <p>Why is this POST /thing so slow?</p>
 </blockquote>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">           +-------------------------------------+
+<div class="highlight"><pre><code class="language-text" data-lang="text">           +-------------------------------------+
            |  POST /thing                        |
            +-------------------------------------+
 </code></pre></div>
-</div><div class="slide" id="slide7"><h2 id="toc_6">Troubleshooting Latency Problems</h2>
+</div><div class="slide" id="slide7"><h2 id="troubleshooting-latency-problems">Troubleshooting Latency Problems</h2>
 
 <ul>
 <li>When was the request and how long did it take?</li>
@@ -108,8 +108,8 @@ img[alt=KibanaUI] { width: 50%; }
 <li>Is it abnormal?</li>
 </ul>
 
-</div><div class="slide" id="slide8"><h2 id="toc_7">When was it and how long did it take?</h2>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
+</div><div class="slide" id="slide8"><h2 id="when-was-it-and-how-long-did-it-take">When was it and how long did it take?</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
            v                                     v
            +-------------------------------------+
            |  POST /thing                        | 1427ms
@@ -119,8 +119,8 @@ img[alt=KibanaUI] { width: 50%; }
 <p>First log statement: 15:31:29:103, last one: 15:31:30:530</p>
 </blockquote>
 
-</div><div class="slide" id="slide9"><h2 id="toc_8">Where did this happen?</h2>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
+</div><div class="slide" id="slide9"><h2 id="where-did-this-happen">Where did this happen?</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
            v                                     v
            +-------------------------------------+
            |  POST /thing                        | 1427ms
@@ -133,8 +133,8 @@ img[alt=KibanaUI] { width: 50%; }
 <p>Server log says Client IP was <em>1.2.3.4</em></p>
 </blockquote>
 
-</div><div class="slide" id="slide10"><h2 id="toc_9">Which Business Event Was It?</h2>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
+</div><div class="slide" id="slide10"><h2 id="which-business-event-was-it">Which Business Event Was It?</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
            v                                     v
            +-------------------------------------+
            |  POST /thing                        | 1427ms
@@ -146,8 +146,8 @@ img[alt=KibanaUI] { width: 50%; }
 <p>The http response header had <em>request-id: abcd-ffe</em>? Is that what you mean?</p>
 </blockquote>
 
-</div><div class="slide" id="slide11"><h2 id="toc_10">Is it Abnormal?</h2>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
+</div><div class="slide" id="slide11"><h2 id="is-it-abnormal">Is it Abnormal?</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
            v                                     v
            +-------------------------------------+
            |  POST /thing                        | 1427ms
@@ -161,8 +161,8 @@ img[alt=KibanaUI] { width: 50%; }
 <p>I’ll check other logs for this request id and see what I can find out.</p>
 </blockquote>
 
-</div><div class="slide" id="slide12"><h2 id="toc_11">Achieving Understanding</h2>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
+</div><div class="slide" id="slide12"><h2 id="achieving-understanding">Achieving Understanding</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
            v                                     v
            +-------------------------------------+
            |  POST /thing                        | 1427ms
@@ -178,8 +178,8 @@ img[alt=KibanaUI] { width: 50%; }
 <p>I searched the logs for others in that group. took about the same time. </p>
 </blockquote>
 
-</div><div class="slide" id="slide13"><h2 id="toc_12">There&#39;s Often Two Sides to the Story</h2>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">    Client Sent: 15:31:28:500                               Client Received: 15:31:31:000
+</div><div class="slide" id="slide13"><h2 id="there-39-s-often-two-sides-to-the-story">There&#39;s Often Two Sides to the Story</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    Client Sent: 15:31:28:500                               Client Received: 15:31:31:000
     v                                                       v
     +-------------------------------------------------------+
     |  POST /some                                           | 2500ms
@@ -190,8 +190,8 @@ img[alt=KibanaUI] { width: 50%; }
        ^                                     ^
        Server Received: 15:31:29:103         Server Sent: 15:31:30:530
 </code></pre></div>
-</div><div class="slide" id="slide14"><h2 id="toc_13">And Not All Operations are on the Critical Path</h2>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">    +-------------------------------------------------------+
+</div><div class="slide" id="slide14"><h2 id="and-not-all-operations-are-on-the-critical-path">And Not All Operations are on the Critical Path</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    +-------------------------------------------------------+
     |  POST /some                                           |
     +-------------------------------------------------------+
        +-------------------------------------+
@@ -204,7 +204,7 @@ img[alt=KibanaUI] { width: 50%; }
                      |  Async Store                                                 |
                      +--------------------------------------------------------------+
 </code></pre></div>
-</div><div class="slide" id="slide15"><h2 id="toc_14">Distributed Tracing adds structure to correlation data</h2>
+</div><div class="slide" id="slide15"><h2 id="distributed-tracing-adds-structure-to-correlation-data">Distributed Tracing adds structure to correlation data</h2>
 
 <p>It&#39;s like centralized logging, but structured at source</p>
 
@@ -214,7 +214,7 @@ img[alt=KibanaUI] { width: 50%; }
 <li><p>Special purpose query servers and UIs</p></li>
 </ul>
 
-</div><div class="slide" id="slide16"><h2 id="toc_15">Distributed Tracing commoditizes knowledge</h2>
+</div><div class="slide" id="slide16"><h2 id="distributed-tracing-commoditizes-knowledge">Distributed Tracing commoditizes knowledge</h2>
 
 <p>Distributed tracing systems collect end-to-end
 latency graphs (traces) in near real-time.</p>
@@ -222,7 +222,7 @@ latency graphs (traces) in near real-time.</p>
 <p>You can compare traces to understand why certain
 requests take longer than others.</p>
 
-</div><div class="slide" id="slide17"><h2 id="toc_16">Distributed Tracing Vocabulary</h2>
+</div><div class="slide" id="slide17"><h2 id="distributed-tracing-vocabulary">Distributed Tracing Vocabulary</h2>
 
 <p>A <em>Span</em> is an individual operation that took place.</p>
 
@@ -230,8 +230,8 @@ requests take longer than others.</p>
 
 <p>A <em>Trace</em> is an end-to-end latency graph, composed of <em>spans</em>.</p>
 
-</div><div class="slide" id="slide18"><h2 id="toc_17">In a Picture</h2>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
+</div><div class="slide" id="slide18"><h2 id="in-a-picture">In a Picture</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
            v                                     v
            +-------------------------------------+
            |  POST /thing                        | 1427ms
@@ -248,7 +248,7 @@ requests take longer than others.</p>
 <li><p><em>http.request-id=abcd-ffe</em> is a <em>span tag</em></p></li>
 </ul>
 
-</div><div class="slide" id="slide19"><h2 id="toc_18">Tracers send trace data out of process</h2>
+</div><div class="slide" id="slide19"><h2 id="tracers-send-trace-data-out-of-process">Tracers send trace data out of process</h2>
 
 <blockquote>
 <p>Tracers propagate IDs in-band,
@@ -259,7 +259,7 @@ a trace in progress</p>
 <p>Completed spans are reported out-of-band,
 to reduce overhead and allow for batching</p>
 
-</div><div class="slide" id="slide20"><h2 id="toc_19">Zipkin</h2>
+</div><div class="slide" id="slide20"><h2 id="zipkin">Zipkin</h2>
 
 <ul>
 <li><p>Tracers collect timing data and transport it over HTTP or
@@ -274,17 +274,17 @@ img[alt=ZipkinUI] { width: 50%; }
 
 <p><img src="images/zipkin-ui.png" alt="ZipkinUI"></p>
 
-</div><div class="slide" id="slide21"><h2 id="toc_20">Getting Started</h2>
+</div><div class="slide" id="slide21"><h2 id="getting-started">Getting Started</h2>
 
 <ul>
 <li>Download the Zipkin JAR from Bintray (or Maven Central, <a href="http://repo1.maven.org/maven2/io/zipkin/zipkin-web/1.36.0/zipkin-web-1.36.0-all.jar">io.zipkin:zipkin-web:1.36.0:all@jar</a>):</li>
 </ul>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">$ java -jar zipkin-server.jar
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ java -jar zipkin-server.jar
 </code></pre></div>
 <ul>
 <li>Or:</li>
 </ul>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">@EnableZipkinServer
+<div class="highlight"><pre><code class="language-text" data-lang="text">@EnableZipkinServer
 @SpringBootApplication
 public class ZipkinServer {
 
@@ -295,10 +295,10 @@ public class ZipkinServer {
 <hr>
 
 <p>Then:</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">$ curl -s localhost:9411/api/v1/services | jq .
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ curl -s localhost:9411/api/v1/services | jq .
 [ &quot;service1&quot;, &quot;service2&quot; ]
 </code></pre></div>
-</div><div class="slide" id="slide22"><h2 id="toc_21">Spring Cloud Sleuth and Zipkin</h2>
+</div><div class="slide" id="slide22"><h2 id="spring-cloud-sleuth-and-zipkin">Spring Cloud Sleuth and Zipkin</h2>
 
 <p>To instrument your application and have it send
 span data to a collector:</p>
@@ -311,7 +311,7 @@ or <em>spring-cloud-sleuth-stream</em> (messaging transport)</p></li>
 <li><p>Spans ahoy!</p></li>
 </ul>
 
-</div><div class="slide" id="slide23"><h2 id="toc_22">Links</h2>
+</div><div class="slide" id="slide23"><h2 id="links">Links</h2>
 
 <ul>
 <li><p>Sleuth: <a href="https://github.com/spring-cloud/spring-cloud-sleuth">https://github.com/spring-cloud/spring-cloud-sleuth</a></p></li>

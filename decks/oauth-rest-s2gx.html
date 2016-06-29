@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
     
     
-	<link rel="stylesheet" id="style-theme-link" href="../themes/style/springone.css">
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/web-2.0.css">
 	<link rel="stylesheet" id="transition-theme-link" href="../deck.js/themes/transition/horizontal-slide.css">
 	
 	<script src="../deck.js/modernizr.custom.js"></script>
@@ -33,13 +33,13 @@
 
 <body class="deck-container">
 
-<div class="slide" id="slide1"><h1 id="toc_0">Securing REST-ful Web Services with OAuth2</h1>
+<div class="slide" id="slide1"><h1 id="securing-rest-ful-web-services-with-oauth2">Securing REST-ful Web Services with OAuth2</h1>
 
 <p>Dave Syer, 2012<br>
 Twitter: @david_syer<br>
 Email: <a href="mailto:dsyer@vmware.com">dsyer@vmware.com</a></p>
 
-</div><div class="slide" id="slide2"><h2 id="toc_1">Agenda</h2>
+</div><div class="slide" id="slide2"><h2 id="agenda">Agenda</h2>
 
 <ul>
 <li>Why would I use <a href="http://en.wikipedia.org/wiki/OAuth#OAuth_2.0">OAuth2</a>?</li>
@@ -48,7 +48,7 @@ Email: <a href="mailto:dsyer@vmware.com">dsyer@vmware.com</a></p>
 <li>Blog: <a href="">http://blog.cloudfoundry.org/2012/10/09/oauth-rest/</a></li>
 </ul>
 
-</div><div class="slide" id="slide3"><h2 id="toc_2">Introduction</h2>
+</div><div class="slide" id="slide3"><h2 id="introduction">Introduction</h2>
 
 <ul>
 <li>There is a <a href="http://www.indeed.com/jobtrends?q=JSON+REST%2CSOAP+XML&amp;l=&amp;relative=1#shareCode">strong trend</a> distributed systems with
@@ -61,7 +61,7 @@ lightweight architectures</li>
 <li>So what are people doing about security in such systems?</li>
 </ul>
 
-</div><div class="slide" id="slide4"><h2 id="toc_3">What is a Lightweight Service?</h2>
+</div><div class="slide" id="slide4"><h2 id="what-is-a-lightweight-service">What is a Lightweight Service?</h2>
 
 <ul>
 <li>HTTP transport.</li>
@@ -72,7 +72,7 @@ lightweight architectures</li>
 <li>Interoperability.</li>
 </ul>
 
-</div><div class="slide" id="slide5"><h2 id="toc_4">What Are the Security Requirements</h2>
+</div><div class="slide" id="slide5"><h2 id="what-are-the-security-requirements">What Are the Security Requirements</h2>
 
 <p>Identity and permissions:</p>
 
@@ -85,7 +85,7 @@ roles, ACLs etc.)?</li>
 retrieving it?</li>
 </ul>
 
-</div><div class="slide" id="slide6"><h2 id="toc_5">HTTP Basic Authentication</h2>
+</div><div class="slide" id="slide6"><h2 id="http-basic-authentication">HTTP Basic Authentication</h2>
 
 <ul>
 <li>something of a lowest common denominator</li>
@@ -94,9 +94,9 @@ retrieving it?</li>
 </ul>
 
 <p>Example:</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">    $ curl &quot;https://$username:$password@myhost/resource&quot;
+<div class="highlight"><pre><code class="language-text" data-lang="text">    $ curl &quot;https://$username:$password@myhost/resource&quot;
 </code></pre></div>
-</div><div class="slide" id="slide7"><h2 id="toc_6">So what&#39;s wrong with that?</h2>
+</div><div class="slide" id="slide7"><h2 id="so-what-39-s-wrong-with-that">So what&#39;s wrong with that?</h2>
 
 <ul>
 <li>Nothing, but...</li>
@@ -107,7 +107,7 @@ retrieving it?</li>
 <li>Only covers authentication</li>
 </ul>
 
-</div><div class="slide" id="slide8"><h2 id="toc_7">User or Client Permissions</h2>
+</div><div class="slide" id="slide8"><h2 id="user-or-client-permissions">User or Client Permissions</h2>
 
 <ul>
 <li>Finer-grained information about the authenticated party</li>
@@ -117,19 +117,19 @@ server/container</li>
 <li>Often business requirements are more complex</li>
 </ul>
 
-</div><div class="slide" id="slide9"><h2 id="toc_8">Identity Management: Three Corners</h2>
+</div><div class="slide" id="slide9"><h2 id="identity-management-three-corners">Identity Management: Three Corners</h2>
 
 <p><img src="images/three-corners.png" alt="three-corners"></p>
 
-</div><div class="slide" id="slide10"><h2 id="toc_9">Identity Management: Four Corners</h2>
+</div><div class="slide" id="slide10"><h2 id="identity-management-four-corners">Identity Management: Four Corners</h2>
 
 <p><img src="images/four-corners.png" alt="four-corners"></p>
 
-</div><div class="slide" id="slide11"><h2 id="toc_10">Centralized Identity Management</h2>
+</div><div class="slide" id="slide11"><h2 id="centralized-identity-management">Centralized Identity Management</h2>
 
 <p><img src="images/idm.png" alt="idm"></p>
 
-</div><div class="slide" id="slide12"><h2 id="toc_11">Centralized Identity Management</h2>
+</div><div class="slide" id="slide12"><h2 id="centralized-identity-management">Centralized Identity Management</h2>
 
 <ul>
 <li>Centralized: scales better than peers sharing secrets
@@ -141,7 +141,7 @@ server/container</li>
 <li>For user accounts the scalability benefit is even bigger</li>
 </ul>
 
-</div><div class="slide" id="slide13"><h2 id="toc_12">OAuth2</h2>
+</div><div class="slide" id="slide13"><h2 id="oauth2">OAuth2</h2>
 
 <p>Centralizing accounts and secrets is great, but what about
 permissions?</p>
@@ -154,7 +154,7 @@ decision</li>
 <li>Requires HTTPS for secure operation, but you can test with HTTP</li>
 </ul>
 
-</div><div class="slide" id="slide14"><h2 id="toc_13">Quick Introduction to OAuth2</h2>
+</div><div class="slide" id="slide14"><h2 id="quick-introduction-to-oauth2">Quick Introduction to OAuth2</h2>
 
 <blockquote>
 <p>A Client application, often web application, acts on behalf of a
@@ -175,14 +175,14 @@ User, but with the User&#39;s approval</p>
 <li><a href="http://uaa.cloudfoundry.com">Cloud Foundry</a> - Cloud Controller</li>
 </ul>
 
-</div><div class="slide" id="slide15"><h2 id="toc_14">Typical Web Application Client</h2>
+</div><div class="slide" id="slide15"><h2 id="typical-web-application-client">Typical Web Application Client</h2>
 
 <p><img src="images/oauth-web-client.png" alt="oauth-web-client"></p>
 
-</div><div class="slide" id="slide16"><h2 id="toc_15">OAuth2 and the Lightweight Service</h2>
+</div><div class="slide" id="slide16"><h2 id="oauth2-and-the-lightweight-service">OAuth2 and the Lightweight Service</h2>
 
 <p>Example command line Client:</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">$ curl -H &quot;Authorization: Bearer $TOKEN&quot; https://myhost/resource
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ curl -H &quot;Authorization: Bearer $TOKEN&quot; https://myhost/resource
 </code></pre></div>
 <ul>
 <li><code>https://myhost</code> is a Resource Server</li>
@@ -190,7 +190,7 @@ User, but with the User&#39;s approval</p>
 <li>it came from an Authorization Server</li>
 </ul>
 
-</div><div class="slide" id="slide17"><h2 id="toc_16">Role of Client Application</h2>
+</div><div class="slide" id="slide17"><h2 id="role-of-client-application">Role of Client Application</h2>
 
 <ul>
 <li>Register with Authorization Server (get a <code>client_id</code> and maybe a
@@ -205,21 +205,21 @@ User, but with the User&#39;s approval</p>
 <li>Use it to access Resource Server</li>
 </ul>
 
-</div><div class="slide" id="slide18"><h2 id="toc_17">Obtaining a Client Credentials Token</h2>
+</div><div class="slide" id="slide18"><h2 id="obtaining-a-client-credentials-token">Obtaining a Client Credentials Token</h2>
 
 <p>A client can act in its own right (not on behalf of a user):</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">$ curl &quot;https://myclient:mysecret@uaa.cloudfoundry.com&quot; 
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ curl &quot;https://myclient:mysecret@uaa.cloudfoundry.com&quot; 
     -d grant_type=client_credentials -d client_id=myclient
 </code></pre></div>
 <p>Result:</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">{
+<div class="highlight"><pre><code class="language-text" data-lang="text">{
   access_token: FUYGKRWFG.jhdfgair7fylzshjg.o98q47tgh.fljgh,
   expires_in: 43200,
   client_id: myclient,
   scope: uaa.admin
 }
 </code></pre></div>
-</div><div class="slide" id="slide19"><h2 id="toc_18">OAuth2 Key Features</h2>
+</div><div class="slide" id="slide19"><h2 id="oauth2-key-features">OAuth2 Key Features</h2>
 
 <ul>
 <li>Extremely simple for clients</li>
@@ -235,14 +235,14 @@ User, but with the User&#39;s approval</p>
 </ul></li>
 </ul>
 
-</div><div class="slide" id="slide20"><h2 id="toc_19">UAA Bearer Tokens</h2>
+</div><div class="slide" id="slide20"><h2 id="uaa-bearer-tokens">UAA Bearer Tokens</h2>
 
 <ul>
 <li>OAuth 2.0 tokens are opaque to clients</li>
 <li>But they carry important information to Resource Servers</li>
 <li><p>Example of implementation (from Cloud Foundry UAA, JWT = signed,
 base64-encoded, JSON):</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">{  &quot;client_id&quot;:&quot;vmc&quot;,
+<div class="highlight"><pre><code class="language-text" data-lang="text">{  &quot;client_id&quot;:&quot;vmc&quot;,
    &quot;exp&quot;:1346325625,
    &quot;scope&quot;:[&quot;cloud_controller.read&quot;,&quot;openid&quot;,&quot;password.write&quot;],
    &quot;aud&quot;:[&quot;openid&quot;,&quot;cloud_controller&quot;,&quot;password&quot;],
@@ -253,19 +253,19 @@ base64-encoded, JSON):</p>
 </code></pre></div></li>
 </ul>
 
-</div><div class="slide" id="slide21"><h2 id="toc_20">Web Application Client Again</h2>
+</div><div class="slide" id="slide21"><h2 id="web-application-client-again">Web Application Client Again</h2>
 
 <p>The Client wants to access a Resource on behalf of the User</p>
 
 <p><img src="images/oauth-web-client.png" alt="oauth-web-client"></p>
 
-</div><div class="slide" id="slide22"><h2 id="toc_21">Obtaining a User Token</h2>
+</div><div class="slide" id="slide22"><h2 id="obtaining-a-user-token">Obtaining a User Token</h2>
 
 <p>A client can act on behalf of a user (e.g. <code>authorization_code</code> grant):</p>
 
 <p><img src="images/auth-code-flow.png" alt="auth-code-flow"></p>
 
-</div><div class="slide" id="slide23"><h2 id="toc_22">Authorization Code Grant Summary</h2>
+</div><div class="slide" id="slide23"><h2 id="authorization-code-grant-summary">Authorization Code Grant Summary</h2>
 
 <ol>
 <li><p>Authorization Server authenticates the User</p></li>
@@ -275,7 +275,7 @@ token)</p></li>
 <li><p>Client exchanges the authorization code for an access token.</p></li>
 </ol>
 
-</div><div class="slide" id="slide24"><h2 id="toc_23">Role of Resource Server</h2>
+</div><div class="slide" id="slide24"><h2 id="role-of-resource-server">Role of Resource Server</h2>
 
 <ol>
 <li>Extract token from request and decode it</li>
@@ -290,7 +290,7 @@ token)</p></li>
 <li>Send 403 (FORBIDDEN) if token not sufficient</li>
 </ol>
 
-</div><div class="slide" id="slide25"><h2 id="toc_24">Role of the Authorization Server</h2>
+</div><div class="slide" id="slide25"><h2 id="role-of-the-authorization-server">Role of the Authorization Server</h2>
 
 <ol>
 <li>Grant tokens</li>
@@ -303,7 +303,7 @@ on their behalf</li>
 <p>#1 and #4 are covered thoroughly by the spec; #2 and #3 not (for
 good reasons).</p>
 
-</div><div class="slide" id="slide26"><h2 id="toc_25">Client Registration and Scopes</h2>
+</div><div class="slide" id="slide26"><h2 id="client-registration-and-scopes">Client Registration and Scopes</h2>
 
 <p>For secure channels a client has to authenticate itself to obtain a
 token, so it has to be known to the Authorization Server.
@@ -322,7 +322,7 @@ Registration provides at a mimimum:</p>
 <li>ownership information (which user registered the client)</li>
 </ul>
 
-</div><div class="slide" id="slide27"><h2 id="toc_26">More on Scopes</h2>
+</div><div class="slide" id="slide27"><h2 id="more-on-scopes">More on Scopes</h2>
 
 <p>Per the spec they are arbitrary strings.  The Authorization Server and
 the Resource Servers agree on the content and meanings.</p>
@@ -339,12 +339,12 @@ the Resource Servers agree on the content and meanings.</p>
 <p>Authorization Server has to decide whether to grant a token to a given
 client and user based on the requested scope (if any).</p>
 
-</div><div class="slide" id="slide28"><h2 id="toc_27">UAA Scopes</h2>
+</div><div class="slide" id="slide28"><h2 id="uaa-scopes">UAA Scopes</h2>
 
 <ul>
 <li>UAA scopes are actually Groups in the User accounts</li>
 <li><p><code>GET /Groups</code>, <code>Get /Users/{id}</code></p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">{
+<div class="highlight"><pre><code class="language-text" data-lang="text">{
   &quot;id&quot;: &quot;73ba999e-fc34-49eb-ac26-dc8be52c1d82&quot;,
   &quot;meta&quot;: {...},
   &quot;userName&quot;: &quot;marissa&quot;,
@@ -360,21 +360,21 @@ client and user based on the requested scope (if any).</p>
 </code></pre></div></li>
 </ul>
 
-</div><div class="slide" id="slide29"><h2 id="toc_28">Special Mention for Vmc</h2>
+</div><div class="slide" id="slide29"><h2 id="special-mention-for-vmc">Special Mention for Vmc</h2>
 
 <p>The UAA authenticates requests from <code>vmc</code> in a special way:</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">$ curl https://uaa.cloudfoundry.com/oauth/authorize
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ curl https://uaa.cloudfoundry.com/oauth/authorize
     -d response_type=token -d client_id=vmc
     -d redirect_uri=https:uaa.cloudfoundry.com/redirect/vmc
     -d source=credentials
     -d username=$username -d password=$password
 </code></pre></div>
 <p>Result:</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">302 FOUND
+<div class="highlight"><pre><code class="language-text" data-lang="text">302 FOUND
 ...
 Location: https:uaa.cloudfoundry.com/redirect/vmc#access_token=FUYGKRWFG.jhdfgair7fylzshjg.o98q47tgh.fljgh...  
 </code></pre></div>
-</div><div class="slide" id="slide30"><h2 id="toc_29">Authentication and the Authorization Server</h2>
+</div><div class="slide" id="slide30"><h2 id="authentication-and-the-authorization-server">Authentication and the Authorization Server</h2>
 
 <ul>
 <li>Authentication (checking user credentials) is orthogonal to
@@ -388,17 +388,17 @@ endpoints (<code>/authorize</code> and <code>/token</code>)</li>
 <code>grant_type=password</code>)</li>
 </ul>
 
-</div><div class="slide" id="slide31"><h2 id="toc_30">Cloud Foundry UAA Authorization Server</h2>
+</div><div class="slide" id="slide31"><h2 id="cloud-foundry-uaa-authorization-server">Cloud Foundry UAA Authorization Server</h2>
 
 <p><img src="images/cf-uaa.png" alt="cf-uaa"></p>
 
-</div><div class="slide" id="slide32"><h2 id="toc_31">Cloud Foundry Login Server</h2>
+</div><div class="slide" id="slide32"><h2 id="cloud-foundry-login-server">Cloud Foundry Login Server</h2>
 
 <p><img src="images/cf-login.png" alt="cf-login"></p>
 
 <!-- demo login server -->
 
-</div><div class="slide" id="slide33"><h2 id="toc_32">Role of Login Server</h2>
+</div><div class="slide" id="slide33"><h2 id="role-of-login-server">Role of Login Server</h2>
 
 <ul>
 <li>Authenticate users and collect user approvals for OAuth2 scopes</li>
@@ -408,7 +408,7 @@ endpoints (<code>/authorize</code> and <code>/token</code>)</li>
 <li>OAuth2 endpoints - delegate (pass through) to UAA</li>
 </ul>
 
-</div><div class="slide" id="slide34"><h2 id="toc_33">Cloud Foundry UAA as a General Purpose Solution</h2>
+</div><div class="slide" id="slide34"><h2 id="cloud-foundry-uaa-as-a-general-purpose-solution">Cloud Foundry UAA as a General Purpose Solution</h2>
 
 <ul>
 <li><a href="http://github.com/cloudfoundry/uaa">User Account and Authentication Service</a> is part of <a href="http://www.cloudfoundry.com">Cloud
@@ -421,7 +421,7 @@ Foundry</a></li>
 <li>look for UAA blogs at <a href="">http://blog.cloudfoundry.org</a> (and .com)</li>
 </ul>
 
-</div><div class="slide" id="slide35"><h2 id="toc_34">UAA OAuth Implementation</h2>
+</div><div class="slide" id="slide35"><h2 id="uaa-oauth-implementation">UAA OAuth Implementation</h2>
 
 <p>UAA makes some explicit choices where the spec allows it, and also
 adds some useful features:</p>
@@ -444,7 +444,7 @@ adds some useful features:</p>
 </ul></li>
 </ul>
 
-</div><div class="slide" id="slide36"><h2 id="toc_35">UAA Resources (Endpoints)</h2>
+</div><div class="slide" id="slide36"><h2 id="uaa-resources-endpoints">UAA Resources (Endpoints)</h2>
 
 <p>Brief list of all the UAA endpoints (with valid scopes if it is an
 OAuth2 resource):</p>
@@ -459,7 +459,7 @@ OAuth2 resource):</p>
 <li>Password changes: <code>/Users/{id}/password</code>, scope <code>password.write</code></li>
 </ul>
 
-</div><div class="slide" id="slide37"><h2 id="toc_36">UAA Resources (continued)</h2>
+</div><div class="slide" id="slide37"><h2 id="uaa-resources-continued">UAA Resources (continued)</h2>
 
 <ul>
 <li>Token management, e.g. cancelling an approval:
@@ -472,7 +472,7 @@ OAuth2 resource):</p>
 <code>/health</code> and <code>/varz</code></li>
 </ul>
 
-</div><div class="slide" id="slide38"><h2 id="toc_37">Alternatives to OAuth2</h2>
+</div><div class="slide" id="slide38"><h2 id="alternatives-to-oauth2">Alternatives to OAuth2</h2>
 
 <ul>
 <li>OAuth 1.0a</li>
@@ -481,7 +481,7 @@ OAuth2 resource):</p>
 <li>Extensions to OAuth2</li>
 </ul>
 
-</div><div class="slide" id="slide39"><h2 id="toc_38">In Conclusion</h2>
+</div><div class="slide" id="slide39"><h2 id="in-conclusion">In Conclusion</h2>
 
 <ul>
 <li>Lightweight services demand lightweight infrastructure</li>
@@ -493,7 +493,7 @@ the framework level</li>
 some concrete choices</li>
 </ul>
 
-</div><div class="slide" id="slide40"><h2 id="toc_39">Links</h2>
+</div><div class="slide" id="slide40"><h2 id="links">Links</h2>
 
 <ul>
 <li><a href="">http://github.com/springsource/spring-security-oauth</a></li>
