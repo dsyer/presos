@@ -1,6 +1,6 @@
 ---
 title: Locks and Leaders
-layout: springio
+layout: spring
 ---
 # Locks and Leaders with Spring Integration
 
