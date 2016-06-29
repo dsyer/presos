@@ -149,11 +149,13 @@ From Martin Kleppmann:
 
 ![fencing-a-lock](images/fencing-a-lock.png)
 
-BUT: The storage service has to be fully consistent (basically ACID).
+> BUT: The storage service has to be fully consistent.
 
 ## Alternative View
 
 ![lizard-protection](images/lizard-protection.png)
+
+> BUT: Now the storage service has to be atomic as well (ACID).
 
 ## Leader Elections
 
@@ -233,3 +235,10 @@ https://www.websequencediagrams.com/?lz=CkNsaWVudDEtPlN0b3JhZ2VTZXJ2aWNlOiByZWFk
 
 https://www.websequencediagrams.com/?lz=CkNsaWVudDEtPlN0b3JhZ2VTZXJ2aWNlOiByZWFkKDMzKQAYCisAExBzdGFydGluZygzNCkKADIOLT4tAFMHOiBvawBfBzIAThg0KQpub3RlIHJpZ2h0IG9mIAApBzogcmVzdWx0IG5vdCByZWNvcmRlZApkZXN0cm95AB0IAIE5CldlYmhvb2s6IHBpbmcAgRwcdWNjZXNzAIEVIg&s=roundgreen
 
+## Ideas
+
+* When to use it. HA active/passive failover.
+
+* How to avoid it: latency from restarting a failed app might be fine
+
+* Be idempotent.
