@@ -93,3 +93,6 @@ DEPENDENCIES
   haml
   public_suffix (= 1.4.6)
   tilt
+
+BUNDLED WITH
+   1.10.4
