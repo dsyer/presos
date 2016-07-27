@@ -1,11 +1,12 @@
 ---
 title: Locks and Leaders
-layout: spring
+layout: plain
+theme: spring
 ---
 # Locks and Leaders with Spring Integration
 
 Dave Syer, 2016  
-Twitter: @david_syer  
+Twitter: @david_syer (see also @artem_bilan, @gprussell)  
 Email: `dsyer@pivotal.io`
 
 ## Agenda
@@ -14,10 +15,47 @@ Email: `dsyer@pivotal.io`
 * What is a leader election?
 * What is it good for?
 * How do I do it?
+* Some tools for thinking about failure
 
 
 
 > Warning: Here be Dragons!
+
+## A Simple Distributed Operation
+
+![basic-sequence-0](images/locks-basic-sequence-0.png)
+
+## Two Clients
+
+![basic-sequence-1](images/locks-basic-sequence-1.png)
+
+## Shuffle!
+
+![basic-sequence-2](images/locks-basic-sequence-2.png)
+
+## Shuffle!
+
+![basic-sequence-3](images/locks-basic-sequence-3.png)
+
+## Shuffle!
+
+![basic-sequence-4](images/locks-basic-sequence-4.png)
+
+## Shuffle!
+
+![basic-sequence-4](images/locks-basic-sequence-2.png)
+
+## Shuffle!
+
+![basic-sequence-4](images/locks-basic-sequence-1.png)
+
+## Shuffle!
+
+![basic-sequence-4](images/locks-basic-sequence-3.png)
+
+## Scary, Eh?
+
+![basic-sequence-5](images/locks-basic-sequence-5.png)
 
 ## Locks
 
@@ -37,6 +75,15 @@ try {
   if (acquired) {
     lock.unlock();
   }
+}
+```
+
+
+## Spring Integration: LockRegistry
+
+```java
+public interface LockRegistry {
+	Lock obtain(Object lockKey);
 }
 ```
 
@@ -63,23 +110,15 @@ try {
 
 (same code)
 
-## LockRegistry
-
-```java
-public interface LockRegistry {
-	Lock obtain(Object lockKey);
-}
-```
-
 ## Locks and Leases
 
-A distributed lock nearly almost has a shelf life (it expires).
+A distributed lock nearly always has a shelf life (it expires).
 
 Technically, that makes it a "lease".
 
-You need the expiry in order to make progress when a lock holder dies.
+Without expiry system can't make progress when a lock holder dies.
 
-## Lizards
+## Gotcha
 
 ```java
 ...
@@ -124,39 +163,6 @@ lock being broken, even supposing he is able to detect it.
 > long it lasts, but fundamentally you cannot prevent the system from
 > ever allowing more than one holder of a lock.
 
-## Writing Stale Data
-
-![writing-stale-data](images/writing-stale-data.png)
-
-## Fencing
-
-```java
-MyData data = getDataIncludingVersion();
-...
-  if (acquired) {
-    checkVersion(data); // Throw exception here if someone else updated the data
-    update(data);
-  }
-...
-```
-
-N.B. The version is not necessarily part of the lock; it's stored and
-checked in the shared resource that needs to be updated.
-
-## Fencing a Lock#
-
-From Martin Kleppmann:
-
-![fencing-a-lock](images/fencing-a-lock.png)
-
-> BUT: The storage service has to be fully consistent.
-
-## Alternative View
-
-![lizard-protection](images/lizard-protection.png)
-
-> BUT: Now the storage service has to be atomic as well (ACID).
-
 ## Leader Elections
 
 > Simple idea: if you hold a lock you are the leader.
@@ -167,10 +173,31 @@ What can you do with it?
 
 * sequences
 * message aggregation
-* webhooks
-* cron service
+* scheduling, e.g. cron service
 
-## Spring Integration
+## Spring Integration: Leader Initiator
+
+Implementations of leader election need to be able to start an
+election and fire events on granted and revoked.
+
+* Zookeeper
+* Hazelcast
+* Etcd(*)
+* Generic (lock-based)
+
+For a user it looks like this (create a new bean which is a `SmartLifecycle`):
+
+```java
+@Bean
+public LeaderInitiator leaderInitiator(CuratorFramework client,
+			Candidate candidate) {
+  return new LeaderInitiator(client, candidate);
+}
+```
+
+(*) No support for etcd v3. Probably dead.
+
+## Spring Integration: Callbacks
 
 Callbacks on leadership events:
 
@@ -196,25 +223,15 @@ public void stop() {
 }
 ```
 
-## Leader Initiator
+## Wrap Up
 
-Implementations of leader election need to be able to start an
-election and fire events on granted and revoked.
+* When to use locks and leaders: HA active/passive failover
 
-* Zookeeper
-* Hazelcast
-* Etcd
-* Generic (lock-based)
+* How to avoid it: latency from restarting a failed app might be fine
 
-For a user it looks like this (create a new bean which is a `SmartLifecycle`):
+* Otherwise, be idempotent. For correctness, de-duplication store has to be ACID.
 
-```java
-@Bean
-public LeaderInitiator leaderInitiator(CuratorFramework client,
-			Candidate candidate) {
-  return new LeaderInitiator(client, candidate);
-}
-```
+* Relational databases are really useful.
 
 ## Summary
 
@@ -222,23 +239,50 @@ public LeaderInitiator leaderInitiator(CuratorFramework client,
 * Leader election is an application of locks
 * Spring Integration has some useful abstractions: [https://github.com/spring-projects/spring-integration](https://github.com/spring-projects/spring-integration)
 * Careful with the physics
-* Sample code: TBD
+* Sample code: [https://github.com/SpringOnePlatform2016/dsyer-locks-and-leaders](https://github.com/SpringOnePlatform2016/dsyer-locks-and-leaders)
 * Spring Cloud Cluster: [https://github.com/spring-cloud/spring-cloud-cluster](https://github.com/spring-cloud/spring-cloud-cluster)
 
 ## Links
 
 Optimistic Locks fencing and ping:
 
-https://www.websequencediagrams.com/?lz=CkNsaWVudDEtPlN0b3JhZ2VTZXJ2aWNlOiByZWFkKDMzKQAbBzIAASEyLT4rADUQc3RhcnRpbmcoMzQpCgBUDi0-LQBTBzogb2sAXApXZWJob29rOiBwaW5nAD8cdWNjZXNzADIoMQBnNzE6IGZhaWwKZGVzdHJveSAAgikHCgo&s=roundgreen
+[Client1 Wins](https://www.websequencediagrams.com/?lz=CkNsaWVudDEtPlN0b3JhZ2VTZXJ2aWNlOiByZWFkKDMzKQAbBzIAASEyLT4rADUQc3RhcnRpbmcoMzQpCgBUDi0-LQBTBzogb2sAXApXZWJob29rOiBwaW5nAD8cdWNjZXNzADIoMQBnNzE6IGZhaWwKZGVzdHJveSAAgikHCgo&s=roundgreen)
 
-https://www.websequencediagrams.com/?lz=CkNsaWVudDEtPlN0b3JhZ2VTZXJ2aWNlOiByZWFkKDMzKQAbBzIAASExLT4rADUQc3RhcnRpbmcoMzQpCgBUDi0-LQB1Bzogb2sAfgpXZWJob29rOiBwaW5nAD8cdWNjZXNzADIoMgBnNzI6IGZhaWwKZGVzdHJveSAAggcHCg&s=roundgreen
+[CLient2 Wins](https://www.websequencediagrams.com/?lz=CkNsaWVudDEtPlN0b3JhZ2VTZXJ2aWNlOiByZWFkKDMzKQAbBzIAASExLT4rADUQc3RhcnRpbmcoMzQpCgBUDi0-LQB1Bzogb2sAfgpXZWJob29rOiBwaW5nAD8cdWNjZXNzADIoMgBnNzI6IGZhaWwKZGVzdHJveSAAggcHCg&s=roundgreen)
 
-https://www.websequencediagrams.com/?lz=CkNsaWVudDEtPlN0b3JhZ2VTZXJ2aWNlOiByZWFkKDMzKQAYCisAExBzdGFydGluZygzNCkKADIOLT4tAFMHOiBvawBfBzIAThg0KQpub3RlIHJpZ2h0IG9mIAApBzogcmVzdWx0IG5vdCByZWNvcmRlZApkZXN0cm95AB0IAIE5CldlYmhvb2s6IHBpbmcAgRwcdWNjZXNzAIEVIg&s=roundgreen
+[Oops](https://www.websequencediagrams.com/?lz=CkNsaWVudDEtPlN0b3JhZ2VTZXJ2aWNlOiByZWFkKDMzKQAYCisAExBzdGFydGluZygzNCkKADIOLT4tAFMHOiBvawBfBzIAThg0KQpub3RlIHJpZ2h0IG9mIAApBzogcmVzdWx0IG5vdCByZWNvcmRlZApkZXN0cm95AB0IAIE5CldlYmhvb2s6IHBpbmcAgRwcdWNjZXNzAIEVIg&s=roundgreen)
 
-## Ideas
+## Writing Stale Data
 
-* When to use it. HA active/passive failover.
+![writing-stale-data](images/writing-stale-data.png)
 
-* How to avoid it: latency from restarting a failed app might be fine
+## Fencing
 
-* Be idempotent.
+```java
+MyData data = getDataIncludingVersion();
+...
+  if (acquired) {
+    checkVersion(data); // Throw exception here if someone else updated the data
+    update(data);
+  }
+...
+```
+
+N.B. The version is not necessarily part of the lock; it's stored and
+checked in the shared resource that needs to be updated.
+
+## Fencing a Lock
+
+From Martin Kleppmann:
+
+![fencing-a-lock](images/fencing-a-lock.png)
+
+> BUT: The storage service has to be fully consistent.
+
+## Alternative View
+
+![lizard-protection](images/lizard-protection.png)
+
+> BUT: Now the storage service has to have isolation guarantees as
+> well (ACID).
+

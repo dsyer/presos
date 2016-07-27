@@ -1,5 +1,3 @@
-title Writing Stale Data
-
 Client1->+LockService: getLock
 LockService->Client1: lock
 Client1-->+Client1: GC start
