@@ -13,7 +13,8 @@ Dave Syer, 2015
 
 * Really quick introduction to Spring Security, Spring Session, Angular JS
 * Focus on features to build secure, modern, single-page applications
-* High level view of sample apps presented in https://spring.io/blog/2015/01/12/spring-and-angular-js-a-secure-single-page-application[blog series]
+* High level view of sample apps presented in http://spring.io/guides/tutorials/spring-security-and-angular-js/[tutorial] (from 
+https://spring.io/blog/2015/01/12/spring-and-angular-js-a-secure-single-page-application[blog series])
 * More detailed look at some of the apps
 
 == Spring Security
@@ -59,44 +60,6 @@ Sub-text: "use them, they're reliable and free".
 * Also useful for configuration management, service discovery, load balancing, circuit breaker, etc.
 * http://cloud.spring.io
 
-== Overview of Sample Apps
-
-Imagine several physical implementations of the same system with an identical Javascript client (single page application) and a secure back end. Application and security architecture variations:
-
-|===
-| Application | Description | Security | Blog
-
-| `basic`
-| Single backend
-| HTTP Basic
-| Part I
-
-| `single`
-| Adds form authentication
-| Session cookie
-| Part II
-
-| `spring-session`
-| Adds secure backend with custom token
-| Spring Session ID as token
-| Part III
-
-| `proxy`
-| UI acts as proxy.
-| Session cookie, Spring Session
-| Part IV
-
-| `oauth2`
-| Add OAuth2 SSO with a separate authentication server
-| Session cookie in UI and access token for backends
-| Part V
-
-| `double`
-| Add "admin" UI behind Gateway
-| Session cookie, Spring Session
-| Part VI
-|===
-
 == Basic Sample
 
 image::images/angular/basic.png['Basic' Sample]
@@ -112,9 +75,9 @@ image::images/angular/basic.png['Basic' Sample]
   <body ng-app="hello">
     <div class="container">
       <h1>Greeting</h1>
-      <div ng-controller="home" ng-cloak class="ng-cloak">
-        <p>The ID is {{greeting.id}}</p>
-        <p>The content is {{greeting.content}}</p>
+      <div ng-controller="home as home" ng-cloak class="ng-cloak">
+        <p>The ID is: {{home.greeting.id}}</p>
+        <p>The content is: {{home.greeting.msg}}</p>
       </div>
     </div>
     <script src="js/angular-bootstrap.js" type="text/javascript"></script>
@@ -123,14 +86,15 @@ image::images/angular/basic.png['Basic' Sample]
 </html>
 ```
 
-== Compleletly Minimal JavaScript
+== Completely Minimal JavaScript
 
 `hello.js`
 ```javascript
 angular.module('hello', [])
-  .controller('home', function($scope, $http) {
-    $http.get('/resource/').success(function(data) {
-      $scope.greeting = data;
+  .controller('home', function($http) {
+    var self = this;
+    $http.get('/resource/').then(function(response) {
+      self.greeting = response.data;
     })
   }
 );
@@ -145,7 +109,7 @@ With Spring Boot you get a secure application out of the box, but it is easy to 
 <dependency>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-security</artifactId>
-/dependency>
+</dependency>
 ```
 
 or `build.gradle`
@@ -181,19 +145,35 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 (c.f. "single": https://github.com/dsyer/spring-security-angular/tree/master/single[https://github.com/.../single], Part I)
 
+== Suppress the Browser Dialog
+
+* When the browser gets a 401 with "WWW-Authenticate: Basic ..." it pops up a dialog. 
+* Spring Security sends that header unless it sees "X-Requested-With" in the request.
+
+So:
+
+```javascript
+angular.module('hello', []).config(function($httpProvider) {
+
+  $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+
+})
+...
+```
+
 == Client Side Login Form
 
 ```html
-<form role="form" ng-submit="login()">
+<form role="form" ng-submit="controller.login()">
   ...
 </form>
 ```
 
 ```javascript
-$scope.credentials = {};
-$scope.login = function() {
+self.credentials = {};
+self.login = function() {
 
-  authenticate($scope.credentials, function(authenticated) {
+  authenticate(self.credentials, function(authenticated) {
 
     if (authenticated) {
       console.log("Login succeeded")
@@ -210,22 +190,6 @@ $scope.login = function() {
 
 * The `authenticate()` function sends HTTP Basic credentials and checks the "/user" endpoint.
 * Subsequent requests are authenticated by a cookie - standard Spring Security and browser behaviour
-
-== One More Thing
-
-* When the browser gets a 401 with "WWW-Authenticate: Basic ..." it pops up a dialog. 
-* Spring Security sends that header unless it sees "X-Requested-With" in the request.
-
-So:
-
-```javascript
-angular.module('hello', []).config(function($httpProvider) {
-
-  $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-
-})
-...
-```
 
 == Login Form Summary
 
@@ -268,21 +232,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         ...
       .and()
         .csrf()
-          .csrfTokenRepository(csrfTokenRepository())
-      .and()
-          .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
+          .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
     }
 
-    private CsrfTokenRepository csrfTokenRepository() {
-      HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-      repository.setHeaderName("X-XSRF-TOKEN");
-      return repository;
-    }
+}
+```
 
-    private Filter csrfHeaderFilter() {
-      return new FilterThatSendsCookie("XSRF-TOKEN");
-    }
+== One Last Thing
 
+For a Single Page Application the default logout success handler
+doesn't make sense, so:
+
+```java
+
+@Configuration
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+      http
+       ...
+       .and()
+         .logout().logoutSuccessUrl("/");
   }
 
 }
@@ -326,13 +297,51 @@ image::images/angular/double-components.png['Double' System Components]
 
 (c.f. "double": https://github.com/dsyer/spring-security-angular/tree/master/double[https://github.com/.../double], Part VI)
 
+== Overview of Sample Apps
+
+Imagine several physical implementations of the same system with an identical Javascript client (single page application) and a secure back end. Application and security architecture variations:
+
+|===
+| Application | Description | Security | Blog
+
+| `basic`
+| Single backend
+| HTTP Basic
+| Part I
+
+| `single`
+| Adds form authentication
+| Session cookie
+| Part II
+
+| `spring-session`
+| Adds secure backend with custom token
+| Spring Session ID as token
+| Part III
+
+| `proxy`
+| UI acts as proxy.
+| Session cookie, Spring Session
+| Part IV
+
+| `oauth2`
+| Add OAuth2 SSO with a separate authentication server
+| Session cookie in UI and access token for backends
+| Part V
+
+| `double`
+| Add "admin" UI behind Gateway
+| Session cookie, Spring Session
+| Part VI
+|===
+
 == Links
 
 * http://presos.dsyer.com/decks/spring-security-angular.html
-* http://github.com/dsyer/spring-security-angular
+* http://spring.io/guides/tutorials/spring-security-and-angular-js/
+* http://github.com/spring-guides/tut-spring-security-and-angular-js
 * http://github.com/spring-projects/spring-security-oauth
 * http://cloud.spring.io/spring-cloud-netflix (for `@EnableZuulProxy`)
-* http://spring.io/blog/2015/01/12/spring-and-angular-js-a-secure-single-page-application
 * Twitter: @david_syer  
 * Email: dsyer@pivotal.io
 
