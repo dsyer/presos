@@ -1,5 +1,6 @@
 = Spring Security and Angular
-Dave Syer, 2015
+Dave Syer, 2016
+@david_syer
 :backend: deckjs
 :deckjs_transition: fade
 :navigation:
@@ -174,22 +175,19 @@ angular.module('hello', []).config(function($httpProvider) {
 self.credentials = {};
 self.login = function() {
 
-  authenticate(self.credentials, function(authenticated) {
-
-    if (authenticated) {
-      console.log("Login succeeded")
-      ...            
-    } else {
-      console.log("Login failed")
-      ...
-    }
-
+  $http.get('/user', {
+      headers : { authorization : "Basic "
+        + btoa(self.credentials.username
+        + ":"  + self.credentials.password)
+      }}).then(function(response) {
+        self.greeting = response.data;
+        self.show = false;
   })
 
 }
 ```
 
-* The `authenticate()` function sends HTTP Basic credentials and checks the "/user" endpoint.
+* The `login()` function sends HTTP Basic credentials and checks the "/user" endpoint.
 * Subsequent requests are authenticated by a cookie - standard Spring Security and browser behaviour
 
 == Login Form Summary
@@ -343,6 +341,6 @@ Imagine several physical implementations of the same system with an identical Ja
 * http://github.com/spring-guides/tut-spring-security-and-angular-js
 * http://github.com/spring-projects/spring-security-oauth
 * http://cloud.spring.io/spring-cloud-netflix (for `@EnableZuulProxy`)
-* Twitter: @david_syer  
+* Twitter: @david_syer
 * Email: dsyer@pivotal.io
 
