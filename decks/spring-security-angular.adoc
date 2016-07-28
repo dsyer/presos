@@ -5,6 +5,7 @@ Dave Syer, 2015
 :navigation:
 :menu:
 :status:
+:goto:
 :source-highlighter: pygments
 :deckjs_theme: spring
 :deckjsdir: ../deck.js
