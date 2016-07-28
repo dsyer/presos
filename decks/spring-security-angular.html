@@ -4,7 +4,7 @@
 <meta content="text/html; charset=" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta content="Asciidoctor 1.5.4" name="generator">
-<meta content="Dave Syer, 2015" name="author">
+<meta content="Dave Syer, 2016" name="author">
 <title>Spring Security and Angular</title>
 <link href="./asciidoctor-pygments.css" rel="stylesheet">
 <link href="../deck.js/core/deck.core.css" rel="stylesheet">
@@ -21,8 +21,9 @@
 <div class="deck-container">
 <section class="slide" id="title-slide">
 <h1>Spring Security and Angular</h1>
-<span id="author">Dave Syer, 2015</span>
+<span id="author">Dave Syer, 2016</span>
 <br>
+<span id="revdate">@david_syer</span>
 </section>
 <section class="slide" id="_agenda">
 <h2>Agenda</h2>
@@ -230,16 +231,13 @@
 <pre class="pygments highlight"><code class="javascript language-javascript"><span class="tok-nx">self</span><span class="tok-p">.</span><span class="tok-nx">credentials</span> <span class="tok-o">=</span> <span class="tok-p">{};</span>
 <span class="tok-nx">self</span><span class="tok-p">.</span><span class="tok-nx">login</span> <span class="tok-o">=</span> <span class="tok-kd">function</span><span class="tok-p">()</span> <span class="tok-p">{</span>
 
-  <span class="tok-nx">authenticate</span><span class="tok-p">(</span><span class="tok-nx">self</span><span class="tok-p">.</span><span class="tok-nx">credentials</span><span class="tok-p">,</span> <span class="tok-kd">function</span><span class="tok-p">(</span><span class="tok-nx">authenticated</span><span class="tok-p">)</span> <span class="tok-p">{</span>
-
-    <span class="tok-k">if</span> <span class="tok-p">(</span><span class="tok-nx">authenticated</span><span class="tok-p">)</span> <span class="tok-p">{</span>
-      <span class="tok-nx">console</span><span class="tok-p">.</span><span class="tok-nx">log</span><span class="tok-p">(</span><span class="tok-s2">&quot;Login succeeded&quot;</span><span class="tok-p">)</span>
-      <span class="tok-p">...</span>
-    <span class="tok-p">}</span> <span class="tok-k">else</span> <span class="tok-p">{</span>
-      <span class="tok-nx">console</span><span class="tok-p">.</span><span class="tok-nx">log</span><span class="tok-p">(</span><span class="tok-s2">&quot;Login failed&quot;</span><span class="tok-p">)</span>
-      <span class="tok-p">...</span>
-    <span class="tok-p">}</span>
-
+  <span class="tok-nx">$http</span><span class="tok-p">.</span><span class="tok-nx">get</span><span class="tok-p">(</span><span class="tok-s1">&#39;/user&#39;</span><span class="tok-p">,</span> <span class="tok-p">{</span>
+      <span class="tok-nx">headers</span> <span class="tok-o">:</span> <span class="tok-p">{</span> <span class="tok-nx">authorization</span> <span class="tok-o">:</span> <span class="tok-s2">&quot;Basic &quot;</span>
+        <span class="tok-o">+</span> <span class="tok-nx">btoa</span><span class="tok-p">(</span><span class="tok-nx">self</span><span class="tok-p">.</span><span class="tok-nx">credentials</span><span class="tok-p">.</span><span class="tok-nx">username</span>
+        <span class="tok-o">+</span> <span class="tok-s2">&quot;:&quot;</span>  <span class="tok-o">+</span> <span class="tok-nx">self</span><span class="tok-p">.</span><span class="tok-nx">credentials</span><span class="tok-p">.</span><span class="tok-nx">password</span><span class="tok-p">)</span>
+      <span class="tok-p">}}).</span><span class="tok-nx">then</span><span class="tok-p">(</span><span class="tok-kd">function</span><span class="tok-p">(</span><span class="tok-nx">response</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+        <span class="tok-nx">self</span><span class="tok-p">.</span><span class="tok-nx">greeting</span> <span class="tok-o">=</span> <span class="tok-nx">response</span><span class="tok-p">.</span><span class="tok-nx">data</span><span class="tok-p">;</span>
+        <span class="tok-nx">self</span><span class="tok-p">.</span><span class="tok-nx">show</span> <span class="tok-o">=</span> <span class="tok-kc">false</span><span class="tok-p">;</span>
   <span class="tok-p">})</span>
 
 <span class="tok-p">}</span></code></pre>
@@ -247,7 +245,7 @@
 </div>
 <div class="ulist">
 <ul>
-<li>The <code>authenticate()</code> function sends HTTP Basic credentials and checks the "/user" endpoint.</li>
+<li>The <code>login()</code> function sends HTTP Basic credentials and checks the "/user" endpoint.</li>
 <li>Subsequent requests are authenticated by a cookie - standard Spring Security and browser behaviour</li>
 </ul>
 </div>
