@@ -9,6 +9,7 @@
 <link href="./asciidoctor-pygments.css" rel="stylesheet">
 <link href="../deck.js/core/deck.core.css" rel="stylesheet">
 <link href="../deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/goto/deck.goto.css" media="screen" rel="stylesheet">
 <link href="../deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
 <link href="../deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
 <link href="../deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
@@ -490,10 +491,17 @@ doesn&#8217;t make sense, so:</p></div>
 /
 <span class="deck-status-total"></span>
 </p>
+<form action="." class="goto-form" method="get">
+<label for="goto-slide">Go to Slide:</label>
+<input id="goto-slide" list="goto-datalist" name="slidenum" type="text">
+<datalist id="goto-data-list"></datalist>
+<input type="submit" value="Go">
+</form>
 </div>
 <script src="../deck.js/jquery-1.7.2.min.js"></script>
 <script src="../deck.js/core/deck.core.js"></script>
 <script src="../deck.js/extensions/scale/deck.scale.js"></script>
+<script src="../deck.js/extensions/goto/deck.goto.js"></script>
 <script src="../deck.js/extensions/menu/deck.menu.js"></script>
 <script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
 <script src="../deck.js/extensions/status/deck.status.js"></script>
