@@ -17,7 +17,7 @@ them (read only) like this:
 
 ## Building the Site
 
-Use Ruby 1.9.3 and make sure you have `bundle` on your `PATH` 
+Use Ruby 2.2 and make sure you have `bundle` on your `PATH` 
 
     $ cd presos
     $ bundle 
