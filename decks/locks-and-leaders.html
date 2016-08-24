@@ -153,13 +153,17 @@ Email: <code>dsyer@pivotal.io</code></p>
 <p><strong>Read this</strong>:
   <a href="http://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html">http://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html</a></p>
 
+<p>TL;DR If using a lock for &quot;correctness&quot; not &quot;efficiency&quot; be <em>very</em> careful.</p>
+
+</div><div class="slide" id="slide17"><h2 id="public-service-announcement">Public Service Announcement</h2>
+
 <blockquote>
 <p>Important: you can tune the system to adjust the probability, or how
 long it lasts, but fundamentally you cannot prevent the system from
 ever allowing more than one holder of a lock.</p>
 </blockquote>
 
-</div><div class="slide" id="slide17"><h2 id="leader-elections">Leader Elections</h2>
+</div><div class="slide" id="slide18"><h2 id="leader-elections">Leader Elections</h2>
 
 <blockquote>
 <p>Simple idea: if you hold a lock you are the leader.</p>
@@ -177,7 +181,7 @@ ever allowing more than one holder of a lock.</p>
 <li>scheduling, e.g. cron service</li>
 </ul>
 
-</div><div class="slide" id="slide18"><h2 id="spring-integration-leader-initiator">Spring Integration: Leader Initiator</h2>
+</div><div class="slide" id="slide19"><h2 id="spring-integration-leader-initiator">Spring Integration: Leader Initiator</h2>
 
 <p>Implementations of leader election need to be able to start an
 election and fire events on granted and revoked.</p>
@@ -198,7 +202,7 @@ election and fire events on granted and revoked.</p>
 </code></pre></div>
 <p>(*) No support for etcd v3. Probably dead.</p>
 
-</div><div class="slide" id="slide19"><h2 id="spring-integration-callbacks">Spring Integration: Callbacks</h2>
+</div><div class="slide" id="slide20"><h2 id="spring-integration-callbacks">Spring Integration: Callbacks</h2>
 
 <p>Callbacks on leadership events:</p>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Candidate</span> <span class="o">{</span>
@@ -218,23 +222,22 @@ election and fire events on granted and revoked.</p>
 
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide20"><h2 id="closing">Closing</h2>
+</div><div class="slide" id="slide21"><h2 id="closing">Closing</h2>
 
 <ul>
 <li><p>When to use locks and leaders: HA active/passive failover</p></li>
 <li><p>How to avoid it: latency from restarting a failed app might be fine</p></li>
 <li><p>Otherwise, be idempotent. For correctness, de-duplication store has to be ACID.</p></li>
-<li><p>Relational databases can be really useful.</p></li>
+<li><p>Relational databases can be really useful, as is Zookeeper.</p></li>
+<li><p>Careful with the physics.</p></li>
 </ul>
 
-</div><div class="slide" id="slide21"><h2 id="summary">Summary</h2>
+</div><div class="slide" id="slide22"><h2 id="links">Links</h2>
 
 <ul>
-<li>Locks can be shared and distributed</li>
-<li>Leader election is an application of locks</li>
-<li>Spring Integration has some useful abstractions: <a href="https://github.com/spring-projects/spring-integration">https://github.com/spring-projects/spring-integration</a></li>
-<li>Careful with the physics</li>
+<li><a href="http://presos.dsyer.com/decks/locks-and-leaders.html">http://presos.dsyer.com/decks/locks-and-leaders.html</a></li>
 <li>Sample code: <a href="https://github.com/SpringOnePlatform2016/dsyer-locks-and-leaders">https://github.com/SpringOnePlatform2016/dsyer-locks-and-leaders</a></li>
+<li>Spring Integration: <a href="https://github.com/spring-projects/spring-integration">https://github.com/spring-projects/spring-integration</a></li>
 <li>Spring Cloud Cluster: <a href="https://github.com/spring-cloud/spring-cloud-cluster">https://github.com/spring-cloud/spring-cloud-cluster</a></li>
 </ul>
 </div>

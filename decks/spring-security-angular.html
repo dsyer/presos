@@ -33,9 +33,21 @@
 <li>Focus on features to build secure, modern, single-page applications</li>
 <li>High level view of sample apps presented in <a href="http://spring.io/guides/tutorials/spring-security-and-angular-js/">tutorial</a> (from
 <a href="https://spring.io/blog/2015/01/12/spring-and-angular-js-a-secure-single-page-application">blog series</a>)</li>
-<li>More detailed look at some of the apps</li>
+<li>More detailed look at some features of the apps</li>
 </ul>
 </div>
+</section>
+<section class="slide" id="_most_valuable_links">
+<h2>Most Valuable Links</h2>
+<div class="paragraph lead"><p>&#160;<br>
+&#160;<br>
+<a class="bare" href="http://spring.io/guides/tutorials/spring-security-and-angular-js">http://spring.io/guides/tutorials/spring-security-and-angular-js</a>
+&#160;<br>
+&#160;<br>
+<a class="bare" href="http://spring.io/guides/topicals/spring-security-architecture">http://spring.io/guides/topicals/spring-security-architecture</a>
+&#160;<br>
+&#160;<br>
+<a class="bare" href="http://start.spring.io">http://start.spring.io</a></p></div>
 </section>
 <section class="slide" id="_spring_security">
 <h2>Spring Security</h2>
@@ -356,6 +368,34 @@ doesn&#8217;t make sense, so:</p></div>
 </div>
 <div class="paragraph"><p>(c.f. "vanilla": <a href="https://github.com/dsyer/spring-security-angular/tree/master/vanilla">https://github.com/&#8230;&#8203;/vanilla</a>, Part III)</p></div>
 </section>
+<section class="slide" id="_cors">
+<h2>CORS</h2>
+<div class="paragraph"><p>Use <code>@CrossOrigin</code> on your <code>@RequestMapping</code> and this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">ResourceApplication</span> <span class="tok-kd">extends</span> <span class="tok-n">WebSecurityConfigurerAdapter</span> <span class="tok-o">{</span>
+
+  <span class="tok-nd">@Override</span>
+  <span class="tok-kd">protected</span> <span class="tok-kt">void</span> <span class="tok-nf">configure</span><span class="tok-o">(</span><span class="tok-n">HttpSecurity</span> <span class="tok-n">http</span><span class="tok-o">)</span> <span class="tok-kd">throws</span> <span class="tok-n">Exception</span> <span class="tok-o">{</span>
+    <span class="tok-n">http</span><span class="tok-o">.</span><span class="tok-na">cors</span><span class="tok-o">()</span>
+      <span class="tok-o">...</span>
+  <span class="tok-o">}</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+there is also <code>CorsUtils::isCorsRequest</code> method you can use in a
+request matcher.
+</td>
+</tr>
+</table>
+</div>
+</section>
 <section class="slide" id="_add_spring_session">
 <h2>Add Spring Session</h2>
 <div class="imageblock">
@@ -472,6 +512,7 @@ doesn&#8217;t make sense, so:</p></div>
 <ul>
 <li><a class="bare" href="http://presos.dsyer.com/decks/spring-security-angular.html">http://presos.dsyer.com/decks/spring-security-angular.html</a></li>
 <li><a class="bare" href="http://spring.io/guides/tutorials/spring-security-and-angular-js/">http://spring.io/guides/tutorials/spring-security-and-angular-js/</a></li>
+<li><a class="bare" href="http://spring.io/guides/topicals/spring-security-architecture/">http://spring.io/guides/topicals/spring-security-architecture/</a></li>
 <li><a class="bare" href="http://github.com/spring-guides/tut-spring-security-and-angular-js">http://github.com/spring-guides/tut-spring-security-and-angular-js</a></li>
 <li><a class="bare" href="http://github.com/spring-projects/spring-security-oauth">http://github.com/spring-projects/spring-security-oauth</a></li>
 <li><a class="bare" href="http://cloud.spring.io/spring-cloud-netflix">http://cloud.spring.io/spring-cloud-netflix</a> (for <code>@EnableZuulProxy</code>)</li>
