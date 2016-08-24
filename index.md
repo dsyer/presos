@@ -5,10 +5,11 @@ layout: home
 
 # Presentations
 
-* [Messaging Microservices with Spring Cloud](decks/dataflow-intro.html)
-* [Distributed Tracing with Sleuth](decks/tracing.html)
-* [Spring Cloud Developer Experience](decks/spring-cloud-dev-experience.html) from SpringOne 2015 (with [Spencer Gibb](http://spencer.gibb.us))
 * [Spring Security and Angular JS](decks/spring-security-angular.html)
+* [Locks and Leaders](decks/locks-and-leaders.html)
+* [Distributed Tracing with Sleuth](decks/tracing.html)
+* [Messaging Microservices with Spring Cloud](decks/dataflow-intro.html)
+* [Spring Cloud Developer Experience](decks/spring-cloud-dev-experience.html) from SpringOne 2015 (with [Spencer Gibb](http://spencer.gibb.us))
 * [Spring Cloud and Netflix OSS](decks/cloud-boot-netflix.html) (with Spencer Gibb)
 * [Spring Boot in the Web Tier](decks/spring-boot-for-the-web-tier.html) (with Phil Webb)
 * [Security for Microservices](decks/microservice-security.html)

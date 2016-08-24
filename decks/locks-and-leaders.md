@@ -128,6 +128,10 @@ Without expiry system can't make progress when a lock holder dies.
 **Read this**:
   [http://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html](http://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html)
 
+TL;DR If using a lock for "correctness" not "efficiency" be *very* careful.
+
+## Public Service Announcement
+
 > Important: you can tune the system to adjust the probability, or how
 > long it lasts, but fundamentally you cannot prevent the system from
 > ever allowing more than one holder of a lock.
@@ -200,14 +204,14 @@ public void stop() {
 
 * Otherwise, be idempotent. For correctness, de-duplication store has to be ACID.
 
-* Relational databases can be really useful.
+* Relational databases can be really useful, as is Zookeeper.
 
-## Summary
+* Careful with the physics.
 
-* Locks can be shared and distributed
-* Leader election is an application of locks
-* Spring Integration has some useful abstractions: [https://github.com/spring-projects/spring-integration](https://github.com/spring-projects/spring-integration)
-* Careful with the physics
+## Links
+
+* http://presos.dsyer.com/decks/locks-and-leaders.html
 * Sample code: [https://github.com/SpringOnePlatform2016/dsyer-locks-and-leaders](https://github.com/SpringOnePlatform2016/dsyer-locks-and-leaders)
+* Spring Integration: [https://github.com/spring-projects/spring-integration](https://github.com/spring-projects/spring-integration)
 * Spring Cloud Cluster: [https://github.com/spring-cloud/spring-cloud-cluster](https://github.com/spring-cloud/spring-cloud-cluster)
 

@@ -17,7 +17,21 @@ Dave Syer, 2016
 * Focus on features to build secure, modern, single-page applications
 * High level view of sample apps presented in http://spring.io/guides/tutorials/spring-security-and-angular-js/[tutorial] (from 
 https://spring.io/blog/2015/01/12/spring-and-angular-js-a-secure-single-page-application[blog series])
-* More detailed look at some of the apps
+* More detailed look at some features of the apps
+
+== Most Valuable Links
+
+[.lead]
+{nbsp}  +
+{nbsp}  +
+http://spring.io/guides/tutorials/spring-security-and-angular-js
+{nbsp}  +
+{nbsp}  +
+http://spring.io/guides/topicals/spring-security-architecture
+{nbsp}  +
+{nbsp}  +
+http://start.spring.io
+
 
 == Spring Security
 
@@ -264,6 +278,23 @@ image::images/angular/vanilla.png['Vanilla' Sample]
 
 (c.f. "vanilla": https://github.com/dsyer/spring-security-angular/tree/master/vanilla[https://github.com/.../vanilla], Part III)
 
+== CORS
+
+Use `@CrossOrigin` on your `@RequestMapping` and this:
+
+```java
+public class ResourceApplication extends WebSecurityConfigurerAdapter {
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.cors()
+      ...
+  }
+```
+
+TIP: there is also `CorsUtils::isCorsRequest` method you can use in a
+request matcher.
+
 == Add Spring Session
 
 image::images/angular/spring-session.png['Spring Session' Sample]
@@ -338,6 +369,7 @@ Imagine several physical implementations of the same system with an identical Ja
 
 * http://presos.dsyer.com/decks/spring-security-angular.html
 * http://spring.io/guides/tutorials/spring-security-and-angular-js/
+* http://spring.io/guides/topicals/spring-security-architecture/
 * http://github.com/spring-guides/tut-spring-security-and-angular-js
 * http://github.com/spring-projects/spring-security-oauth
 * http://cloud.spring.io/spring-cloud-netflix (for `@EnableZuulProxy`)
