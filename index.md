@@ -5,7 +5,7 @@ layout: home
 
 # Presentations
 
-* [Spring Security and Angular JS](decks/spring-security-angular.html)
+* [Spring Security and Angular JS](decks/spring-security-angular.html) from SpringOne 2016
 * [Locks and Leaders](decks/locks-and-leaders.html)
 * [Distributed Tracing with Sleuth](decks/tracing.html)
 * [Messaging Microservices with Spring Cloud](decks/dataflow-intro.html)
