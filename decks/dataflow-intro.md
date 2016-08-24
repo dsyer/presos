@@ -1,5 +1,6 @@
 ---
 title: Messaging Microservices
+layout: plain
 layout: spring
 ---
 # Messaging Microservices with Spring Cloud
@@ -7,10 +8,6 @@ layout: spring
 Dave Syer, 2016  
 Twitter: @david_syer  
 Email: dsyer@pivotal.io
-
-## International Women's Day
-
-http://girlswhocode.com/
 
 ## Agenda
 
