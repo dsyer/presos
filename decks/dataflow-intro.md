@@ -1,7 +1,7 @@
 ---
 title: Messaging Microservices
 layout: plain
-layout: spring
+theme: spring
 ---
 # Messaging Microservices with Spring Cloud
 
