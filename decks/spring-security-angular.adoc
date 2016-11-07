@@ -251,27 +251,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 }
 ```
 
-== One Last Thing
-
-For a Single Page Application the default logout success handler
-doesn't make sense, so:
-
-```java
-
-@Configuration
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-      http
-       ...
-       .and()
-         .logout().logoutSuccessUrl("/");
-  }
-
-}
-```
-
 == Add Resource Server
 
 image::images/angular/vanilla.png['Vanilla' Sample]

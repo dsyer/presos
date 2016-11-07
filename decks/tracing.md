@@ -1,8 +1,9 @@
 ---
-title: Distributed Tracing with Sleuth
-layout: springio
+title: Distributed Tracing
+layout: plain
+theme: spring
 ---
-# Distributed Tracing with Spring Cloud
+# Distributed Tracing with Zipkin and Spring
 
 Dave Syer, 2016  
 Twitter: @david_syer  
@@ -33,15 +34,7 @@ processes (e.g. in HTTP or message headers)
 You can answer a lot of questions just with
 standard log analysis tools (ELK, Splunk, etc.)
 
-## Spring Cloud Sleuth
-
-*Recipe:*
-
-* Take any Spring Boot application
-* Add _spring-cloud-sleuth_
-* Logs ahoy!
-
-## Adding a Log Analayser
+## Adding a Log Analyser
 
 
 * Apps send logs (stdout) to a central service
@@ -58,6 +51,14 @@ standard log analysis tools (ELK, Splunk, etc.)
 img[alt=KibanaUI] { width: 50%; }
 </style>
 ![KibanaUI](images/kibana.png)
+
+## Spring Cloud Sleuth
+
+*Recipe:*
+
+* Take any Spring Boot application
+* Add _spring-cloud-sleuth_
+* Logs ahoy!
 
 ## Distributed Tracing
 
@@ -195,7 +196,7 @@ img[alt=KibanaUI] { width: 50%; }
 
 > I searched the logs for others in that group. took about the same time. 
 
-## There's Often Two Sides to the Story
+## Often Two Sides to the Story
 
 
 
@@ -265,7 +266,7 @@ requests take longer than others.
 
 A *Span* is an individual operation that took place.
 
-A *span* contains timestamped _events_ and _tags_.
+A *Span* contains timestamped _events_ and _tags_.
 
 A *Trace* is an end-to-end latency graph, composed of *spans*.
 
@@ -312,7 +313,7 @@ to reduce overhead and allow for batching
 * Tracers collect timing data and transport it over HTTP or
   Kafka or (via Spring Cloud) Rabbit.
 
-* Collectors store spans in MySQL or Cassandra (or in memory).
+* Collectors store spans in MySQL or EasticSearch or Cassandra (or in memory).
 
 * Users query for traces via Zipkin's Web UI or Api.
 
@@ -330,7 +331,7 @@ img[alt=ZipkinUI] { width: 50%; }
 $ java -jar zipkin-server.jar
 ```
 
-* Or:
+* Or add it to your classpath and:
 
 ```
 @EnableZipkinServer
@@ -346,7 +347,7 @@ public class ZipkinServer {
 
 Then:
 
- ```
+```
 $ curl -s localhost:9411/api/v1/services | jq .
 [ "service1", "service2" ]
 ```
@@ -373,6 +374,8 @@ span data to a collector:
 * Gitter for Sleuth: https://gitter.im/spring-cloud/spring-cloud-sleuth
 
 * Gitter for Zipkin: https://gitter.im/openzipkin/zipkin
+
+* Spring Boot CLI: https://spring.io/blog/2016/11/02/introducing-the-spring-cloud-cli-launcher
 
 * Spring IO Guides:  https://spring.io/guides
 

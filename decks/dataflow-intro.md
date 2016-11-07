@@ -126,11 +126,41 @@ or even
 @EnableBinding(MyCoffeeShop.class)
 ```
 
-see also
+## Consuming Messages
 
+You can use the `MessageChannel` interfaces (e.g. inject a `SubscribableChannel` and subscribe to it).
+
+```java
+@EnableBinding(Processor.class)
+public class TransformProcessor {
+
+  @Transformer(inputChannel = Processor.INPUT, outputChannel = Processor.OUTPUT)
+  public Object transform(String message) {
+    return message.toUpper();
+  }
+
+}
 ```
-@EnableRxJavaProcessor
+
+## Consuming Messages
+
+*Or* you can use a `@StreamListener` (more like `@RequestMapping`):
+
+```java
+@EnableBinding(Processor.class)
+public class TransformProcessor {
+
+  ...
+
+  @StreamListener(Processor.INPUT)
+  @SendTo(Processor.OUTPUT)
+  public VoteResult handle(Vote vote) {
+    return record(vote);
+  }
+}
 ```
+
+(With `@StreamListener` you also get support for Reactor and RxJava.)
 
 ## Tasks as Well
 
@@ -208,7 +238,7 @@ It's an SPI. _Examples:_
   | +----+----+----+----+----+----+ |
   | |    |    |Apps|    |    |    | | (streams and tasks)
   | +-----------------------------+ |
-  | |         Transport           | | (rabbit, redis, kafka)
+  | |         Transport           | | (rabbit, kafka, etc.)
   +---------------------------------+
 
 ```
