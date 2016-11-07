@@ -338,27 +338,6 @@
 </div>
 </div>
 </section>
-<section class="slide" id="_one_last_thing">
-<h2>One Last Thing</h2>
-<div class="paragraph"><p>For a Single Page Application the default logout success handler
-doesn&#8217;t make sense, so:</p></div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Configuration</span>
-<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">SecurityConfiguration</span> <span class="tok-kd">extends</span> <span class="tok-n">WebSecurityConfigurerAdapter</span> <span class="tok-o">{</span>
-
-  <span class="tok-nd">@Override</span>
-  <span class="tok-kd">protected</span> <span class="tok-kt">void</span> <span class="tok-nf">configure</span><span class="tok-o">(</span><span class="tok-n">HttpSecurity</span> <span class="tok-n">http</span><span class="tok-o">)</span> <span class="tok-kd">throws</span> <span class="tok-n">Exception</span> <span class="tok-o">{</span>
-      <span class="tok-n">http</span>
-       <span class="tok-o">...</span>
-       <span class="tok-o">.</span><span class="tok-na">and</span><span class="tok-o">()</span>
-         <span class="tok-o">.</span><span class="tok-na">logout</span><span class="tok-o">().</span><span class="tok-na">logoutSuccessUrl</span><span class="tok-o">(</span><span class="tok-s">&quot;/&quot;</span><span class="tok-o">);</span>
-  <span class="tok-o">}</span>
-
-<span class="tok-o">}</span></code></pre>
-</div>
-</div>
-</section>
 <section class="slide" id="_add_resource_server">
 <h2>Add Resource Server</h2>
 <div class="imageblock">

@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
     
     
-	<link rel="stylesheet" id="style-theme-link" href="../themes/style/web-2.0.css">
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/spring.css">
 	<link rel="stylesheet" id="transition-theme-link" href="../deck.js/themes/transition/fade.css">
 	
 	<script src="../deck.js/modernizr.custom.js"></script>
@@ -34,7 +34,7 @@
 
 <body class="deck-container">
 
-<div class="slide" id="slide1"><h1 id="distributed-tracing-with-spring-cloud">Distributed Tracing with Spring Cloud</h1>
+<div class="slide" id="slide1"><h1 id="distributed-tracing-with-zipkin-and-spring">Distributed Tracing with Zipkin and Spring</h1>
 
 <p>Dave Syer, 2016<br>
 Twitter: @david_syer<br>
@@ -65,17 +65,7 @@ processes (e.g. in HTTP or message headers)</p>
 <p>You can answer a lot of questions just with
 standard log analysis tools (ELK, Splunk, etc.)</p>
 
-</div><div class="slide" id="slide4"><h2 id="spring-cloud-sleuth">Spring Cloud Sleuth</h2>
-
-<p><em>Recipe:</em></p>
-
-<ul>
-<li>Take any Spring Boot application</li>
-<li>Add <em>spring-cloud-sleuth</em></li>
-<li>Logs ahoy!</li>
-</ul>
-
-</div><div class="slide" id="slide5"><h2 id="adding-a-log-analayser">Adding a Log Analayser</h2>
+</div><div class="slide" id="slide4"><h2 id="adding-a-log-analyser">Adding a Log Analyser</h2>
 
 <ul>
 <li><p>Apps send logs (stdout) to a central service</p></li>
@@ -90,6 +80,16 @@ img[alt=KibanaUI] { width: 50%; }
 </style>
 
 <p><img src="images/kibana.png" alt="KibanaUI"></p>
+
+</div><div class="slide" id="slide5"><h2 id="spring-cloud-sleuth">Spring Cloud Sleuth</h2>
+
+<p><em>Recipe:</em></p>
+
+<ul>
+<li>Take any Spring Boot application</li>
+<li>Add <em>spring-cloud-sleuth</em></li>
+<li>Logs ahoy!</li>
+</ul>
 
 </div><div class="slide" id="slide6"><h2 id="distributed-tracing">Distributed Tracing</h2>
 
@@ -179,7 +179,7 @@ img[alt=KibanaUI] { width: 50%; }
 <p>I searched the logs for others in that group. took about the same time. </p>
 </blockquote>
 
-</div><div class="slide" id="slide13"><h2 id="there-39-s-often-two-sides-to-the-story">There&#39;s Often Two Sides to the Story</h2>
+</div><div class="slide" id="slide13"><h2 id="often-two-sides-to-the-story">Often Two Sides to the Story</h2>
 <div class="highlight"><pre><code class="language-text" data-lang="text">    Client Sent: 15:31:28:500                               Client Received: 15:31:31:000
     v                                                       v
     +-------------------------------------------------------+
@@ -227,7 +227,7 @@ requests take longer than others.</p>
 
 <p>A <em>Span</em> is an individual operation that took place.</p>
 
-<p>A <em>span</em> contains timestamped <em>events</em> and <em>tags</em>.</p>
+<p>A <em>Span</em> contains timestamped <em>events</em> and <em>tags</em>.</p>
 
 <p>A <em>Trace</em> is an end-to-end latency graph, composed of <em>spans</em>.</p>
 
@@ -265,7 +265,7 @@ to reduce overhead and allow for batching</p>
 <ul>
 <li><p>Tracers collect timing data and transport it over HTTP or
 Kafka or (via Spring Cloud) Rabbit.</p></li>
-<li><p>Collectors store spans in MySQL or Cassandra (or in memory).</p></li>
+<li><p>Collectors store spans in MySQL or EasticSearch or Cassandra (or in memory).</p></li>
 <li><p>Users query for traces via Zipkin&#39;s Web UI or Api.</p></li>
 </ul>
 
@@ -283,7 +283,7 @@ img[alt=ZipkinUI] { width: 50%; }
 <div class="highlight"><pre><code class="language-text" data-lang="text">$ java -jar zipkin-server.jar
 </code></pre></div>
 <ul>
-<li>Or:</li>
+<li>Or add it to your classpath and:</li>
 </ul>
 <div class="highlight"><pre><code class="language-text" data-lang="text">@EnableZipkinServer
 @SpringBootApplication
@@ -319,11 +319,11 @@ or <em>spring-cloud-sleuth-stream</em> (messaging transport)</p></li>
 <li><p>Zipkin: <a href="https://github.com/openzipkin/zipkin-java">https://github.com/openzipkin/zipkin-java</a></p></li>
 <li><p>Gitter for Sleuth: <a href="https://gitter.im/spring-cloud/spring-cloud-sleuth">https://gitter.im/spring-cloud/spring-cloud-sleuth</a></p></li>
 <li><p>Gitter for Zipkin: <a href="https://gitter.im/openzipkin/zipkin">https://gitter.im/openzipkin/zipkin</a></p></li>
+<li><p>Spring Boot CLI: <a href="https://spring.io/blog/2016/11/02/introducing-the-spring-cloud-cli-launcher">https://spring.io/blog/2016/11/02/introducing-the-spring-cloud-cli-launcher</a></p></li>
 <li><p>Spring IO Guides:  <a href="https://spring.io/guides">https://spring.io/guides</a></p></li>
 <li><p>Get Started on Your Own:  <a href="https://start.spring.io">https://start.spring.io</a></p></li>
 </ul>
 </div>
-
 
 <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
 <a href="#" class="deck-next-link" title="Next">&#8594;</a>
