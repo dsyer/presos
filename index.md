@@ -5,6 +5,8 @@ layout: home
 
 # Presentations
 
+* [What's New in Spring](decks/whats-new-2017.html)
+* [Inside Spring Boot](decks/inside-spring-boot.html)
 * [Spring Security and Angular JS](decks/spring-security-angular.html) from SpringOne 2016
 * [Locks and Leaders](decks/locks-and-leaders.html)
 * [Distributed Tracing with Sleuth](decks/tracing.html)
