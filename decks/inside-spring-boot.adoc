@@ -1,0 +1,91 @@
+= Inside Spring Boot
+Dave Syer, 2017
+:backend: deckjs
+:deckjs_transition: fade
+:navigation:
+:menu:
+:status:
+:goto:
+:icons: font
+:source-highlighter: pygments
+:deckjs_theme: spring
+:deckjsdir: ../deck.js
+
+== Agenda
+
+* What's under the hood in Spring Boot?
+* How much do I need to care?
+
+http://projects.spring.io/spring-boot
+
+== Spring Boot
+
+* Entry point for standalone apps
+* Embedded servers
+* Build tools and executable jars
+* External configuration (`@ConfigurationProperties`)
+* Autoconfiguration
+* Actuator
+* Test framework
+
+== Spring Boot
+
+> Cloud Native Spring applications
+
+== Autoconfiguration
+
+[.lead]
+{nbsp}  +
+{nbsp}  +
+Opinionated magic
+
+== Autoconfiguration
+
+[.lead]
+{nbsp}  +
+{nbsp}  +
+Boilerplate configuration
+
+== SpringApplication Lifecycle
+
+|===
+| Activity | Callbacks | Events
+
+|{nbsp}             | {nbsp}    | `ApplicationStartingEvent`
+
+| Logging initialization start | {nbsp}   | `ApplicationEvironmentPreparedEvent`
+
+|      Config files |`EnvironmentPostProcessor` | {nbsp}
+
+|   Logging initialization end | {nbsp}  | `ApplicationPreparedEvent`
+
+|{nbsp}| `ApplicationContextInitializer` | {nbsp}
+
+| ApplicationContext refreshes | `EmbeddedServletContainerCustomizer` | {nbsp}
+
+| Autoconfig processed | {nbsp} | {nbsp}
+
+| User config processed |  `SmartLifecycle` | `ContextRefreshedEvent`
+
+|Embedded container connectors | {nbsp}   | `EmbeddedServletContainerInitializedEvent`
+
+|{nbsp}             | {nbsp}   | `ApplicationReadyEvent`
+
+|=== 
+
+== Actuator
+
+* Endpoints
+* Health indicators
+* Metrics
+
+== Spring Cloud Context
+
+* Bootstrap: adds a tiny parent context in an `ApplicationContextInitializer`
+* `PropertySourceLocator`
+* `@RefreshScope`
+* Decryption of environment properties
+
+== Links
+* Spring Initializr: http://start.spring.io
+* Spring Boot: http://projects.spring.io/boot

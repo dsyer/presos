@@ -1,0 +1,174 @@
+= The Road to Serverless: Spring Cloud Function
+Dave Syer, 2017
+:backend: deckjs
+:deckjs_transition: fade
+:navigation:
+:menu:
+:status:
+:goto:
+:source-highlighter: pygments
+:deckjs_theme: spring
+:deckjsdir: ../deck.js
+
+== Agenda
+
+* Cloud abstractions, and serverless
+* Spring Cloud Function
+* Raising the value line
+
+http://markfisher/spring-cloud-function +
+http://projectreactor.io/
+
+== Cloud Abstractions
+
+image::images/cloud_abstraction_layers.svg[cloud-abstractions]
+
+== Cloud Services
+
+image::images/cloud_service_layers.svg[cloud-service-layers]
+
+== Serverless and Functions
+
+* Event driven
+* Dynamic resource utilization
+* Billing per message
+* Prototypes become production code really quickly
+* Focus on business logic
+
+== Business Logic and the Value Line
+
+_Paraphrasing @adrianco:_
+
+[.big]
+Get out of the business of infrastructure *and* +
+automation (a.k.a. "undifferentiated heavy lifting")
+
+== Business Logic and the Value Line
+
+{nbsp} +
+
+[.big]
+Get out of the business of infrastructure *and* +
+automation (a.k.a. "undifferentiated heavy lifting") + 
+*and* integration spaghetti
+
+== Amazon Lambda
+
+image::images/aws_lambda_screenshot.png[aws_lambda_screenshot]
+
+== Google Cloud Function
+
+image::images/gcp_function_screenshot.png[gcp_function_screenshot]
+
+== Serverless Providers
+
+* (J) Amazon Lambda
+* Google Cloud Functions
+* Azure Function
+* (J) IBM OpenWhisk
+* Fission
+* ...
+
+== Java Util Function
+
+```java
+public interface Function<T, R> {
+    R apply(T t);
+}
+
+public interface Consumer<T> {
+    void accept(T t);
+}
+
+public interface Supplier<T> {
+    T get();
+}
+```
+
+== Spring Cloud Function
+
+```java
+@SpringBootApplication
+public class Application {
+
+  @Bean
+  public Function<String, String> uppercase() {
+    return value -> value.toUpperCase();
+  }
+
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
+}
+```
+
+== Spring Cloud Function
+
+> All the benefits of serverless, but with full access to Spring (dependency injection,
+> integrations, autoconfiguration) and build tools (testing, continuous delivery, run
+> locally)
+
+For Spring devs: a smaller, more familiar step than using FaaS APIs and UIs
+natively
+
+For Functionistas: no need to know anything about Spring
+
+Uniform programming model across serverless providers, and also able to run standalone
+(locally or in a PaaS)
+
+== Project Reactor
+
+```java
+public abstract class Flux<T> implements Publisher<T> {
+...
+}
+
+
+
+public abstract class Mono<T> implements Publisher<T> {
+...
+}
+```
+
+== Spring Cloud Function
+
+```java
+@SpringBootApplication
+public class Application {
+
+  @Bean
+  public Function<Flux<String>, Flux<String>> uppercase() {
+    return flux -> flux
+        .filter(this::isNotRude)
+        .map(String::toUpperCase);
+  }
+
+  boolean isNotRude(String word) {
+    ...
+  }
+
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
+}
+```
+
+== Spring Cloud Function
+
+1. Programming model: `@Beans` of type `Function`, `Consumer` and `Supplier`.
+
+2. Compiling strings which are Java function bodies.
+
+3. Deploy app with an isolated classloader (JVM packing).
+
+4. Adapters for AWS Lambda, and possibly other "serverless"
+service providers.
+
+== Links
+
+* Spring Cloud Function: https://github.com/markfisher/spring-cloud-function
+* Spring Boot Thin Launcher: https://github.com/dsyer/spring-boot-thin-launcher
+* Fission: http://fission.io/
+* Spring Initializr: http://start.spring.io
+* Spring Cloud: http://cloud.spring.io
+* Reactor: http://projectreactor.io

@@ -4,8 +4,8 @@
 <meta content="text/html; charset=" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta content="Asciidoctor 1.5.4" name="generator">
-<meta content="Dave Syer, 2015" name="author">
-<title>Cloud Native Process</title>
+<meta content="Dave Syer, 2017" name="author">
+<title>Inside Spring Boot</title>
 <link href="../deck.js/../font-awesome/css/font-awesome.css" rel="stylesheet">
 <style>
 .conum { display: inline-block; color: white !important; background-color: #222222; -webkit-border-radius: 100px; border-radius: 100px; text-align: center; width: 1.2em; height: 1.2em; font-size: 0.9em; font-weight: bold; line-height: 1.2; font-family: Arial, sans-serif; font-style: normal; position: relative; top: -0.1em; }
@@ -29,153 +29,150 @@
 <body class="article">
 <div class="deck-container">
 <section class="slide" id="title-slide">
-<h1>Cloud Native Process</h1>
-<span id="author">Dave Syer, 2015</span>
+<h1>Inside Spring Boot</h1>
+<span id="author">Dave Syer, 2017</span>
 <br>
 </section>
-<section class="slide" id="_authors">
-<h2>Authors</h2>
-<div class="paragraph"><p>Dave Syer,<br>
-<a href="http://twitter.com/david_syer">@david_syer</a>,<br>
-<a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p></div>
-<div class="paragraph"><p>(with thanks to @mstine)</p></div>
-</section>
-<section class="slide" id="_why_cloud_native">
-<h2>Why Cloud Native?</h2>
+<section class="slide" id="_agenda">
+<h2>Agenda</h2>
 <div class="ulist">
 <ul>
-<li>Speed</li>
-<li>Safety</li>
-<li>Scale</li>
-<li>Mobility</li>
+<li>What&#8217;s under the hood in Spring Boot?</li>
+<li>How much do I need to care?</li>
+</ul>
+</div>
+<div class="paragraph"><p><a class="bare" href="http://projects.spring.io/spring-boot">http://projects.spring.io/spring-boot</a></p></div>
+</section>
+<section class="slide" id="_spring_boot">
+<h2>Spring Boot</h2>
+<div class="ulist">
+<ul>
+<li>Entry point for standalone apps</li>
+<li>Embedded servers</li>
+<li>Build tools and executable jars</li>
+<li>External configuration (<code>@ConfigurationProperties</code>)</li>
+<li>Autoconfiguration</li>
+<li>Actuator</li>
+<li>Test framework</li>
 </ul>
 </div>
 </section>
-<section class="slide" id="_what_is_cloud_native">
-<h2>What is Cloud Native?</h2>
-<div class="ulist">
-<ul>
-<li>Twelve Factor Apps (<a class="bare" href="http://12factor.net">http://12factor.net</a>)</li>
-<li>Microservices</li>
-<li>Self-service, agile infrastructure</li>
-<li>Contract-based collaboration (APIs, messages)</li>
-<li>Antifragility</li>
-</ul>
-</div>
-</section>
-<section class="slide" id="_cloud_native_is_not">
-<h2>Cloud Native is NOT:</h2>
-<div class="ulist">
-<ul>
-<li>Configuring infrastructure</li>
-<li>Orchestrating containers</li>
-<li>Composing distributed systems</li>
-<li>Supporting ad-hoc general purpose automation</li>
-</ul>
-</div>
+<section class="slide" id="_spring_boot_2">
+<h2>Spring Boot</h2>
 <div class="quoteblock">
 <blockquote>
-<div class="paragraph"><p>ad hoc automation is a problem masquerading as a solution</p></div>
-<div class="attribution">
-<cite>https://twitter.com/littleidea/status/626767188653797376</cite>
-</div>
+<div class="paragraph"><p>Cloud Native Spring applications</p></div>
 </blockquote>
 </div>
 </section>
-<section class="slide" id="_i_regret_to_inform_you_but">
-<h2>I Regret to Inform You, but&#8230;&#8203;</h2>
-<div class="ulist">
-<ul>
-<li>You&#8217;re not that smart</li>
-<li>You&#8217;re not different</li>
-<li>You&#8217;re not special</li>
-</ul>
-</div>
+<section class="slide" id="_autoconfiguration">
+<h2>Autoconfiguration</h2>
+<div class="paragraph lead"><p>&#160;<br>
+&#160;<br>
+Opinionated magic</p></div>
 </section>
-<section class="slide" id="_cloud_native_objective">
-<h2>Cloud Native Objective</h2>
-<div class="admonitionblock note">
-<table>
+<section class="slide" id="_autoconfiguration_2">
+<h2>Autoconfiguration</h2>
+<div class="paragraph lead"><p>&#160;<br>
+&#160;<br>
+Boilerplate configuration</p></div>
+</section>
+<section class="slide" id="_springapplication_lifecycle">
+<h2>SpringApplication Lifecycle</h2>
+<table class="tableblock frame-all grid-all" style="width:100%">
+<colgroup>
+<col style="width:33.3333%">
+<col style="width:33.3333%">
+<col style="width:33.3334%">
+</colgroup>
+<thead>
 <tr>
-<td class="icon">
-<i class="icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph"><p>Get out of the business of infrastructure <strong>and</strong> automation<br>
-(a.k.a. "undifferentiated heavy lifting")</p></div>
-</td>
+<th class="tableblock halign-left valign-top">Activity</th>
+<th class="tableblock halign-left valign-top">Callbacks</th>
+<th class="tableblock halign-left valign-top">Events</th>
 </tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationStartingEvent</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logging initialization start</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationEvironmentPreparedEvent</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Config files</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EnvironmentPostProcessor</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logging initialization end</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationPreparedEvent</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationContextInitializer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ApplicationContext refreshes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EmbeddedServletContainerCustomizer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Autoconfig processed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User config processed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SmartLifecycle</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ContextRefreshedEvent</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Embedded container connectors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EmbeddedServletContainerInitializedEvent</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationReadyEvent</code></p></td>
+</tr>
+</tbody>
 </table>
-</div>
-<div class="paragraph"><p>&#160;<br>
-&#160;<br></p></div>
+</section>
+<section class="slide" id="_actuator">
+<h2>Actuator</h2>
 <div class="ulist">
 <ul>
-<li>Internet giants, ratio of app to infra developers = 10:1</li>
-<li>What is left that is special? Your business = your apps.</li>
+<li>Endpoints</li>
+<li>Health indicators</li>
+<li>Metrics</li>
 </ul>
 </div>
 </section>
-<section class="slide" id="_12_factor_application_patterns">
-<h2>12-Factor Application Patterns</h2>
+<section class="slide" id="_spring_cloud_context">
+<h2>Spring Cloud Context</h2>
 <div class="ulist">
 <ul>
-<li>Cloud-native application architectures</li>
-<li>Optimized for speed, safety, &amp; scale</li>
-<li>Declarative configuration</li>
-<li>Stateless/shared-nothing processes</li>
-<li>Loose coupling to application environment</li>
+<li>Bootstrap: adds a tiny parent context in an <code>ApplicationContextInitializer</code></li>
+<li><code>PropertySourceLocator</code></li>
+<li><code>@RefreshScope</code></li>
+<li>Decryption of environment properties</li>
 </ul>
 </div>
-</section>
-<section class="slide" id="_conway_s_law">
-<h2>Conway&#8217;s Law</h2>
-<div class="quoteblock">
-<blockquote>
-<div class="paragraph"><p>Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization&#8217;s communication structure.</p></div>
-<div class="attribution">
-<cite>Melvyn Conway, 1967</cite>
-</div>
-</blockquote>
-</div>
-</section>
-<section class="slide" id="_the_inverse_conway_manoeuver">
-<h2>The Inverse Conway Manoeuver</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="inverse-conway" src="images/cloud-native/inverse_conway.png">
-</div>
-</div>
-</section>
-<section class="slide" id="_platform_should_remind_us">
-<h2>Platform Should Remind Us:</h2>
-<div class="ulist">
-<ul>
-<li>We&#8217;re not that smart</li>
-<li>We&#8217;re not different</li>
-<li>We&#8217;re not special</li>
-</ul>
-</div>
-</section>
-<section class="slide" id="_cloud_native_contracts">
-<h2>Cloud Native Contracts</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="cloud-native-contracts" src="images/cnc.png">
-</div>
-</div>
-<div class="paragraph"><p>(With thanks to @littleidea)</p></div>
 </section>
 <section class="slide" id="_links">
 <h2>Links</h2>
 <div class="ulist">
 <ul>
-<li><a class="bare" href="http://presos.dsyer.com/decks/spring-cloud-dev-experience.html">http://presos.dsyer.com/decks/spring-cloud-dev-experience.html</a></li>
-<li><a class="bare" href="http://cloud.spring.io">http://cloud.spring.io</a></li>
-<li><a class="bare" href="http://spring.io/blog">http://spring.io/blog</a></li>
-<li><a class="bare" href="https://github.com/spring-cloud">https://github.com/spring-cloud</a></li>
-<li><a class="bare" href="https://github.com/spring-cloud-samples">https://github.com/spring-cloud-samples</a></li>
-<li><a class="bare" href="https://github.com/springone2gx2015">https://github.com/springone2gx2015</a></li>
+<li>Spring Initializr: <a class="bare" href="http://start.spring.io">http://start.spring.io</a></li>
+<li>Spring Boot: <a class="bare" href="http://projects.spring.io/boot">http://projects.spring.io/boot</a></li>
 </ul>
 </div>
 </section>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="Asciidoctor 1.5.4" name="generator">
+<meta content="Dave Syer, 2017" name="author">
+<title>The Road to Serverless: Spring Cloud Function</title>
+<link href="./asciidoctor-pygments.css" rel="stylesheet">
+<link href="../deck.js/core/deck.core.css" rel="stylesheet">
+<link href="../deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/goto/deck.goto.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
+<link href="../deck.js/themes/style/spring.css" media="screen" rel="stylesheet">
+<link href="../deck.js/themes/transition/fade.css" media="screen" rel="stylesheet">
+<script src="../deck.js/modernizr.custom.js"></script>
+</head>
+<body class="article">
+<div class="deck-container">
+<section class="slide" id="title-slide">
+<h1>The Road to Serverless: Spring Cloud Function</h1>
+<span id="author">Dave Syer, 2017</span>
+<br>
+</section>
+<section class="slide" id="_agenda">
+<h2>Agenda</h2>
+<div class="ulist">
+<ul>
+<li>Cloud abstractions, and serverless</li>
+<li>Spring Cloud Function</li>
+<li>Raising the value line</li>
+</ul>
+</div>
+<div class="paragraph"><p><a class="bare" href="http://markfisher/spring-cloud-function">http://markfisher/spring-cloud-function</a><br>
+<a class="bare" href="http://projectreactor.io/">http://projectreactor.io/</a></p></div>
+</section>
+<section class="slide" id="_cloud_abstractions">
+<h2>Cloud Abstractions</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="cloud-abstractions" src="images/cloud_abstraction_layers.svg">
+</div>
+</div>
+</section>
+<section class="slide" id="_cloud_services">
+<h2>Cloud Services</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="cloud-service-layers" src="images/cloud_service_layers.svg">
+</div>
+</div>
+</section>
+<section class="slide" id="_serverless_and_functions">
+<h2>Serverless and Functions</h2>
+<div class="ulist">
+<ul>
+<li>Event driven</li>
+<li>Dynamic resource utilization</li>
+<li>Billing per message</li>
+<li>Prototypes become production code really quickly</li>
+<li>Focus on business logic</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_business_logic_and_the_value_line">
+<h2>Business Logic and the Value Line</h2>
+<div class="paragraph"><p><em>Paraphrasing @adrianco:</em></p></div>
+<div class="paragraph big"><p>Get out of the business of infrastructure <strong>and</strong><br>
+automation (a.k.a. "undifferentiated heavy lifting")</p></div>
+</section>
+<section class="slide" id="_business_logic_and_the_value_line_2">
+<h2>Business Logic and the Value Line</h2>
+<div class="paragraph"><p>&#160;<br></p></div>
+<div class="paragraph big"><p>Get out of the business of infrastructure <strong>and</strong><br>
+automation (a.k.a. "undifferentiated heavy lifting")<br>
+<strong>and</strong> integration spaghetti</p></div>
+</section>
+<section class="slide" id="_amazon_lambda">
+<h2>Amazon Lambda</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="aws_lambda_screenshot" src="images/aws_lambda_screenshot.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_google_cloud_function">
+<h2>Google Cloud Function</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="gcp_function_screenshot" src="images/gcp_function_screenshot.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_serverless_providers">
+<h2>Serverless Providers</h2>
+<div class="ulist">
+<ul>
+<li>(J) Amazon Lambda</li>
+<li>Google Cloud Functions</li>
+<li>Azure Function</li>
+<li>(J) IBM OpenWhisk</li>
+<li>Fission</li>
+<li>&#8230;&#8203;</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_java_util_function">
+<h2>Java Util Function</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-kd">public</span> <span class="tok-kd">interface</span> <span class="tok-nc">Function</span><span class="tok-o">&lt;</span><span class="tok-n">T</span><span class="tok-o">,</span> <span class="tok-n">R</span><span class="tok-o">&gt;</span> <span class="tok-o">{</span>
+    <span class="tok-n">R</span> <span class="tok-nf">apply</span><span class="tok-o">(</span><span class="tok-n">T</span> <span class="tok-n">t</span><span class="tok-o">);</span>
+<span class="tok-o">}</span>
+
+<span class="tok-kd">public</span> <span class="tok-kd">interface</span> <span class="tok-nc">Consumer</span><span class="tok-o">&lt;</span><span class="tok-n">T</span><span class="tok-o">&gt;</span> <span class="tok-o">{</span>
+    <span class="tok-kt">void</span> <span class="tok-nf">accept</span><span class="tok-o">(</span><span class="tok-n">T</span> <span class="tok-n">t</span><span class="tok-o">);</span>
+<span class="tok-o">}</span>
+
+<span class="tok-kd">public</span> <span class="tok-kd">interface</span> <span class="tok-nc">Supplier</span><span class="tok-o">&lt;</span><span class="tok-n">T</span><span class="tok-o">&gt;</span> <span class="tok-o">{</span>
+    <span class="tok-n">T</span> <span class="tok-nf">get</span><span class="tok-o">();</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_cloud_function">
+<h2>Spring Cloud Function</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@SpringBootApplication</span>
+<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">Application</span> <span class="tok-o">{</span>
+
+  <span class="tok-nd">@Bean</span>
+  <span class="tok-kd">public</span> <span class="tok-n">Function</span><span class="tok-o">&lt;</span><span class="tok-n">String</span><span class="tok-o">,</span> <span class="tok-n">String</span><span class="tok-o">&gt;</span> <span class="tok-nf">uppercase</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+    <span class="tok-k">return</span> <span class="tok-n">value</span> <span class="tok-o">-&gt;</span> <span class="tok-n">value</span><span class="tok-o">.</span><span class="tok-na">toUpperCase</span><span class="tok-o">();</span>
+  <span class="tok-o">}</span>
+
+  <span class="tok-kd">public</span> <span class="tok-kd">static</span> <span class="tok-kt">void</span> <span class="tok-nf">main</span><span class="tok-o">(</span><span class="tok-n">String</span><span class="tok-o">[]</span> <span class="tok-n">args</span><span class="tok-o">)</span> <span class="tok-o">{</span>
+    <span class="tok-n">SpringApplication</span><span class="tok-o">.</span><span class="tok-na">run</span><span class="tok-o">(</span><span class="tok-n">Application</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span> <span class="tok-n">args</span><span class="tok-o">);</span>
+  <span class="tok-o">}</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_cloud_function_2">
+<h2>Spring Cloud Function</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>All the benefits of serverless, but with full access to Spring (dependency injection,
+integrations, autoconfiguration) and build tools (testing, continuous delivery, run
+locally)</p></div>
+</blockquote>
+</div>
+<div class="paragraph"><p>For Spring devs: a smaller, more familiar step than using FaaS APIs and UIs
+natively</p></div>
+<div class="paragraph"><p>For Functionistas: no need to know anything about Spring</p></div>
+<div class="paragraph"><p>Uniform programming model across serverless providers, and also able to run standalone
+(locally or in a PaaS)</p></div>
+</section>
+<section class="slide" id="_project_reactor">
+<h2>Project Reactor</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-kd">public</span> <span class="tok-kd">abstract</span> <span class="tok-kd">class</span> <span class="tok-nc">Flux</span><span class="tok-o">&lt;</span><span class="tok-n">T</span><span class="tok-o">&gt;</span> <span class="tok-kd">implements</span> <span class="tok-n">Publisher</span><span class="tok-o">&lt;</span><span class="tok-n">T</span><span class="tok-o">&gt;</span> <span class="tok-o">{</span>
+<span class="tok-o">...</span>
+<span class="tok-o">}</span>
+
+
+
+<span class="tok-kd">public</span> <span class="tok-kd">abstract</span> <span class="tok-kd">class</span> <span class="tok-nc">Mono</span><span class="tok-o">&lt;</span><span class="tok-n">T</span><span class="tok-o">&gt;</span> <span class="tok-kd">implements</span> <span class="tok-n">Publisher</span><span class="tok-o">&lt;</span><span class="tok-n">T</span><span class="tok-o">&gt;</span> <span class="tok-o">{</span>
+<span class="tok-o">...</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_cloud_function_3">
+<h2>Spring Cloud Function</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@SpringBootApplication</span>
+<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">Application</span> <span class="tok-o">{</span>
+
+  <span class="tok-nd">@Bean</span>
+  <span class="tok-kd">public</span> <span class="tok-n">Function</span><span class="tok-o">&lt;</span><span class="tok-n">Flux</span><span class="tok-o">&lt;</span><span class="tok-n">String</span><span class="tok-o">&gt;,</span> <span class="tok-n">Flux</span><span class="tok-o">&lt;</span><span class="tok-n">String</span><span class="tok-o">&gt;&gt;</span> <span class="tok-nf">uppercase</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+    <span class="tok-k">return</span> <span class="tok-n">flux</span> <span class="tok-o">-&gt;</span> <span class="tok-n">flux</span>
+        <span class="tok-o">.</span><span class="tok-na">filter</span><span class="tok-o">(</span><span class="tok-k">this</span><span class="tok-o">::</span><span class="tok-n">isNotRude</span><span class="tok-o">)</span>
+        <span class="tok-o">.</span><span class="tok-na">map</span><span class="tok-o">(</span><span class="tok-nl">String:</span><span class="tok-o">:</span><span class="tok-n">toUpperCase</span><span class="tok-o">);</span>
+  <span class="tok-o">}</span>
+
+  <span class="tok-kt">boolean</span> <span class="tok-nf">isNotRude</span><span class="tok-o">(</span><span class="tok-n">String</span> <span class="tok-n">word</span><span class="tok-o">)</span> <span class="tok-o">{</span>
+    <span class="tok-o">...</span>
+  <span class="tok-o">}</span>
+
+  <span class="tok-kd">public</span> <span class="tok-kd">static</span> <span class="tok-kt">void</span> <span class="tok-nf">main</span><span class="tok-o">(</span><span class="tok-n">String</span><span class="tok-o">[]</span> <span class="tok-n">args</span><span class="tok-o">)</span> <span class="tok-o">{</span>
+    <span class="tok-n">SpringApplication</span><span class="tok-o">.</span><span class="tok-na">run</span><span class="tok-o">(</span><span class="tok-n">Application</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span> <span class="tok-n">args</span><span class="tok-o">);</span>
+  <span class="tok-o">}</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_cloud_function_4">
+<h2>Spring Cloud Function</h2>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+Programming model: <code>@Beans</code> of type <code>Function</code>, <code>Consumer</code> and <code>Supplier</code>.
+</li>
+<li>
+Compiling strings which are Java function bodies.
+</li>
+<li>
+Deploy app with an isolated classloader (JVM packing).
+</li>
+<li>
+Adapters for AWS Lambda, and possibly other "serverless"
+service providers.
+</li>
+</ol>
+</div>
+</section>
+<section class="slide" id="_links">
+<h2>Links</h2>
+<div class="ulist">
+<ul>
+<li>Spring Cloud Function: <a class="bare" href="https://github.com/markfisher/spring-cloud-function">https://github.com/markfisher/spring-cloud-function</a></li>
+<li>Spring Boot Thin Launcher: <a class="bare" href="https://github.com/dsyer/spring-boot-thin-launcher">https://github.com/dsyer/spring-boot-thin-launcher</a></li>
+<li>Fission: <a class="bare" href="http://fission.io/">http://fission.io/</a></li>
+<li>Spring Initializr: <a class="bare" href="http://start.spring.io">http://start.spring.io</a></li>
+<li>Spring Cloud: <a class="bare" href="http://cloud.spring.io">http://cloud.spring.io</a></li>
+<li>Reactor: <a class="bare" href="http://projectreactor.io">http://projectreactor.io</a></li>
+</ul>
+</div>
+</section>
+<div aria-role="navigation">
+<a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
+<a class="deck-next-link" href="#" title="Next">&#8594;</a>
+</div>
+<p aria-role="status" class="deck-status">
+<span class="deck-status-current"></span>
+/
+<span class="deck-status-total"></span>
+</p>
+<form action="." class="goto-form" method="get">
+<label for="goto-slide">Go to Slide:</label>
+<input id="goto-slide" list="goto-datalist" name="slidenum" type="text">
+<datalist id="goto-data-list"></datalist>
+<input type="submit" value="Go">
+</form>
+</div>
+<script src="../deck.js/jquery-1.7.2.min.js"></script>
+<script src="../deck.js/core/deck.core.js"></script>
+<script src="../deck.js/extensions/scale/deck.scale.js"></script>
+<script src="../deck.js/extensions/goto/deck.goto.js"></script>
+<script src="../deck.js/extensions/menu/deck.menu.js"></script>
+<script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="../deck.js/extensions/status/deck.status.js"></script>
+<script>
+  (function($, deck, undefined) {
+    $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
+    $.deck.defaults.keys['next'] = [13, 32, 34, 39];
+  
+    $.extend(true, $[deck].defaults, {
+        countNested: false
+    });
+  
+    $.deck('.slide');
+  })(jQuery, 'deck');
+</script>
+<style>
+  .slide.canvas-image {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-box;
+  display: box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -moz-box-align: start;
+  -webkit-box-align: start;
+  -ms-box-align: start;
+  box-align: start;
+  -moz-box-pack: start;
+  -webkit-box-pack: start;
+  -ms-box-pack: start;
+  box-pack: start;}
+  
+  .bottom-left {
+    left: 1%;
+    bottom: 20%; }
+  
+  .top-left {
+    left: 1%;
+    top: 20%; }
+  
+  .bottom-right {
+    right: 1%;
+    bottom: 20%; }
+  
+  .top-right {
+    right: 1%;
+    top: 20%; }
+  
+  .center-up {
+    right: 50%;
+    top: 1%;
+  }
+  
+  .center-down {
+    right: 50%;
+    bottom: 1%;
+  }
+  .canvas-image .canvas-caption p {
+    text-align: center;
+    padding-top: 0;
+    padding: 0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    display: inline;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 58px;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    -moz-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+    padding: 1rem;
+    color: white; }
+  kbd.keyseq { color: #555555; }
+  kbd:not(.keyseq) {
+    display: inline-block;
+    color: #222222;
+    font-size: 0.7em;
+    line-height: 1.4;
+    background-color: #F7F7F7;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    margin: -0.15em 0.15em 0 0.15em;
+    padding: 0.2em 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  kbd kbd:first-child { margin-left: 0; }
+  kbd kbd:last-child { margin-right: 0; }
+</style>
+</body>
+</html>

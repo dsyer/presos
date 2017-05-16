@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="Asciidoctor 1.5.4" name="generator">
+<meta content="Dave Syer, 2017" name="author">
+<title>What&#8217;s New in Spring?</title>
+<link href="./asciidoctor-pygments.css" rel="stylesheet">
+<link href="../deck.js/core/deck.core.css" rel="stylesheet">
+<link href="../deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/goto/deck.goto.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
+<link href="../deck.js/themes/style/spring.css" media="screen" rel="stylesheet">
+<link href="../deck.js/themes/transition/fade.css" media="screen" rel="stylesheet">
+<script src="../deck.js/modernizr.custom.js"></script>
+</head>
+<body class="article">
+<div class="deck-container">
+<section class="slide" id="title-slide">
+<h1>What&#8217;s New in Spring?</h1>
+<span id="author">Dave Syer, 2017</span>
+<br>
+</section>
+<section class="slide" id="_agenda">
+<h2>Agenda</h2>
+<div class="ulist">
+<ul>
+<li>What&#8217;s happening in Spring?</li>
+<li>How does it all fit together?</li>
+</ul>
+</div>
+<div class="paragraph"><p><a class="bare" href="http://spring.io/projects">http://spring.io/projects</a><br>
+<a class="bare" href="http://projectreactor.io/">http://projectreactor.io/</a></p></div>
+</section>
+<section class="slide" id="_spring_layer_diagram">
+<h2>Spring Layer Diagram</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="spring-layers-4" src="images/spring-layers-4.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_layers_detail">
+<h2>Spring Layers Detail</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="spring-layers-io-4" src="images/spring-layers-io-4.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_today">
+<h2>Spring Today</h2>
+<div class="paragraph"><p>May 2017:</p></div>
+<div class="ulist">
+<ul>
+<li>Reactor: Aluminium-SR2 (3.0.7.RELEASE)</li>
+<li>Framework: 4.3.8.RELEASE</li>
+<li>Data: Ingalls-SR3</li>
+<li>Boot: 1.5.3.RELEASE</li>
+<li>Cloud: Dalston.RELEASE</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_spring_5_0">
+<h2>Spring 5.0</h2>
+<div class="ulist">
+<ul>
+<li>Baseline: JDK 8, Servlet 3.1, JMS 2.0, JPA 2.1</li>
+<li>Performance improvements</li>
+<li>Functional bean configuration</li>
+<li>Reactive: WebFlux, Router Functions</li>
+<li>Support for JUnit 5, JDK 9 and HTTP/2</li>
+<li>Kotlin</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_spring_layers_detail_2">
+<h2>Spring Layers Detail</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="spring-layers-io" src="images/spring-layers-io.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_imperative_style_blocking">
+<h2>Imperative style (Blocking)</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-k">try</span> <span class="tok-o">{</span>
+    <span class="tok-n">Person</span> <span class="tok-n">p</span> <span class="tok-o">=</span> <span class="tok-n">personRepository</span><span class="tok-o">.</span><span class="tok-na">findById</span><span class="tok-o">(</span><span class="tok-n">id</span><span class="tok-o">);</span>
+    <span class="tok-n">handle</span><span class="tok-o">(</span><span class="tok-n">p</span><span class="tok-o">);</span>
+<span class="tok-o">}</span> <span class="tok-k">catch</span>	<span class="tok-o">(</span><span class="tok-n">IOException</span> <span class="tok-n">ex</span><span class="tok-o">)</span>	<span class="tok-o">{</span>
+    <span class="tok-n">error</span><span class="tok-o">(</span><span class="tok-n">ex</span><span class="tok-o">);</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-kd">interface</span> <span class="tok-nc">PersonRepository</span> <span class="tok-o">{</span>
+     <span class="tok-n">Person</span> <span class="tok-nf">findById</span><span class="tok-o">(</span><span class="tok-n">String</span>	<span class="tok-n">id</span><span class="tok-o">);</span>
+     <span class="tok-n">List</span><span class="tok-o">&lt;</span><span class="tok-n">Person</span><span class="tok-o">&gt;</span> <span class="tok-nf">findAll</span><span class="tok-o">();</span>
+     <span class="tok-kt">void</span> <span class="tok-nf">save</span><span class="tok-o">(</span><span class="tok-n">Person</span>	<span class="tok-n">person</span><span class="tok-o">);</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_functional_style_non_blocking">
+<h2>Functional style (Non-blocking)</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-n">Mono</span><span class="tok-o">&lt;</span><span class="tok-n">Person</span><span class="tok-o">&gt;</span> <span class="tok-n">p</span> <span class="tok-o">=</span> <span class="tok-n">personRepository</span><span class="tok-o">.</span><span class="tok-na">findById</span><span class="tok-o">(</span><span class="tok-n">id</span><span class="tok-o">)</span>
+             <span class="tok-o">.</span><span class="tok-na">map</span><span class="tok-o">(</span><span class="tok-k">this</span><span class="tok-o">::</span><span class="tok-n">handle</span><span class="tok-o">)</span>
+             <span class="tok-o">.</span><span class="tok-na">doOnError</span><span class="tok-o">(</span><span class="tok-k">this</span><span class="tok-o">::</span><span class="tok-n">error</span><span class="tok-o">);</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-kd">interface</span> <span class="tok-nc">PersonRepository</span> <span class="tok-o">{</span>
+     <span class="tok-n">Mono</span><span class="tok-o">&lt;</span><span class="tok-n">Person</span><span class="tok-o">&gt;</span> <span class="tok-nf">findById</span><span class="tok-o">(</span><span class="tok-n">String</span> <span class="tok-n">id</span><span class="tok-o">);</span>
+     <span class="tok-n">Flux</span><span class="tok-o">&lt;</span><span class="tok-n">Person</span><span class="tok-o">&gt;</span> <span class="tok-nf">findAll</span><span class="tok-o">();</span>
+     <span class="tok-n">Mono</span><span class="tok-o">&lt;</span><span class="tok-n">Void</span><span class="tok-o">&gt;</span> <span class="tok-nf">save</span><span class="tok-o">(</span><span class="tok-n">Person</span>	<span class="tok-n">person</span><span class="tok-o">);</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph"><p>&#160;<br>
+&#160;<br></p></div>
+<div class="ulist">
+<ul>
+<li>Neutral to Latency</li>
+<li>Event based</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_spring_mvc">
+<h2>Spring MVC</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@GetMapping</span><span class="tok-o">(</span><span class="tok-s">&quot;/users/{id}&quot;</span><span class="tok-o">)</span>
+<span class="tok-n">User</span> <span class="tok-nf">getById</span><span class="tok-o">(</span><span class="tok-nd">@PathVariable</span> <span class="tok-n">String</span> <span class="tok-n">id</span><span class="tok-o">)</span>	<span class="tok-o">{</span>
+    <span class="tok-k">return</span> <span class="tok-k">this</span><span class="tok-o">.</span><span class="tok-na">userRepository</span><span class="tok-o">.</span><span class="tok-na">findOne</span><span class="tok-o">(</span><span class="tok-n">id</span><span class="tok-o">);</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_webflux">
+<h2>Spring WebFlux</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@GetMapping</span><span class="tok-o">(</span><span class="tok-s">&quot;/users/{id}&quot;</span><span class="tok-o">)</span>
+<span class="tok-n">Mono</span><span class="tok-o">&lt;</span><span class="tok-n">User</span><span class="tok-o">&gt;</span> <span class="tok-nf">getById</span><span class="tok-o">(</span><span class="tok-nd">@PathVariable</span> <span class="tok-n">String</span> <span class="tok-n">id</span><span class="tok-o">)</span>	<span class="tok-o">{</span>
+    <span class="tok-k">return</span> <span class="tok-k">this</span><span class="tok-o">.</span><span class="tok-na">userRepository</span><span class="tok-o">.</span><span class="tok-na">findOne</span><span class="tok-o">(</span><span class="tok-n">id</span><span class="tok-o">);</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_router_function">
+<h2>Router Function</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Bean</span>
+<span class="tok-kd">public</span> <span class="tok-n">RouterFunction</span><span class="tok-o">&lt;?&gt;</span> <span class="tok-n">userEndpoints</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+    <span class="tok-k">return</span> <span class="tok-nf">route</span><span class="tok-o">(</span><span class="tok-n">GET</span><span class="tok-o">(</span><span class="tok-s">&quot;/users/{id}&quot;</span><span class="tok-o">),</span> <span class="tok-n">request</span> <span class="tok-o">-&gt;</span>
+        <span class="tok-n">ok</span><span class="tok-o">().</span><span class="tok-na">body</span><span class="tok-o">(</span>
+            <span class="tok-n">repository</span><span class="tok-o">.</span><span class="tok-na">findOne</span><span class="tok-o">(</span><span class="tok-n">request</span><span class="tok-o">.</span><span class="tok-na">pathVariable</span><span class="tok-o">(</span><span class="tok-s">&quot;id&quot;</span><span class="tok-o">)),</span>
+            <span class="tok-n">User</span><span class="tok-o">.</span><span class="tok-na">class</span>
+        <span class="tok-o">));</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_webclient">
+<h2>Spring WebClient</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-n">WebClient</span> <span class="tok-n">client</span> <span class="tok-o">=</span> <span class="tok-n">WebClient</span><span class="tok-o">.</span><span class="tok-na">create</span><span class="tok-o">();</span>
+
+<span class="tok-n">Mono</span><span class="tok-o">&lt;</span><span class="tok-n">GithubUser</span><span class="tok-o">&gt;</span> <span class="tok-n">githubUser</span> <span class="tok-o">=</span> <span class="tok-n">client</span>
+    <span class="tok-o">.</span><span class="tok-na">get</span><span class="tok-o">()</span>
+    <span class="tok-o">.</span><span class="tok-na">uri</span><span class="tok-o">(</span><span class="tok-s">&quot;https://api.github.com/users/{username}&quot;</span><span class="tok-o">,</span> <span class="tok-n">username</span><span class="tok-o">)</span>
+    <span class="tok-o">.</span><span class="tok-na">retrieve</span><span class="tok-o">()</span>
+    <span class="tok-o">.</span><span class="tok-na">bodyToMono</span><span class="tok-o">(</span><span class="tok-n">GithubUser</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">);</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_webclient_scatter_gather">
+<h2>Spring WebClient Scatter Gather</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-n">Mono</span><span class="tok-o">&lt;</span><span class="tok-n">TwitterUser</span><span class="tok-o">&gt;</span> <span class="tok-n">twitterUser</span> <span class="tok-o">=</span> <span class="tok-n">client</span>
+    <span class="tok-o">.</span><span class="tok-na">get</span><span class="tok-o">()</span>
+    <span class="tok-o">.</span><span class="tok-na">uri</span><span class="tok-o">(</span><span class="tok-s">&quot;https://api.twitter.com/1.1/users/show.json?screen_name={username}&quot;</span><span class="tok-o">,</span> <span class="tok-n">username</span><span class="tok-o">)</span>
+    <span class="tok-o">.</span><span class="tok-na">retrieve</span><span class="tok-o">()</span>
+    <span class="tok-o">.</span><span class="tok-na">bodyToMono</span><span class="tok-o">(</span><span class="tok-n">TwitterUser</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">);</span>
+
+<span class="tok-k">return</span> <span class="tok-n">githubUser</span><span class="tok-o">.</span><span class="tok-na">and</span><span class="tok-o">(</span><span class="tok-n">twitterUser</span><span class="tok-o">,</span>
+    <span class="tok-o">(</span><span class="tok-n">github</span><span class="tok-o">,</span> <span class="tok-n">twitter</span><span class="tok-o">)-&gt;</span> <span class="tok-k">new</span> <span class="tok-nf">AppUser</span><span class="tok-o">(</span><span class="tok-n">github</span><span class="tok-o">,</span> <span class="tok-n">twitter</span><span class="tok-o">));</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_reactive_spring">
+<h2>Reactive Spring</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>More for scalability and stability than for speed</p></div>
+</blockquote>
+</div>
+<div class="paragraph"><p>Servlets and Web MVC are not going to go away.</p></div>
+</section>
+<section class="slide" id="_spring_releases">
+<h2>Spring Releases</h2>
+<div class="paragraph"><p><a class="bare" href="https://spring-calendar.cfapps.io/">https://spring-calendar.cfapps.io/</a></p></div>
+<table class="tableblock frame-all grid-all" style="width:100%">
+<colgroup>
+<col style="width:33.3333%">
+<col style="width:33.3333%">
+<col style="width:33.3334%">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Project</th>
+<th class="tableblock halign-left valign-top">Release</th>
+<th class="tableblock halign-left valign-top">Timeline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reactor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bismuth</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Framework</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5.0.0.RELEASE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2017Q2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kay</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5.0.0.RELEASE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5.0.0.RELEASE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boot</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0.0.RELEASE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2017Q4</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Finchley.RELEASE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide" id="_spring_cloud">
+<h2>Spring Cloud</h2>
+<div class="ulist">
+<ul>
+<li>Dalston: 2017Q1, Spring Boot 1.5.x</li>
+<li><p>
+Edgware: 2017Q3, Spring Boot 1.5.x<div class="ulist">
+<ul>
+<li>Spring Cloud Dataflow</li>
+</ul>
+</div></p></li>
+<li><p>
+Finchley: 2017Q4: Spring Boot 2.0.x<div class="ulist">
+<ul>
+<li>Spring Cloud Function</li>
+<li>Spring Cloud Gateway</li>
+</ul>
+</div></p></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_spring_cloud_2">
+<h2>Spring Cloud</h2>
+<div class="ulist">
+<ul>
+<li>Dalston: 2017Q1, Spring Boot 1.5.x</li>
+<li><p>
+Edgware: 2017Q3, Spring Boot 1.5.x<div class="ulist">
+<ul>
+<li>Spring Cloud Dataflow</li>
+<li>Spring Cloud Function</li>
+</ul>
+</div></p></li>
+<li><p>
+Finchley: 2017Q4: Spring Boot 2.0.x<div class="ulist">
+<ul>
+<li>Spring Cloud Gateway</li>
+</ul>
+</div></p></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_links">
+<h2>Links</h2>
+<div class="ulist">
+<ul>
+<li>Spring Initializr: <a class="bare" href="http://start.spring.io">http://start.spring.io</a></li>
+<li>Spring Boot: <a class="bare" href="http://projects.spring.io/boot">http://projects.spring.io/boot</a></li>
+<li>Spring Cloud: <a class="bare" href="http://cloud.spring.io">http://cloud.spring.io</a></li>
+<li>Reactor: <a class="bare" href="http://projectreactor.io">http://projectreactor.io</a></li>
+<li>Reactive Types: <a class="bare" href="https://spring.io/blog/2016/04/19/understanding-reactive-types">https://spring.io/blog/2016/04/19/understanding-reactive-types</a></li>
+<li><a class="bare" href="http://www.reactive-streams.org">http://www.reactive-streams.org</a></li>
+</ul>
+</div>
+</section>
+<div aria-role="navigation">
+<a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
+<a class="deck-next-link" href="#" title="Next">&#8594;</a>
+</div>
+<p aria-role="status" class="deck-status">
+<span class="deck-status-current"></span>
+/
+<span class="deck-status-total"></span>
+</p>
+<form action="." class="goto-form" method="get">
+<label for="goto-slide">Go to Slide:</label>
+<input id="goto-slide" list="goto-datalist" name="slidenum" type="text">
+<datalist id="goto-data-list"></datalist>
+<input type="submit" value="Go">
+</form>
+</div>
+<script src="../deck.js/jquery-1.7.2.min.js"></script>
+<script src="../deck.js/core/deck.core.js"></script>
+<script src="../deck.js/extensions/scale/deck.scale.js"></script>
+<script src="../deck.js/extensions/goto/deck.goto.js"></script>
+<script src="../deck.js/extensions/menu/deck.menu.js"></script>
+<script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="../deck.js/extensions/status/deck.status.js"></script>
+<script>
+  (function($, deck, undefined) {
+    $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
+    $.deck.defaults.keys['next'] = [13, 32, 34, 39];
+  
+    $.extend(true, $[deck].defaults, {
+        countNested: false
+    });
+  
+    $.deck('.slide');
+  })(jQuery, 'deck');
+</script>
+<style>
+  .slide.canvas-image {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-box;
+  display: box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -moz-box-align: start;
+  -webkit-box-align: start;
+  -ms-box-align: start;
+  box-align: start;
+  -moz-box-pack: start;
+  -webkit-box-pack: start;
+  -ms-box-pack: start;
+  box-pack: start;}
+  
+  .bottom-left {
+    left: 1%;
+    bottom: 20%; }
+  
+  .top-left {
+    left: 1%;
+    top: 20%; }
+  
+  .bottom-right {
+    right: 1%;
+    bottom: 20%; }
+  
+  .top-right {
+    right: 1%;
+    top: 20%; }
+  
+  .center-up {
+    right: 50%;
+    top: 1%;
+  }
+  
+  .center-down {
+    right: 50%;
+    bottom: 1%;
+  }
+  .canvas-image .canvas-caption p {
+    text-align: center;
+    padding-top: 0;
+    padding: 0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    display: inline;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 58px;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    -moz-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+    padding: 1rem;
+    color: white; }
+  kbd.keyseq { color: #555555; }
+  kbd:not(.keyseq) {
+    display: inline-block;
+    color: #222222;
+    font-size: 0.7em;
+    line-height: 1.4;
+    background-color: #F7F7F7;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    margin: -0.15em 0.15em 0 0.15em;
+    padding: 0.2em 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  kbd kbd:first-child { margin-left: 0; }
+  kbd kbd:last-child { margin-right: 0; }
+</style>
+</body>
+</html>
