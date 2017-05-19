@@ -4,7 +4,7 @@
 <meta content="text/html; charset=" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta content="Asciidoctor 1.5.4" name="generator">
-<meta content="Dave Syer, 2017" name="author">
+<meta content="@david_syer, 2017" name="author">
 <title>The Road to Serverless: Spring Cloud Function</title>
 <link href="./asciidoctor-pygments.css" rel="stylesheet">
 <link href="../deck.js/core/deck.core.css" rel="stylesheet">
@@ -21,7 +21,7 @@
 <div class="deck-container">
 <section class="slide" id="title-slide">
 <h1>The Road to Serverless: Spring Cloud Function</h1>
-<span id="author">Dave Syer, 2017</span>
+<span id="author">@david_syer, 2017</span>
 <br>
 </section>
 <section class="slide" id="_agenda">
@@ -102,9 +102,12 @@ automation (a.k.a. "undifferentiated heavy lifting")<br>
 <li>Azure Function</li>
 <li>(J) IBM OpenWhisk</li>
 <li>Fission</li>
+<li>Kubeless</li>
 <li>&#8230;&#8203;</li>
 </ul>
 </div>
+<div class="paragraph"><p>(J) = native Java support<br>
+Others can run Java via node JRE launcher.</p></div>
 </section>
 <section class="slide" id="_java_util_function">
 <h2>Java Util Function</h2>
@@ -143,6 +146,14 @@ automation (a.k.a. "undifferentiated heavy lifting")<br>
 </div>
 </div>
 </section>
+<section class="slide" id="_spring_cloud_function_web">
+<h2>Spring Cloud Function Web</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="function_demo_web" src="images/function_demo_web.svg">
+</div>
+</div>
+</section>
 <section class="slide" id="_spring_cloud_function_2">
 <h2>Spring Cloud Function</h2>
 <div class="quoteblock">
@@ -155,6 +166,12 @@ locally)</p></div>
 <div class="paragraph"><p>For Spring devs: a smaller, more familiar step than using FaaS APIs and UIs
 natively</p></div>
 <div class="paragraph"><p>For Functionistas: no need to know anything about Spring</p></div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>Decouple lifecycle of business logic from runtime platform. Run the same code as a web
+endpoint, a stream processor, or a task</p></div>
+</blockquote>
+</div>
 <div class="paragraph"><p>Uniform programming model across serverless providers, and also able to run standalone
 (locally or in a PaaS)</p></div>
 </section>
@@ -199,22 +216,41 @@ natively</p></div>
 </div>
 </div>
 </section>
+<section class="slide" id="_spring_cloud_function_stream">
+<h2>Spring Cloud Function Stream</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="function_demo_stream" src="images/function_demo_stream.svg">
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_cloud_function_adapter">
+<h2>Spring Cloud Function Adapter</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="function_demo_adapter" src="images/function_demo_adapter.svg">
+</div>
+</div>
+</section>
 <section class="slide" id="_spring_cloud_function_4">
 <h2>Spring Cloud Function</h2>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-Programming model: <code>@Beans</code> of type <code>Function</code>, <code>Consumer</code> and <code>Supplier</code>.
+Programming model: <code>@Beans</code> of type <code>Function</code>, <code>Consumer</code> and <code>Supplier</code>
 </li>
 <li>
-Compiling strings which are Java function bodies.
+Component scan for functions (e.g. execute jar with no dependency on Spring at all)
 </li>
 <li>
-Deploy app with an isolated classloader (JVM packing).
+Compile strings which are Java function bodies
 </li>
 <li>
-Adapters for AWS Lambda, and possibly other "serverless"
-service providers.
+Deploy app with an isolated classloader (JVM packing)
+</li>
+<li>
+Adapters for AWS Lambda, and other "serverless"
+service providers
 </li>
 </ol>
 </div>
