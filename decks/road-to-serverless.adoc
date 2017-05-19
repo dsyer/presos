@@ -1,5 +1,5 @@
 = The Road to Serverless: Spring Cloud Function
-Dave Syer, 2017
+@david_syer, 2017
 :backend: deckjs
 :deckjs_transition: fade
 :navigation:
@@ -67,7 +67,11 @@ image::images/gcp_function_screenshot.png[gcp_function_screenshot]
 * Azure Function
 * (J) IBM OpenWhisk
 * Fission
+* Kubeless
 * ...
+
+(J) = native Java support +
+Others can run Java via node JRE launcher.
 
 == Java Util Function
 
@@ -102,6 +106,10 @@ public class Application {
 }
 ```
 
+== Spring Cloud Function Web
+
+image::images/function_demo_web.svg[function_demo_web]
+
 == Spring Cloud Function
 
 > All the benefits of serverless, but with full access to Spring (dependency injection,
@@ -112,6 +120,9 @@ For Spring devs: a smaller, more familiar step than using FaaS APIs and UIs
 natively
 
 For Functionistas: no need to know anything about Spring
+
+> Decouple lifecycle of business logic from runtime platform. Run the same code as a web
+> endpoint, a stream processor, or a task
 
 Uniform programming model across serverless providers, and also able to run standalone
 (locally or in a PaaS)
@@ -153,16 +164,26 @@ public class Application {
 }
 ```
 
+== Spring Cloud Function Stream
+
+image::images/function_demo_stream.svg[function_demo_stream]
+
+== Spring Cloud Function Adapter
+
+image::images/function_demo_adapter.svg[function_demo_adapter]
+
 == Spring Cloud Function
 
-1. Programming model: `@Beans` of type `Function`, `Consumer` and `Supplier`.
+1. Programming model: `@Beans` of type `Function`, `Consumer` and `Supplier`
 
-2. Compiling strings which are Java function bodies.
+2. Component scan for functions (e.g. execute jar with no dependency on Spring at all)
 
-3. Deploy app with an isolated classloader (JVM packing).
+3. Compile strings which are Java function bodies
 
-4. Adapters for AWS Lambda, and possibly other "serverless"
-service providers.
+4. Deploy app with an isolated classloader (JVM packing)
+
+5. Adapters for AWS Lambda, and other "serverless"
+service providers
 
 == Links
 
