@@ -5,6 +5,7 @@ layout: home
 
 # Presentations
 
+* [The Road to Serverless](decks/road-to-serverless.html) and Spring Cloud Function
 * [What's New in Spring](decks/whats-new-2017.html)
 * [Inside Spring Boot](decks/inside-spring-boot.html)
 * [Spring Security and Angular JS](decks/spring-security-angular.html) from SpringOne 2016
