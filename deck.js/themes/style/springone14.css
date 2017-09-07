@@ -1,0 +1,11 @@
+@import url("spring.css");
+.deck-container .slide pre {
+  font-size: 80%;
+}
+#footer {
+	background: url("footer.png") no-repeat bottom right;
+    height: 65px;
+}
+#slide1 {
+  background: url("badge14.png") no-repeat top;
+}
