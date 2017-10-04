@@ -28,13 +28,14 @@ image::images/spring-layers-io-4.png[spring-layers-io-4]
 
 == Spring Today
 
-May 2017:
+September 2017:
 
 * Reactor: Aluminium-SR2 (3.0.7.RELEASE)
-* Framework: 4.3.8.RELEASE
-* Data: Ingalls-SR3
-* Boot: 1.5.3.RELEASE
-* Cloud: Dalston.RELEASE
+* Framework: 4.3.11.RELEASE
+* Security: 4.2.3.RELEASE
+* Data: Ingalls-SR7
+* Boot: 1.5.7.RELEASE
+* Cloud: Dalston.SR3
 
 == Spring 5.0
 
@@ -133,6 +134,7 @@ Mono<GithubUser> githubUser = client
     .bodyToMono(GithubUser.class); 
 ```
 
+
 == Spring WebClient Scatter Gather
 
 ```java
@@ -145,6 +147,21 @@ Mono<TwitterUser> twitterUser = client
 return githubUser.and(twitterUser, 
     (github, twitter)-> new AppUser(github, twitter));
 ```
+
+== Spring WebTestClient
+
+```java
+client.get().uri("/users/dave")
+    .exchange()
+    .expectBody(User.class)
+    .consumeWith(result -> 
+        assertThat(result.getResponseBody().getName())
+            .isEqualTo("dave"));
+}
+```
+
+N.B. with `@SpringBootTest` just `@AutoConfigureWebTestClient` and
+`@Autowired` it.
 
 == Reactive Spring
 
@@ -160,12 +177,12 @@ https://spring-calendar.cfapps.io/
 |Project | Release | Timeline
 
 |Reactor |Bismuth | {nbsp}
-|Framework | 5.0.0.RELEASE | 2017Q2
+|Framework | 5.0.0.RELEASE | 2017Q3
 | Data     | Kay | {nbsp}
 | Security | 5.0.0.RELEASE |{nbsp}
 | Integration | 5.0.0.RELEASE |{nbsp}
 | ... | {nbsp} |{nbsp}
-| Boot     |2.0.0.RELEASE  | 2017Q4
+| Boot     |2.0.0.RELEASE  | 2018Q1
 | Cloud    | Finchley.RELEASE |{nbsp}
 
 |===
@@ -173,19 +190,19 @@ https://spring-calendar.cfapps.io/
 == Spring Cloud
 
 * Dalston: 2017Q1, Spring Boot 1.5.x
-* Edgware: 2017Q3, Spring Boot 1.5.x
+* Edgware: 2017Q4, Spring Boot 1.5.x
         - Spring Cloud Dataflow
-* Finchley: 2017Q4: Spring Boot 2.0.x
+* Finchley: 2018Q1: Spring Boot 2.0.x
         - Spring Cloud Function
         - Spring Cloud Gateway
 
 == Spring Cloud
 
 * Dalston: 2017Q1, Spring Boot 1.5.x
-* Edgware: 2017Q3, Spring Boot 1.5.x
+* Edgware: 2017Q4, Spring Boot 1.5.x
         - Spring Cloud Dataflow
         - Spring Cloud Function
-* Finchley: 2017Q4: Spring Boot 2.0.x
+* Finchley: 2018Q1: Spring Boot 2.0.x
         - Spring Cloud Gateway
 
 == Links
