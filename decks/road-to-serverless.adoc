@@ -64,10 +64,12 @@ image::images/gcp_function_screenshot.png[gcp_function_screenshot]
 
 * (J) Amazon Lambda
 * Google Cloud Functions
-* Azure Function
+* (J) Azure Function
 * (J) IBM OpenWhisk
+* (J) Oracle Fn
 * Fission
 * Kubeless
+* (J) Sk8s
 * ...
 
 (J) = native Java support +
@@ -103,6 +105,20 @@ public class Application {
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
   }
+}
+```
+
+== Plain Old Functions
+
+```java
+package functions;
+
+public class Uppercase implements Function<String, String> {
+
+  String apply(String input) {
+    return input.toUpperCase();
+  }
+
 }
 ```
 
@@ -188,6 +204,7 @@ service providers
 == Links
 
 * Spring Cloud Function: https://github.com/markfisher/spring-cloud-function
+* Sk8s: https://github.com/markfisher/sk8s
 * Spring Boot Thin Launcher: https://github.com/dsyer/spring-boot-thin-launcher
 * Fission: http://fission.io/
 * Spring Initializr: http://start.spring.io
