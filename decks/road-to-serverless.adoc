@@ -16,7 +16,7 @@
 * Spring Cloud Function
 * Raising the value line
 
-http://markfisher/spring-cloud-function +
+http://github.com/spring-cloud/spring-cloud-function +
 http://projectreactor.io/
 
 == Cloud Abstractions
@@ -34,6 +34,14 @@ image::images/cloud_service_layers.svg[cloud-service-layers]
 * Billing per message
 * Prototypes become production code really quickly
 * Focus on business logic
+
+CNCF https://docs.google.com/document/d/1UjW8bt5O8QBgQRILJVKZJej_IuNnxl20AJu9wA8wcdI[WG Whitepaper]
+
+== Service Block
+
+_From @kennybastani:_
+
+image::images/serverless/sba.png[service-block-architecture]
 
 == Business Logic and the Value Line
 
@@ -67,13 +75,14 @@ image::images/gcp_function_screenshot.png[gcp_function_screenshot]
 * (J) Azure Function
 * (J) IBM OpenWhisk
 * (J) Oracle Fn
+* OpenFaaS
 * Fission
 * Kubeless
 * (J) Sk8s
 * ...
 
 (J) = native Java support +
-Others can run Java via node JRE launcher.
+Others can run Java, e.g. via custom container or node JRE launcher.
 
 == Java Util Function
 
@@ -201,12 +210,23 @@ image::images/function_demo_adapter.svg[function_demo_adapter]
 5. Adapters for AWS Lambda, and other "serverless"
 service providers
 
+== Business Logic and the Value Line
+
+{nbsp} +
+
+[.big]
+Get out of the business of infrastructure *and* +
+automation (a.k.a. "undifferentiated heavy lifting") + 
+*and* integration spaghetti
+
+image::images/serverless/sba.png[service-block-architecture,500]
+
 == Links
 
-* Spring Cloud Function: https://github.com/markfisher/spring-cloud-function
+* Spring Cloud Function: https://github.com/spring-cloud/spring-cloud-function
 * Sk8s: https://github.com/markfisher/sk8s
 * Spring Boot Thin Launcher: https://github.com/dsyer/spring-boot-thin-launcher
-* Fission: http://fission.io/
+* CNCF https://docs.google.com/document/d/1UjW8bt5O8QBgQRILJVKZJej_IuNnxl20AJu9wA8wcdI[WG Whitepaper]
 * Spring Initializr: http://start.spring.io
 * Spring Cloud: http://cloud.spring.io
 * Reactor: http://projectreactor.io
