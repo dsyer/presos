@@ -28,14 +28,18 @@ image::images/spring-layers-io-4.png[spring-layers-io-4]
 
 == Spring Today
 
-September 2017:
+November 2017:
 
-* Reactor: Aluminium-SR2 (3.0.7.RELEASE)
-* Framework: 4.3.11.RELEASE
-* Security: 4.2.3.RELEASE
-* Data: Ingalls-SR7
-* Boot: 1.5.7.RELEASE
-* Cloud: Dalston.SR3
+* Reactor: Bismuth-SR4 (reactor-core 3.1.2.RELEASE)
+* Framework: 4.3.12.RELEASE -> 5.0.1.RELEASE
+* Security: 4.2.3.RELEASE -> 5.0.0.RC1
+* Data: Ingalls-SR8 -> Kay-RELEASE
+* Boot: 1.5.8.RELEASE -> 2.0.0.M6
+* Cloud: Edgware.RELEASE -> Finchley.M4
+
+== Spring Layers Detail
+
+image::images/spring-layers-io.png[spring-layers-io]
 
 == Spring 5.0
 
@@ -45,10 +49,6 @@ September 2017:
 * Reactive: WebFlux, Router Functions
 * Support for JUnit 5, JDK 9 and HTTP/2
 * Kotlin
-
-== Spring Layers Detail
-
-image::images/spring-layers-io.png[spring-layers-io]
 
 == Imperative style (Blocking)
 
@@ -177,7 +177,7 @@ https://spring-calendar.cfapps.io/
 |Project | Release | Timeline
 
 |Reactor |Bismuth | {nbsp}
-|Framework | 5.0.0.RELEASE | 2017Q3
+|Framework | 5.0.2.RELEASE | 2017Q4
 | Data     | Kay | {nbsp}
 | Security | 5.0.0.RELEASE |{nbsp}
 | Integration | 5.0.0.RELEASE |{nbsp}
@@ -189,20 +189,9 @@ https://spring-calendar.cfapps.io/
 
 == Spring Cloud
 
-* Dalston: 2017Q1, Spring Boot 1.5.x
 * Edgware: 2017Q4, Spring Boot 1.5.x
-        - Spring Cloud Dataflow
 * Finchley: 2018Q1: Spring Boot 2.0.x
         - Spring Cloud Function
-        - Spring Cloud Gateway
-
-== Spring Cloud
-
-* Dalston: 2017Q1, Spring Boot 1.5.x
-* Edgware: 2017Q4, Spring Boot 1.5.x
-        - Spring Cloud Dataflow
-        - Spring Cloud Function
-* Finchley: 2018Q1: Spring Boot 2.0.x
         - Spring Cloud Gateway
 
 == Links

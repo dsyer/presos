@@ -1,5 +1,5 @@
-= The Road to Serverless: Spring Cloud Function
-@david_syer, 2017
+= Serverless Spring
+@david_syer, 2018
 :backend: deckjs
 :deckjs_transition: fade
 :navigation:
@@ -13,6 +13,7 @@
 == Agenda
 
 * Serverless and functions
+* Servless platforms, including Riff
 * Spring Cloud Function
 * Raising the value line
 
