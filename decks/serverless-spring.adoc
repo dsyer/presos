@@ -20,26 +20,15 @@
 http://github.com/spring-cloud/spring-cloud-function +
 http://projectreactor.io/
 
-== Serverless and Functions
+== Serverless
 
 * Event driven
 * Dynamic resource utilization
 * Billing per message
-* Prototypes become production code really quickly
 * Focus on business logic
+* Easy integration with platform services
 
 CNCF https://docs.google.com/document/d/1UjW8bt5O8QBgQRILJVKZJej_IuNnxl20AJu9wA8wcdI[WG Whitepaper]
-
-== Business Logic and the Value Line
-
-{nbsp} +
-
-[.big]
-Get out of the business of infrastructure *and* +
-automation (a.k.a. "undifferentiated heavy lifting") + 
-*and* integration spaghetti
-
-image::images/serverless/sba.png[service-block-architecture,500]
 
 == Amazon Lambda
 
@@ -62,12 +51,12 @@ image::images/riff_function_screenshot.png[riff_function_screenshot]
 * (J) Amazon Lambda
 * Google Cloud Functions
 * (J) Azure Function
+* (J) Riff https://github.com/projectriff
 * (J) IBM OpenWhisk
 * (J) Oracle Fn
 * OpenFaaS
 * Fission
 * Kubeless
-* (J) Riff https://github.com/projectriff
 * ...
 
 (J) = native Java support +
@@ -119,10 +108,6 @@ public class Uppercase implements Function<String, String> {
 
 }
 ```
-
-== Spring Cloud Function Web
-
-image::images/function_demo_web.svg[function_demo_web]
 
 == Spring Cloud Function
 
@@ -177,6 +162,10 @@ public class Application {
   }
 }
 ```
+
+== Spring Cloud Function Web
+
+image::images/function_demo_web.svg[function_demo_web]
 
 == Spring Cloud Function Stream
 

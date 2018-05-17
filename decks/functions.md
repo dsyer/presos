@@ -17,7 +17,7 @@ Email: `dsyer@pivotal.io`
 
 ## Serverless
 
-* Dynamic resource utilization
+* Dynamic resource utilization, "scale to zero"
 * Billing per message
 * Focus on business logic
 * Easy integration with platform services
@@ -38,7 +38,7 @@ Monolith: vertical slices
 
 Microservices: one per bounded context
 
-Serverless: ?
+Serverless: not so obvious...
 
 ## Idealized Serverless Architecture
 
@@ -53,17 +53,17 @@ Serverless: ?
 
 ## More Often...
 
-![tire-fire](https://media.giphy.com/media/xTk9ZPSV1TLrKjONO0/giphy.gif)
+![tire-fire](images/serverless/tire-fire.gif)
 
 <div style="text-align:center">What Can We Do?</div>
 
 ## Convergence of Platforms
 
-Abstractions are a good thing.
+Abstractions are a good thing
 
-But not everything is a function.
+But not everything is a function
 
-So platforms have to adapt to real needs.
+So platforms have to adapt to real needs...
 
 ## Cloud Abstractions
 
@@ -90,8 +90,24 @@ Not all abstractions are helpful for all problems.
 
 N.B. a developer does not care what is in the middle
 
+## A Platform for Devops
+
+<style>
+img[alt=triangle_k8s] {
+  text-align: center;
+  width: 50%;
+}
+</style>
+![triangle_k8s](images/triangle_k8s.svg)
+
 ## Riff
 
+<style>
+img[alt=riff_function_screenshot] {
+  text-align: center;
+  width: 70%;
+}
+</style>
 ![riff_function_screenshot](images/riff_function_screenshot.png)
 
 ## Links
@@ -99,3 +115,4 @@ N.B. a developer does not care what is in the middle
 * Spring Cloud Function: https://github.com/spring-cloud/spring-cloud-function
 * Riff: https://github.com/projectriff/riff
 * Cloud Events: https://github.com/cloudevents/spec
+* Spring Tip: https://youtu.be/E55oAtOhWZU
