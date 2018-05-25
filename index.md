@@ -5,6 +5,8 @@ layout: home
 
 # Presentations
 
+* [Platforms and Functions](decks/functions.html) from Spring/IO 2018
+* [Serverless Spring](decks/serverless-spring.html), Riff and Spring Cloud Function
 * [The Road to Serverless](decks/road-to-serverless.html) and Spring Cloud Function
 * [What's New in Spring](decks/whats-new-2017.html)
 * [Inside Spring Boot](decks/inside-spring-boot.html)

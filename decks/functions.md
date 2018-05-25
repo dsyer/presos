@@ -15,6 +15,12 @@ Email: `dsyer@pivotal.io`
 * Architecture and domain concepts
 * Platform convergence
 
+## No Code is an Island
+
+![mixed_arch](images/serverless/burningmonk.png)
+
+Credit: Yan Cui, https://theburningmonk.com
+
 ## Serverless
 
 * Dynamic resource utilization, "scale to zero"
@@ -22,23 +28,9 @@ Email: `dsyer@pivotal.io`
 * Focus on business logic
 * Easy integration with platform services
 
-## No Code is an Island
-
-![mixed_arch](images/serverless/burningmonk.png)
-
-Credit: Yan Cui, https://theburningmonk.com
-
 ## Service Block
 
 ![service-block-architecture](images/serverless/sba.png)
-
-## Where is my Bounded Context?
-
-Monolith: vertical slices
-
-Microservices: one per bounded context
-
-Serverless: not so obvious...
 
 ## Idealized Serverless Architecture
 
@@ -63,7 +55,7 @@ Abstractions are a good thing
 
 But not everything is a function
 
-So platforms have to adapt to real needs...
+So platforms adapt to real needs...
 
 ## Cloud Abstractions
 

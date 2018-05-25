@@ -15,7 +15,6 @@
 * Serverless and functions
 * Servless platforms, including Riff
 * Spring Cloud Function
-* Raising the value line
 
 http://github.com/spring-cloud/spring-cloud-function +
 http://projectreactor.io/
@@ -23,7 +22,7 @@ http://projectreactor.io/
 == Serverless
 
 * Event driven
-* Dynamic resource utilization
+* Dynamic resource utilization, "scale to zero"
 * Billing per message
 * Focus on business logic
 * Easy integration with platform services
@@ -109,6 +108,18 @@ public class Uppercase implements Function<String, String> {
 }
 ```
 
+== AWS Cold Starts
+
+* Lambda throttles CPU resources when memory is constrained
+
+* ... also billing is proportional to memory usage
+
+* ... it's not that simple
+
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQRWYdp_BpzQg7nA9P7xi9bjTapxu6cYrLi7PFvBmnnKM2zCuVuYzAh25KpFuz0hX0fqJyo1nJO5fyN/pubchart?oid=1202364356&format=image[startup]
+
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQRWYdp_BpzQg7nA9P7xi9bjTapxu6cYrLi7PFvBmnnKM2zCuVuYzAh25KpFuz0hX0fqJyo1nJO5fyN/pubchart?oid=459598255&format=image[billing]
+
 == Spring Cloud Function
 
 > All the benefits of serverless, but with full access to Spring (dependency injection,
@@ -163,21 +174,13 @@ public class Application {
 }
 ```
 
-== Spring Cloud Function Web
-
-image::images/function_demo_web.svg[function_demo_web]
-
-== Spring Cloud Function Stream
-
-image::images/function_demo_stream.svg[function_demo_stream]
-
 == Spring Cloud Function Adapter
 
 image::images/function_demo_adapter.svg[function_demo_adapter]
 
 == Spring Cloud Function
 
-1. Programming model: `@Beans` of type `Function`, `Consumer` and `Supplier`
+1. Programming model: `@Beans` of type `Function`, `Consumer` and `Supplier`, with `Flux`, `Mono`, `Publisher`
 
 2. Component scan for functions (e.g. execute jar with no dependency on Spring at all)
 
@@ -185,15 +188,29 @@ image::images/function_demo_adapter.svg[function_demo_adapter]
 
 4. Bind and invoke from an isolated classloader (JVM packing, platform)
 
-5. Adapters for AWS Lambda, Azure, Riff and other "serverless"
+5. Adapters for Spring MVC, Spring Cloud Stream, AWS Lambda, Azure, Riff and other "serverless"
 service providers
+
+== Learnings
+
+1. Spring is not slow or "heavy" on its own, classes loaded is important
+
+2. AWS Lambda containers are *slow*
+
+3. Warm JVM starts app much faster (10x) -> class loader isolation
+
+4. Functions are glue code anyway - not latency sensitive
+
+5. Scale to Zero
+
+6. Platform services and integration spaghetti
+
 
 == Links
 
 * Spring Cloud Function: https://github.com/spring-cloud/spring-cloud-function
 * Riff: https://github.com/projectriff/riff
 * Spring Boot Thin Launcher: https://github.com/dsyer/spring-boot-thin-launcher
-* CNCF https://docs.google.com/document/d/1UjW8bt5O8QBgQRILJVKZJej_IuNnxl20AJu9wA8wcdI[WG Whitepaper]
 * Spring Initializr: http://start.spring.io
 * Spring Cloud: http://cloud.spring.io
 * Reactor: http://projectreactor.io
