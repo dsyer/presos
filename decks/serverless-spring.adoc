@@ -1,0 +1,216 @@
+= Serverless Spring
+@david_syer, 2018
+:backend: deckjs
+:deckjs_transition: fade
+:navigation:
+:menu:
+:status:
+:goto:
+:source-highlighter: pygments
+:deckjs_theme: spring
+:deckjsdir: ../deck.js
+
+== Agenda
+
+* Serverless and functions
+* Servless platforms, including Riff
+* Spring Cloud Function
+
+http://github.com/spring-cloud/spring-cloud-function +
+http://projectreactor.io/
+
+== Serverless
+
+* Event driven
+* Dynamic resource utilization, "scale to zero"
+* Billing per message
+* Focus on business logic
+* Easy integration with platform services
+
+CNCF https://docs.google.com/document/d/1UjW8bt5O8QBgQRILJVKZJej_IuNnxl20AJu9wA8wcdI[WG Whitepaper]
+
+== Amazon Lambda
+
+image::images/aws_lambda_screenshot.png[aws_lambda_screenshot]
+
+== Google Cloud Function
+
+image::images/gcp_function_screenshot.png[gcp_function_screenshot]
+
+== Microsoft Azure Functions
+
+image::images/azure_function_screenshot.png[azure_function_screenshot]
+
+== Riff
+
+image::images/riff_function_screenshot.png[riff_function_screenshot]
+
+== Serverless Providers
+
+* (J) Amazon Lambda
+* Google Cloud Functions
+* (J) Azure Function
+* (J) Riff https://github.com/projectriff
+* (J) IBM OpenWhisk
+* (J) Oracle Fn
+* OpenFaaS
+* Fission
+* Kubeless
+* ...
+
+(J) = native Java support +
+Others can run Java, e.g. via custom container or node JRE launcher.
+
+== Java Util Function
+
+```java
+public interface Function<T, R> {
+    R apply(T t);
+}
+
+public interface Consumer<T> {
+    void accept(T t);
+}
+
+public interface Supplier<T> {
+    T get();
+}
+```
+
+== Spring Cloud Function
+
+```java
+@SpringBootApplication
+public class Application {
+
+  @Bean
+  public Function<String, String> uppercase() {
+    return value -> value.toUpperCase();
+  }
+
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
+}
+```
+
+== Plain Old Functions
+
+```java
+package functions;
+
+public class Uppercase implements Function<String, String> {
+
+  String apply(String input) {
+    return input.toUpperCase();
+  }
+
+}
+```
+
+== AWS Cold Starts
+
+* Lambda throttles CPU resources when memory is constrained
+
+* ... also billing is proportional to memory usage
+
+* ... it's not that simple
+
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQRWYdp_BpzQg7nA9P7xi9bjTapxu6cYrLi7PFvBmnnKM2zCuVuYzAh25KpFuz0hX0fqJyo1nJO5fyN/pubchart?oid=1202364356&format=image[startup]
+
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQRWYdp_BpzQg7nA9P7xi9bjTapxu6cYrLi7PFvBmnnKM2zCuVuYzAh25KpFuz0hX0fqJyo1nJO5fyN/pubchart?oid=459598255&format=image[billing]
+
+== Spring Cloud Function
+
+> All the benefits of serverless, but with full access to Spring (dependency injection,
+> integrations, autoconfiguration) and build tools (testing, continuous delivery, run
+> locally)
+
+For Spring devs: a smaller, more familiar step than using FaaS APIs and UIs
+natively
+
+For Functionistas: no need to know anything about Spring
+
+> Decouple lifecycle of business logic from runtime platform. Run the same code as a web
+> endpoint, a stream processor, or a task
+
+Uniform programming model across serverless providers, and also able to run standalone
+(locally or in a PaaS)
+
+== Project Reactor
+
+```java
+public abstract class Flux<T> implements Publisher<T> {
+...
+}
+
+
+
+public abstract class Mono<T> implements Publisher<T> {
+...
+}
+```
+
+== Spring Cloud Function
+
+```java
+@SpringBootApplication
+public class Application {
+
+  @Bean
+  public Function<Flux<String>, Flux<String>> uppercase() {
+    return flux -> flux
+        .filter(this::isNotRude)
+        .map(String::toUpperCase);
+  }
+
+  boolean isNotRude(String word) {
+    ...
+  }
+
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
+}
+```
+
+== Spring Cloud Function Adapter
+
+image::images/function_demo_adapter.svg[function_demo_adapter]
+
+== Spring Cloud Function
+
+1. Programming model: `@Beans` of type `Function`, `Consumer` and `Supplier`, with `Flux`, `Mono`, `Publisher`
+
+2. Component scan for functions (e.g. execute jar with no dependency on Spring at all)
+
+3. Compile strings which are Java function bodies
+
+4. Bind and invoke from an isolated classloader (JVM packing, platform)
+
+5. Adapters for Spring MVC, Spring Cloud Stream, AWS Lambda, Azure, Riff and other "serverless"
+service providers
+
+== Learnings
+
+1. Spring is not slow or "heavy" on its own, classes loaded is important
+
+2. AWS Lambda containers are *slow*
+
+3. Warm JVM starts app much faster (10x) -> class loader isolation
+
+4. Functions are glue code anyway - not latency sensitive
+
+5. Scale to Zero
+
+6. Platform services and integration spaghetti
+
+
+== Links
+
+* Spring Cloud Function: https://github.com/spring-cloud/spring-cloud-function
+* Riff: https://github.com/projectriff/riff
+* Spring Boot Thin Launcher: https://github.com/dsyer/spring-boot-thin-launcher
+* Spring Initializr: http://start.spring.io
+* Spring Cloud: http://cloud.spring.io
+* Reactor: http://projectreactor.io

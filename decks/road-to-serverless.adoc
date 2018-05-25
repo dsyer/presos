@@ -12,20 +12,12 @@
 
 == Agenda
 
-* Cloud abstractions, and serverless
+* Serverless and functions
 * Spring Cloud Function
 * Raising the value line
 
-http://markfisher/spring-cloud-function +
+http://github.com/spring-cloud/spring-cloud-function +
 http://projectreactor.io/
-
-== Cloud Abstractions
-
-image::images/cloud_abstraction_layers.svg[cloud-abstractions]
-
-== Cloud Services
-
-image::images/cloud_service_layers.svg[cloud-service-layers]
 
 == Serverless and Functions
 
@@ -35,13 +27,7 @@ image::images/cloud_service_layers.svg[cloud-service-layers]
 * Prototypes become production code really quickly
 * Focus on business logic
 
-== Business Logic and the Value Line
-
-_Paraphrasing @adrianco:_
-
-[.big]
-Get out of the business of infrastructure *and* +
-automation (a.k.a. "undifferentiated heavy lifting")
+CNCF https://docs.google.com/document/d/1UjW8bt5O8QBgQRILJVKZJej_IuNnxl20AJu9wA8wcdI[WG Whitepaper]
 
 == Business Logic and the Value Line
 
@@ -52,6 +38,8 @@ Get out of the business of infrastructure *and* +
 automation (a.k.a. "undifferentiated heavy lifting") + 
 *and* integration spaghetti
 
+image::images/serverless/sba.png[service-block-architecture,500]
+
 == Amazon Lambda
 
 image::images/aws_lambda_screenshot.png[aws_lambda_screenshot]
@@ -60,18 +48,29 @@ image::images/aws_lambda_screenshot.png[aws_lambda_screenshot]
 
 image::images/gcp_function_screenshot.png[gcp_function_screenshot]
 
+== Microsoft Azure Functions
+
+image::images/azure_function_screenshot.png[azure_function_screenshot]
+
+== Riff
+
+image::images/riff_function_screenshot.png[riff_function_screenshot]
+
 == Serverless Providers
 
 * (J) Amazon Lambda
 * Google Cloud Functions
-* Azure Function
+* (J) Azure Function
 * (J) IBM OpenWhisk
+* (J) Oracle Fn
+* OpenFaaS
 * Fission
 * Kubeless
+* (J) Riff https://github.com/projectriff
 * ...
 
 (J) = native Java support +
-Others can run Java via node JRE launcher.
+Others can run Java, e.g. via custom container or node JRE launcher.
 
 == Java Util Function
 
@@ -103,6 +102,20 @@ public class Application {
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
   }
+}
+```
+
+== Plain Old Functions
+
+```java
+package functions;
+
+public class Uppercase implements Function<String, String> {
+
+  String apply(String input) {
+    return input.toUpperCase();
+  }
+
 }
 ```
 
@@ -180,16 +193,17 @@ image::images/function_demo_adapter.svg[function_demo_adapter]
 
 3. Compile strings which are Java function bodies
 
-4. Deploy app with an isolated classloader (JVM packing)
+4. Bind and invoke from an isolated classloader (JVM packing, platform)
 
-5. Adapters for AWS Lambda, and other "serverless"
+5. Adapters for AWS Lambda, Azure, Riff and other "serverless"
 service providers
 
 == Links
 
-* Spring Cloud Function: https://github.com/markfisher/spring-cloud-function
+* Spring Cloud Function: https://github.com/spring-cloud/spring-cloud-function
+* Riff: https://github.com/projectriff/riff
 * Spring Boot Thin Launcher: https://github.com/dsyer/spring-boot-thin-launcher
-* Fission: http://fission.io/
+* CNCF https://docs.google.com/document/d/1UjW8bt5O8QBgQRILJVKZJej_IuNnxl20AJu9wA8wcdI[WG Whitepaper]
 * Spring Initializr: http://start.spring.io
 * Spring Cloud: http://cloud.spring.io
 * Reactor: http://projectreactor.io

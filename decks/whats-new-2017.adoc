@@ -28,13 +28,18 @@ image::images/spring-layers-io-4.png[spring-layers-io-4]
 
 == Spring Today
 
-May 2017:
+November 2017:
 
-* Reactor: Aluminium-SR2 (3.0.7.RELEASE)
-* Framework: 4.3.8.RELEASE
-* Data: Ingalls-SR3
-* Boot: 1.5.3.RELEASE
-* Cloud: Dalston.RELEASE
+* Reactor: Bismuth-SR4 (reactor-core 3.1.2.RELEASE)
+* Framework: 4.3.12.RELEASE -> 5.0.1.RELEASE
+* Security: 4.2.3.RELEASE -> 5.0.0.RC1
+* Data: Ingalls-SR8 -> Kay-RELEASE
+* Boot: 1.5.8.RELEASE -> 2.0.0.M6
+* Cloud: Edgware.RELEASE -> Finchley.M4
+
+== Spring Layers Detail
+
+image::images/spring-layers-io.png[spring-layers-io]
 
 == Spring 5.0
 
@@ -44,10 +49,6 @@ May 2017:
 * Reactive: WebFlux, Router Functions
 * Support for JUnit 5, JDK 9 and HTTP/2
 * Kotlin
-
-== Spring Layers Detail
-
-image::images/spring-layers-io.png[spring-layers-io]
 
 == Imperative style (Blocking)
 
@@ -133,6 +134,7 @@ Mono<GithubUser> githubUser = client
     .bodyToMono(GithubUser.class); 
 ```
 
+
 == Spring WebClient Scatter Gather
 
 ```java
@@ -145,6 +147,21 @@ Mono<TwitterUser> twitterUser = client
 return githubUser.and(twitterUser, 
     (github, twitter)-> new AppUser(github, twitter));
 ```
+
+== Spring WebTestClient
+
+```java
+client.get().uri("/users/dave")
+    .exchange()
+    .expectBody(User.class)
+    .consumeWith(result -> 
+        assertThat(result.getResponseBody().getName())
+            .isEqualTo("dave"));
+}
+```
+
+N.B. with `@SpringBootTest` just `@AutoConfigureWebTestClient` and
+`@Autowired` it.
 
 == Reactive Spring
 
@@ -160,32 +177,21 @@ https://spring-calendar.cfapps.io/
 |Project | Release | Timeline
 
 |Reactor |Bismuth | {nbsp}
-|Framework | 5.0.0.RELEASE | 2017Q2
+|Framework | 5.0.2.RELEASE | 2017Q4
 | Data     | Kay | {nbsp}
 | Security | 5.0.0.RELEASE |{nbsp}
 | Integration | 5.0.0.RELEASE |{nbsp}
 | ... | {nbsp} |{nbsp}
-| Boot     |2.0.0.RELEASE  | 2017Q4
+| Boot     |2.0.0.RELEASE  | 2018Q1
 | Cloud    | Finchley.RELEASE |{nbsp}
 
 |===
 
 == Spring Cloud
 
-* Dalston: 2017Q1, Spring Boot 1.5.x
-* Edgware: 2017Q3, Spring Boot 1.5.x
-        - Spring Cloud Dataflow
-* Finchley: 2017Q4: Spring Boot 2.0.x
+* Edgware: 2017Q4, Spring Boot 1.5.x
+* Finchley: 2018Q1: Spring Boot 2.0.x
         - Spring Cloud Function
-        - Spring Cloud Gateway
-
-== Spring Cloud
-
-* Dalston: 2017Q1, Spring Boot 1.5.x
-* Edgware: 2017Q3, Spring Boot 1.5.x
-        - Spring Cloud Dataflow
-        - Spring Cloud Function
-* Finchley: 2017Q4: Spring Boot 2.0.x
         - Spring Cloud Gateway
 
 == Links

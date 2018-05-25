@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title></title>
+	
+	<meta name="description" content="A jQuery library for modern HTML presentations">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+	
+	<!-- Core and extension CSS files -->
+	<link rel="stylesheet" href="../deck.js/core/deck.core.css">
+	<link rel="stylesheet" media='print' href="../deck.js/core/print.css">
+	<link rel="stylesheet" media='screen' href="../deck.js/extensions/goto/deck.goto.css">
+	<link rel="stylesheet" media='screen' href="../deck.js/extensions/menu/deck.menu.css">
+	<link rel="stylesheet" media='screen' href="../deck.js/extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" media='screen' href="../deck.js/extensions/status/deck.status.css">
+	<link rel="stylesheet" media='screen' href="../deck.js/extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="../css/syntax.css">
+	
+	<!-- Theme CSS files (menu swaps these out) -->
+    <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
+    
+    
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/spring.css">
+	<link rel="stylesheet" id="transition-theme-link" href="../deck.js/themes/transition/fade.css">
+	
+	<script src="../deck.js/modernizr.custom.js"></script>
+</head>
+
+<body class="deck-container">
+
+<div class="slide" id="slide1"><h1 id="functions-and-platforms">Functions and Platforms</h1>
+
+<p>Dave Syer, 2016<br>
+Twitter: @david_syer<br>
+Email: <code>dsyer@pivotal.io</code></p>
+
+</div><div class="slide" id="slide2"><h2 id="agenda">Agenda</h2>
+
+<ul>
+<li>Platforms and serverless</li>
+<li>Architecture and domain concepts</li>
+<li>Platform convergence</li>
+</ul>
+
+</div><div class="slide" id="slide3"><h2 id="no-code-is-an-island">No Code is an Island</h2>
+
+<p><img src="images/serverless/burningmonk.png" alt="mixed_arch"></p>
+
+<p>Credit: Yan Cui, <a href="https://theburningmonk.com">https://theburningmonk.com</a></p>
+
+</div><div class="slide" id="slide4"><h2 id="serverless">Serverless</h2>
+
+<ul>
+<li>Dynamic resource utilization, &quot;scale to zero&quot;</li>
+<li>Billing per message</li>
+<li>Focus on business logic</li>
+<li>Easy integration with platform services</li>
+</ul>
+
+</div><div class="slide" id="slide5"><h2 id="service-block">Service Block</h2>
+
+<p><img src="images/serverless/sba.png" alt="service-block-architecture"></p>
+
+</div><div class="slide" id="slide6"><h2 id="idealized-serverless-architecture">Idealized Serverless Architecture</h2>
+
+<p><img src="images/mixed_arch.svg" alt="mixed_arch"></p>
+
+</div><div class="slide" id="slide7"><h2 id="what-is-missing">What is Missing?</h2>
+
+<ul>
+<li>Architectural cohesion</li>
+<li>Observability</li>
+<li>On premise and BYO services</li>
+<li>Vendor neutrality</li>
+</ul>
+
+</div><div class="slide" id="slide8"><h2 id="more-often">More Often...</h2>
+
+<p><img src="images/serverless/tire-fire.gif" alt="tire-fire"></p>
+
+<div style="text-align:center">What Can We Do?</div>
+
+</div><div class="slide" id="slide9"><h2 id="convergence-of-platforms">Convergence of Platforms</h2>
+
+<p>Abstractions are a good thing</p>
+
+<p>But not everything is a function</p>
+
+<p>So platforms adapt to real needs...</p>
+
+</div><div class="slide" id="slide10"><h2 id="cloud-abstractions">Cloud Abstractions</h2>
+
+<p><img src="images/cloud_abstraction_layers.svg" alt="cloud_abstractions"></p>
+
+</div><div class="slide" id="slide11"><h2 id="cloud-abstractions">Cloud Abstractions</h2>
+
+<p><img src="images/cloud_service_layers.svg" alt="cloud_services"></p>
+
+</div><div class="slide" id="slide12"><h2 id="abstraction-trade-offs">Abstraction Trade Offs</h2>
+
+<p>Higher level of abstraction means:</p>
+
+<ul>
+<li>Higher value line          :-)</li>
+<li>Less control               :-(</li>
+</ul>
+
+<p>But: you need to pick your battles.</p>
+
+<p>Not all abstractions are helpful for all problems.</p>
+
+</div><div class="slide" id="slide13"><h2 id="a-platform-for-devops">A Platform for Devops</h2>
+
+<p><img src="images/triangle_platform.svg" alt="triangle_platform"></p>
+
+<p>N.B. a developer does not care what is in the middle</p>
+
+</div><div class="slide" id="slide14"><h2 id="a-platform-for-devops">A Platform for Devops</h2>
+
+<style>
+img[alt=triangle_k8s] {
+  text-align: center;
+  width: 50%;
+}
+</style>
+
+<p><img src="images/triangle_k8s.svg" alt="triangle_k8s"></p>
+
+</div><div class="slide" id="slide15"><h2 id="riff">Riff</h2>
+
+<style>
+img[alt=riff_function_screenshot] {
+  text-align: center;
+  width: 70%;
+}
+</style>
+
+<p><img src="images/riff_function_screenshot.png" alt="riff_function_screenshot"></p>
+
+</div><div class="slide" id="slide16"><h2 id="links">Links</h2>
+
+<ul>
+<li>Spring Cloud Function: <a href="https://github.com/spring-cloud/spring-cloud-function">https://github.com/spring-cloud/spring-cloud-function</a></li>
+<li>Riff: <a href="https://github.com/projectriff/riff">https://github.com/projectriff/riff</a></li>
+<li>Cloud Events: <a href="https://github.com/cloudevents/spec">https://github.com/cloudevents/spec</a></li>
+<li>Spring Tip: <a href="https://youtu.be/E55oAtOhWZU">https://youtu.be/E55oAtOhWZU</a></li>
+</ul>
+</div>
+
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<p id="footer" class="deck-status">
+	<span class="deck-status-current"></span>/<span class="deck-status-total"></span>
+</p>
+
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="number" name="slidenum" id="goto-slide">
+	<input type="submit" value="Go">
+</form>
+
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<script src="/deck.js/jquery-1.7.2.min.js"></script>
+<script>window.jQuery || document.write('<script src="../deck.js/jquery.min.js"><\/script>')</script>
+
+<!-- Deck Core and extensions -->
+<script src="../deck.js/core/deck.core.js"></script>
+<script src="../deck.js/extensions/menu/deck.menu.js"></script>
+<script src="../deck.js/extensions/goto/deck.goto.js"></script>
+<script src="../deck.js/extensions/status/deck.status.js"></script>
+<script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="../deck.js/extensions/hash/deck.hash.js"></script>
+
+<script type="text/javascript">
+$(function() {
+	// Deck initialization
+	$.deck('.slide');
+	
+	$('#style-themes').change(function() {
+		$('#style-theme-link').attr('href', $(this).val());
+	});
+	
+	$('#transition-themes').change(function() {
+		$('#transition-theme-link').attr('href', $(this).val());
+	});
+
+    $('pre').click(function (){
+	$(this).toggleClass('highlighted');
+    });
+});
+</script>
+
+</body>
+</html>

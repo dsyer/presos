@@ -13,7 +13,7 @@
 <link href="../deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
 <link href="../deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
 <link href="../deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
-<link href="../deck.js/themes/style/spring.css" media="screen" rel="stylesheet">
+<link href="../deck.js/themes/style/spring.css" rel="stylesheet">
 <link href="../deck.js/themes/transition/fade.css" media="screen" rel="stylesheet">
 <link href="../deck.js/core/print.css" media="print" rel="stylesheet">
 <script src="../deck.js/modernizr.custom.js"></script>
@@ -29,29 +29,13 @@
 <h2>Agenda</h2>
 <div class="ulist">
 <ul>
-<li>Cloud abstractions, and serverless</li>
+<li>Serverless and functions</li>
 <li>Spring Cloud Function</li>
 <li>Raising the value line</li>
 </ul>
 </div>
-<div class="paragraph"><p><a class="bare" href="http://markfisher/spring-cloud-function">http://markfisher/spring-cloud-function</a><br>
+<div class="paragraph"><p><a class="bare" href="http://github.com/spring-cloud/spring-cloud-function">http://github.com/spring-cloud/spring-cloud-function</a><br>
 <a class="bare" href="http://projectreactor.io/">http://projectreactor.io/</a></p></div>
-</section>
-<section class="slide" id="_cloud_abstractions">
-<h2>Cloud Abstractions</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="cloud-abstractions" src="images/cloud_abstraction_layers.svg">
-</div>
-</div>
-</section>
-<section class="slide" id="_cloud_services">
-<h2>Cloud Services</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="cloud-service-layers" src="images/cloud_service_layers.svg">
-</div>
-</div>
 </section>
 <section class="slide" id="_serverless_and_functions">
 <h2>Serverless and Functions</h2>
@@ -64,19 +48,19 @@
 <li>Focus on business logic</li>
 </ul>
 </div>
+<div class="paragraph"><p>CNCF <a href="https://docs.google.com/document/d/1UjW8bt5O8QBgQRILJVKZJej_IuNnxl20AJu9wA8wcdI">WG Whitepaper</a></p></div>
 </section>
 <section class="slide" id="_business_logic_and_the_value_line">
-<h2>Business Logic and the Value Line</h2>
-<div class="paragraph"><p><em>Paraphrasing @adrianco:</em></p></div>
-<div class="paragraph big"><p>Get out of the business of infrastructure <strong>and</strong><br>
-automation (a.k.a. "undifferentiated heavy lifting")</p></div>
-</section>
-<section class="slide" id="_business_logic_and_the_value_line_2">
 <h2>Business Logic and the Value Line</h2>
 <div class="paragraph"><p>&#160;<br></p></div>
 <div class="paragraph big"><p>Get out of the business of infrastructure <strong>and</strong><br>
 automation (a.k.a. "undifferentiated heavy lifting")<br>
 <strong>and</strong> integration spaghetti</p></div>
+<div class="imageblock">
+<div class="content">
+<img alt="service-block-architecture" src="images/serverless/sba.png" width="500">
+</div>
+</div>
 </section>
 <section class="slide" id="_amazon_lambda">
 <h2>Amazon Lambda</h2>
@@ -94,21 +78,40 @@ automation (a.k.a. "undifferentiated heavy lifting")<br>
 </div>
 </div>
 </section>
+<section class="slide" id="_microsoft_azure_functions">
+<h2>Microsoft Azure Functions</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="azure_function_screenshot" src="images/azure_function_screenshot.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_riff">
+<h2>Riff</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="riff_function_screenshot" src="images/riff_function_screenshot.png">
+</div>
+</div>
+</section>
 <section class="slide" id="_serverless_providers">
 <h2>Serverless Providers</h2>
 <div class="ulist">
 <ul>
 <li>(J) Amazon Lambda</li>
 <li>Google Cloud Functions</li>
-<li>Azure Function</li>
+<li>(J) Azure Function</li>
 <li>(J) IBM OpenWhisk</li>
+<li>(J) Oracle Fn</li>
+<li>OpenFaaS</li>
 <li>Fission</li>
 <li>Kubeless</li>
+<li>(J) Riff <a class="bare" href="https://github.com/projectriff">https://github.com/projectriff</a></li>
 <li>&#8230;&#8203;</li>
 </ul>
 </div>
 <div class="paragraph"><p>(J) = native Java support<br>
-Others can run Java via node JRE launcher.</p></div>
+Others can run Java, e.g. via custom container or node JRE launcher.</p></div>
 </section>
 <section class="slide" id="_java_util_function">
 <h2>Java Util Function</h2>
@@ -143,6 +146,22 @@ Others can run Java via node JRE launcher.</p></div>
   <span class="tok-kd">public</span> <span class="tok-kd">static</span> <span class="tok-kt">void</span> <span class="tok-nf">main</span><span class="tok-o">(</span><span class="tok-n">String</span><span class="tok-o">[]</span> <span class="tok-n">args</span><span class="tok-o">)</span> <span class="tok-o">{</span>
     <span class="tok-n">SpringApplication</span><span class="tok-o">.</span><span class="tok-na">run</span><span class="tok-o">(</span><span class="tok-n">Application</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span> <span class="tok-n">args</span><span class="tok-o">);</span>
   <span class="tok-o">}</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_plain_old_functions">
+<h2>Plain Old Functions</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-kn">package</span> <span class="tok-n">functions</span><span class="tok-o">;</span>
+
+<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">Uppercase</span> <span class="tok-kd">implements</span> <span class="tok-n">Function</span><span class="tok-o">&lt;</span><span class="tok-n">String</span><span class="tok-o">,</span> <span class="tok-n">String</span><span class="tok-o">&gt;</span> <span class="tok-o">{</span>
+
+  <span class="tok-n">String</span> <span class="tok-nf">apply</span><span class="tok-o">(</span><span class="tok-n">String</span> <span class="tok-n">input</span><span class="tok-o">)</span> <span class="tok-o">{</span>
+    <span class="tok-k">return</span> <span class="tok-n">input</span><span class="tok-o">.</span><span class="tok-na">toUpperCase</span><span class="tok-o">();</span>
+  <span class="tok-o">}</span>
+
 <span class="tok-o">}</span></code></pre>
 </div>
 </div>
@@ -247,10 +266,10 @@ Component scan for functions (e.g. execute jar with no dependency on Spring at a
 Compile strings which are Java function bodies
 </li>
 <li>
-Deploy app with an isolated classloader (JVM packing)
+Bind and invoke from an isolated classloader (JVM packing, platform)
 </li>
 <li>
-Adapters for AWS Lambda, and other "serverless"
+Adapters for AWS Lambda, Azure, Riff and other "serverless"
 service providers
 </li>
 </ol>
@@ -260,9 +279,10 @@ service providers
 <h2>Links</h2>
 <div class="ulist">
 <ul>
-<li>Spring Cloud Function: <a class="bare" href="https://github.com/markfisher/spring-cloud-function">https://github.com/markfisher/spring-cloud-function</a></li>
+<li>Spring Cloud Function: <a class="bare" href="https://github.com/spring-cloud/spring-cloud-function">https://github.com/spring-cloud/spring-cloud-function</a></li>
+<li>Riff: <a class="bare" href="https://github.com/projectriff/riff">https://github.com/projectriff/riff</a></li>
 <li>Spring Boot Thin Launcher: <a class="bare" href="https://github.com/dsyer/spring-boot-thin-launcher">https://github.com/dsyer/spring-boot-thin-launcher</a></li>
-<li>Fission: <a class="bare" href="http://fission.io/">http://fission.io/</a></li>
+<li>CNCF <a href="https://docs.google.com/document/d/1UjW8bt5O8QBgQRILJVKZJej_IuNnxl20AJu9wA8wcdI">WG Whitepaper</a></li>
 <li>Spring Initializr: <a class="bare" href="http://start.spring.io">http://start.spring.io</a></li>
 <li>Spring Cloud: <a class="bare" href="http://cloud.spring.io">http://cloud.spring.io</a></li>
 <li>Reactor: <a class="bare" href="http://projectreactor.io">http://projectreactor.io</a></li>
