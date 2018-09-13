@@ -5,7 +5,7 @@ theme: spring
 ---
 # Functions and Platforms
 
-Dave Syer, 2016  
+Dave Syer, 2018  
 Twitter: @david_syer  
 Email: `dsyer@pivotal.io`
 
@@ -65,6 +65,12 @@ So platforms adapt to real needs...
 
 ![cloud_services](images/cloud_service_layers.svg)
 
+## Cloud Abstractions
+
+![cloud_inversion](images/platforms/faas-too-far.png)
+
+Credit: Olivier Tardieu, and [John McKim](https://serverless.zone/abstracting-the-back-end-with-faas-e5e80e837362)
+
 ## Abstraction Trade Offs
 
 Higher level of abstraction means:
@@ -72,7 +78,7 @@ Higher level of abstraction means:
 * Higher value line          :-)
 * Less control               :-(
 
-But: you need to pick your battles.
+But: you need to pick your battles. And the value line is not fixed.
 
 Not all abstractions are helpful for all problems.
 
