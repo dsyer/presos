@@ -1,0 +1,279 @@
+= How Fast is Spring (and Spring Boot)?
+Dave Syer, 2015
+:backend: deckjs
+:deckjs_transition: fade
+:navigation:
+:icons: font
+:menu:
+:goto:
+:hash:
+:status:
+:scale:
+:source-highlighter: pygments
+:deckjs_theme: spring
+:deckjsdir: ../deck.js
+
+== Agenda
+
+* How much work is Spring doing, compared to other parts of your app?
+* Tools for measurement
+* Comparison between various classpath and packaging choices
+* Speeding things up
+* The future
+
+== Baseline Micro App
+
+image::images/fast/startup-progress.png[]
+
+== Spring Boot 2.1
+
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1818051570&format=image[startup-2.1.x,width=75%]
+
+== Heap Memory and Garbage Collection
+
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1685708082&format=image[heap-size-2.1.x,width=75%]
+
+== Garbage Collection
+
+[cols="52a,48a"]
+|===
+|image::images/fast/flame_20.svg[flame_20]
+|image::images/fast/flame_21.svg[flame_21]
+
+| Spring Boot 2.0
+| Spring Boot 2.1
+|===
+
+== How Fast is Spring?
+
+TL;DR How do I make my app go faster?
+
+* Classpath exclusions from Spring Boot web starters.
+* Use the `spring-context-indexer`.
+* Don't use actuators if you can afford not to.
+* Use Spring Boot 2.1 and Spring 5.1 when they are available.
+* Use explicit `spring.config.location`
+* Switch off JMX: `spring.jmx.enabled=false`
+* Make bean definitions lazy by default.
+* Unpack the fat jar and run with an explicit classpath.
+* Run the JVM with `-noverify`. Also consider `-XX:TieredStopAtLevel=1`
+* Use functional bean definition.
+* (Build a native image.)
+
+== Tools
+
+* Benchmarks: http://openjdk.java.net/projects/code-tools/jmh/[JMH]
+* Profiling: https://github.com/jvm-profiling-tools/async-profiler[async-profiler]
+* GC pressure: http://openjdk.java.net/projects/jmc/[JMC] a.k.a. Flight Controller
+* Classpath manipulation: https://github.com/dsyer/spring-boot-thin-launcher[Thin Launcher]
+
+== Benchmarks: Application Startup
+
+https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc[Static benchmarks] from https://github.com/dsyer/spring-boot-startup-bench. New JVM (separate process) per application startup, explicit classpath (not fat jar).
+
+```
+Benchmark   (sample) Mode  Cnt  Score   Error  Units Beans Classes
+MainBenchmark  actr  avgt   10  1.316 ± 0.060   s/op 186   5666
+MainBenchmark  jdbc  avgt   10  1.237 ± 0.050   s/op 147   5625
+MainBenchmark  demo  avgt   10  1.056 ± 0.040   s/op 111   5266
+MainBenchmark  slim  avgt   10  1.003 ± 0.011   s/op 105   5208
+MainBenchmark  thin  avgt   10  0.855 ± 0.028   s/op 60    4892
+MainBenchmark  lite  avgt   10  0.694 ± 0.015   s/op 30    4580
+MainBenchmark  func  avgt   10  0.652 ± 0.017   s/op 25    4378
+```
+
+== Number of Classes vs. Startup Time
+
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vR8B4l5WkWf-9gZWmIYTkmBWM7YWf5bRg852OakrV0G2-vtfM_UkVNRC3cTVk1079HagnMVHYZnvbib/pubchart?oid=88442446&amp;format=image[,width=75%]
+
+== WebFlux and Micro Apps
+
+https://github.com/dsyer/spring-boot-startup-bench/blob/master/flux/README.adoc[Flux benchmarks] from https://github.com/dsyer/spring-boot-startup-bench
+
+```
+Benchmark            (sample)  Mode  Cnt  Score   Error  Units Classes
+MainBenchmark.main       jlog    ss   10  0.933 ± 0.065   s/op 4367
+MainBenchmark.main       demo    ss   10  1.081 ± 0.075   s/op 5779
+MiniBenchmark.boot       jlog    ss   10  0.486 ± 0.020   s/op 2974
+MiniBenchmark.boot       demo    ss   10  0.579 ± 0.041   s/op 4138
+MiniBenchmark.mini       jlog    ss   10  0.420 ± 0.011   s/op 2351
+MiniBenchmark.mini       demo    ss   10  0.538 ± 0.009   s/op 3138
+MiniBenchmark.micro      jlog    ss   10  0.186 ± 0.006   s/op 1371
+MiniBenchmark.micro      demo    ss   10  0.288 ± 0.006   s/op 2112
+```
+
+== Number of Classes vs. Startup Time
+
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vR8B4l5WkWf-9gZWmIYTkmBWM7YWf5bRg852OakrV0G2-vtfM_UkVNRC3cTVk1079HagnMVHYZnvbib/pubchart?oid=976086548&format=image[width=75%]
+
+== JVM Tweaks
+
+* Command line: `-noverify` `-XX:TieredStopAtLevel=1` `-Djava.security.egd=file:/dev/./urandom`
+* Java 10/11: CDS, AOT (GraalVM)
+* Open J9: CDS
+* Explicit classpath (exploded archive)
+
+== Open J9
+
+```
+Benchmark            (sample)  Mode  Cnt  Score   Error  Units Classes
+MainBenchmark.main       jlog    ss   10  0.709 ± 0.034   s/op 4536
+MainBenchmark.main       demo    ss   10  0.939 ± 0.027   s/op 5954
+MiniBenchmark.boot       jlog    ss   10  0.406 ± 0.085   s/op 3090
+MiniBenchmark.boot       demo    ss   10  0.505 ± 0.035   s/op 4314
+MiniBenchmark.mini       jlog    ss   10  0.340 ± 0.018   s/op 2427
+MiniBenchmark.mini       demo    ss   10  0.432 ± 0.019   s/op 3256
+MiniBenchmark.micro      jlog    ss   10  0.152 ± 0.045   s/op 1436
+MiniBenchmark.micro      demo    ss   10  0.204 ± 0.019   s/op 2238
+```
+
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1689271723&format=image[width=75%]
+
+== Classpath Exclusions
+
+YMMV, but consider excluding:
+
+* Jackson (`spring-boot-starter-json`)
+* Logback (`spring-boot-starter-logging`)
+* Hibernate Validator (`org.hibernate.validator:hibernate-validator`)
+* Actuators (`spring-boot-starter-actuator`)
+
+== Spring Tweaks
+
+* Use the `spring-context-indexer`.
+* Don't use actuators if you can afford not to.
+* Use Spring Boot 2.1 and Spring 5.1 when they are available.
+* Use explicit `spring.config.location`
+* Switch off JMX: `spring.jmx.enabled=false`
+* Make bean definitions lazy by default.
+* Use functional bean definition.
+
+== Lazy Beans
+
+* Spring Data `@EnableJpaRepositories(bootstrapMode=BootstrapMode.LAZY)`
+* `BeanFactoryPostProcessor` that switches all beans to `lazy=true`
+* Look carefully at custom beans with expensive `@PostConstruct`
+
+== Lazy Subsystems
+
+Break down application into modules and initialize each one separately on demand.
+
+E.g. see https://github.com/dsyer/spring-boot-lazy-actuator[Lazy Actuator]
+
+.pom.xml
+```xml
+<dependency>
+	<groupId>org.springframework.boot.experimental</groupId>
+	<artifactId>spring-boot-lazy-actuator</artifactId>
+	<version>1.0.0.BUILD-SNAPSHOT</version>
+</dependency>
+```
+
+== Functional Bean Definitions
+
+Before:
+
+```java
+@Configuration
+public class SampleConfiguration {
+    
+    @Bean
+    public Foo foo() {
+        return new Foo();
+    }
+
+    @Bean
+    public Bar bar(Foo foo) {
+        return new Bar(foo);
+    }
+
+}
+```
+
+== Functional Bean Definitions
+
+After:
+
+```java
+public class SampleConfiguration
+        implements ApplicationContextInitializer<GenericApplicationContext> {
+
+    public Foo foo() {
+        return new Foo();
+    }
+
+    public Bar bar(Foo foo) {
+        return new Bar(foo);
+    }
+
+    @Override
+    public void initialize(GenericApplicationContext context) {
+        context.registerBean(SampleConfiguration.class);
+        context.registerBean(Foo.class,
+                () -> context.getBean(SampleConfiguration.class).foo());
+        context.registerBean(Bar.class, () -> context.getBean(SampleConfiguration.class)
+                .bar(context.getBean(Foo.class)));
+    }
+
+}
+```
+
+== Result
+
+image::images/fast/startup-progress.png[]
+
+C.f. `Bunc` vs `Demo`.
+
+== Examples
+
+* https://github.com/dsyer/spring-boot-micro-apps[Micro apps] (`FuncApplication` and `BuncApplication`)
+* Spring Cloud Function AWS adapter
+
+== Functional Beans: Research
+
+* Convert `@Configuration` to `ApplicationContextInitializer`
+    - runtime (https://github.com/dsyer/spring-boot-auto-reflect[reflection])
+    - compile time
+
+Compile time options:
+
+* Annotation processor (standard JDK feature)
+* Byte code enhancement, e.g. https://github.com/dsyer/spring-init-experiment[Byte Buddy] plugin
+
+== Ahead of Time Compilation (AOT)
+
+Native images can be very efficient (see https://github.com/oracle/graal[Graal VM]).
+
+```
+$ native-image -H:Name=target/bunc ... com.example.func.BuncApplication
+$ ./target/bunc
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                        
+
+...
+Aug 07, 2018 11:25:13 AM org.springframework.boot.web.embedded.netty.NettyWebServer start
+INFO: Netty started on port(s): 8080
+Aug 07, 2018 11:25:13 AM org.springframework.boot.StartupInfoLogger logStarted
+INFO: Started application in 0.036 seconds (JVM running for 0.04)
+Benchmark app started
+Started HttpServer: 40ms
+```
+
+Downside: you lose all of JVM benefits (debugging, manageability, dynamic compilation, garbage collection).
+
+Also, too many issues still for general purpose use.
+
+== Links
+
+* https://github.com/dsyer/spring-boot-startup-bench - older (back to Spring Boot 1.3), fat jar data
+* https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc[/static] benchmarks in the same repo - newer, explores classes loaded correlation
+* https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc[/flux] benchmarks in the same repo - WebFlux
+* https://github.com/dsyer/spring-boot-allocations - explore functional beans and GC pressure
+* https://github.com/dsyer/spring-boot-micro-apps - functional beans and AOT (samples not benchmarks)
+* https://github.com/dsyer/spring-boot-aot - AOT compilation and Graal VM

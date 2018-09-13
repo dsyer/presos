@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="Asciidoctor 1.5.4" name="generator">
+<meta content="Dave Syer, 2015" name="author">
+<title>How Fast is Spring (and Spring Boot)?</title>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+<style>
+.conum { display: inline-block; color: white !important; background-color: #222222; -webkit-border-radius: 100px; border-radius: 100px; text-align: center; width: 1.2em; height: 1.2em; font-size: 0.9em; font-weight: bold; line-height: 1.2; font-family: Arial, sans-serif; font-style: normal; position: relative; top: -0.1em; }
+.conum * { color: white !important; }
+.conum + b { display: none; }
+.conum:after { content: attr(data-value); }
+.conum:not([data-value]):empty { display: none; }
+.colist table td:first-of-type { padding-right: 0.25em; }
+</style>
+<link href="./asciidoctor-pygments.css" rel="stylesheet">
+<link href="../deck.js/core/deck.core.css" rel="stylesheet">
+<link href="../deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/goto/deck.goto.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
+<link href="../deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
+<link href="../deck.js/themes/style/spring.css" rel="stylesheet">
+<link href="../deck.js/themes/transition/fade.css" media="screen" rel="stylesheet">
+<link href="../deck.js/core/print.css" media="print" rel="stylesheet">
+<script src="../deck.js/modernizr.custom.js"></script>
+</head>
+<body class="article">
+<div class="deck-container">
+<section class="slide" id="title-slide">
+<h1>How Fast is Spring (and Spring Boot)?</h1>
+<span id="author">Dave Syer, 2015</span>
+<br>
+</section>
+<section class="slide" id="_agenda">
+<h2>Agenda</h2>
+<div class="ulist">
+<ul>
+<li>How much work is Spring doing, compared to other parts of your app?</li>
+<li>Tools for measurement</li>
+<li>Comparison between various classpath and packaging choices</li>
+<li>Speeding things up</li>
+<li>The future</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_baseline_micro_app">
+<h2>Baseline Micro App</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="startup progress" src="images/fast/startup-progress.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_spring_boot_2_1">
+<h2>Spring Boot 2.1</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="startup-2.1.x" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1818051570&format=image" width="75%">
+</div>
+</div>
+</section>
+<section class="slide" id="_heap_memory_and_garbage_collection">
+<h2>Heap Memory and Garbage Collection</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="heap-size-2.1.x" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1685708082&format=image" width="75%">
+</div>
+</div>
+</section>
+<section class="slide" id="_garbage_collection">
+<h2>Garbage Collection</h2>
+<table class="tableblock frame-all grid-all" style="width:100%">
+<colgroup>
+<col style="width:52%">
+<col style="width:48%">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="imageblock">
+<div class="content">
+<img alt="flame_20" src="images/fast/flame_20.svg">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="imageblock">
+<div class="content">
+<img alt="flame_21" src="images/fast/flame_21.svg">
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Spring Boot 2.0</p></div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Spring Boot 2.1</p></div></div></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide" id="_how_fast_is_spring">
+<h2>How Fast is Spring?</h2>
+<div class="paragraph"><p>TL;DR How do I make my app go faster?</p></div>
+<div class="ulist">
+<ul>
+<li>Classpath exclusions from Spring Boot web starters.</li>
+<li>Use the <code>spring-context-indexer</code>.</li>
+<li>Don&#8217;t use actuators if you can afford not to.</li>
+<li>Use Spring Boot 2.1 and Spring 5.1 when they are available.</li>
+<li>Use explicit <code>spring.config.location</code></li>
+<li>Switch off JMX: <code>spring.jmx.enabled=false</code></li>
+<li>Make bean definitions lazy by default.</li>
+<li>Unpack the fat jar and run with an explicit classpath.</li>
+<li>Run the JVM with <code>-noverify</code>. Also consider <code>-XX:TieredStopAtLevel=1</code></li>
+<li>Use functional bean definition.</li>
+<li>(Build a native image.)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_tools">
+<h2>Tools</h2>
+<div class="ulist">
+<ul>
+<li>Benchmarks: <a href="http://openjdk.java.net/projects/code-tools/jmh/">JMH</a></li>
+<li>Profiling: <a href="https://github.com/jvm-profiling-tools/async-profiler">async-profiler</a></li>
+<li>GC pressure: <a href="http://openjdk.java.net/projects/jmc/">JMC</a> a.k.a. Flight Controller</li>
+<li>Classpath manipulation: <a href="https://github.com/dsyer/spring-boot-thin-launcher">Thin Launcher</a></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_benchmarks_application_startup">
+<h2>Benchmarks: Application Startup</h2>
+<div class="paragraph"><p><a href="https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc">Static benchmarks</a> from <a class="bare" href="https://github.com/dsyer/spring-boot-startup-bench">https://github.com/dsyer/spring-boot-startup-bench</a>. New JVM (separate process) per application startup, explicit classpath (not fat jar).</p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Benchmark   (sample) Mode  Cnt  Score   Error  Units Beans Classes
+MainBenchmark  actr  avgt   10  1.316 ± 0.060   s/op 186   5666
+MainBenchmark  jdbc  avgt   10  1.237 ± 0.050   s/op 147   5625
+MainBenchmark  demo  avgt   10  1.056 ± 0.040   s/op 111   5266
+MainBenchmark  slim  avgt   10  1.003 ± 0.011   s/op 105   5208
+MainBenchmark  thin  avgt   10  0.855 ± 0.028   s/op 60    4892
+MainBenchmark  lite  avgt   10  0.694 ± 0.015   s/op 30    4580
+MainBenchmark  func  avgt   10  0.652 ± 0.017   s/op 25    4378</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_number_of_classes_vs_startup_time">
+<h2>Number of Classes vs. Startup Time</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="pubchart?oid=88442446&amp;amp;format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR8B4l5WkWf-9gZWmIYTkmBWM7YWf5bRg852OakrV0G2-vtfM_UkVNRC3cTVk1079HagnMVHYZnvbib/pubchart?oid=88442446&amp;format=image" width="75%">
+</div>
+</div>
+</section>
+<section class="slide" id="_webflux_and_micro_apps">
+<h2>WebFlux and Micro Apps</h2>
+<div class="paragraph"><p><a href="https://github.com/dsyer/spring-boot-startup-bench/blob/master/flux/README.adoc">Flux benchmarks</a> from <a class="bare" href="https://github.com/dsyer/spring-boot-startup-bench">https://github.com/dsyer/spring-boot-startup-bench</a></p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Benchmark            (sample)  Mode  Cnt  Score   Error  Units Classes
+MainBenchmark.main       jlog    ss   10  0.933 ± 0.065   s/op 4367
+MainBenchmark.main       demo    ss   10  1.081 ± 0.075   s/op 5779
+MiniBenchmark.boot       jlog    ss   10  0.486 ± 0.020   s/op 2974
+MiniBenchmark.boot       demo    ss   10  0.579 ± 0.041   s/op 4138
+MiniBenchmark.mini       jlog    ss   10  0.420 ± 0.011   s/op 2351
+MiniBenchmark.mini       demo    ss   10  0.538 ± 0.009   s/op 3138
+MiniBenchmark.micro      jlog    ss   10  0.186 ± 0.006   s/op 1371
+MiniBenchmark.micro      demo    ss   10  0.288 ± 0.006   s/op 2112</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_number_of_classes_vs_startup_time_2">
+<h2>Number of Classes vs. Startup Time</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="pubchart?oid=976086548&amp;format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR8B4l5WkWf-9gZWmIYTkmBWM7YWf5bRg852OakrV0G2-vtfM_UkVNRC3cTVk1079HagnMVHYZnvbib/pubchart?oid=976086548&format=image" width="75%">
+</div>
+</div>
+</section>
+<section class="slide" id="_jvm_tweaks">
+<h2>JVM Tweaks</h2>
+<div class="ulist">
+<ul>
+<li>Command line: <code>-noverify</code> <code>-XX:TieredStopAtLevel=1</code> <code>-Djava.security.egd=file:/dev/./urandom</code></li>
+<li>Java 10/11: CDS, AOT (GraalVM)</li>
+<li>Open J9: CDS</li>
+<li>Explicit classpath (exploded archive)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_open_j9">
+<h2>Open J9</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Benchmark            (sample)  Mode  Cnt  Score   Error  Units Classes
+MainBenchmark.main       jlog    ss   10  0.709 ± 0.034   s/op 4536
+MainBenchmark.main       demo    ss   10  0.939 ± 0.027   s/op 5954
+MiniBenchmark.boot       jlog    ss   10  0.406 ± 0.085   s/op 3090
+MiniBenchmark.boot       demo    ss   10  0.505 ± 0.035   s/op 4314
+MiniBenchmark.mini       jlog    ss   10  0.340 ± 0.018   s/op 2427
+MiniBenchmark.mini       demo    ss   10  0.432 ± 0.019   s/op 3256
+MiniBenchmark.micro      jlog    ss   10  0.152 ± 0.045   s/op 1436
+MiniBenchmark.micro      demo    ss   10  0.204 ± 0.019   s/op 2238</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img alt="pubchart?oid=1689271723&amp;format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1689271723&format=image" width="75%">
+</div>
+</div>
+</section>
+<section class="slide" id="_classpath_exclusions">
+<h2>Classpath Exclusions</h2>
+<div class="paragraph"><p>YMMV, but consider excluding:</p></div>
+<div class="ulist">
+<ul>
+<li>Jackson (<code>spring-boot-starter-json</code>)</li>
+<li>Logback (<code>spring-boot-starter-logging</code>)</li>
+<li>Hibernate Validator (<code>org.hibernate.validator:hibernate-validator</code>)</li>
+<li>Actuators (<code>spring-boot-starter-actuator</code>)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_spring_tweaks">
+<h2>Spring Tweaks</h2>
+<div class="ulist">
+<ul>
+<li>Use the <code>spring-context-indexer</code>.</li>
+<li>Don&#8217;t use actuators if you can afford not to.</li>
+<li>Use Spring Boot 2.1 and Spring 5.1 when they are available.</li>
+<li>Use explicit <code>spring.config.location</code></li>
+<li>Switch off JMX: <code>spring.jmx.enabled=false</code></li>
+<li>Make bean definitions lazy by default.</li>
+<li>Use functional bean definition.</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_lazy_beans">
+<h2>Lazy Beans</h2>
+<div class="ulist">
+<ul>
+<li>Spring Data <code>@EnableJpaRepositories(bootstrapMode=BootstrapMode.LAZY)</code></li>
+<li><code>BeanFactoryPostProcessor</code> that switches all beans to <code>lazy=true</code></li>
+<li>Look carefully at custom beans with expensive <code>@PostConstruct</code></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_lazy_subsystems">
+<h2>Lazy Subsystems</h2>
+<div class="paragraph"><p>Break down application into modules and initialize each one separately on demand.</p></div>
+<div class="paragraph"><p>E.g. see <a href="https://github.com/dsyer/spring-boot-lazy-actuator">Lazy Actuator</a></p></div>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre class="pygments highlight"><code class="xml language-xml"><span class="tok-nt">&lt;dependency&gt;</span>
+	<span class="tok-nt">&lt;groupId&gt;</span>org.springframework.boot.experimental<span class="tok-nt">&lt;/groupId&gt;</span>
+	<span class="tok-nt">&lt;artifactId&gt;</span>spring-boot-lazy-actuator<span class="tok-nt">&lt;/artifactId&gt;</span>
+	<span class="tok-nt">&lt;version&gt;</span>1.0.0.BUILD-SNAPSHOT<span class="tok-nt">&lt;/version&gt;</span>
+<span class="tok-nt">&lt;/dependency&gt;</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_functional_bean_definitions">
+<h2>Functional Bean Definitions</h2>
+<div class="paragraph"><p>Before:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Configuration</span>
+<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">SampleConfiguration</span> <span class="tok-o">{</span>
+
+    <span class="tok-nd">@Bean</span>
+    <span class="tok-kd">public</span> <span class="tok-n">Foo</span> <span class="tok-nf">foo</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+        <span class="tok-k">return</span> <span class="tok-k">new</span> <span class="tok-nf">Foo</span><span class="tok-o">();</span>
+    <span class="tok-o">}</span>
+
+    <span class="tok-nd">@Bean</span>
+    <span class="tok-kd">public</span> <span class="tok-n">Bar</span> <span class="tok-nf">bar</span><span class="tok-o">(</span><span class="tok-n">Foo</span> <span class="tok-n">foo</span><span class="tok-o">)</span> <span class="tok-o">{</span>
+        <span class="tok-k">return</span> <span class="tok-k">new</span> <span class="tok-nf">Bar</span><span class="tok-o">(</span><span class="tok-n">foo</span><span class="tok-o">);</span>
+    <span class="tok-o">}</span>
+
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_functional_bean_definitions_2">
+<h2>Functional Bean Definitions</h2>
+<div class="paragraph"><p>After:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">SampleConfiguration</span>
+        <span class="tok-kd">implements</span> <span class="tok-n">ApplicationContextInitializer</span><span class="tok-o">&lt;</span><span class="tok-n">GenericApplicationContext</span><span class="tok-o">&gt;</span> <span class="tok-o">{</span>
+
+    <span class="tok-kd">public</span> <span class="tok-n">Foo</span> <span class="tok-nf">foo</span><span class="tok-o">()</span> <span class="tok-o">{</span>
+        <span class="tok-k">return</span> <span class="tok-k">new</span> <span class="tok-nf">Foo</span><span class="tok-o">();</span>
+    <span class="tok-o">}</span>
+
+    <span class="tok-kd">public</span> <span class="tok-n">Bar</span> <span class="tok-nf">bar</span><span class="tok-o">(</span><span class="tok-n">Foo</span> <span class="tok-n">foo</span><span class="tok-o">)</span> <span class="tok-o">{</span>
+        <span class="tok-k">return</span> <span class="tok-k">new</span> <span class="tok-nf">Bar</span><span class="tok-o">(</span><span class="tok-n">foo</span><span class="tok-o">);</span>
+    <span class="tok-o">}</span>
+
+    <span class="tok-nd">@Override</span>
+    <span class="tok-kd">public</span> <span class="tok-kt">void</span> <span class="tok-nf">initialize</span><span class="tok-o">(</span><span class="tok-n">GenericApplicationContext</span> <span class="tok-n">context</span><span class="tok-o">)</span> <span class="tok-o">{</span>
+        <span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">registerBean</span><span class="tok-o">(</span><span class="tok-n">SampleConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">);</span>
+        <span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">registerBean</span><span class="tok-o">(</span><span class="tok-n">Foo</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span>
+                <span class="tok-o">()</span> <span class="tok-o">-&gt;</span> <span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">getBean</span><span class="tok-o">(</span><span class="tok-n">SampleConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">).</span><span class="tok-na">foo</span><span class="tok-o">());</span>
+        <span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">registerBean</span><span class="tok-o">(</span><span class="tok-n">Bar</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span> <span class="tok-o">()</span> <span class="tok-o">-&gt;</span> <span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">getBean</span><span class="tok-o">(</span><span class="tok-n">SampleConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">)</span>
+                <span class="tok-o">.</span><span class="tok-na">bar</span><span class="tok-o">(</span><span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">getBean</span><span class="tok-o">(</span><span class="tok-n">Foo</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">)));</span>
+    <span class="tok-o">}</span>
+
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_result">
+<h2>Result</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="startup progress" src="images/fast/startup-progress.png">
+</div>
+</div>
+<div class="paragraph"><p>C.f. <code>Bunc</code> vs <code>Demo</code>.</p></div>
+</section>
+<section class="slide" id="_examples">
+<h2>Examples</h2>
+<div class="ulist">
+<ul>
+<li><a href="https://github.com/dsyer/spring-boot-micro-apps">Micro apps</a> (<code>FuncApplication</code> and <code>BuncApplication</code>)</li>
+<li>Spring Cloud Function AWS adapter</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_functional_beans_research">
+<h2>Functional Beans: Research</h2>
+<div class="ulist">
+<ul>
+<li><p>
+Convert <code>@Configuration</code> to <code>ApplicationContextInitializer</code><div class="ulist">
+<ul>
+<li>runtime (<a href="https://github.com/dsyer/spring-boot-auto-reflect">reflection</a>)</li>
+<li>compile time</li>
+</ul>
+</div></p></li>
+</ul>
+</div>
+<div class="paragraph"><p>Compile time options:</p></div>
+<div class="ulist">
+<ul>
+<li>Annotation processor (standard JDK feature)</li>
+<li>Byte code enhancement, e.g. <a href="https://github.com/dsyer/spring-init-experiment">Byte Buddy</a> plugin</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_ahead_of_time_compilation_aot">
+<h2>Ahead of Time Compilation (AOT)</h2>
+<div class="paragraph"><p>Native images can be very efficient (see <a href="https://github.com/oracle/graal">Graal VM</a>).</p></div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ native-image -H:Name=target/bunc ... com.example.func.BuncApplication
+$ ./target/bunc
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::
+
+...
+Aug 07, 2018 11:25:13 AM org.springframework.boot.web.embedded.netty.NettyWebServer start
+INFO: Netty started on port(s): 8080
+Aug 07, 2018 11:25:13 AM org.springframework.boot.StartupInfoLogger logStarted
+INFO: Started application in 0.036 seconds (JVM running for 0.04)
+Benchmark app started
+Started HttpServer: 40ms</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>Downside: you lose all of JVM benefits (debugging, manageability, dynamic compilation, garbage collection).</p></div>
+<div class="paragraph"><p>Also, too many issues still for general purpose use.</p></div>
+</section>
+<section class="slide" id="_links">
+<h2>Links</h2>
+<div class="ulist">
+<ul>
+<li><a class="bare" href="https://github.com/dsyer/spring-boot-startup-bench">https://github.com/dsyer/spring-boot-startup-bench</a> - older (back to Spring Boot 1.3), fat jar data</li>
+<li><a href="https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc">/static</a> benchmarks in the same repo - newer, explores classes loaded correlation</li>
+<li><a href="https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc">/flux</a> benchmarks in the same repo - WebFlux</li>
+<li><a class="bare" href="https://github.com/dsyer/spring-boot-allocations">https://github.com/dsyer/spring-boot-allocations</a> - explore functional beans and GC pressure</li>
+<li><a class="bare" href="https://github.com/dsyer/spring-boot-micro-apps">https://github.com/dsyer/spring-boot-micro-apps</a> - functional beans and AOT (samples not benchmarks)</li>
+<li><a class="bare" href="https://github.com/dsyer/spring-boot-aot">https://github.com/dsyer/spring-boot-aot</a> - AOT compilation and Graal VM</li>
+</ul>
+</div>
+</section>
+<div aria-role="navigation">
+<a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
+<a class="deck-next-link" href="#" title="Next">&#8594;</a>
+</div>
+<p aria-role="status" class="deck-status">
+<span class="deck-status-current"></span>
+/
+<span class="deck-status-total"></span>
+</p>
+<form action="." class="goto-form" method="get">
+<label for="goto-slide">Go to Slide:</label>
+<input id="goto-slide" list="goto-datalist" name="slidenum" type="text">
+<datalist id="goto-data-list"></datalist>
+<input type="submit" value="Go">
+</form>
+</div>
+<script src="../deck.js/jquery.min.js"></script>
+<script src="../deck.js/core/deck.core.js"></script>
+<script src="../deck.js/extensions/scale/deck.scale.js"></script>
+<script src="../deck.js/extensions/goto/deck.goto.js"></script>
+<script src="../deck.js/extensions/menu/deck.menu.js"></script>
+<script src="../deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="../deck.js/extensions/status/deck.status.js"></script>
+<script>
+  (function($, deck, undefined) {
+    $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
+    $.deck.defaults.keys['next'] = [13, 32, 34, 39];
+  
+    $.extend(true, $[deck].defaults, {
+        countNested: false
+    });
+  
+    $.deck('.slide');
+  })(jQuery, 'deck');
+</script>
+<style>
+  .slide.canvas-image {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-box;
+  display: box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -moz-box-align: start;
+  -webkit-box-align: start;
+  -ms-box-align: start;
+  box-align: start;
+  -moz-box-pack: start;
+  -webkit-box-pack: start;
+  -ms-box-pack: start;
+  box-pack: start;}
+  
+  .bottom-left {
+    left: 1%;
+    bottom: 20%; }
+  
+  .top-left {
+    left: 1%;
+    top: 20%; }
+  
+  .bottom-right {
+    right: 1%;
+    bottom: 20%; }
+  
+  .top-right {
+    right: 1%;
+    top: 20%; }
+  
+  .center-up {
+    right: 50%;
+    top: 1%;
+  }
+  
+  .center-down {
+    right: 50%;
+    bottom: 1%;
+  }
+  .canvas-image .canvas-caption p {
+    text-align: center;
+    padding-top: 0;
+    padding: 0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    display: inline;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 58px;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    -moz-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+    padding: 1rem;
+    color: white; }
+  kbd.keyseq { color: #555555; }
+  kbd:not(.keyseq) {
+    display: inline-block;
+    color: #222222;
+    font-size: 0.7em;
+    line-height: 1.4;
+    background-color: #F7F7F7;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    margin: -0.15em 0.15em 0 0.15em;
+    padding: 0.2em 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  kbd kbd:first-child { margin-left: 0; }
+  kbd kbd:last-child { margin-right: 0; }
+</style>
+</body>
+</html>

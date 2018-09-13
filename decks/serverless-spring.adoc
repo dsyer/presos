@@ -27,7 +27,23 @@ http://projectreactor.io/
 * Focus on business logic
 * Easy integration with platform services
 
+== Serverless Use Cases
+
+* Web hooks
+* Background jobs
+* Glue code (hands-free integration)
+
 CNCF https://docs.google.com/document/d/1UjW8bt5O8QBgQRILJVKZJej_IuNnxl20AJu9wA8wcdI[WG Whitepaper]
+
+== No Code is an Island
+
+image::images/serverless/burningmonk.png[mixed_arch]
+
+Credit: Yan Cui, https://theburningmonk.com
+
+== Service Block
+
+image::images/serverless/sba.png[service-block-architecture]
 
 == Amazon Lambda
 
