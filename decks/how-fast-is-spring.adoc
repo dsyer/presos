@@ -1,4 +1,4 @@
-= How Fast is Spring (and Spring Boot)?
+= How Fast is Spring?
 Dave Syer, 2015
 :backend: deckjs
 :deckjs_transition: fade
@@ -31,7 +31,7 @@ image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0j
 
 == Heap Memory and Garbage Collection
 
-image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1685708082&format=image[heap-size-2.1.x,width=75%]
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=336485057&format=image[heap-size-2.1.x,width=75%]
 
 == Garbage Collection
 
@@ -48,17 +48,29 @@ image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0j
 
 TL;DR How do I make my app go faster?
 
-* Classpath exclusions from Spring Boot web starters.
-* Use the `spring-context-indexer`.
-* Don't use actuators if you can afford not to.
-* Use Spring Boot 2.1 and Spring 5.1 when they are available.
+* Classpath exclusions from Spring Boot web starters
+* Use the `spring-context-indexer`
+* Don't use actuators if you can afford not to
+* Use Spring Boot 2.1 and Spring 5.1
 * Use explicit `spring.config.location`
 * Switch off JMX: `spring.jmx.enabled=false`
-* Make bean definitions lazy by default.
-* Unpack the fat jar and run with an explicit classpath.
+* Make bean definitions lazy by default
+* Unpack the fat jar and run with an explicit classpath
 * Run the JVM with `-noverify`. Also consider `-XX:TieredStopAtLevel=1`
-* Use functional bean definition.
-* (Build a native image.)
+* Use functional bean definition
+* (Build a native image)
+
+== Summary
+
+* Spring was designed _ab initio_ to be lightweight
+* The engineering team cares *deeply* about performance
+* There are many *optional* features
+* Packaging: exploded jar with application main is always best
+* Server: there is no measureable difference between Tomcat, Jetty and Undertow
+* Netty is a _bit_ faster on startup - you won't notice in a large app
+* The more features you use, the more classes are loaded
+* Functional bean definitions rule
+* Spring Boot, HTTP: starts in <1sec and uses <10MB heap
 
 == Tools
 
@@ -84,7 +96,7 @@ MainBenchmark  func  avgt   10  0.652 ± 0.017   s/op 25    4378
 
 == Number of Classes vs. Startup Time
 
-image::https://docs.google.com/spreadsheets/d/e/2PACX-1vR8B4l5WkWf-9gZWmIYTkmBWM7YWf5bRg852OakrV0G2-vtfM_UkVNRC3cTVk1079HagnMVHYZnvbib/pubchart?oid=88442446&amp;format=image[,width=75%]
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vR8B4l5WkWf-9gZWmIYTkmBWM7YWf5bRg852OakrV0G2-vtfM_UkVNRC3cTVk1079HagnMVHYZnvbib/pubchart?oid=976086548&format=image[width=75%]
 
 == WebFlux and Micro Apps
 
@@ -102,15 +114,11 @@ MiniBenchmark.micro      jlog    ss   10  0.186 ± 0.006   s/op 1371
 MiniBenchmark.micro      demo    ss   10  0.288 ± 0.006   s/op 2112
 ```
 
-== Number of Classes vs. Startup Time
-
-image::https://docs.google.com/spreadsheets/d/e/2PACX-1vR8B4l5WkWf-9gZWmIYTkmBWM7YWf5bRg852OakrV0G2-vtfM_UkVNRC3cTVk1079HagnMVHYZnvbib/pubchart?oid=976086548&format=image[width=75%]
-
 == JVM Tweaks
 
 * Command line: `-noverify` `-XX:TieredStopAtLevel=1` `-Djava.security.egd=file:/dev/./urandom`
-* Java 10/11: CDS, AOT (GraalVM)
 * Open J9: CDS
+* Java 10/11: CDS, AOT (GraalVM)
 * Explicit classpath (exploded archive)
 
 == Open J9
@@ -150,9 +158,10 @@ YMMV, but consider excluding:
 
 == Lazy Beans
 
-* Spring Data `@EnableJpaRepositories(bootstrapMode=BootstrapMode.LAZY)`
+* Spring Data `@EnableJpaRepositories(bootstrapMode=BootstrapMode.LAZY)` or `spring.data.jpa.repositories.bootstrap-mode=lazy`
 * `BeanFactoryPostProcessor` that switches all beans to `lazy=true`
 * Look carefully at custom beans with expensive `@PostConstruct`
+* Profiling with AspectJ
 
 == Lazy Subsystems
 
@@ -226,7 +235,9 @@ C.f. `Bunc` vs `Demo`.
 
 == Examples
 
-* https://github.com/dsyer/spring-boot-micro-apps[Micro apps] (`FuncApplication` and `BuncApplication`)
+* Micro apps (`FuncApplication` and `BuncApplication`): https://github.com/dsyer/spring-boot-micro-apps
+* Spring Fu: https://github.com/spring-projects/spring-fu
+* Spring Init Experiment: https://github.com/dsyer/spring-init-experiment 
 * Spring Cloud Function AWS adapter
 
 == Functional Beans: Research
@@ -234,9 +245,11 @@ C.f. `Bunc` vs `Demo`.
 * Convert `@Configuration` to `ApplicationContextInitializer`
     - runtime (https://github.com/dsyer/spring-boot-auto-reflect[reflection])
     - compile time
+* Hand write configuration using Spring Boot autoconfiguration as a public API (c.f. micro apps)
 
 Compile time options:
 
+* AspectJ - works with e.g. `@Transactional` since 2006, but not a full solution for `@Configuration`
 * Annotation processor (standard JDK feature)
 * Byte code enhancement, e.g. https://github.com/dsyer/spring-init-experiment[Byte Buddy] plugin
 
@@ -265,7 +278,7 @@ Benchmark app started
 Started HttpServer: 40ms
 ```
 
-Downside: you lose all of JVM benefits (debugging, manageability, dynamic compilation, garbage collection).
+Downside: you lose all of JVM benefits (debugging, manageability, dynamic compilation, optimization, garbage collection).
 
 Also, too many issues still for general purpose use.
 
@@ -274,6 +287,8 @@ Also, too many issues still for general purpose use.
 * https://github.com/dsyer/spring-boot-startup-bench - older (back to Spring Boot 1.3), fat jar data
 * https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc[/static] benchmarks in the same repo - newer, explores classes loaded correlation
 * https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc[/flux] benchmarks in the same repo - WebFlux
+* Spring Fu: https://github.com/spring-projects/spring-fu
+* Spring Init Experiment: https://github.com/dsyer/spring-init-experiment
 * https://github.com/dsyer/spring-boot-allocations - explore functional beans and GC pressure
 * https://github.com/dsyer/spring-boot-micro-apps - functional beans and AOT (samples not benchmarks)
 * https://github.com/dsyer/spring-boot-aot - AOT compilation and Graal VM

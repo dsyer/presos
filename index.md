@@ -5,6 +5,7 @@ layout: home
 
 # Presentations
 
+* [How Fast is Spring?](decks/how-fast-is-spring.html) from SpringOne 2018
 * [Platforms and Functions](decks/functions.html) from Spring/IO 2018
 * [Serverless Spring](decks/serverless-spring.html), Riff and Spring Cloud Function
 * [The Road to Serverless](decks/road-to-serverless.html) and Spring Cloud Function
