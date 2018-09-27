@@ -5,7 +5,7 @@
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta content="Asciidoctor 1.5.4" name="generator">
 <meta content="Dave Syer, 2015" name="author">
-<title>How Fast is Spring (and Spring Boot)?</title>
+<title>How Fast is Spring?</title>
 <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
 <style>
 .conum { display: inline-block; color: white !important; background-color: #222222; -webkit-border-radius: 100px; border-radius: 100px; text-align: center; width: 1.2em; height: 1.2em; font-size: 0.9em; font-weight: bold; line-height: 1.2; font-family: Arial, sans-serif; font-style: normal; position: relative; top: -0.1em; }
@@ -30,7 +30,7 @@
 <body class="article">
 <div class="deck-container">
 <section class="slide" id="title-slide">
-<h1>How Fast is Spring (and Spring Boot)?</h1>
+<h1>How Fast is Spring?</h1>
 <span id="author">Dave Syer, 2015</span>
 <br>
 </section>
@@ -66,7 +66,7 @@
 <h2>Heap Memory and Garbage Collection</h2>
 <div class="imageblock">
 <div class="content">
-<img alt="heap-size-2.1.x" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1685708082&format=image" width="75%">
+<img alt="heap-size-2.1.x" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=336485057&format=image" width="75%">
 </div>
 </div>
 </section>
@@ -102,17 +102,33 @@
 <div class="paragraph"><p>TL;DR How do I make my app go faster?</p></div>
 <div class="ulist">
 <ul>
-<li>Classpath exclusions from Spring Boot web starters.</li>
-<li>Use the <code>spring-context-indexer</code>.</li>
-<li>Don&#8217;t use actuators if you can afford not to.</li>
-<li>Use Spring Boot 2.1 and Spring 5.1 when they are available.</li>
+<li>Classpath exclusions from Spring Boot web starters</li>
+<li>Use the <code>spring-context-indexer</code></li>
+<li>Don&#8217;t use actuators if you can afford not to</li>
+<li>Use Spring Boot 2.1 and Spring 5.1</li>
 <li>Use explicit <code>spring.config.location</code></li>
 <li>Switch off JMX: <code>spring.jmx.enabled=false</code></li>
-<li>Make bean definitions lazy by default.</li>
-<li>Unpack the fat jar and run with an explicit classpath.</li>
+<li>Make bean definitions lazy by default</li>
+<li>Unpack the fat jar and run with an explicit classpath</li>
 <li>Run the JVM with <code>-noverify</code>. Also consider <code>-XX:TieredStopAtLevel=1</code></li>
-<li>Use functional bean definition.</li>
-<li>(Build a native image.)</li>
+<li>Use functional bean definition</li>
+<li>(Build a native image)</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_summary">
+<h2>Summary</h2>
+<div class="ulist">
+<ul>
+<li>Spring was designed <em>ab initio</em> to be lightweight</li>
+<li>The engineering team cares <strong>deeply</strong> about performance</li>
+<li>There are many <strong>optional</strong> features</li>
+<li>Packaging: exploded jar with application main is always best</li>
+<li>Server: there is no measureable difference between Tomcat, Jetty and Undertow</li>
+<li>Netty is a <em>bit</em> faster on startup - you won&#8217;t notice in a large app</li>
+<li>The more features you use, the more classes are loaded</li>
+<li>Functional bean definitions rule</li>
+<li>Spring Boot, HTTP: starts in &lt;1sec and uses &lt;10MB heap</li>
 </ul>
 </div>
 </section>
@@ -147,7 +163,7 @@ MainBenchmark  func  avgt   10  0.652 ± 0.017   s/op 25    4378</code></pre>
 <h2>Number of Classes vs. Startup Time</h2>
 <div class="imageblock">
 <div class="content">
-<img alt="pubchart?oid=88442446&amp;amp;format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR8B4l5WkWf-9gZWmIYTkmBWM7YWf5bRg852OakrV0G2-vtfM_UkVNRC3cTVk1079HagnMVHYZnvbib/pubchart?oid=88442446&amp;format=image" width="75%">
+<img alt="pubchart?oid=976086548&amp;format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR8B4l5WkWf-9gZWmIYTkmBWM7YWf5bRg852OakrV0G2-vtfM_UkVNRC3cTVk1079HagnMVHYZnvbib/pubchart?oid=976086548&format=image" width="75%">
 </div>
 </div>
 </section>
@@ -168,21 +184,13 @@ MiniBenchmark.micro      demo    ss   10  0.288 ± 0.006   s/op 2112</code></pre
 </div>
 </div>
 </section>
-<section class="slide" id="_number_of_classes_vs_startup_time_2">
-<h2>Number of Classes vs. Startup Time</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="pubchart?oid=976086548&amp;format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR8B4l5WkWf-9gZWmIYTkmBWM7YWf5bRg852OakrV0G2-vtfM_UkVNRC3cTVk1079HagnMVHYZnvbib/pubchart?oid=976086548&format=image" width="75%">
-</div>
-</div>
-</section>
 <section class="slide" id="_jvm_tweaks">
 <h2>JVM Tweaks</h2>
 <div class="ulist">
 <ul>
 <li>Command line: <code>-noverify</code> <code>-XX:TieredStopAtLevel=1</code> <code>-Djava.security.egd=file:/dev/./urandom</code></li>
-<li>Java 10/11: CDS, AOT (GraalVM)</li>
 <li>Open J9: CDS</li>
+<li>Java 10/11: CDS, AOT (GraalVM)</li>
 <li>Explicit classpath (exploded archive)</li>
 </ul>
 </div>
@@ -238,9 +246,10 @@ MiniBenchmark.micro      demo    ss   10  0.204 ± 0.019   s/op 2238</code></pre
 <h2>Lazy Beans</h2>
 <div class="ulist">
 <ul>
-<li>Spring Data <code>@EnableJpaRepositories(bootstrapMode=BootstrapMode.LAZY)</code></li>
+<li>Spring Data <code>@EnableJpaRepositories(bootstrapMode=BootstrapMode.LAZY)</code> or <code>spring.data.jpa.repositories.bootstrap-mode=lazy</code></li>
 <li><code>BeanFactoryPostProcessor</code> that switches all beans to <code>lazy=true</code></li>
 <li>Look carefully at custom beans with expensive <code>@PostConstruct</code></li>
+<li>Profiling with AspectJ</li>
 </ul>
 </div>
 </section>
@@ -323,7 +332,9 @@ MiniBenchmark.micro      demo    ss   10  0.204 ± 0.019   s/op 2238</code></pre
 <h2>Examples</h2>
 <div class="ulist">
 <ul>
-<li><a href="https://github.com/dsyer/spring-boot-micro-apps">Micro apps</a> (<code>FuncApplication</code> and <code>BuncApplication</code>)</li>
+<li>Micro apps (<code>FuncApplication</code> and <code>BuncApplication</code>): <a class="bare" href="https://github.com/dsyer/spring-boot-micro-apps">https://github.com/dsyer/spring-boot-micro-apps</a></li>
+<li>Spring Fu: <a class="bare" href="https://github.com/spring-projects/spring-fu">https://github.com/spring-projects/spring-fu</a></li>
+<li>Spring Init Experiment: <a class="bare" href="https://github.com/dsyer/spring-init-experiment">https://github.com/dsyer/spring-init-experiment</a></li>
 <li>Spring Cloud Function AWS adapter</li>
 </ul>
 </div>
@@ -339,11 +350,13 @@ Convert <code>@Configuration</code> to <code>ApplicationContextInitializer</code
 <li>compile time</li>
 </ul>
 </div></p></li>
+<li>Hand write configuration using Spring Boot autoconfiguration as a public API (c.f. micro apps)</li>
 </ul>
 </div>
 <div class="paragraph"><p>Compile time options:</p></div>
 <div class="ulist">
 <ul>
+<li>AspectJ - works with e.g. <code>@Transactional</code> since 2006, but not a full solution for <code>@Configuration</code></li>
 <li>Annotation processor (standard JDK feature)</li>
 <li>Byte code enhancement, e.g. <a href="https://github.com/dsyer/spring-init-experiment">Byte Buddy</a> plugin</li>
 </ul>
@@ -374,7 +387,7 @@ Benchmark app started
 Started HttpServer: 40ms</code></pre>
 </div>
 </div>
-<div class="paragraph"><p>Downside: you lose all of JVM benefits (debugging, manageability, dynamic compilation, garbage collection).</p></div>
+<div class="paragraph"><p>Downside: you lose all of JVM benefits (debugging, manageability, dynamic compilation, optimization, garbage collection).</p></div>
 <div class="paragraph"><p>Also, too many issues still for general purpose use.</p></div>
 </section>
 <section class="slide" id="_links">
@@ -384,6 +397,8 @@ Started HttpServer: 40ms</code></pre>
 <li><a class="bare" href="https://github.com/dsyer/spring-boot-startup-bench">https://github.com/dsyer/spring-boot-startup-bench</a> - older (back to Spring Boot 1.3), fat jar data</li>
 <li><a href="https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc">/static</a> benchmarks in the same repo - newer, explores classes loaded correlation</li>
 <li><a href="https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc">/flux</a> benchmarks in the same repo - WebFlux</li>
+<li>Spring Fu: <a class="bare" href="https://github.com/spring-projects/spring-fu">https://github.com/spring-projects/spring-fu</a></li>
+<li>Spring Init Experiment: <a class="bare" href="https://github.com/dsyer/spring-init-experiment">https://github.com/dsyer/spring-init-experiment</a></li>
 <li><a class="bare" href="https://github.com/dsyer/spring-boot-allocations">https://github.com/dsyer/spring-boot-allocations</a> - explore functional beans and GC pressure</li>
 <li><a class="bare" href="https://github.com/dsyer/spring-boot-micro-apps">https://github.com/dsyer/spring-boot-micro-apps</a> - functional beans and AOT (samples not benchmarks)</li>
 <li><a class="bare" href="https://github.com/dsyer/spring-boot-aot">https://github.com/dsyer/spring-boot-aot</a> - AOT compilation and Graal VM</li>
