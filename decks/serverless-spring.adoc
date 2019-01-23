@@ -57,6 +57,10 @@ image::images/gcp_function_screenshot.png[gcp_function_screenshot]
 
 image::images/azure_function_screenshot.png[azure_function_screenshot]
 
+== Alibaba Function Compute
+
+image::images/alibaba_screenshot.png[alibaba_screenshot]
+
 == Riff
 
 image::images/riff_function_screenshot.png[riff_function_screenshot]
@@ -66,7 +70,8 @@ image::images/riff_function_screenshot.png[riff_function_screenshot]
 * (J) Amazon Lambda
 * Google Cloud Functions
 * (J) Azure Function
-* (J) Riff https://github.com/projectriff
+* (J) Alibaba
+* (J) Riff https://projectriff.io and PFS
 * (J) IBM OpenWhisk
 * (J) Oracle Fn
 * OpenFaaS
@@ -132,9 +137,7 @@ public class Uppercase implements Function<String, String> {
 
 * ... it's not that simple
 
-image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQRWYdp_BpzQg7nA9P7xi9bjTapxu6cYrLi7PFvBmnnKM2zCuVuYzAh25KpFuz0hX0fqJyo1nJO5fyN/pubchart?oid=1202364356&format=image[startup]
-
-image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQRWYdp_BpzQg7nA9P7xi9bjTapxu6cYrLi7PFvBmnnKM2zCuVuYzAh25KpFuz0hX0fqJyo1nJO5fyN/pubchart?oid=459598255&format=image[billing]
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQRWYdp_BpzQg7nA9P7xi9bjTapxu6cYrLi7PFvBmnnKM2zCuVuYzAh25KpFuz0hX0fqJyo1nJO5fyN/pubchart?oid=459598255&format=image[Memory Cost]
 
 == Spring Cloud Function
 
@@ -211,9 +214,9 @@ service providers
 
 1. Spring is not slow or "heavy" on its own, classes loaded is important
 
-2. AWS Lambda containers are *slow*
+2. AWS Lambda containers are *slow*, Azure even more so
 
-3. Warm JVM starts app much faster (10x) -> class loader isolation
+3. Functional bean definitions rule for fast startup
 
 4. Functions are glue code anyway - not latency sensitive
 
