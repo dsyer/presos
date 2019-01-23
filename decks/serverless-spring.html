@@ -101,6 +101,14 @@
 </div>
 </div>
 </section>
+<section class="slide" id="_alibaba_function_compute">
+<h2>Alibaba Function Compute</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="alibaba_screenshot" src="images/alibaba_screenshot.png">
+</div>
+</div>
+</section>
 <section class="slide" id="_riff">
 <h2>Riff</h2>
 <div class="imageblock">
@@ -116,7 +124,8 @@
 <li>(J) Amazon Lambda</li>
 <li>Google Cloud Functions</li>
 <li>(J) Azure Function</li>
-<li>(J) Riff <a class="bare" href="https://github.com/projectriff">https://github.com/projectriff</a></li>
+<li>(J) Alibaba</li>
+<li>(J) Riff <a class="bare" href="https://projectriff.io">https://projectriff.io</a> and PFS</li>
 <li>(J) IBM OpenWhisk</li>
 <li>(J) Oracle Fn</li>
 <li>OpenFaaS</li>
@@ -192,12 +201,7 @@ Others can run Java, e.g. via custom container or node JRE launcher.</p></div>
 </div>
 <div class="imageblock">
 <div class="content">
-<img alt="startup" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQRWYdp_BpzQg7nA9P7xi9bjTapxu6cYrLi7PFvBmnnKM2zCuVuYzAh25KpFuz0hX0fqJyo1nJO5fyN/pubchart?oid=1202364356&format=image">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img alt="billing" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQRWYdp_BpzQg7nA9P7xi9bjTapxu6cYrLi7PFvBmnnKM2zCuVuYzAh25KpFuz0hX0fqJyo1nJO5fyN/pubchart?oid=459598255&format=image">
+<img alt="Memory Cost" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQRWYdp_BpzQg7nA9P7xi9bjTapxu6cYrLi7PFvBmnnKM2zCuVuYzAh25KpFuz0hX0fqJyo1nJO5fyN/pubchart?oid=459598255&format=image">
 </div>
 </div>
 </section>
@@ -302,10 +306,10 @@ service providers
 Spring is not slow or "heavy" on its own, classes loaded is important
 </li>
 <li>
-AWS Lambda containers are <strong>slow</strong>
+AWS Lambda containers are <strong>slow</strong>, Azure even more so
 </li>
 <li>
-Warm JVM starts app much faster (10x) &#8594; class loader isolation
+Functional bean definitions rule for fast startup
 </li>
 <li>
 Functions are glue code anyway - not latency sensitive

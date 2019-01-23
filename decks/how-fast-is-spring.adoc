@@ -1,5 +1,5 @@
 = How Fast is Spring?
-Dave Syer, 2015
+Dave Syer, 2018
 :backend: deckjs
 :deckjs_transition: fade
 :navigation:
@@ -77,7 +77,9 @@ TL;DR How do I make my app go faster?
 * Benchmarks: http://openjdk.java.net/projects/code-tools/jmh/[JMH]
 * Profiling: https://github.com/jvm-profiling-tools/async-profiler[async-profiler]
 * GC pressure: http://openjdk.java.net/projects/jmc/[JMC] a.k.a. Flight Controller
+* Quick metrics for any Spring Boot jar: https://github.com/dsyer/spring-boot-startup-bench/blob/master/launcher/README.adoc[Benchmark launcher] from dsyer/spring-boot-startup.
 * Classpath manipulation: https://github.com/dsyer/spring-boot-thin-launcher[Thin Launcher]
+* Profiling with https://github.com/dsyer/spring-boot-aspectj/tree/master/timing[AspectJ]
 
 == Benchmarks: Application Startup
 
@@ -117,7 +119,7 @@ MiniBenchmark.micro      demo    ss   10  0.288 ± 0.006   s/op 2112
 == JVM Tweaks
 
 * Command line: `-noverify` `-XX:TieredStopAtLevel=1` `-Djava.security.egd=file:/dev/./urandom`
-* Open J9: CDS
+* Open J9: CDS `-Xquickstart -Xshareclasses -Xscmx128m`
 * Java 10/11: CDS, AOT (GraalVM)
 * Explicit classpath (exploded archive)
 
@@ -161,7 +163,7 @@ YMMV, but consider excluding:
 * Spring Data `@EnableJpaRepositories(bootstrapMode=BootstrapMode.LAZY)` or `spring.data.jpa.repositories.bootstrap-mode=lazy`
 * `BeanFactoryPostProcessor` that switches all beans to `lazy=true`
 * Look carefully at custom beans with expensive `@PostConstruct`
-* Profiling with AspectJ
+* Profiling with https://github.com/dsyer/spring-boot-aspectj/tree/master/timing[AspectJ]
 
 == Lazy Subsystems
 
@@ -238,14 +240,14 @@ C.f. `Bunc` vs `Demo`.
 * Micro apps (`FuncApplication` and `BuncApplication`): https://github.com/dsyer/spring-boot-micro-apps
 * Spring Fu: https://github.com/spring-projects/spring-fu
 * Spring Init Experiment: https://github.com/dsyer/spring-init-experiment 
-* Spring Cloud Function AWS adapter
+* Spring Cloud Function `spring.functional.enabled=true`
 
 == Functional Beans: Research
 
 * Convert `@Configuration` to `ApplicationContextInitializer`
     - runtime (https://github.com/dsyer/spring-boot-auto-reflect[reflection])
     - compile time
-* Hand write configuration using Spring Boot autoconfiguration as a public API (c.f. micro apps)
+* Hand write configuration using Spring Boot autoconfiguration as a public API
 
 Compile time options:
 

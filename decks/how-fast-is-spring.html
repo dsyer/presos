@@ -4,7 +4,7 @@
 <meta content="text/html; charset=" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta content="Asciidoctor 1.5.4" name="generator">
-<meta content="Dave Syer, 2015" name="author">
+<meta content="Dave Syer, 2018" name="author">
 <title>How Fast is Spring?</title>
 <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
 <style>
@@ -31,7 +31,7 @@
 <div class="deck-container">
 <section class="slide" id="title-slide">
 <h1>How Fast is Spring?</h1>
-<span id="author">Dave Syer, 2015</span>
+<span id="author">Dave Syer, 2018</span>
 <br>
 </section>
 <section class="slide" id="_agenda">
@@ -139,7 +139,9 @@
 <li>Benchmarks: <a href="http://openjdk.java.net/projects/code-tools/jmh/">JMH</a></li>
 <li>Profiling: <a href="https://github.com/jvm-profiling-tools/async-profiler">async-profiler</a></li>
 <li>GC pressure: <a href="http://openjdk.java.net/projects/jmc/">JMC</a> a.k.a. Flight Controller</li>
+<li>Quick metrics for any Spring Boot jar: <a href="https://github.com/dsyer/spring-boot-startup-bench/blob/master/launcher/README.adoc">Benchmark launcher</a> from dsyer/spring-boot-startup.</li>
 <li>Classpath manipulation: <a href="https://github.com/dsyer/spring-boot-thin-launcher">Thin Launcher</a></li>
+<li>Profiling with <a href="https://github.com/dsyer/spring-boot-aspectj/tree/master/timing">AspectJ</a></li>
 </ul>
 </div>
 </section>
@@ -189,7 +191,7 @@ MiniBenchmark.micro      demo    ss   10  0.288 ± 0.006   s/op 2112</code></pre
 <div class="ulist">
 <ul>
 <li>Command line: <code>-noverify</code> <code>-XX:TieredStopAtLevel=1</code> <code>-Djava.security.egd=file:/dev/./urandom</code></li>
-<li>Open J9: CDS</li>
+<li>Open J9: CDS <code>-Xquickstart -Xshareclasses -Xscmx128m</code></li>
 <li>Java 10/11: CDS, AOT (GraalVM)</li>
 <li>Explicit classpath (exploded archive)</li>
 </ul>
@@ -249,7 +251,7 @@ MiniBenchmark.micro      demo    ss   10  0.204 ± 0.019   s/op 2238</code></pre
 <li>Spring Data <code>@EnableJpaRepositories(bootstrapMode=BootstrapMode.LAZY)</code> or <code>spring.data.jpa.repositories.bootstrap-mode=lazy</code></li>
 <li><code>BeanFactoryPostProcessor</code> that switches all beans to <code>lazy=true</code></li>
 <li>Look carefully at custom beans with expensive <code>@PostConstruct</code></li>
-<li>Profiling with AspectJ</li>
+<li>Profiling with <a href="https://github.com/dsyer/spring-boot-aspectj/tree/master/timing">AspectJ</a></li>
 </ul>
 </div>
 </section>
@@ -335,7 +337,7 @@ MiniBenchmark.micro      demo    ss   10  0.204 ± 0.019   s/op 2238</code></pre
 <li>Micro apps (<code>FuncApplication</code> and <code>BuncApplication</code>): <a class="bare" href="https://github.com/dsyer/spring-boot-micro-apps">https://github.com/dsyer/spring-boot-micro-apps</a></li>
 <li>Spring Fu: <a class="bare" href="https://github.com/spring-projects/spring-fu">https://github.com/spring-projects/spring-fu</a></li>
 <li>Spring Init Experiment: <a class="bare" href="https://github.com/dsyer/spring-init-experiment">https://github.com/dsyer/spring-init-experiment</a></li>
-<li>Spring Cloud Function AWS adapter</li>
+<li>Spring Cloud Function <code>spring.functional.enabled=true</code></li>
 </ul>
 </div>
 </section>
@@ -350,7 +352,7 @@ Convert <code>@Configuration</code> to <code>ApplicationContextInitializer</code
 <li>compile time</li>
 </ul>
 </div></p></li>
-<li>Hand write configuration using Spring Boot autoconfiguration as a public API (c.f. micro apps)</li>
+<li>Hand write configuration using Spring Boot autoconfiguration as a public API</li>
 </ul>
 </div>
 <div class="paragraph"><p>Compile time options:</p></div>
