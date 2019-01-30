@@ -57,6 +57,7 @@ TL;DR How do I make my app go faster?
 * Make bean definitions lazy by default
 * Unpack the fat jar and run with an explicit classpath
 * Run the JVM with `-noverify`. Also consider `-XX:TieredStopAtLevel=1`
+* Import autoconfigurations individually
 * Use functional bean definition
 * (Build a native image)
 
@@ -148,37 +149,44 @@ YMMV, but consider excluding:
 * Hibernate Validator (`org.hibernate.validator:hibernate-validator`)
 * Actuators (`spring-boot-starter-actuator`)
 
-== Spring Tweaks
-
-* Use the `spring-context-indexer`.
-* Don't use actuators if you can afford not to.
-* Use Spring Boot 2.1 and Spring 5.1 when they are available.
-* Use explicit `spring.config.location`
-* Switch off JMX: `spring.jmx.enabled=false`
-* Make bean definitions lazy by default.
-* Use functional bean definition.
-
 == Lazy Beans
 
 * Spring Data `@EnableJpaRepositories(bootstrapMode=BootstrapMode.LAZY)` or `spring.data.jpa.repositories.bootstrap-mode=lazy`
 * `BeanFactoryPostProcessor` that switches all beans to `lazy=true`
 * Look carefully at custom beans with expensive `@PostConstruct`
 * Profiling with https://github.com/dsyer/spring-boot-aspectj/tree/master/timing[AspectJ]
+* Lazy subsystems, E.g. see https://github.com/dsyer/spring-boot-lazy-actuator[Lazy Actuator]
 
-== Lazy Subsystems
+== Manual Configuration
 
-Break down application into modules and initialize each one separately on demand.
+Choose your own autoconfigurations: "a la carte" instead of "all you can eat".
 
-E.g. see https://github.com/dsyer/spring-boot-lazy-actuator[Lazy Actuator]
+```java
+@SpringBootConfiguration
+@ImportAutoConfiguration({
+    WebFluxAutoConfiguration.class,
+    ReactiveWebServerFactoryAutoConfiguration.class,
+    ErrorWebFluxAutoConfiguration.class,
+    HttpHandlerAutoConfiguration.class,
+    ConfigurationPropertiesAutoConfiguration.class,
+    PropertyPlaceholderAutoConfiguration.class
+})
+@RestController
+public class DemoApplication {
 
-.pom.xml
-```xml
-<dependency>
-	<groupId>org.springframework.boot.experimental</groupId>
-	<artifactId>spring-boot-lazy-actuator</artifactId>
-	<version>1.0.0.BUILD-SNAPSHOT</version>
-</dependency>
+...
+
+}
 ```
+
+== PetClinic Benchmarks
+
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1003506885&format=image[]
+
+* Green: manual autoconfiguration.
+* Red: different "a la carte" option in Spring Init.
+* Blue: out of the box Spring Boot.
+* Yellow: fully functional via Spring Init
 
 == Functional Bean Definitions
 
@@ -239,21 +247,27 @@ C.f. `Bunc` vs `Demo`.
 
 * Micro apps (`FuncApplication` and `BuncApplication`): https://github.com/dsyer/spring-boot-micro-apps
 * Spring Fu: https://github.com/spring-projects/spring-fu
-* Spring Init Experiment: https://github.com/dsyer/spring-init-experiment 
+* Spring Init: https://github.com/spring-projects-experimental/spring-init
 * Spring Cloud Function `spring.functional.enabled=true`
 
-== Functional Beans: Research
 
-* Convert `@Configuration` to `ApplicationContextInitializer`
-    - runtime (https://github.com/dsyer/spring-boot-auto-reflect[reflection])
-    - compile time
-* Hand write configuration using Spring Boot autoconfiguration as a public API
+== CPU Constrained Environments
 
-Compile time options:
+```
+container cpus  startup(ms)
+===========================
+riff       4       2817
+scf        4        664
+riff       2       4614
+scf        2        653
+riff       1      16782
+scf        1       2121
+scf:n      1       1091
+```
 
-* AspectJ - works with e.g. `@Transactional` since 2006, but not a full solution for `@Configuration`
-* Annotation processor (standard JDK feature)
-* Byte code enhancement, e.g. https://github.com/dsyer/spring-init-experiment[Byte Buddy] plugin
+* riff is the image built by pack using the riff builder
+* scf same app built with WebFlux and functional beans 
+* scf:n also switch off background preinit
 
 == Ahead of Time Compilation (AOT)
 
@@ -290,7 +304,8 @@ Also, too many issues still for general purpose use.
 * https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc[/static] benchmarks in the same repo - newer, explores classes loaded correlation
 * https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc[/flux] benchmarks in the same repo - WebFlux
 * Spring Fu: https://github.com/spring-projects/spring-fu
-* Spring Init Experiment: https://github.com/dsyer/spring-init-experiment
+* Spring Init Experiment: https://github.com/spring-projects-experimental/spring-init
 * https://github.com/dsyer/spring-boot-allocations - explore functional beans and GC pressure
 * https://github.com/dsyer/spring-boot-micro-apps - functional beans and AOT (samples not benchmarks)
 * https://github.com/dsyer/spring-boot-aot - AOT compilation and Graal VM
+* https://github.com/mp911de/microbenchmark-runner: Microbenchmark runner with JUnit

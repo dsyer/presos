@@ -111,6 +111,7 @@
 <li>Make bean definitions lazy by default</li>
 <li>Unpack the fat jar and run with an explicit classpath</li>
 <li>Run the JVM with <code>-noverify</code>. Also consider <code>-XX:TieredStopAtLevel=1</code></li>
+<li>Import autoconfigurations individually</li>
 <li>Use functional bean definition</li>
 <li>(Build a native image)</li>
 </ul>
@@ -230,20 +231,6 @@ MiniBenchmark.micro      demo    ss   10  0.204 ± 0.019   s/op 2238</code></pre
 </ul>
 </div>
 </section>
-<section class="slide" id="_spring_tweaks">
-<h2>Spring Tweaks</h2>
-<div class="ulist">
-<ul>
-<li>Use the <code>spring-context-indexer</code>.</li>
-<li>Don&#8217;t use actuators if you can afford not to.</li>
-<li>Use Spring Boot 2.1 and Spring 5.1 when they are available.</li>
-<li>Use explicit <code>spring.config.location</code></li>
-<li>Switch off JMX: <code>spring.jmx.enabled=false</code></li>
-<li>Make bean definitions lazy by default.</li>
-<li>Use functional bean definition.</li>
-</ul>
-</div>
-</section>
 <section class="slide" id="_lazy_beans">
 <h2>Lazy Beans</h2>
 <div class="ulist">
@@ -252,22 +239,47 @@ MiniBenchmark.micro      demo    ss   10  0.204 ± 0.019   s/op 2238</code></pre
 <li><code>BeanFactoryPostProcessor</code> that switches all beans to <code>lazy=true</code></li>
 <li>Look carefully at custom beans with expensive <code>@PostConstruct</code></li>
 <li>Profiling with <a href="https://github.com/dsyer/spring-boot-aspectj/tree/master/timing">AspectJ</a></li>
+<li>Lazy subsystems, E.g. see <a href="https://github.com/dsyer/spring-boot-lazy-actuator">Lazy Actuator</a></li>
 </ul>
 </div>
 </section>
-<section class="slide" id="_lazy_subsystems">
-<h2>Lazy Subsystems</h2>
-<div class="paragraph"><p>Break down application into modules and initialize each one separately on demand.</p></div>
-<div class="paragraph"><p>E.g. see <a href="https://github.com/dsyer/spring-boot-lazy-actuator">Lazy Actuator</a></p></div>
+<section class="slide" id="_manual_configuration">
+<h2>Manual Configuration</h2>
+<div class="paragraph"><p>Choose your own autoconfigurations: "a la carte" instead of "all you can eat".</p></div>
 <div class="listingblock">
-<div class="title">pom.xml</div>
 <div class="content">
-<pre class="pygments highlight"><code class="xml language-xml"><span class="tok-nt">&lt;dependency&gt;</span>
-	<span class="tok-nt">&lt;groupId&gt;</span>org.springframework.boot.experimental<span class="tok-nt">&lt;/groupId&gt;</span>
-	<span class="tok-nt">&lt;artifactId&gt;</span>spring-boot-lazy-actuator<span class="tok-nt">&lt;/artifactId&gt;</span>
-	<span class="tok-nt">&lt;version&gt;</span>1.0.0.BUILD-SNAPSHOT<span class="tok-nt">&lt;/version&gt;</span>
-<span class="tok-nt">&lt;/dependency&gt;</span></code></pre>
+<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@SpringBootConfiguration</span>
+<span class="tok-nd">@ImportAutoConfiguration</span><span class="tok-o">({</span>
+    <span class="tok-n">WebFluxAutoConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span>
+    <span class="tok-n">ReactiveWebServerFactoryAutoConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span>
+    <span class="tok-n">ErrorWebFluxAutoConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span>
+    <span class="tok-n">HttpHandlerAutoConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span>
+    <span class="tok-n">ConfigurationPropertiesAutoConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span>
+    <span class="tok-n">PropertyPlaceholderAutoConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span>
+<span class="tok-o">})</span>
+<span class="tok-nd">@RestController</span>
+<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">DemoApplication</span> <span class="tok-o">{</span>
+
+<span class="tok-o">...</span>
+
+<span class="tok-o">}</span></code></pre>
 </div>
+</div>
+</section>
+<section class="slide" id="_petclinic_benchmarks">
+<h2>PetClinic Benchmarks</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="pubchart?oid=1003506885&amp;format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1003506885&format=image">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>Green: manual autoconfiguration.</li>
+<li>Red: different "a la carte" option in Spring Init.</li>
+<li>Blue: out of the box Spring Boot.</li>
+<li>Yellow: fully functional via Spring Init</li>
+</ul>
 </div>
 </section>
 <section class="slide" id="_functional_bean_definitions">
@@ -336,31 +348,31 @@ MiniBenchmark.micro      demo    ss   10  0.204 ± 0.019   s/op 2238</code></pre
 <ul>
 <li>Micro apps (<code>FuncApplication</code> and <code>BuncApplication</code>): <a class="bare" href="https://github.com/dsyer/spring-boot-micro-apps">https://github.com/dsyer/spring-boot-micro-apps</a></li>
 <li>Spring Fu: <a class="bare" href="https://github.com/spring-projects/spring-fu">https://github.com/spring-projects/spring-fu</a></li>
-<li>Spring Init Experiment: <a class="bare" href="https://github.com/dsyer/spring-init-experiment">https://github.com/dsyer/spring-init-experiment</a></li>
+<li>Spring Init: <a class="bare" href="https://github.com/spring-projects-experimental/spring-init">https://github.com/spring-projects-experimental/spring-init</a></li>
 <li>Spring Cloud Function <code>spring.functional.enabled=true</code></li>
 </ul>
 </div>
 </section>
-<section class="slide" id="_functional_beans_research">
-<h2>Functional Beans: Research</h2>
-<div class="ulist">
-<ul>
-<li><p>
-Convert <code>@Configuration</code> to <code>ApplicationContextInitializer</code><div class="ulist">
-<ul>
-<li>runtime (<a href="https://github.com/dsyer/spring-boot-auto-reflect">reflection</a>)</li>
-<li>compile time</li>
-</ul>
-</div></p></li>
-<li>Hand write configuration using Spring Boot autoconfiguration as a public API</li>
-</ul>
+<section class="slide" id="_cpu_constrained_environments">
+<h2>CPU Constrained Environments</h2>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>container cpus  startup(ms)
+===========================
+riff       4       2817
+scf        4        664
+riff       2       4614
+scf        2        653
+riff       1      16782
+scf        1       2121
+scf:n      1       1091</code></pre>
 </div>
-<div class="paragraph"><p>Compile time options:</p></div>
+</div>
 <div class="ulist">
 <ul>
-<li>AspectJ - works with e.g. <code>@Transactional</code> since 2006, but not a full solution for <code>@Configuration</code></li>
-<li>Annotation processor (standard JDK feature)</li>
-<li>Byte code enhancement, e.g. <a href="https://github.com/dsyer/spring-init-experiment">Byte Buddy</a> plugin</li>
+<li>riff is the image built by pack using the riff builder</li>
+<li>scf same app built with WebFlux and functional beans</li>
+<li>scf:n also switch off background preinit</li>
 </ul>
 </div>
 </section>
@@ -400,10 +412,11 @@ Started HttpServer: 40ms</code></pre>
 <li><a href="https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc">/static</a> benchmarks in the same repo - newer, explores classes loaded correlation</li>
 <li><a href="https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc">/flux</a> benchmarks in the same repo - WebFlux</li>
 <li>Spring Fu: <a class="bare" href="https://github.com/spring-projects/spring-fu">https://github.com/spring-projects/spring-fu</a></li>
-<li>Spring Init Experiment: <a class="bare" href="https://github.com/dsyer/spring-init-experiment">https://github.com/dsyer/spring-init-experiment</a></li>
+<li>Spring Init Experiment: <a class="bare" href="https://github.com/spring-projects-experimental/spring-init">https://github.com/spring-projects-experimental/spring-init</a></li>
 <li><a class="bare" href="https://github.com/dsyer/spring-boot-allocations">https://github.com/dsyer/spring-boot-allocations</a> - explore functional beans and GC pressure</li>
 <li><a class="bare" href="https://github.com/dsyer/spring-boot-micro-apps">https://github.com/dsyer/spring-boot-micro-apps</a> - functional beans and AOT (samples not benchmarks)</li>
 <li><a class="bare" href="https://github.com/dsyer/spring-boot-aot">https://github.com/dsyer/spring-boot-aot</a> - AOT compilation and Graal VM</li>
+<li><a class="bare" href="https://github.com/mp911de/microbenchmark-runner">https://github.com/mp911de/microbenchmark-runner</a>: Microbenchmark runner with JUnit</li>
 </ul>
 </div>
 </section>
