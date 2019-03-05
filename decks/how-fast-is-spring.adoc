@@ -25,10 +25,6 @@ Dave Syer, 2018
 
 image::images/fast/startup-progress.png[]
 
-== Spring Boot 2.1
-
-image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1818051570&format=image[startup-2.1.x,width=75%]
-
 == Heap Memory and Garbage Collection
 
 image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=336485057&format=image[heap-size-2.1.x,width=75%]
@@ -51,7 +47,7 @@ TL;DR How do I make my app go faster?
 * Classpath exclusions from Spring Boot web starters
 * Use the `spring-context-indexer`
 * Don't use actuators if you can afford not to
-* Use Spring Boot 2.1 and Spring 5.1
+* Use Spring Boot 2.1 (or 2.2) and Spring 5.1
 * Use explicit `spring.config.location`
 * Switch off JMX: `spring.jmx.enabled=false`
 * Make bean definitions lazy by default
@@ -76,6 +72,7 @@ TL;DR How do I make my app go faster?
 == Tools
 
 * Benchmarks: http://openjdk.java.net/projects/code-tools/jmh/[JMH]
+* JUnit and JMH: https://github.com/mp911de/microbenchmark-runner[microbenchmark-runner]
 * Profiling: https://github.com/jvm-profiling-tools/async-profiler[async-profiler]
 * GC pressure: http://openjdk.java.net/projects/jmc/[JMC] a.k.a. Flight Controller
 * Quick metrics for any Spring Boot jar: https://github.com/dsyer/spring-boot-startup-bench/blob/master/launcher/README.adoc[Benchmark launcher] from dsyer/spring-boot-startup.
@@ -152,10 +149,20 @@ YMMV, but consider excluding:
 == Lazy Beans
 
 * Spring Data `@EnableJpaRepositories(bootstrapMode=BootstrapMode.LAZY)` or `spring.data.jpa.repositories.bootstrap-mode=lazy`
-* `BeanFactoryPostProcessor` that switches all beans to `lazy=true`
 * Look carefully at custom beans with expensive `@PostConstruct`
 * Profiling with https://github.com/dsyer/spring-boot-aspectj/tree/master/timing[AspectJ]
 * Lazy subsystems, E.g. see https://github.com/dsyer/spring-boot-lazy-actuator[Lazy Actuator]
+* Spring Boot 2.2: `spring.main.lazy-initialization=true`
+
+```
+Benchmark            (sample)  Mode  Cnt  Score   Error  Units Faster
+MainBenchmark.main       empt    ss   10  0.495 ± 0.008   s/op 9.91%
+MainBenchmark.main       jlog    ss   10  0.692 ± 0.017   s/op 21.04%
+MainBenchmark.main       demo    ss   10  0.805 ± 0.016   s/op 19.45%
+MainBenchmark.main       actr    ss   10  0.946 ± 0.021   s/op 27.03%
+MainBenchmark.main       jdbc    ss   10  0.860 ± 0.010   s/op 19.95%
+MainBenchmark.main       actj    ss   10  1.015 ± 0.020   s/op 29.11%
+```
 
 == Manual Configuration
 
@@ -183,9 +190,9 @@ public class DemoApplication {
 
 image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1003506885&format=image[]
 
+* Blue: out of the box Spring Boot.
 * Green: manual autoconfiguration.
 * Red: different "a la carte" option in Spring Init.
-* Blue: out of the box Spring Boot.
 * Yellow: fully functional via Spring Init
 
 == Functional Bean Definitions

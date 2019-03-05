@@ -54,14 +54,6 @@
 </div>
 </div>
 </section>
-<section class="slide" id="_spring_boot_2_1">
-<h2>Spring Boot 2.1</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="startup-2.1.x" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1818051570&format=image" width="75%">
-</div>
-</div>
-</section>
 <section class="slide" id="_heap_memory_and_garbage_collection">
 <h2>Heap Memory and Garbage Collection</h2>
 <div class="imageblock">
@@ -105,7 +97,7 @@
 <li>Classpath exclusions from Spring Boot web starters</li>
 <li>Use the <code>spring-context-indexer</code></li>
 <li>Don&#8217;t use actuators if you can afford not to</li>
-<li>Use Spring Boot 2.1 and Spring 5.1</li>
+<li>Use Spring Boot 2.1 (or 2.2) and Spring 5.1</li>
 <li>Use explicit <code>spring.config.location</code></li>
 <li>Switch off JMX: <code>spring.jmx.enabled=false</code></li>
 <li>Make bean definitions lazy by default</li>
@@ -138,6 +130,7 @@
 <div class="ulist">
 <ul>
 <li>Benchmarks: <a href="http://openjdk.java.net/projects/code-tools/jmh/">JMH</a></li>
+<li>JUnit and JMH: <a href="https://github.com/mp911de/microbenchmark-runner">microbenchmark-runner</a></li>
 <li>Profiling: <a href="https://github.com/jvm-profiling-tools/async-profiler">async-profiler</a></li>
 <li>GC pressure: <a href="http://openjdk.java.net/projects/jmc/">JMC</a> a.k.a. Flight Controller</li>
 <li>Quick metrics for any Spring Boot jar: <a href="https://github.com/dsyer/spring-boot-startup-bench/blob/master/launcher/README.adoc">Benchmark launcher</a> from dsyer/spring-boot-startup.</li>
@@ -236,11 +229,22 @@ MiniBenchmark.micro      demo    ss   10  0.204 ± 0.019   s/op 2238</code></pre
 <div class="ulist">
 <ul>
 <li>Spring Data <code>@EnableJpaRepositories(bootstrapMode=BootstrapMode.LAZY)</code> or <code>spring.data.jpa.repositories.bootstrap-mode=lazy</code></li>
-<li><code>BeanFactoryPostProcessor</code> that switches all beans to <code>lazy=true</code></li>
 <li>Look carefully at custom beans with expensive <code>@PostConstruct</code></li>
 <li>Profiling with <a href="https://github.com/dsyer/spring-boot-aspectj/tree/master/timing">AspectJ</a></li>
 <li>Lazy subsystems, E.g. see <a href="https://github.com/dsyer/spring-boot-lazy-actuator">Lazy Actuator</a></li>
+<li>Spring Boot 2.2: <code>spring.main.lazy-initialization=true</code></li>
 </ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Benchmark            (sample)  Mode  Cnt  Score   Error  Units Faster
+MainBenchmark.main       empt    ss   10  0.495 ± 0.008   s/op 9.91%
+MainBenchmark.main       jlog    ss   10  0.692 ± 0.017   s/op 21.04%
+MainBenchmark.main       demo    ss   10  0.805 ± 0.016   s/op 19.45%
+MainBenchmark.main       actr    ss   10  0.946 ± 0.021   s/op 27.03%
+MainBenchmark.main       jdbc    ss   10  0.860 ± 0.010   s/op 19.95%
+MainBenchmark.main       actj    ss   10  1.015 ± 0.020   s/op 29.11%</code></pre>
+</div>
 </div>
 </section>
 <section class="slide" id="_manual_configuration">
@@ -275,9 +279,9 @@ MiniBenchmark.micro      demo    ss   10  0.204 ± 0.019   s/op 2238</code></pre
 </div>
 <div class="ulist">
 <ul>
+<li>Blue: out of the box Spring Boot.</li>
 <li>Green: manual autoconfiguration.</li>
 <li>Red: different "a la carte" option in Spring Init.</li>
-<li>Blue: out of the box Spring Boot.</li>
 <li>Yellow: fully functional via Spring Init</li>
 </ul>
 </div>
