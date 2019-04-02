@@ -3,7 +3,7 @@
 <head>
 <meta content="text/html; charset=" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-<meta content="Asciidoctor 1.5.4" name="generator">
+<meta content="Asciidoctor 2.0.5" name="generator">
 <meta content="@david_syer, 2018" name="author">
 <title>Serverless Spring</title>
 <link href="./asciidoctor-pygments.css" rel="stylesheet">
@@ -141,17 +141,7 @@ Others can run Java, e.g. via custom container or node JRE launcher.</p></div>
 <h2>Java Util Function</h2>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-kd">public</span> <span class="tok-kd">interface</span> <span class="tok-nc">Function</span><span class="tok-o">&lt;</span><span class="tok-n">T</span><span class="tok-o">,</span> <span class="tok-n">R</span><span class="tok-o">&gt;</span> <span class="tok-o">{</span>
-    <span class="tok-n">R</span> <span class="tok-nf">apply</span><span class="tok-o">(</span><span class="tok-n">T</span> <span class="tok-n">t</span><span class="tok-o">);</span>
-<span class="tok-o">}</span>
-
-<span class="tok-kd">public</span> <span class="tok-kd">interface</span> <span class="tok-nc">Consumer</span><span class="tok-o">&lt;</span><span class="tok-n">T</span><span class="tok-o">&gt;</span> <span class="tok-o">{</span>
-    <span class="tok-kt">void</span> <span class="tok-nf">accept</span><span class="tok-o">(</span><span class="tok-n">T</span> <span class="tok-n">t</span><span class="tok-o">);</span>
-<span class="tok-o">}</span>
-
-<span class="tok-kd">public</span> <span class="tok-kd">interface</span> <span class="tok-nc">Supplier</span><span class="tok-o">&lt;</span><span class="tok-n">T</span><span class="tok-o">&gt;</span> <span class="tok-o">{</span>
-    <span class="tok-n">T</span> <span class="tok-nf">get</span><span class="tok-o">();</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">public interface Function&lt;T, R&gt; {&#x000A;    R apply(T t);&#x000A;}&#x000A;&#x000A;public interface Consumer&lt;T&gt; {&#x000A;    void accept(T t);&#x000A;}&#x000A;&#x000A;public interface Supplier&lt;T&gt; {&#x000A;    T get();&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -159,18 +149,7 @@ Others can run Java, e.g. via custom container or node JRE launcher.</p></div>
 <h2>Spring Cloud Function</h2>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@SpringBootApplication</span>
-<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">Application</span> <span class="tok-o">{</span>
-
-  <span class="tok-nd">@Bean</span>
-  <span class="tok-kd">public</span> <span class="tok-n">Function</span><span class="tok-o">&lt;</span><span class="tok-n">String</span><span class="tok-o">,</span> <span class="tok-n">String</span><span class="tok-o">&gt;</span> <span class="tok-nf">uppercase</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-    <span class="tok-k">return</span> <span class="tok-n">value</span> <span class="tok-o">-&gt;</span> <span class="tok-n">value</span><span class="tok-o">.</span><span class="tok-na">toUpperCase</span><span class="tok-o">();</span>
-  <span class="tok-o">}</span>
-
-  <span class="tok-kd">public</span> <span class="tok-kd">static</span> <span class="tok-kt">void</span> <span class="tok-nf">main</span><span class="tok-o">(</span><span class="tok-n">String</span><span class="tok-o">[]</span> <span class="tok-n">args</span><span class="tok-o">)</span> <span class="tok-o">{</span>
-    <span class="tok-n">SpringApplication</span><span class="tok-o">.</span><span class="tok-na">run</span><span class="tok-o">(</span><span class="tok-n">Application</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span> <span class="tok-n">args</span><span class="tok-o">);</span>
-  <span class="tok-o">}</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">@SpringBootApplication&#x000A;public class Application {&#x000A;&#x000A;  @Bean&#x000A;  public Function&lt;String, String&gt; uppercase() {&#x000A;    return value -&gt; value.toUpperCase();&#x000A;  }&#x000A;&#x000A;  public static void main(String[] args) {&#x000A;    SpringApplication.run(Application.class, args);&#x000A;  }&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -178,15 +157,7 @@ Others can run Java, e.g. via custom container or node JRE launcher.</p></div>
 <h2>Plain Old Functions</h2>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-kn">package</span> <span class="tok-n">functions</span><span class="tok-o">;</span>
-
-<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">Uppercase</span> <span class="tok-kd">implements</span> <span class="tok-n">Function</span><span class="tok-o">&lt;</span><span class="tok-n">String</span><span class="tok-o">,</span> <span class="tok-n">String</span><span class="tok-o">&gt;</span> <span class="tok-o">{</span>
-
-  <span class="tok-n">String</span> <span class="tok-nf">apply</span><span class="tok-o">(</span><span class="tok-n">String</span> <span class="tok-n">input</span><span class="tok-o">)</span> <span class="tok-o">{</span>
-    <span class="tok-k">return</span> <span class="tok-n">input</span><span class="tok-o">.</span><span class="tok-na">toUpperCase</span><span class="tok-o">();</span>
-  <span class="tok-o">}</span>
-
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">package functions;&#x000A;&#x000A;public class Uppercase implements Function&lt;String, String&gt; {&#x000A;&#x000A;  String apply(String input) {&#x000A;    return input.toUpperCase();&#x000A;  }&#x000A;&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -230,15 +201,7 @@ endpoint, a stream processor, or a task</p></div>
 <h2>Project Reactor</h2>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-kd">public</span> <span class="tok-kd">abstract</span> <span class="tok-kd">class</span> <span class="tok-nc">Flux</span><span class="tok-o">&lt;</span><span class="tok-n">T</span><span class="tok-o">&gt;</span> <span class="tok-kd">implements</span> <span class="tok-n">Publisher</span><span class="tok-o">&lt;</span><span class="tok-n">T</span><span class="tok-o">&gt;</span> <span class="tok-o">{</span>
-<span class="tok-o">...</span>
-<span class="tok-o">}</span>
-
-
-
-<span class="tok-kd">public</span> <span class="tok-kd">abstract</span> <span class="tok-kd">class</span> <span class="tok-nc">Mono</span><span class="tok-o">&lt;</span><span class="tok-n">T</span><span class="tok-o">&gt;</span> <span class="tok-kd">implements</span> <span class="tok-n">Publisher</span><span class="tok-o">&lt;</span><span class="tok-n">T</span><span class="tok-o">&gt;</span> <span class="tok-o">{</span>
-<span class="tok-o">...</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">public abstract class Flux&lt;T&gt; implements Publisher&lt;T&gt; {&#x000A;...&#x000A;}&#x000A;&#x000A;&#x000A;&#x000A;public abstract class Mono&lt;T&gt; implements Publisher&lt;T&gt; {&#x000A;...&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -246,24 +209,7 @@ endpoint, a stream processor, or a task</p></div>
 <h2>Spring Cloud Function</h2>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@SpringBootApplication</span>
-<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">Application</span> <span class="tok-o">{</span>
-
-  <span class="tok-nd">@Bean</span>
-  <span class="tok-kd">public</span> <span class="tok-n">Function</span><span class="tok-o">&lt;</span><span class="tok-n">Flux</span><span class="tok-o">&lt;</span><span class="tok-n">String</span><span class="tok-o">&gt;,</span> <span class="tok-n">Flux</span><span class="tok-o">&lt;</span><span class="tok-n">String</span><span class="tok-o">&gt;&gt;</span> <span class="tok-nf">uppercase</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-    <span class="tok-k">return</span> <span class="tok-n">flux</span> <span class="tok-o">-&gt;</span> <span class="tok-n">flux</span>
-        <span class="tok-o">.</span><span class="tok-na">filter</span><span class="tok-o">(</span><span class="tok-k">this</span><span class="tok-o">::</span><span class="tok-n">isNotRude</span><span class="tok-o">)</span>
-        <span class="tok-o">.</span><span class="tok-na">map</span><span class="tok-o">(</span><span class="tok-nl">String:</span><span class="tok-o">:</span><span class="tok-n">toUpperCase</span><span class="tok-o">);</span>
-  <span class="tok-o">}</span>
-
-  <span class="tok-kt">boolean</span> <span class="tok-nf">isNotRude</span><span class="tok-o">(</span><span class="tok-n">String</span> <span class="tok-n">word</span><span class="tok-o">)</span> <span class="tok-o">{</span>
-    <span class="tok-o">...</span>
-  <span class="tok-o">}</span>
-
-  <span class="tok-kd">public</span> <span class="tok-kd">static</span> <span class="tok-kt">void</span> <span class="tok-nf">main</span><span class="tok-o">(</span><span class="tok-n">String</span><span class="tok-o">[]</span> <span class="tok-n">args</span><span class="tok-o">)</span> <span class="tok-o">{</span>
-    <span class="tok-n">SpringApplication</span><span class="tok-o">.</span><span class="tok-na">run</span><span class="tok-o">(</span><span class="tok-n">Application</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span> <span class="tok-n">args</span><span class="tok-o">);</span>
-  <span class="tok-o">}</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">@SpringBootApplication&#x000A;public class Application {&#x000A;&#x000A;  @Bean&#x000A;  public Function&lt;Flux&lt;String&gt;, Flux&lt;String&gt;&gt; uppercase() {&#x000A;    return flux -&gt; flux&#x000A;        .filter(this::isNotRude)&#x000A;        .map(String::toUpperCase);&#x000A;  }&#x000A;&#x000A;  boolean isNotRude(String word) {&#x000A;    ...&#x000A;  }&#x000A;&#x000A;  public static void main(String[] args) {&#x000A;    SpringApplication.run(Application.class, args);&#x000A;  }&#x000A;}</code></pre>
 </div>
 </div>
 </section>

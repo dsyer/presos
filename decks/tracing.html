@@ -54,7 +54,7 @@ Email: <code>dsyer@pivotal.io</code></p>
 
 <p>Add a Correlation ID to logs, and propagate it between
 processes (e.g. in HTTP or message headers)</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">2016-03-05 12:07:03.748 INFO [service1,5b7b3ceafd06fceb,5b7b3ceafd06fceb,false] 18487 --- ...
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>2016-03-05 12:07:03.748 INFO [service1,5b7b3ceafd06fceb,5b7b3ceafd06fceb,false] 18487 --- ...
 2016-03-05 12:07:03.748 INFO [service1,5b7b3ceafd06fceb,5b7b3ceafd06fceb,false] 18487 --- ...
 2016-03-05 12:07:05.540 INFO [service2,5b7b3ceafd06fceb,162e2f236273a756,false] 18487 --- ...
 2016-03-05 12:07:05.541 INFO [service2,5b7b3ceafd06fceb,162e2f236273a756,false] 18487 --- ...
@@ -97,7 +97,7 @@ img[alt=KibanaUI] { width: 50%; }
 <blockquote>
 <p>Why is this POST /thing so slow?</p>
 </blockquote>
-<div class="highlight"><pre><code class="language-text" data-lang="text">           +-------------------------------------+
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>           +-------------------------------------+
            |  POST /thing                        |
            +-------------------------------------+
 </code></pre></div>
@@ -111,7 +111,7 @@ img[alt=KibanaUI] { width: 50%; }
 </ul>
 
 </div><div class="slide" id="slide8"><h2 id="when-was-it-and-how-long-did-it-take">When was it and how long did it take?</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
            v                                     v
            +-------------------------------------+
            |  POST /thing                        | 1427ms
@@ -122,7 +122,7 @@ img[alt=KibanaUI] { width: 50%; }
 </blockquote>
 
 </div><div class="slide" id="slide9"><h2 id="where-did-this-happen">Where did this happen?</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
            v                                     v
            +-------------------------------------+
            |  POST /thing                        | 1427ms
@@ -136,7 +136,7 @@ img[alt=KibanaUI] { width: 50%; }
 </blockquote>
 
 </div><div class="slide" id="slide10"><h2 id="which-business-event-was-it">Which Business Event Was It?</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
            v                                     v
            +-------------------------------------+
            |  POST /thing                        | 1427ms
@@ -149,7 +149,7 @@ img[alt=KibanaUI] { width: 50%; }
 </blockquote>
 
 </div><div class="slide" id="slide11"><h2 id="is-it-abnormal">Is it Abnormal?</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
            v                                     v
            +-------------------------------------+
            |  POST /thing                        | 1427ms
@@ -164,7 +164,7 @@ img[alt=KibanaUI] { width: 50%; }
 </blockquote>
 
 </div><div class="slide" id="slide12"><h2 id="achieving-understanding">Achieving Understanding</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
            v                                     v
            +-------------------------------------+
            |  POST /thing                        | 1427ms
@@ -181,7 +181,7 @@ img[alt=KibanaUI] { width: 50%; }
 </blockquote>
 
 </div><div class="slide" id="slide13"><h2 id="often-two-sides-to-the-story">Often Two Sides to the Story</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">    Client Sent: 15:31:28:500                               Client Received: 15:31:31:000
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    Client Sent: 15:31:28:500                               Client Received: 15:31:31:000
     v                                                       v
     +-------------------------------------------------------+
     |  POST /some                                           | 2500ms
@@ -193,7 +193,7 @@ img[alt=KibanaUI] { width: 50%; }
        Server Received: 15:31:29:103         Server Sent: 15:31:30:530
 </code></pre></div>
 </div><div class="slide" id="slide14"><h2 id="and-not-all-operations-are-on-the-critical-path">And Not All Operations are on the Critical Path</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">    +-------------------------------------------------------+
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    +-------------------------------------------------------+
     |  POST /some                                           |
     +-------------------------------------------------------+
        +-------------------------------------+
@@ -233,7 +233,7 @@ requests take longer than others.</p>
 <p>A <em>Trace</em> is an end-to-end latency graph, composed of <em>spans</em>.</p>
 
 </div><div class="slide" id="slide18"><h2 id="in-a-picture">In a Picture</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>           Server Received: 15:31:29:103         Server Sent: 15:31:30:530
            v                                     v
            +-------------------------------------+
            |  POST /thing                        | 1427ms
@@ -281,12 +281,12 @@ img[alt=ZipkinUI] { width: 50%; }
 <ul>
 <li>Download the Zipkin JAR from Bintray (or Maven Central, <a href="http://repo1.maven.org/maven2/io/zipkin/zipkin-web/1.36.0/zipkin-web-1.36.0-all.jar">io.zipkin:zipkin-web:1.36.0:all@jar</a>):</li>
 </ul>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ java -jar zipkin-server.jar
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ java -jar zipkin-server.jar
 </code></pre></div>
 <ul>
 <li>Or add it to your classpath and:</li>
 </ul>
-<div class="highlight"><pre><code class="language-text" data-lang="text">@EnableZipkinServer
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>@EnableZipkinServer
 @SpringBootApplication
 public class ZipkinServer {
 
@@ -297,7 +297,7 @@ public class ZipkinServer {
 <hr>
 
 <p>Then:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ curl -s localhost:9411/api/v1/services | jq .
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ curl -s localhost:9411/api/v1/services | jq .
 [ &quot;service1&quot;, &quot;service2&quot; ]
 </code></pre></div>
 </div><div class="slide" id="slide22"><h2 id="spring-cloud-sleuth-and-zipkin">Spring Cloud Sleuth and Zipkin</h2>

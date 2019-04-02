@@ -75,7 +75,7 @@ or <em>Spring Cloud Components</em>)</p>
 </div><div class="slide" id="slide4"><h2 id="lightweight-services-and-rest">Lightweight Services and REST</h2>
 
 <ul>
-<li>There is a <a href="http://www.indeed.com/jobtrends?q=JSON+REST%2CSOAP+XML&amp;l=&amp;relative=1#shareCode">strong trend</a> in distributed systems with
+<li>There is a <a href="http://www.indeed.com/jobtrends?q=JSON+REST%2CSOAP+XML&l=&relative=1#shareCode">strong trend</a> in distributed systems with
 lightweight architectures</li>
 <li>People have started to call them &quot;microservices&quot;</li>
 </ul>
@@ -85,7 +85,7 @@ lightweight architectures</li>
 </div><div class="slide" id="slide5"><h2 id="spring-boot">Spring Boot</h2>
 
 <p>It needs to be super easy to implement and update a service:</p>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@RestController</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span></span><span class="nd">@RestController</span>
 <span class="kd">class</span> <span class="nc">ThisWillActuallyRun</span> <span class="o">{</span>
     <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s2">&quot;/&quot;</span><span class="o">)</span>
     <span class="n">String</span> <span class="nf">home</span><span class="o">()</span> <span class="o">{</span>
@@ -98,7 +98,7 @@ lightweight architectures</li>
 </div><div class="slide" id="slide6"><h2 id="cloud-foundry">Cloud Foundry</h2>
 
 <p>Deploying services needs to be simple and reproducible</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ cf push app.groovy
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ cf push app.groovy
 </code></pre></div>
 <p>and you don&#39;t get much more convenient than that.</p>
 
@@ -257,7 +257,7 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 </ul>
 
 <p>DEMO</p>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableConfigurationProperties</span><span class="o">(</span><span class="n">MyProps</span><span class="o">)</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span></span><span class="nd">@EnableConfigurationProperties</span><span class="o">(</span><span class="n">MyProps</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Application</span> <span class="o">{</span>
 
   <span class="nd">@Autowired</span>
@@ -304,7 +304,7 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <li>Eureka Server</li>
 <li>Eureka Client</li>
 </ul>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableEurekaClient</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span></span><span class="nd">@EnableEurekaClient</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Application</span> <span class="o">{</span>
 <span class="o">}</span>
 </code></pre></div>
@@ -341,7 +341,7 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <p>DEMO</p>
 
 </div><div class="slide" id="slide29"><h2 id="hystrix-synchronous">Hystrix Synchronous</h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="kd">private</span> <span class="n">String</span> <span class="nf">getDefaultMessage</span><span class="o">()</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span></span><span class="kd">private</span> <span class="n">String</span> <span class="nf">getDefaultMessage</span><span class="o">()</span> <span class="o">{</span>
   <span class="k">return</span> <span class="s2">&quot;Hello World Default&quot;</span><span class="o">;</span>
 <span class="o">}</span>
 
@@ -351,7 +351,7 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <span class="o">}</span>
 </code></pre></div>
 </div><div class="slide" id="slide30"><h2 id="hystrix-future">Hystrix Future</h2>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="n">Future</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">getMessageFuture</span><span class="o">()</span> <span class="o">{</span>
   <span class="k">return</span> <span class="k">new</span> <span class="n">AsyncResult</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="n">String</span> <span class="nf">invoke</span><span class="o">()</span> <span class="o">{</span>
@@ -364,7 +364,7 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <span class="n">service</span><span class="o">.</span><span class="na">getMessageFuture</span><span class="o">().</span><span class="na">get</span><span class="o">();</span>
 </code></pre></div>
 </div><div class="slide" id="slide31"><h2 id="hystrix-observable">Hystrix Observable</h2>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="nd">@HystrixCommand</span><span class="o">(</span><span class="n">fallbackMethod</span><span class="o">=</span><span class="s">&quot;getDefaultMessage&quot;</span><span class="o">)</span>
 <span class="kd">public</span> <span class="n">Observable</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">getMessageRx</span><span class="o">()</span> <span class="o">{</span>
   <span class="k">return</span> <span class="k">new</span> <span class="n">ObservableResult</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="n">String</span> <span class="nf">invoke</span><span class="o">()</span> <span class="o">{</span>
@@ -435,7 +435,7 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <p>DEMO</p>
 
 </div><div class="slide" id="slide37"><h2 id="feign-cont">Feign cont.</h2>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">HelloClient</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">HelloClient</span> <span class="o">{</span>
   <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">method</span> <span class="o">=</span> <span class="n">RequestMethod</span><span class="o">.</span><span class="na">GET</span><span class="o">,</span>
                   <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;/hello&quot;</span><span class="o">)</span>
   <span class="n">Message</span> <span class="nf">hello</span><span class="o">();</span>
@@ -479,7 +479,7 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <code>zuul.proxy.route.customers: /customers</code></li>
 <li>uses <code>Hystrix-&gt;Ribbon-&gt;Eureka</code> to forward requests to appropriate service</li>
 </ul>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableZuulProxy</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span></span><span class="nd">@EnableZuulProxy</span>
 <span class="nd">@Controller</span>
 <span class="kd">class</span> <span class="nc">Application</span> <span class="o">{</span>
   <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s2">&quot;/&quot;</span><span class="o">)</span>
@@ -498,7 +498,7 @@ addressed with <em>generic</em>, <em>boiler plate</em> patterns.</p>
 <li>extendible sources</li>
 <li>Polling or push updates</li>
 </ul>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">DynamicStringProperty</span> <span class="n">myprop</span> <span class="o">=</span> <span class="n">DynamicPropertyFactory</span><span class="o">.</span><span class="na">getInstance</span><span class="o">()</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="n">DynamicStringProperty</span> <span class="n">myprop</span> <span class="o">=</span> <span class="n">DynamicPropertyFactory</span><span class="o">.</span><span class="na">getInstance</span><span class="o">()</span>
       <span class="o">.</span><span class="na">getStringProperty</span><span class="o">(</span><span class="s">&quot;my.prop&quot;</span><span class="o">);</span>
 <span class="n">someMethod</span><span class="o">(</span><span class="n">myprop</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
 </code></pre></div>

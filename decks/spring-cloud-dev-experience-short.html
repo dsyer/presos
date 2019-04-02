@@ -3,7 +3,7 @@
 <head>
 <meta content="text/html; charset=" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-<meta content="Asciidoctor 1.5.4" name="generator">
+<meta content="Asciidoctor 2.0.5" name="generator">
 <meta content="Spencer Gibb, Dave Syer, 2015" name="author">
 <title>Developer Experience with Spring Cloud</title>
 <link href="./asciidoctor-pygments.css" rel="stylesheet">
@@ -45,7 +45,7 @@
 </ul>
 </div>
 </section>
-<section class="slide" id="_database_middleware_docker">
+<section class="slide" id="_databasemiddleware_docker">
 <h2>Database/middleware: Docker</h2>
 <div class="ulist">
 <ul>
@@ -187,21 +187,7 @@ Create <a href="http://wiremock.org/stubbing.html">Wiremock</a> stubs using test
 <div class="paragraph"><p>Generates a MockMVC test and a Wiremock stub</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="groovy language-groovy"><span class="tok-kn">import</span> <span class="tok-nn">io.codearte.accurest.dsl.GroovyDsl</span>
-
-<span class="tok-n">GroovyDsl</span> <span class="tok-n">groovyDsl</span> <span class="tok-o">=</span> <span class="tok-n">GroovyDsl</span><span class="tok-o">.</span><span class="tok-na">make</span> <span class="tok-o">{</span>
-    <span class="tok-n">request</span> <span class="tok-o">{</span>
-        <span class="tok-n">method</span> <span class="tok-s1">&#39;GET&#39;</span>
-        <span class="tok-n">url</span> <span class="tok-s1">&#39;/foo&#39;</span>
-    <span class="tok-o">}</span>
-    <span class="tok-n">response</span> <span class="tok-o">{</span>
-        <span class="tok-n">status</span> <span class="tok-mi">200</span>
-        <span class="tok-n">headers</span> <span class="tok-o">{</span>
-            <span class="tok-n">header</span> <span class="tok-s1">&#39;Content-Type&#39;</span> <span class="tok-o">:</span> <span class="tok-s1">&#39;application/json;charset=UTF-8&#39;</span>
-        <span class="tok-o">}</span>
-        <span class="tok-n">body</span> <span class="tok-s1">&#39;&#39;&#39;{ &quot;value&quot; : 42 }&#39;&#39;&#39;</span>
-    <span class="tok-o">}</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="groovy language-groovy">import io.codearte.accurest.dsl.GroovyDsl&#x000A;&#x000A;GroovyDsl groovyDsl = GroovyDsl.make {&#x000A;    request {&#x000A;        method 'GET'&#x000A;        url '/foo'&#x000A;    }&#x000A;    response {&#x000A;        status 200&#x000A;        headers {&#x000A;            header 'Content-Type' : 'application/json;charset=UTF-8'&#x000A;        }&#x000A;        body '''{ "value" : 42 }'''&#x000A;    }&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -209,24 +195,7 @@ Create <a href="http://wiremock.org/stubbing.html">Wiremock</a> stubs using test
 <h2>Stubbing: Spring REST Docs</h2>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Before</span>
-<span class="tok-kd">public</span> <span class="tok-kt">void</span> <span class="tok-nf">setup</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-    <span class="tok-k">this</span><span class="tok-o">.</span><span class="tok-na">mockMvc</span> <span class="tok-o">=</span> <span class="tok-n">MockMvcBuilders</span><span class="tok-o">.</span><span class="tok-na">webAppContextSetup</span><span class="tok-o">(</span><span class="tok-k">this</span><span class="tok-o">.</span><span class="tok-na">context</span><span class="tok-o">)</span>
-        <span class="tok-o">.</span><span class="tok-na">apply</span><span class="tok-o">(</span><span class="tok-n"><em>documentationConfiguration</em></span><span class="tok-o">()</span>
-                <span class="tok-o">.</span><span class="tok-na">snippets</span><span class="tok-o">().</span><span class="tok-na">withDefaults</span><span class="tok-o">(</span><span class="tok-n"><em>curlRequest</em></span><span class="tok-o">(),</span>
-                    <span class="tok-n"><em>httpRequest</em></span><span class="tok-o">(),</span>
-                    <span class="tok-n"><em>httpResponse</em></span><span class="tok-o">(),</span>
-                    <span class="tok-k">new</span> <span class="tok-nf">WiremockStubSnippet</span><span class="tok-o">()))</span>
-        <span class="tok-o">.</span><span class="tok-na">build</span><span class="tok-o">();</span>
-<span class="tok-o">}</span>
-
-<span class="tok-nd">@Test</span>
-<span class="tok-kd">public</span> <span class="tok-kt">void</span> <span class="tok-nf">foo</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-    <span class="tok-k">this</span><span class="tok-o">.</span><span class="tok-na">mockMvc</span><span class="tok-o">.</span><span class="tok-na">perform</span><span class="tok-o">(</span><span class="tok-n"><em>get</em></span><span class="tok-o">(</span><span class="tok-s">&quot;/foo&quot;</span><span class="tok-o">)</span>
-        <span class="tok-o">.</span><span class="tok-na">accept</span><span class="tok-o">(</span><span class="tok-n">MediaType</span><span class="tok-o">.</span><span class="tok-na">APPLICATION_JSON</span><span class="tok-o">))</span>
-        <span class="tok-o">.</span><span class="tok-na">andExpect</span><span class="tok-o">(</span><span class="tok-n"><em>status</span><span class="tok-o">()</span><span class="tok-n"></em></span><span class="tok-o">.</span><span class="tok-na">isOk</span><span class="tok-o">())</span>
-        <span class="tok-o">.</span><span class="tok-na">andDo</span><span class="tok-o">(</span><span class="tok-n"><em>document</em></span><span class="tok-o">(</span><span class="tok-s">&quot;foo&quot;</span><span class="tok-o">));</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">@Before&#x000A;public void setup() {&#x000A;    this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)&#x000A;        .apply(<em>documentationConfiguration</em>()&#x000A;                .snippets().withDefaults(<em>curlRequest</em>(),&#x000A;                    <em>httpRequest</em>(),&#x000A;                    <em>httpResponse</em>(),&#x000A;                    new WiremockStubSnippet()))&#x000A;        .build();&#x000A;}&#x000A;&#x000A;@Test&#x000A;public void foo() {&#x000A;    this.mockMvc.perform(<em>get</em>("/foo")&#x000A;        .accept(MediaType.APPLICATION_JSON))&#x000A;        .andExpect(<em>status()</em>.isOk())&#x000A;        .andDo(<em>document</em>("foo"));&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -234,19 +203,7 @@ Create <a href="http://wiremock.org/stubbing.html">Wiremock</a> stubs using test
 <h2>Stubbing: Wiremock Stub</h2>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="json language-json"><span class="tok-p">{</span>
-    <span class="tok-nt">&quot;request&quot;</span><span class="tok-p">:</span> <span class="tok-p">{</span>
-        <span class="tok-nt">&quot;method&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;GET&quot;</span><span class="tok-p">,</span>
-        <span class="tok-nt">&quot;url&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;/foo&quot;</span>
-    <span class="tok-p">},</span>
-    <span class="tok-nt">&quot;response&quot;</span><span class="tok-p">:</span> <span class="tok-p">{</span>
-        <span class="tok-nt">&quot;status&quot;</span><span class="tok-p">:</span> <span class="tok-mi">200</span><span class="tok-p">,</span>
-        <span class="tok-nt">&quot;headers&quot;</span><span class="tok-p">:</span> <span class="tok-p">{</span>
-            <span class="tok-nt">&quot;Content-Type&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;application/json;charset=UTF-8&quot;</span>
-        <span class="tok-p">},</span>
-        <span class="tok-nt">&quot;body&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;{\&quot;value\&quot;:42}&quot;</span>
-    <span class="tok-p">}</span>
-<span class="tok-p">}</span></code></pre>
+<pre class="highlight"><code class="json language-json">{&#x000A;    "request": {&#x000A;        "method": "GET",&#x000A;        "url": "/foo"&#x000A;    },&#x000A;    "response": {&#x000A;        "status": 200,&#x000A;        "headers": {&#x000A;            "Content-Type": "application/json;charset=UTF-8"&#x000A;        },&#x000A;        "body": "{\"value\":42}"&#x000A;    }&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -272,17 +229,7 @@ Stubrunner uses list of dependencies<div class="ulist">
 <h2>Greenfield Stubbing: Spring MVC</h2>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Controller</span>
-<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">StubFleetLocationServiceApplication</span> <span class="tok-o">{</span>
-
-	<span class="tok-nd">@RequestMapping</span><span class="tok-o">(</span><span class="tok-s">&quot;/locations&quot;</span><span class="tok-o">)</span>
-	<span class="tok-kd">public</span> <span class="tok-n">String</span> <span class="tok-nf">home</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-		<span class="tok-k">return</span> <span class="tok-s">&quot;forward:/stubs/locations.json&quot;</span><span class="tok-o">;</span>
-	<span class="tok-o">}</span>
-
-	<span class="tok-o">...</span>
-
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">@Controller&#x000A;public class StubFleetLocationServiceApplication {&#x000A;&#x000A;	@RequestMapping("/locations")&#x000A;	public String home() {&#x000A;		return "forward:/stubs/locations.json";&#x000A;	}&#x000A;&#x000A;	...&#x000A;&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph"><p>Nice side effect: mock MVC and restdocs for tests and docs can be

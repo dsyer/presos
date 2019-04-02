@@ -55,7 +55,7 @@ Email: <a href="mailto:dsyer@vmware.com">dsyer@vmware.com</a></p>
 </div><div class="slide" id="slide3"><h2 id="introduction">Introduction</h2>
 
 <ul>
-<li>There is a <a href="http://www.indeed.com/jobtrends?q=JSON+REST%2CSOAP+XML&amp;l=&amp;relative=1#shareCode">strong trend</a> distributed systems with
+<li>There is a <a href="http://www.indeed.com/jobtrends?q=JSON+REST%2CSOAP+XML&l=&relative=1#shareCode">strong trend</a> distributed systems with
 lightweight architectures</li>
 </ul>
 
@@ -98,9 +98,9 @@ retrieving it?</li>
 </ul>
 
 <p>Example:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">    $ curl &quot;https://$username:$password@myhost/resource&quot;
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    $ curl &quot;https://$username:$password@myhost/resource&quot;
 </code></pre></div>
-</div><div class="slide" id="slide7"><h2 id="so-what-39-s-wrong-with-that">So what&#39;s wrong with that?</h2>
+</div><div class="slide" id="slide7"><h2 id="so-whats-wrong-with-that">So what&#39;s wrong with that?</h2>
 
 <ul>
 <li>Nothing, but...</li>
@@ -157,7 +157,7 @@ User, but with the User&#39;s approval</p>
 </div><div class="slide" id="slide11"><h2 id="oauth2-and-the-lightweight-service">OAuth2 and the Lightweight Service</h2>
 
 <p>Example command line Client:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ curl -H &quot;Authorization: Bearer $TOKEN&quot; https://myhost/resource
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ curl -H &quot;Authorization: Bearer $TOKEN&quot; https://myhost/resource
 </code></pre></div>
 <ul>
 <li><code>https://myhost</code> is a Resource Server</li>
@@ -188,7 +188,7 @@ User, but with the User&#39;s approval</p>
 <li>But they carry important information to Resource Servers</li>
 <li><p>Example of implementation (from Cloud Foundry UAA, JWT = signed,
 base64-encoded, JSON):</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">{  &quot;client_id&quot;:&quot;vmc&quot;,
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>{  &quot;client_id&quot;:&quot;vmc&quot;,
    &quot;exp&quot;:1346325625,
    &quot;scope&quot;:[&quot;cloud_controller.read&quot;,&quot;openid&quot;,&quot;password.write&quot;],
    &quot;aud&quot;:[&quot;openid&quot;,&quot;cloud_controller&quot;,&quot;password&quot;],
@@ -202,11 +202,11 @@ base64-encoded, JSON):</p>
 </div><div class="slide" id="slide14"><h2 id="obtaining-a-client-credentials-token">Obtaining a Client Credentials Token</h2>
 
 <p>A client can act in its own right (not on behalf of a user):</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ curl &quot;https://myclient:mysecret@uaa.cloudfoundry.com/oauth/tokens&quot; 
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ curl &quot;https://myclient:mysecret@uaa.cloudfoundry.com/oauth/tokens&quot; 
     -d grant_type=client_credentials -d client_id=myclient
 </code></pre></div>
 <p>Result:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">{
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>{
   access_token: FUYGKRWFG.jhdfgair7fylzshjg.o98q47tgh.fljgh,
   expires_in: 43200,
   client_id: myclient,
@@ -300,7 +300,7 @@ client and user based on the requested scope (if any).</p>
 <ul>
 <li>UAA scopes are actually Groups in the User accounts</li>
 <li><p><code>GET /Groups</code>, <code>Get /Users/{id}</code></p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">{
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>{
   &quot;id&quot;: &quot;73ba999e-fc34-49eb-ac26-dc8be52c1d82&quot;,
   &quot;meta&quot;: {...},
   &quot;userName&quot;: &quot;marissa&quot;,
@@ -319,14 +319,14 @@ client and user based on the requested scope (if any).</p>
 </div><div class="slide" id="slide23"><h2 id="special-mention-for-vmc">Special Mention for Vmc</h2>
 
 <p>The UAA authenticates requests from <code>vmc</code> in a special way:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ curl https://uaa.cloudfoundry.com/oauth/authorize
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ curl https://uaa.cloudfoundry.com/oauth/authorize
     -d response_type=token -d client_id=vmc
     -d redirect_uri=https:uaa.cloudfoundry.com/redirect/vmc
     -d source=credentials
     -d username=$username -d password=$password
 </code></pre></div>
 <p>Result:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">302 FOUND
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>302 FOUND
 ...
 Location: https://uaa.cloudfoundry.com/redirect/vmc#access_token=FUYGKRWFG.jhdfgair7fylzshjg.o98q47tgh.fljgh...  
 </code></pre></div>

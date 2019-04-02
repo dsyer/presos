@@ -3,7 +3,7 @@
 <head>
 <meta content="text/html; charset=" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-<meta content="Asciidoctor 1.5.4" name="generator">
+<meta content="Asciidoctor 2.0.5" name="generator">
 <meta content="Dave Syer, 2016" name="author">
 <title>Spring Security and Angular</title>
 <link href="./asciidoctor-pygments.css" rel="stylesheet">
@@ -126,20 +126,7 @@
 <div class="paragraph"><p><code>index.html</code></p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="html language-html"><span class="tok-nt">&lt;html&gt;</span>
-...
-  <span class="tok-nt">&lt;body</span> <span class="tok-na">ng-app=</span><span class="tok-s">&quot;hello&quot;</span><span class="tok-nt">&gt;</span>
-    <span class="tok-nt">&lt;div</span> <span class="tok-na">class=</span><span class="tok-s">&quot;container&quot;</span><span class="tok-nt">&gt;</span>
-      <span class="tok-nt">&lt;h1&gt;</span>Greeting<span class="tok-nt">&lt;/h1&gt;</span>
-      <span class="tok-nt">&lt;div</span> <span class="tok-na">ng-controller=</span><span class="tok-s">&quot;home as home&quot;</span> <span class="tok-na">ng-cloak</span> <span class="tok-na">class=</span><span class="tok-s">&quot;ng-cloak&quot;</span><span class="tok-nt">&gt;</span>
-        <span class="tok-nt">&lt;p&gt;</span>The ID is: {{home.greeting.id}}<span class="tok-nt">&lt;/p&gt;</span>
-        <span class="tok-nt">&lt;p&gt;</span>The content is: {{home.greeting.msg}}<span class="tok-nt">&lt;/p&gt;</span>
-      <span class="tok-nt">&lt;/div&gt;</span>
-    <span class="tok-nt">&lt;/div&gt;</span>
-    <span class="tok-nt">&lt;script </span><span class="tok-na">src=</span><span class="tok-s">&quot;js/angular-bootstrap.js&quot;</span> <span class="tok-na">type=</span><span class="tok-s">&quot;text/javascript&quot;</span><span class="tok-nt">&gt;&lt;/script&gt;</span>
-    <span class="tok-nt">&lt;script </span><span class="tok-na">src=</span><span class="tok-s">&quot;js/hello.js&quot;</span><span class="tok-nt">&gt;&lt;/script&gt;</span>
-  <span class="tok-nt">&lt;/body&gt;</span>
-<span class="tok-nt">&lt;/html&gt;</span></code></pre>
+<pre class="highlight"><code class="html language-html">&lt;html&gt;&#x000A;...&#x000A;  &lt;body ng-app="hello"&gt;&#x000A;    &lt;div class="container"&gt;&#x000A;      &lt;h1&gt;Greeting&lt;/h1&gt;&#x000A;      &lt;div ng-controller="home as home" ng-cloak class="ng-cloak"&gt;&#x000A;        &lt;p&gt;The ID is: {{home.greeting.id}}&lt;/p&gt;&#x000A;        &lt;p&gt;The content is: {{home.greeting.msg}}&lt;/p&gt;&#x000A;      &lt;/div&gt;&#x000A;    &lt;/div&gt;&#x000A;    &lt;script src="js/angular-bootstrap.js" type="text/javascript"&gt;&lt;/script&gt;&#x000A;    &lt;script src="js/hello.js"&gt;&lt;/script&gt;&#x000A;  &lt;/body&gt;&#x000A;&lt;/html&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -148,14 +135,7 @@
 <div class="paragraph"><p><code>hello.js</code></p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="javascript language-javascript"><span class="tok-nx">angular</span><span class="tok-p">.</span><span class="tok-nx">module</span><span class="tok-p">(</span><span class="tok-s1">&#39;hello&#39;</span><span class="tok-p">,</span> <span class="tok-p">[])</span>
-  <span class="tok-p">.</span><span class="tok-nx">controller</span><span class="tok-p">(</span><span class="tok-s1">&#39;home&#39;</span><span class="tok-p">,</span> <span class="tok-kd">function</span><span class="tok-p">(</span><span class="tok-nx">$http</span><span class="tok-p">)</span> <span class="tok-p">{</span>
-    <span class="tok-kd">var</span> <span class="tok-nx">self</span> <span class="tok-o">=</span> <span class="tok-k">this</span><span class="tok-p">;</span>
-    <span class="tok-nx">$http</span><span class="tok-p">.</span><span class="tok-nx">get</span><span class="tok-p">(</span><span class="tok-s1">&#39;/resource/&#39;</span><span class="tok-p">).</span><span class="tok-nx">then</span><span class="tok-p">(</span><span class="tok-kd">function</span><span class="tok-p">(</span><span class="tok-nx">response</span><span class="tok-p">)</span> <span class="tok-p">{</span>
-      <span class="tok-nx">self</span><span class="tok-p">.</span><span class="tok-nx">greeting</span> <span class="tok-o">=</span> <span class="tok-nx">response</span><span class="tok-p">.</span><span class="tok-nx">data</span><span class="tok-p">;</span>
-    <span class="tok-p">})</span>
-  <span class="tok-p">}</span>
-<span class="tok-p">);</span></code></pre>
+<pre class="highlight"><code class="javascript language-javascript">angular.module('hello', [])&#x000A;  .controller('home', function($http) {&#x000A;    var self = this;&#x000A;    $http.get('/resource/').then(function(response) {&#x000A;      self.greeting = response.data;&#x000A;    })&#x000A;  }&#x000A;);</code></pre>
 </div>
 </div>
 </section>
@@ -165,18 +145,13 @@
 <div class="paragraph"><p><code>pom.xml</code></p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="xml language-xml"><span class="tok-nt">&lt;dependency&gt;</span>
-  <span class="tok-nt">&lt;groupId&gt;</span>org.springframework.boot<span class="tok-nt">&lt;/groupId&gt;</span>
-  <span class="tok-nt">&lt;artifactId&gt;</span>spring-boot-starter-security<span class="tok-nt">&lt;/artifactId&gt;</span>
-<span class="tok-nt">&lt;/dependency&gt;</span></code></pre>
+<pre class="highlight"><code class="xml language-xml">&lt;dependency&gt;&#x000A;  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;&#x000A;  &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;&#x000A;&lt;/dependency&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph"><p>or <code>build.gradle</code></p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="groovy language-groovy"><span class="tok-n">dependencies</span> <span class="tok-o">{</span>
-  <span class="tok-n">compile</span><span class="tok-o">(</span><span class="tok-s1">&#39;org.springframework.boot:spring-boot-starter-security&#39;</span><span class="tok-o">)</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="groovy language-groovy">dependencies {&#x000A;  compile('org.springframework.boot:spring-boot-starter-security')&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -193,19 +168,7 @@
 <div class="paragraph"><p>To be able to add a login form to the app we need to make some HTML static resources accessible anonymously</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Configuration</span>
-<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">SecurityConfiguration</span> <span class="tok-kd">extends</span> <span class="tok-n">WebSecurityConfigurerAdapter</span> <span class="tok-o">{</span>
-  <span class="tok-nd">@Override</span>
-  <span class="tok-kd">protected</span> <span class="tok-kt">void</span> <span class="tok-nf">configure</span><span class="tok-o">(</span><span class="tok-n">HttpSecurity</span> <span class="tok-n">http</span><span class="tok-o">)</span> <span class="tok-kd">throws</span> <span class="tok-n">Exception</span> <span class="tok-o">{</span>
-    <span class="tok-n">http</span>
-      <span class="tok-o">.</span><span class="tok-na">httpBasic</span><span class="tok-o">()</span>
-    <span class="tok-o">.</span><span class="tok-na">and</span><span class="tok-o">()</span>
-      <span class="tok-o">.</span><span class="tok-na">authorizeRequests</span><span class="tok-o">()</span>
-        <span class="tok-o">.</span><span class="tok-na">antMatchers</span><span class="tok-o">(</span><span class="tok-s">&quot;/index.html&quot;</span><span class="tok-o">,</span> <span class="tok-s">&quot;/home.html&quot;</span><span class="tok-o">,</span>
-           <span class="tok-s">&quot;/login.html&quot;</span><span class="tok-o">,</span> <span class="tok-s">&quot;/&quot;</span><span class="tok-o">).</span><span class="tok-na">permitAll</span><span class="tok-o">()</span>
-        <span class="tok-o">.</span><span class="tok-na">anyRequest</span><span class="tok-o">().</span><span class="tok-na">authenticated</span><span class="tok-o">();</span>
-  <span class="tok-o">}</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">@Configuration&#x000A;public class SecurityConfiguration extends WebSecurityConfigurerAdapter {&#x000A;  @Override&#x000A;  protected void configure(HttpSecurity http) throws Exception {&#x000A;    http&#x000A;      .httpBasic()&#x000A;    .and()&#x000A;      .authorizeRequests()&#x000A;        .antMatchers("/index.html", "/home.html",&#x000A;           "/login.html", "/").permitAll()&#x000A;        .anyRequest().authenticated();&#x000A;  }&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph"><p>(c.f. "single": <a href="https://github.com/dsyer/spring-security-angular/tree/master/single">https://github.com/&#8230;&#8203;/single</a>, Part I)</p></div>
@@ -221,12 +184,7 @@
 <div class="paragraph"><p>So:</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="javascript language-javascript"><span class="tok-nx">angular</span><span class="tok-p">.</span><span class="tok-nx">module</span><span class="tok-p">(</span><span class="tok-s1">&#39;hello&#39;</span><span class="tok-p">,</span> <span class="tok-p">[]).</span><span class="tok-nx">config</span><span class="tok-p">(</span><span class="tok-kd">function</span><span class="tok-p">(</span><span class="tok-nx">$httpProvider</span><span class="tok-p">)</span> <span class="tok-p">{</span>
-
-  <span class="tok-nx">$httpProvider</span><span class="tok-p">.</span><span class="tok-nx">defaults</span><span class="tok-p">.</span><span class="tok-nx">headers</span><span class="tok-p">.</span><span class="tok-nx">common</span><span class="tok-p">[</span><span class="tok-s2">&quot;X-Requested-With&quot;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;XMLHttpRequest&#39;</span><span class="tok-p">;</span>
-
-<span class="tok-p">})</span>
-<span class="tok-p">...</span></code></pre>
+<pre class="highlight"><code class="javascript language-javascript">angular.module('hello', []).config(function($httpProvider) {&#x000A;&#x000A;  $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';&#x000A;&#x000A;})&#x000A;...</code></pre>
 </div>
 </div>
 </section>
@@ -234,26 +192,12 @@
 <h2>Client Side Login Form</h2>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="html language-html"><span class="tok-nt">&lt;form</span> <span class="tok-na">role=</span><span class="tok-s">&quot;form&quot;</span> <span class="tok-na">ng-submit=</span><span class="tok-s">&quot;controller.login()&quot;</span><span class="tok-nt">&gt;</span>
-  ...
-<span class="tok-nt">&lt;/form&gt;</span></code></pre>
+<pre class="highlight"><code class="html language-html">&lt;form role="form" ng-submit="controller.login()"&gt;&#x000A;  ...&#x000A;&lt;/form&gt;</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="javascript language-javascript"><span class="tok-nx">self</span><span class="tok-p">.</span><span class="tok-nx">credentials</span> <span class="tok-o">=</span> <span class="tok-p">{};</span>
-<span class="tok-nx">self</span><span class="tok-p">.</span><span class="tok-nx">login</span> <span class="tok-o">=</span> <span class="tok-kd">function</span><span class="tok-p">()</span> <span class="tok-p">{</span>
-
-  <span class="tok-nx">$http</span><span class="tok-p">.</span><span class="tok-nx">get</span><span class="tok-p">(</span><span class="tok-s1">&#39;/user&#39;</span><span class="tok-p">,</span> <span class="tok-p">{</span>
-      <span class="tok-nx">headers</span> <span class="tok-o">:</span> <span class="tok-p">{</span> <span class="tok-nx">authorization</span> <span class="tok-o">:</span> <span class="tok-s2">&quot;Basic &quot;</span>
-        <span class="tok-o">+</span> <span class="tok-nx">btoa</span><span class="tok-p">(</span><span class="tok-nx">self</span><span class="tok-p">.</span><span class="tok-nx">credentials</span><span class="tok-p">.</span><span class="tok-nx">username</span>
-        <span class="tok-o">+</span> <span class="tok-s2">&quot;:&quot;</span>  <span class="tok-o">+</span> <span class="tok-nx">self</span><span class="tok-p">.</span><span class="tok-nx">credentials</span><span class="tok-p">.</span><span class="tok-nx">password</span><span class="tok-p">)</span>
-      <span class="tok-p">}}).</span><span class="tok-nx">then</span><span class="tok-p">(</span><span class="tok-kd">function</span><span class="tok-p">(</span><span class="tok-nx">response</span><span class="tok-p">)</span> <span class="tok-p">{</span>
-        <span class="tok-nx">self</span><span class="tok-p">.</span><span class="tok-nx">greeting</span> <span class="tok-o">=</span> <span class="tok-nx">response</span><span class="tok-p">.</span><span class="tok-nx">data</span><span class="tok-p">;</span>
-        <span class="tok-nx">self</span><span class="tok-p">.</span><span class="tok-nx">show</span> <span class="tok-o">=</span> <span class="tok-kc">false</span><span class="tok-p">;</span>
-  <span class="tok-p">})</span>
-
-<span class="tok-p">}</span></code></pre>
+<pre class="highlight"><code class="javascript language-javascript">self.credentials = {};&#x000A;self.login = function() {&#x000A;&#x000A;  $http.get('/user', {&#x000A;      headers : { authorization : "Basic "&#x000A;        + btoa(self.credentials.username&#x000A;        + ":"  + self.credentials.password)&#x000A;      }}).then(function(response) {&#x000A;        self.greeting = response.data;&#x000A;        self.show = false;&#x000A;  })&#x000A;&#x000A;}</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -289,27 +233,27 @@
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top"></th>
-<th class="tableblock halign-left valign-top">To Client</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">From Client</th>
-<th class="tableblock halign-left valign-top">Name</th>
+  <th class="tableblock halign-left valign-top"></th>
+  <th class="tableblock halign-left valign-top">To Client</th>
+  <th class="tableblock halign-left valign-top">Name</th>
+  <th class="tableblock halign-left valign-top">From Client</th>
+  <th class="tableblock halign-left valign-top">Name</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Spring Security</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Request attribute</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">_csrf</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Request header</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">X-CSRF-TOKEN</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Spring Security</strong></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Request attribute</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">_csrf</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Request header</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">X-CSRF-TOKEN</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Angular JS</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Cookie</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">XSRF-TOKEN</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Request header</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">X-XSRF-TOKEN</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Angular JS</strong></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Cookie</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">XSRF-TOKEN</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Request header</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">X-XSRF-TOKEN</p></td>
 </tr>
 </tbody>
 </table>
@@ -323,19 +267,7 @@
 <h2>Spring Security for Angular "XSRF"</h2>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Configuration</span>
-<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">SecurityConfiguration</span> <span class="tok-kd">extends</span> <span class="tok-n">WebSecurityConfigurerAdapter</span> <span class="tok-o">{</span>
-
-  <span class="tok-nd">@Override</span>
-  <span class="tok-kd">protected</span> <span class="tok-kt">void</span> <span class="tok-nf">configure</span><span class="tok-o">(</span><span class="tok-n">HttpSecurity</span> <span class="tok-n">http</span><span class="tok-o">)</span> <span class="tok-kd">throws</span> <span class="tok-n">Exception</span> <span class="tok-o">{</span>
-      <span class="tok-n">http</span>
-        <span class="tok-o">...</span>
-      <span class="tok-o">.</span><span class="tok-na">and</span><span class="tok-o">()</span>
-        <span class="tok-o">.</span><span class="tok-na">csrf</span><span class="tok-o">()</span>
-          <span class="tok-o">.</span><span class="tok-na">csrfTokenRepository</span><span class="tok-o">(</span><span class="tok-n">CookieCsrfTokenRepository</span><span class="tok-o">.</span><span class="tok-na">withHttpOnlyFalse</span><span class="tok-o">());</span>
-    <span class="tok-o">}</span>
-
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">@Configuration&#x000A;public class SecurityConfiguration extends WebSecurityConfigurerAdapter {&#x000A;&#x000A;  @Override&#x000A;  protected void configure(HttpSecurity http) throws Exception {&#x000A;      http&#x000A;        ...&#x000A;      .and()&#x000A;        .csrf()&#x000A;          .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());&#x000A;    }&#x000A;&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -353,20 +285,14 @@
 <div class="paragraph"><p>Use <code>@CrossOrigin</code> on your <code>@RequestMapping</code> and this:</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">ResourceApplication</span> <span class="tok-kd">extends</span> <span class="tok-n">WebSecurityConfigurerAdapter</span> <span class="tok-o">{</span>
-
-  <span class="tok-nd">@Override</span>
-  <span class="tok-kd">protected</span> <span class="tok-kt">void</span> <span class="tok-nf">configure</span><span class="tok-o">(</span><span class="tok-n">HttpSecurity</span> <span class="tok-n">http</span><span class="tok-o">)</span> <span class="tok-kd">throws</span> <span class="tok-n">Exception</span> <span class="tok-o">{</span>
-    <span class="tok-n">http</span><span class="tok-o">.</span><span class="tok-na">cors</span><span class="tok-o">()</span>
-      <span class="tok-o">...</span>
-  <span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">public class ResourceApplication extends WebSecurityConfigurerAdapter {&#x000A;&#x000A;  @Override&#x000A;  protected void configure(HttpSecurity http) throws Exception {&#x000A;    http.cors()&#x000A;      ...&#x000A;  }</code></pre>
 </div>
 </div>
 <div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<div class="title">Tip</div>
+<div class="title"></div>
 </td>
 <td class="content">
 there is also <code>CorsUtils::isCorsRequest</code> method you can use in a
@@ -440,48 +366,48 @@ request matcher.
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Application</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Security</th>
-<th class="tableblock halign-left valign-top">Blog</th>
+  <th class="tableblock halign-left valign-top">Application</th>
+  <th class="tableblock halign-left valign-top">Description</th>
+  <th class="tableblock halign-left valign-top">Security</th>
+  <th class="tableblock halign-left valign-top">Blog</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>basic</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Single backend</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">HTTP Basic</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Part I</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>basic</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Single backend</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">HTTP Basic</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Part I</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>single</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Adds form authentication</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Part II</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>single</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Adds form authentication</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Part II</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring-session</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Adds secure backend with custom token</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Spring Session ID as token</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Part III</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring-session</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Adds secure backend with custom token</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Spring Session ID as token</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Part III</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>proxy</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">UI acts as proxy.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie, Spring Session</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Part IV</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>proxy</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">UI acts as proxy.</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie, Spring Session</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Part IV</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>oauth2</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Add OAuth2 SSO with a separate authentication server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie in UI and access token for backends</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Part V</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>oauth2</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Add OAuth2 SSO with a separate authentication server</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie in UI and access token for backends</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Part V</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>double</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Add "admin" UI behind Gateway</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie, Spring Session</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Part VI</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>double</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Add "admin" UI behind Gateway</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Session cookie, Spring Session</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Part VI</p></td>
 </tr>
 </tbody>
 </table>

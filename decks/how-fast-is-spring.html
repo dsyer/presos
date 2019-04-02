@@ -3,7 +3,7 @@
 <head>
 <meta content="text/html; charset=" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-<meta content="Asciidoctor 1.5.4" name="generator">
+<meta content="Asciidoctor 2.0.5" name="generator">
 <meta content="Dave Syer, 2018" name="author">
 <title>How Fast is Spring?</title>
 <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
@@ -71,20 +71,20 @@
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><div><div class="imageblock">
-<div class="content">
-<img alt="flame_20" src="images/fast/flame_20.svg">
-</div>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="imageblock">
-<div class="content">
-<img alt="flame_21" src="images/fast/flame_21.svg">
-</div>
-</div></div></td>
+  <td class="tableblock halign-left valign-top"><div><div class="imageblock">
+  <div class="content">
+  <img alt="flame_20" src="images/fast/flame_20.svg">
+  </div>
+  </div></div></td>
+  <td class="tableblock halign-left valign-top"><div><div class="imageblock">
+  <div class="content">
+  <img alt="flame_21" src="images/fast/flame_21.svg">
+  </div>
+  </div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Spring Boot 2.0</p></div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Spring Boot 2.1</p></div></div></td>
+  <td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Spring Boot 2.0</p></div></div></td>
+  <td class="tableblock halign-left valign-top"><div><div class="paragraph"><p>Spring Boot 2.1</p></div></div></td>
 </tr>
 </tbody>
 </table>
@@ -144,14 +144,7 @@
 <div class="paragraph"><p><a href="https://github.com/dsyer/spring-boot-startup-bench/blob/master/static/README.adoc">Static benchmarks</a> from <a class="bare" href="https://github.com/dsyer/spring-boot-startup-bench">https://github.com/dsyer/spring-boot-startup-bench</a>. New JVM (separate process) per application startup, explicit classpath (not fat jar).</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>class         method  sample  beans    classes  heap    memory  median  mean  range
-MainBenchmark   main   demo  121.000  5643.000  13.360  76.726  0.935  0.948  0.017
-MainBenchmark   main   jdbc  156.000  5794.000  14.137  78.331  1.008  1.017  0.012
-MainBenchmark   main   actr  222.000  6182.000  15.569  83.695  1.140  1.155  0.020
-StripBenchmark  strip  slim  103.000  5465.000  13.815  76.140  0.875  0.897  0.041
-StripBenchmark  strip  thin  62.000   5247.000  12.810  73.781  0.810  0.827  0.023
-StripBenchmark  strip  lite  30.000   5012.000  11.432  70.928  0.715  0.727  0.012
-StripBenchmark  strip  func  26.000   4967.000  11.351  70.516  0.686  0.701  0.026</code></pre>
+<pre class="highlight"><code>class         method  sample  beans    classes  heap    memory  median  mean  range&#x000A;MainBenchmark   main   demo  121.000  5643.000  13.360  76.726  0.935  0.948  0.017&#x000A;MainBenchmark   main   jdbc  156.000  5794.000  14.137  78.331  1.008  1.017  0.012&#x000A;MainBenchmark   main   actr  222.000  6182.000  15.569  83.695  1.140  1.155  0.020&#x000A;StripBenchmark  strip  slim  103.000  5465.000  13.815  76.140  0.875  0.897  0.041&#x000A;StripBenchmark  strip  thin  62.000   5247.000  12.810  73.781  0.810  0.827  0.023&#x000A;StripBenchmark  strip  lite  30.000   5012.000  11.432  70.928  0.715  0.727  0.012&#x000A;StripBenchmark  strip  func  26.000   4967.000  11.351  70.516  0.686  0.701  0.026</code></pre>
 </div>
 </div>
 </section>
@@ -159,7 +152,7 @@ StripBenchmark  strip  func  26.000   4967.000  11.351  70.516  0.686  0.701  0.
 <h2>Number of Classes vs. Startup Time</h2>
 <div class="imageblock">
 <div class="content">
-<img alt="pubchart?oid=976086548&amp;format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR8B4l5WkWf-9gZWmIYTkmBWM7YWf5bRg852OakrV0G2-vtfM_UkVNRC3cTVk1079HagnMVHYZnvbib/pubchart?oid=976086548&format=image" width="75%">
+<img alt="pubchart?oid=976086548&format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR8B4l5WkWf-9gZWmIYTkmBWM7YWf5bRg852OakrV0G2-vtfM_UkVNRC3cTVk1079HagnMVHYZnvbib/pubchart?oid=976086548&format=image" width="75%">
 </div>
 </div>
 </section>
@@ -168,12 +161,7 @@ StripBenchmark  strip  func  26.000   4967.000  11.351  70.516  0.686  0.701  0.
 <div class="paragraph"><p><a href="https://github.com/dsyer/spring-boot-startup-bench/blob/master/flux/README.adoc">Flux benchmarks</a> from <a class="bare" href="https://github.com/dsyer/spring-boot-startup-bench">https://github.com/dsyer/spring-boot-startup-bench</a></p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>class        method sample  beans   classes   heap    memory  median  mean  range
-MainBenchmark  main  demo  93.000   4420.000  8.153  50.333  0.771  0.816  0.042
-MainBenchmark  main  jlog  80.000   3649.000  6.540  44.006  0.685  0.712  0.046
-MiniBenchmark  boot  jlog  28.000   3250.000  6.692  41.158  0.562  0.571  0.013
-MiniBenchmark  mini  jlog  27.000   2986.000  5.421  38.561  0.516  0.524  0.014
-MiniBenchmark  micro jlog  2.000    2215.000  4.817  33.320  0.339  0.344  0.007</code></pre>
+<pre class="highlight"><code>class        method sample  beans   classes   heap    memory  median  mean  range&#x000A;MainBenchmark  main  demo  93.000   4420.000  8.153  50.333  0.771  0.816  0.042&#x000A;MainBenchmark  main  jlog  80.000   3649.000  6.540  44.006  0.685  0.712  0.046&#x000A;MiniBenchmark  boot  jlog  28.000   3250.000  6.692  41.158  0.562  0.571  0.013&#x000A;MiniBenchmark  mini  jlog  27.000   2986.000  5.421  38.561  0.516  0.524  0.014&#x000A;MiniBenchmark  micro jlog  2.000    2215.000  4.817  33.320  0.339  0.344  0.007</code></pre>
 </div>
 </div>
 </section>
@@ -189,7 +177,7 @@ MiniBenchmark  micro jlog  2.000    2215.000  4.817  33.320  0.339  0.344  0.007
 </div>
 <div class="imageblock">
 <div class="content">
-<img alt="pubchart?oid=1689271723&amp;format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1689271723&format=image" width="75%">
+<img alt="pubchart?oid=1689271723&format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1689271723&format=image" width="75%">
 </div>
 </div>
 </section>
@@ -218,13 +206,7 @@ MiniBenchmark  micro jlog  2.000    2215.000  4.817  33.320  0.339  0.344  0.007
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>Benchmark            (sample)  Mode  Cnt  Score   Error  Units Faster
-MainBenchmark.main       empt    ss   10  0.495 ± 0.008   s/op 9.91%
-MainBenchmark.main       jlog    ss   10  0.692 ± 0.017   s/op 21.04%
-MainBenchmark.main       demo    ss   10  0.805 ± 0.016   s/op 19.45%
-MainBenchmark.main       actr    ss   10  0.946 ± 0.021   s/op 27.03%
-MainBenchmark.main       jdbc    ss   10  0.860 ± 0.010   s/op 19.95%
-MainBenchmark.main       actj    ss   10  1.015 ± 0.020   s/op 29.11%</code></pre>
+<pre class="highlight"><code>Benchmark            (sample)  Mode  Cnt  Score   Error  Units Faster&#x000A;MainBenchmark.main       empt    ss   10  0.495 ± 0.008   s/op 9.91%&#x000A;MainBenchmark.main       jlog    ss   10  0.692 ± 0.017   s/op 21.04%&#x000A;MainBenchmark.main       demo    ss   10  0.805 ± 0.016   s/op 19.45%&#x000A;MainBenchmark.main       actr    ss   10  0.946 ± 0.021   s/op 27.03%&#x000A;MainBenchmark.main       jdbc    ss   10  0.860 ± 0.010   s/op 19.95%&#x000A;MainBenchmark.main       actj    ss   10  1.015 ± 0.020   s/op 29.11%</code></pre>
 </div>
 </div>
 </section>
@@ -233,21 +215,7 @@ MainBenchmark.main       actj    ss   10  1.015 ± 0.020   s/op 29.11%</code></p
 <div class="paragraph"><p>Choose your own autoconfigurations: "a la carte" instead of "all you can eat".</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@SpringBootConfiguration</span>
-<span class="tok-nd">@ImportAutoConfiguration</span><span class="tok-o">({</span>
-    <span class="tok-n">WebFluxAutoConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span>
-    <span class="tok-n">ReactiveWebServerFactoryAutoConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span>
-    <span class="tok-n">ErrorWebFluxAutoConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span>
-    <span class="tok-n">HttpHandlerAutoConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span>
-    <span class="tok-n">ConfigurationPropertiesAutoConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span>
-    <span class="tok-n">PropertyPlaceholderAutoConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span>
-<span class="tok-o">})</span>
-<span class="tok-nd">@RestController</span>
-<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">DemoApplication</span> <span class="tok-o">{</span>
-
-<span class="tok-o">...</span>
-
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">@SpringBootConfiguration&#x000A;@ImportAutoConfiguration({&#x000A;    WebFluxAutoConfiguration.class,&#x000A;    ReactiveWebServerFactoryAutoConfiguration.class,&#x000A;    ErrorWebFluxAutoConfiguration.class,&#x000A;    HttpHandlerAutoConfiguration.class,&#x000A;    ConfigurationPropertiesAutoConfiguration.class,&#x000A;    PropertyPlaceholderAutoConfiguration.class&#x000A;})&#x000A;@RestController&#x000A;public class DemoApplication {&#x000A;&#x000A;...&#x000A;&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -255,7 +223,7 @@ MainBenchmark.main       actj    ss   10  1.015 ± 0.020   s/op 29.11%</code></p
 <h2>PetClinic Benchmarks</h2>
 <div class="imageblock">
 <div class="content">
-<img alt="pubchart?oid=2146002665&amp;format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=2146002665&format=image">
+<img alt="pubchart?oid=2146002665&format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=2146002665&format=image">
 </div>
 </div>
 <div class="ulist">
@@ -271,20 +239,7 @@ MainBenchmark.main       actj    ss   10  1.015 ± 0.020   s/op 29.11%</code></p
 <div class="paragraph"><p>Before:</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Configuration</span>
-<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">SampleConfiguration</span> <span class="tok-o">{</span>
-
-    <span class="tok-nd">@Bean</span>
-    <span class="tok-kd">public</span> <span class="tok-n">Foo</span> <span class="tok-nf">foo</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-        <span class="tok-k">return</span> <span class="tok-k">new</span> <span class="tok-nf">Foo</span><span class="tok-o">();</span>
-    <span class="tok-o">}</span>
-
-    <span class="tok-nd">@Bean</span>
-    <span class="tok-kd">public</span> <span class="tok-n">Bar</span> <span class="tok-nf">bar</span><span class="tok-o">(</span><span class="tok-n">Foo</span> <span class="tok-n">foo</span><span class="tok-o">)</span> <span class="tok-o">{</span>
-        <span class="tok-k">return</span> <span class="tok-k">new</span> <span class="tok-nf">Bar</span><span class="tok-o">(</span><span class="tok-n">foo</span><span class="tok-o">);</span>
-    <span class="tok-o">}</span>
-
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">@Configuration&#x000A;public class SampleConfiguration {&#x000A;&#x000A;    @Bean&#x000A;    public Foo foo() {&#x000A;        return new Foo();&#x000A;    }&#x000A;&#x000A;    @Bean&#x000A;    public Bar bar(Foo foo) {&#x000A;        return new Bar(foo);&#x000A;    }&#x000A;&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -293,27 +248,7 @@ MainBenchmark.main       actj    ss   10  1.015 ± 0.020   s/op 29.11%</code></p
 <div class="paragraph"><p>After:</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">SampleConfiguration</span>
-        <span class="tok-kd">implements</span> <span class="tok-n">ApplicationContextInitializer</span><span class="tok-o">&lt;</span><span class="tok-n">GenericApplicationContext</span><span class="tok-o">&gt;</span> <span class="tok-o">{</span>
-
-    <span class="tok-kd">public</span> <span class="tok-n">Foo</span> <span class="tok-nf">foo</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-        <span class="tok-k">return</span> <span class="tok-k">new</span> <span class="tok-nf">Foo</span><span class="tok-o">();</span>
-    <span class="tok-o">}</span>
-
-    <span class="tok-kd">public</span> <span class="tok-n">Bar</span> <span class="tok-nf">bar</span><span class="tok-o">(</span><span class="tok-n">Foo</span> <span class="tok-n">foo</span><span class="tok-o">)</span> <span class="tok-o">{</span>
-        <span class="tok-k">return</span> <span class="tok-k">new</span> <span class="tok-nf">Bar</span><span class="tok-o">(</span><span class="tok-n">foo</span><span class="tok-o">);</span>
-    <span class="tok-o">}</span>
-
-    <span class="tok-nd">@Override</span>
-    <span class="tok-kd">public</span> <span class="tok-kt">void</span> <span class="tok-nf">initialize</span><span class="tok-o">(</span><span class="tok-n">GenericApplicationContext</span> <span class="tok-n">context</span><span class="tok-o">)</span> <span class="tok-o">{</span>
-        <span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">registerBean</span><span class="tok-o">(</span><span class="tok-n">SampleConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">);</span>
-        <span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">registerBean</span><span class="tok-o">(</span><span class="tok-n">Foo</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span>
-                <span class="tok-o">()</span> <span class="tok-o">-&gt;</span> <span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">getBean</span><span class="tok-o">(</span><span class="tok-n">SampleConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">).</span><span class="tok-na">foo</span><span class="tok-o">());</span>
-        <span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">registerBean</span><span class="tok-o">(</span><span class="tok-n">Bar</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">,</span> <span class="tok-o">()</span> <span class="tok-o">-&gt;</span> <span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">getBean</span><span class="tok-o">(</span><span class="tok-n">SampleConfiguration</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">)</span>
-                <span class="tok-o">.</span><span class="tok-na">bar</span><span class="tok-o">(</span><span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">getBean</span><span class="tok-o">(</span><span class="tok-n">Foo</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">)));</span>
-    <span class="tok-o">}</span>
-
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">public class SampleConfiguration&#x000A;        implements ApplicationContextInitializer&lt;GenericApplicationContext&gt; {&#x000A;&#x000A;    public Foo foo() {&#x000A;        return new Foo();&#x000A;    }&#x000A;&#x000A;    public Bar bar(Foo foo) {&#x000A;        return new Bar(foo);&#x000A;    }&#x000A;&#x000A;    @Override&#x000A;    public void initialize(GenericApplicationContext context) {&#x000A;        context.registerBean(SampleConfiguration.class);&#x000A;        context.registerBean(Foo.class,&#x000A;                () -&gt; context.getBean(SampleConfiguration.class).foo());&#x000A;        context.registerBean(Bar.class, () -&gt; context.getBean(SampleConfiguration.class)&#x000A;                .bar(context.getBean(Foo.class)));&#x000A;    }&#x000A;&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -341,15 +276,7 @@ MainBenchmark.main       actj    ss   10  1.015 ± 0.020   s/op 29.11%</code></p
 <h2>CPU Constrained Environments</h2>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>container cpus  startup(ms)
-===========================
-riff       4       2817
-scf        4        664
-riff       2       4614
-scf        2        653
-riff       1      16782
-scf        1       2121
-scf:n      1       1091</code></pre>
+<pre class="highlight"><code>container cpus  startup(ms)&#x000A;===========================&#x000A;riff       4       2817&#x000A;scf        4        664&#x000A;riff       2       4614&#x000A;scf        2        653&#x000A;riff       1      16782&#x000A;scf        1       2121&#x000A;scf:n      1       1091</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -365,24 +292,7 @@ scf:n      1       1091</code></pre>
 <div class="paragraph"><p>Native images can be very efficient (see <a href="https://github.com/oracle/graal">Graal VM</a>).</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>$ native-image -H:Name=target/bunc ... com.example.func.BuncApplication
-$ ./target/bunc
-
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::
-
-...
-Aug 07, 2018 11:25:13 AM org.springframework.boot.web.embedded.netty.NettyWebServer start
-INFO: Netty started on port(s): 8080
-Aug 07, 2018 11:25:13 AM org.springframework.boot.StartupInfoLogger logStarted
-INFO: Started application in 0.036 seconds (JVM running for 0.04)
-Benchmark app started
-Started HttpServer: 40ms</code></pre>
+<pre class="highlight"><code>$ native-image -H:Name=target/bunc ... com.example.func.BuncApplication&#x000A;$ ./target/bunc&#x000A;&#x000A;  .   ____          _            __ _ _&#x000A; /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \&#x000A;( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \&#x000A; \\/  ___)| |_)| | | | | || (_| |  ) ) ) )&#x000A;  '  |____| .__|_| |_|_| |_\__, | / / / /&#x000A; =========|_|==============|___/=/_/_/_/&#x000A; :: Spring Boot ::&#x000A;&#x000A;...&#x000A;Aug 07, 2018 11:25:13 AM org.springframework.boot.web.embedded.netty.NettyWebServer start&#x000A;INFO: Netty started on port(s): 8080&#x000A;Aug 07, 2018 11:25:13 AM org.springframework.boot.StartupInfoLogger logStarted&#x000A;INFO: Started application in 0.036 seconds (JVM running for 0.04)&#x000A;Benchmark app started&#x000A;Started HttpServer: 40ms</code></pre>
 </div>
 </div>
 <div class="paragraph"><p>Downside: you lose all of JVM benefits (debugging, manageability, dynamic compilation, optimization, garbage collection).</p></div>

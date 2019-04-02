@@ -3,7 +3,7 @@
 <head>
 <meta content="text/html; charset=" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-<meta content="Asciidoctor 1.5.4" name="generator">
+<meta content="Asciidoctor 2.0.5" name="generator">
 <meta content="Dave Syer, 2015" name="author">
 <title>Introduction to Spring Cloud</title>
 <link href="./asciidoctor-pygments.css" rel="stylesheet">
@@ -157,17 +157,7 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 <h2>Hystrix Observable</h2>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@HystrixCommand</span><span class="tok-o">(</span><span class="tok-n">fallbackMethod</span><span class="tok-o">=</span><span class="tok-s">&quot;getDefaultMessage&quot;</span><span class="tok-o">)</span>
-<span class="tok-kd">public</span> <span class="tok-n">String</span> <span class="tok-nf">getMessage</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-  <span class="tok-k">return</span> <span class="tok-n">restTemplate</span><span class="tok-o">.</span><span class="tok-na">getForObject</span><span class="tok-o">(</span><span class="tok-cm">/*...*/</span><span class="tok-o">);</span>
-<span class="tok-o">}</span>
-
-<span class="tok-kd">public</span> <span class="tok-n">String</span> <span class="tok-nf">getDefaultMessage</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-  <span class="tok-k">return</span> <span class="tok-s">&quot;Hello World Default&quot;</span><span class="tok-o">;</span>
-<span class="tok-o">}</span>
-
-<span class="tok-c1">// somewhere else</span>
-<span class="tok-n">helloService</span><span class="tok-o">.</span><span class="tok-na">getMessage</span><span class="tok-o">();</span></code></pre>
+<pre class="highlight"><code class="java language-java">@HystrixCommand(fallbackMethod="getDefaultMessage")&#x000A;public String getMessage() {&#x000A;  return restTemplate.getForObject(/*...*/);&#x000A;}&#x000A;&#x000A;public String getDefaultMessage() {&#x000A;  return "Hello World Default";&#x000A;}&#x000A;&#x000A;// somewhere else&#x000A;helloService.getMessage();</code></pre>
 </div>
 </div>
 </section>
@@ -195,10 +185,7 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="groovy language-groovy"><span class="tok-nd">@EnableZuulProxy</span>
-<span class="tok-nd">@Controller</span>
-<span class="tok-kd">class</span> <span class="tok-nc">Application</span> <span class="tok-o">{</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="groovy language-groovy">@EnableZuulProxy&#x000A;@Controller&#x000A;class Application {&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -213,14 +200,7 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@EnableBinding</span><span class="tok-o">(</span><span class="tok-n">Sink</span><span class="tok-o">.</span><span class="tok-na">class</span><span class="tok-o">)</span>
-<span class="tok-nd">@MessageEndpoint</span>
-<span class="tok-kd">public</span> <span class="tok-kd">class</span> <span class="tok-nc">Endpoint</span> <span class="tok-o">{</span>
-   <span class="tok-nd">@ServiceActivator</span><span class="tok-o">(</span><span class="tok-n">inputChannel</span><span class="tok-o">=</span><span class="tok-n">Sink</span><span class="tok-o">.</span><span class="tok-na">INPUT</span><span class="tok-o">)</span>
-   <span class="tok-kd">public</span> <span class="tok-kt">void</span> <span class="tok-nf">handle</span><span class="tok-o">(</span><span class="tok-n">Foo</span> <span class="tok-n">payload</span><span class="tok-o">)</span> <span class="tok-o">{</span>
-      <span class="tok-c1">// .. handle message</span>
-   <span class="tok-o">}</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">@EnableBinding(Sink.class)&#x000A;@MessageEndpoint&#x000A;public class Endpoint {&#x000A;   @ServiceActivator(inputChannel=Sink.INPUT)&#x000A;   public void handle(Foo payload) {&#x000A;      // .. handle message&#x000A;   }&#x000A;}</code></pre>
 </div>
 </div>
 </section>

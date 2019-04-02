@@ -3,7 +3,7 @@
 <head>
 <meta content="text/html; charset=" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-<meta content="Asciidoctor 1.5.4" name="generator">
+<meta content="Asciidoctor 2.0.5" name="generator">
 <meta content="Dave Syer, 2017" name="author">
 <title>Inside Spring Boot</title>
 <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
@@ -88,61 +88,61 @@ Boilerplate configuration</p></div>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Activity</th>
-<th class="tableblock halign-left valign-top">Callbacks</th>
-<th class="tableblock halign-left valign-top">Events</th>
+  <th class="tableblock halign-left valign-top">Activity</th>
+  <th class="tableblock halign-left valign-top">Callbacks</th>
+  <th class="tableblock halign-left valign-top">Events</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationStartingEvent</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationStartingEvent</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Logging initialization start</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationEvironmentPreparedEvent</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Logging initialization start</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationEvironmentPreparedEvent</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Config files</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EnvironmentPostProcessor</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Config files</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>EnvironmentPostProcessor</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Logging initialization end</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationPreparedEvent</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Logging initialization end</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationPreparedEvent</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationContextInitializer</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationContextInitializer</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ApplicationContext refreshes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EmbeddedServletContainerCustomizer</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">ApplicationContext refreshes</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>EmbeddedServletContainerCustomizer</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Autoconfig processed</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Autoconfig processed</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User config processed</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SmartLifecycle</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ContextRefreshedEvent</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">User config processed</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>SmartLifecycle</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ContextRefreshedEvent</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Embedded container connectors</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>EmbeddedServletContainerInitializedEvent</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">Embedded container connectors</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>EmbeddedServletContainerInitializedEvent</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationReadyEvent</code></p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock">&#160;</p></td>
+  <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ApplicationReadyEvent</code></p></td>
 </tr>
 </tbody>
 </table>

@@ -55,7 +55,7 @@ Email: <a href="mailto:dsyer@pivotal.io">dsyer@pivotal.io</a></p>
 </div><div class="slide" id="slide3"><h2 id="introduction">Introduction</h2>
 
 <ul>
-<li>There is a <a href="http://www.indeed.com/jobtrends?q=JSON+REST%2CSOAP+XML&amp;l=&amp;relative=1#shareCode">strong trend</a> in distributed systems with
+<li>There is a <a href="http://www.indeed.com/jobtrends?q=JSON+REST%2CSOAP+XML&l=&relative=1#shareCode">strong trend</a> in distributed systems with
 lightweight architectures</li>
 <li>People have started to call them &quot;microservices&quot;</li>
 </ul>
@@ -106,10 +106,10 @@ retrieving it?</li>
 </ul>
 
 <p>Example:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">    $ curl &quot;https://$username:$password@myhost/resource&quot;
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>    $ curl &quot;https://$username:$password@myhost/resource&quot;
 </code></pre></div>
 </div><div class="slide" id="slide7"><h2 id="simple-service">Simple Service</h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@Grab</span><span class="o">(</span><span class="s1">&#39;spring-boot-starter-security&#39;</span><span class="o">)</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span></span><span class="nd">@Grab</span><span class="o">(</span><span class="s1">&#39;spring-boot-starter-security&#39;</span><span class="o">)</span>
 <span class="nd">@RestController</span>
 <span class="kd">class</span> <span class="nc">Application</span> <span class="o">{</span>
 
@@ -120,7 +120,7 @@ retrieving it?</li>
 
 <span class="o">}</span>
 </code></pre></div>
-</div><div class="slide" id="slide8"><h2 id="so-what-39-s-wrong-with-that">So what&#39;s wrong with that?</h2>
+</div><div class="slide" id="slide8"><h2 id="so-whats-wrong-with-that">So what&#39;s wrong with that?</h2>
 
 <ul>
 <li>Nothing, but...</li>
@@ -141,7 +141,7 @@ retrieving it?</li>
 <li>Suits architecture based on &quot;edge&quot; server</li>
 </ul>
 
-</div><div class="slide" id="slide10"><h2 id="so-what-39-s-wrong-with-that">So what&#39;s wrong with that?</h2>
+</div><div class="slide" id="slide10"><h2 id="so-whats-wrong-with-that">So what&#39;s wrong with that?</h2>
 
 <ul>
 <li>Nothing, but...</li>
@@ -161,9 +161,9 @@ then you have a keystore anyway</li>
 </ul>
 
 <p>Example:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ curl -k --cert rod.pem:password https://localhost:8443/hello
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ curl -k --cert rod.pem:password https://localhost:8443/hello
 </code></pre></div>
-</div><div class="slide" id="slide12"><h2 id="so-what-39-s-wrong-with-that">So what&#39;s wrong with that?</h2>
+</div><div class="slide" id="slide12"><h2 id="so-whats-wrong-with-that">So what&#39;s wrong with that?</h2>
 
 <ul>
 <li>Nothing, but...</li>
@@ -187,7 +187,7 @@ require it anyway)</li>
 <li>Github example: token is temporary password in HTTP Basic</li>
 </ul>
 
-</div><div class="slide" id="slide14"><h2 id="so-what-39-s-wrong-with-that">So what&#39;s wrong with that?</h2>
+</div><div class="slide" id="slide14"><h2 id="so-whats-wrong-with-that">So what&#39;s wrong with that?</h2>
 
 <ul>
 <li>Nothing, but...</li>
@@ -205,7 +205,7 @@ require it anyway)</li>
 <li>Resources are free to interpret token content</li>
 </ul>
 
-</div><div class="slide" id="slide16"><h2 id="so-what-39-s-wrong-with-that">So what&#39;s wrong with that?</h2>
+</div><div class="slide" id="slide16"><h2 id="so-whats-wrong-with-that">So what&#39;s wrong with that?</h2>
 
 <ul>
 <li>Nothing, but...</li>
@@ -248,7 +248,7 @@ decision</li>
 </div><div class="slide" id="slide19"><h2 id="oauth2-and-the-microservice">OAuth2 and the Microservice</h2>
 
 <p>Example command line Client:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$ curl -H &quot;Authorization: Bearer $TOKEN&quot; https://myhost/resource
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>$ curl -H &quot;Authorization: Bearer $TOKEN&quot; https://myhost/resource
 </code></pre></div>
 <ul>
 <li><code>https://myhost</code> is a Resource Server</li>
@@ -257,7 +257,7 @@ decision</li>
 </ul>
 
 </div><div class="slide" id="slide20"><h2 id="simple-authorization-server">Simple Authorization Server</h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableAuthorizationServer</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span></span><span class="nd">@EnableAuthorizationServer</span>
 <span class="kd">class</span> <span class="nc">AuthorizationServer</span> <span class="kd">extends</span> <span class="n">AuthorizationServerConfigurerAdapter</span> <span class="o">{</span>
 
    <span class="nd">@Override</span>
@@ -285,7 +285,7 @@ decision</li>
 <li>But they carry important information to Resource Servers</li>
 <li><p>Example of implementation (from Cloud Foundry UAA, JWT = signed,
 base64-encoded, JSON):</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">{  &quot;client_id&quot;:&quot;cf&quot;,
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>{  &quot;client_id&quot;:&quot;cf&quot;,
    &quot;exp&quot;:1346325625,
    &quot;scope&quot;:[&quot;cloud_controller.read&quot;,&quot;openid&quot;,&quot;password.write&quot;],
    &quot;aud&quot;:[&quot;openid&quot;,&quot;cloud_controller&quot;,&quot;password&quot;],
@@ -298,7 +298,7 @@ base64-encoded, JSON):</p>
 </ul>
 
 </div><div class="slide" id="slide23"><h2 id="jwt-authorization-server">JWT Authorization Server</h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableAuthorizationServer</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span></span><span class="nd">@EnableAuthorizationServer</span>
 <span class="kd">class</span> <span class="nc">AuthorizationServer</span> <span class="kd">extends</span> <span class="n">AuthorizationServerConfigurerAdapter</span> <span class="o">{</span>
 
    <span class="nd">@Bean</span>
@@ -335,7 +335,7 @@ base64-encoded, JSON):</p>
 <p><img src="images/token-with-approvals.png" alt=""></p>
 
 </div><div class="slide" id="slide27"><h2 id="spring-oauth-support">Spring OAuth Support</h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableAuthorizationServer</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span></span><span class="nd">@EnableAuthorizationServer</span>
 <span class="kd">class</span> <span class="nc">AuthorizationServer</span> <span class="kd">extends</span> <span class="n">AuthorizationServerConfigurerAdapter</span> <span class="o">{</span>
 
         <span class="nd">@Override</span>
@@ -354,7 +354,7 @@ base64-encoded, JSON):</p>
 <span class="o">}</span>
 </code></pre></div>
 </div><div class="slide" id="slide28"><h2 id="simple-resource-server">Simple Resource Server</h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableResourceServer</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span></span><span class="nd">@EnableResourceServer</span>
 <span class="kd">class</span> <span class="nc">ResourceServer</span> <span class="o">{</span>
    <span class="nd">@Bean</span>
    <span class="n">TokenStore</span> <span class="nf">tokenStore</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
@@ -363,7 +363,7 @@ base64-encoded, JSON):</p>
 <span class="o">}</span>
 </code></pre></div>
 <p>or</p>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableResourceServer</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span></span><span class="nd">@EnableResourceServer</span>
 <span class="kd">class</span> <span class="nc">ResourceServer</span> <span class="o">{</span>
    <span class="nd">@Bean</span>
    <span class="n">ResourceServerTokenServices</span> <span class="nf">tokenServices</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
@@ -372,7 +372,7 @@ base64-encoded, JSON):</p>
 <span class="o">}</span>
 </code></pre></div>
 </div><div class="slide" id="slide29"><h2 id="simple-client-application">Simple Client Application</h2>
-<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="nd">@EnableOAuth2Client</span>
+<div class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span></span><span class="nd">@EnableOAuth2Client</span>
 <span class="kd">class</span> <span class="nc">ClientApplication</span> <span class="o">{</span>
 
    <span class="nd">@Autowired</span> <span class="c1">// session-scoped</span>
@@ -520,7 +520,7 @@ use password grant (e.g. with the incoming token as a password).</p>
 <li>Spring Security OAuth is full solution at framework level</li>
 </ul>
 
-</div><div class="slide" id="slide40"><h2 id="so-what-39-s-wrong-with-that">So What&#39;s Wrong with That?</h2>
+</div><div class="slide" id="slide40"><h2 id="so-whats-wrong-with-that">So What&#39;s Wrong with That?</h2>
 
 <p>Nothing but...</p>
 
@@ -539,7 +539,7 @@ use password grant (e.g. with the incoming token as a password).</p>
 <li>Request signing is standadized</li>
 </ul>
 
-</div><div class="slide" id="slide42"><h2 id="so-what-39-s-wrong-with-that">So What&#39;s Wrong with That?</h2>
+</div><div class="slide" id="slide42"><h2 id="so-whats-wrong-with-that">So What&#39;s Wrong with That?</h2>
 
 <p>Nothing but...</p>
 

@@ -3,7 +3,7 @@
 <head>
 <meta content="text/html; charset=" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-<meta content="Asciidoctor 1.5.4" name="generator">
+<meta content="Asciidoctor 2.0.5" name="generator">
 <meta content="Dave Syer, 2015" name="author">
 <title>Spring Cloud and Spring Boot</title>
 <link href="./asciidoctor-pygments.css" rel="stylesheet">
@@ -52,13 +52,7 @@
 <div class="paragraph"><p>It needs to be super easy to implement and update a service:</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="groovy language-groovy"><span class="tok-nd">@RestController</span>
-<span class="tok-kd">class</span> <span class="tok-nc">ThisWillActuallyRun</span> <span class="tok-o">{</span>
-    <span class="tok-nd">@RequestMapping</span><span class="tok-o">(</span><span class="tok-s2">&quot;/&quot;</span><span class="tok-o">)</span>
-    <span class="tok-n">String</span> <span class="tok-nf">home</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-        <span class="tok-s1">&#39;Hello World!&#39;</span>
-    <span class="tok-o">}</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="groovy language-groovy">@RestController&#x000A;class ThisWillActuallyRun {&#x000A;    @RequestMapping("/")&#x000A;    String home() {&#x000A;        'Hello World!'&#x000A;    }&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph"><p>and you don&#8217;t get much more "micro" than that.</p></div>

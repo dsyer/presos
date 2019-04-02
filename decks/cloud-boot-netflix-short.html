@@ -3,7 +3,7 @@
 <head>
 <meta content="text/html; charset=" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-<meta content="Asciidoctor 1.5.4" name="generator">
+<meta content="Asciidoctor 2.0.5" name="generator">
 <meta content="Spencer Gibb, Dave Syer, 2015" name="author">
 <title>Spring Cloud, Spring Boot and Netflix OSS</title>
 <link href="./asciidoctor-pygments.css" rel="stylesheet">
@@ -79,13 +79,7 @@
 <div class="paragraph"><p>It needs to be super easy to implement and update a service:</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="groovy language-groovy"><span class="tok-nd">@RestController</span>
-<span class="tok-kd">class</span> <span class="tok-nc">ThisWillActuallyRun</span> <span class="tok-o">{</span>
-    <span class="tok-nd">@RequestMapping</span><span class="tok-o">(</span><span class="tok-s2">&quot;/&quot;</span><span class="tok-o">)</span>
-    <span class="tok-n">String</span> <span class="tok-nf">home</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-        <span class="tok-n">Hello</span> <span class="tok-n">World</span><span class="tok-o">!</span>
-    <span class="tok-o">}</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="groovy language-groovy">@RestController&#x000A;class ThisWillActuallyRun {&#x000A;    @RequestMapping("/")&#x000A;    String home() {&#x000A;        Hello World!&#x000A;    }&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph"><p>and you don&#8217;t get much more "micro" than that.</p></div>
@@ -95,7 +89,7 @@
 <div class="paragraph"><p>Deploying services needs to be simple and reproducible</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="console language-console"><span class="tok-gp">$</span> cf push app -p app.groovy</code></pre>
+<pre class="highlight"><code class="console language-console">$ cf push app -p app.groovy</code></pre>
 </div>
 </div>
 <div class="paragraph"><p>and you don&#8217;t get much more convenient than that.</p></div>
@@ -219,17 +213,7 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 <h2>Hystrix Observable</h2>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@HystrixCommand</span><span class="tok-o">(</span><span class="tok-n">fallbackMethod</span><span class="tok-o">=</span><span class="tok-s">&quot;getDefaultMessage&quot;</span><span class="tok-o">)</span>
-<span class="tok-kd">public</span> <span class="tok-n">String</span> <span class="tok-nf">getMessage</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-  <span class="tok-k">return</span> <span class="tok-n">restTemplate</span><span class="tok-o">.</span><span class="tok-na">getForObject</span><span class="tok-o">(</span><span class="tok-cm">/*...*/</span><span class="tok-o">);</span>
-<span class="tok-o">}</span>
-
-<span class="tok-kd">public</span> <span class="tok-n">String</span> <span class="tok-nf">getDefaultMessage</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-  <span class="tok-k">return</span> <span class="tok-s">&quot;Hello World Default&quot;</span><span class="tok-o">;</span>
-<span class="tok-o">}</span>
-
-<span class="tok-c1">// somewhere else</span>
-<span class="tok-n">helloService</span><span class="tok-o">.</span><span class="tok-na">getMessage</span><span class="tok-o">();</span></code></pre>
+<pre class="highlight"><code class="java language-java">@HystrixCommand(fallbackMethod="getDefaultMessage")&#x000A;public String getMessage() {&#x000A;  return restTemplate.getForObject(/*...*/);&#x000A;}&#x000A;&#x000A;public String getDefaultMessage() {&#x000A;  return "Hello World Default";&#x000A;}&#x000A;&#x000A;// somewhere else&#x000A;helloService.getMessage();</code></pre>
 </div>
 </div>
 </section>
@@ -268,10 +252,7 @@ addressed with <strong>generic</strong>, <strong>boiler plate</strong> patterns.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="groovy language-groovy"><span class="tok-nd">@EnableZuulProxy</span>
-<span class="tok-nd">@Controller</span>
-<span class="tok-kd">class</span> <span class="tok-nc">Application</span> <span class="tok-o">{</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="groovy language-groovy">@EnableZuulProxy&#x000A;@Controller&#x000A;class Application {&#x000A;}</code></pre>
 </div>
 </div>
 <div class="ulist">

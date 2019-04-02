@@ -94,7 +94,7 @@ Email: <code>dsyer@pivotal.io</code></p>
 </div><div class="slide" id="slide12"><h2 id="locks">Locks</h2>
 
 <p>Example code using <code>java.util.concurrent.locks.Lock</code>:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">boolean</span> <span class="n">acquired</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kt">boolean</span> <span class="n">acquired</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 <span class="k">try</span> <span class="o">{</span>
   <span class="n">acquired</span> <span class="o">=</span> <span class="n">lock</span><span class="o">.</span><span class="na">tryLock</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
   <span class="k">if</span> <span class="o">(</span><span class="n">acquired</span><span class="o">)</span> <span class="o">{</span>
@@ -102,7 +102,7 @@ Email: <code>dsyer@pivotal.io</code></p>
   <span class="o">}</span>
 <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
   <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">interrupt</span><span class="o">();</span>
-  <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">&quot;Interrupted&quot;</span><span class="o">);</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="s">&quot;Interrupted&quot;</span><span class="o">);</span>
 <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
   <span class="k">if</span> <span class="o">(</span><span class="n">acquired</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">lock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
@@ -110,14 +110,14 @@ Email: <code>dsyer@pivotal.io</code></p>
 <span class="o">}</span>
 </code></pre></div>
 </div><div class="slide" id="slide13"><h2 id="spring-integration-lockregistry">Spring Integration: LockRegistry</h2>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">LockRegistry</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">LockRegistry</span> <span class="o">{</span>
     <span class="n">Lock</span> <span class="nf">obtain</span><span class="o">(</span><span class="n">Object</span> <span class="n">lockKey</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></div>
 </div><div class="slide" id="slide14"><h2 id="locks-with-spring-integration">Locks with Spring Integration</h2>
 
 <p>Example code using <code>LockRegistry</code>:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">boolean</span> <span class="n">acquired</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kt">boolean</span> <span class="n">acquired</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 <span class="k">try</span> <span class="o">{</span>
   <span class="n">acquired</span> <span class="o">=</span> <span class="n">lock</span><span class="o">.</span><span class="na">tryLock</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
   <span class="k">if</span> <span class="o">(</span><span class="n">acquired</span><span class="o">)</span> <span class="o">{</span>
@@ -125,7 +125,7 @@ Email: <code>dsyer@pivotal.io</code></p>
   <span class="o">}</span>
 <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
   <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">interrupt</span><span class="o">();</span>
-  <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">&quot;Interrupted&quot;</span><span class="o">);</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="s">&quot;Interrupted&quot;</span><span class="o">);</span>
 <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
   <span class="k">if</span> <span class="o">(</span><span class="n">acquired</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">lock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
@@ -195,10 +195,10 @@ election and fire events on granted and revoked.</p>
 </ul>
 
 <p>For a user it looks like this (create a new bean which is a <code>SmartLifecycle</code>):</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Bean</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="nd">@Bean</span>
 <span class="kd">public</span> <span class="n">LeaderInitiator</span> <span class="nf">leaderInitiator</span><span class="o">(</span><span class="n">CuratorFramework</span> <span class="n">client</span><span class="o">,</span>
             <span class="n">Candidate</span> <span class="n">candidate</span><span class="o">)</span> <span class="o">{</span>
-  <span class="k">return</span> <span class="k">new</span> <span class="nf">LeaderInitiator</span><span class="o">(</span><span class="n">client</span><span class="o">,</span> <span class="n">candidate</span><span class="o">);</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="n">LeaderInitiator</span><span class="o">(</span><span class="n">client</span><span class="o">,</span> <span class="n">candidate</span><span class="o">);</span>
 <span class="o">}</span>
 </code></pre></div>
 <p>(*) No support for etcd v3. Probably dead.</p>
@@ -206,14 +206,14 @@ election and fire events on granted and revoked.</p>
 </div><div class="slide" id="slide20"><h2 id="spring-integration-callbacks">Spring Integration: Callbacks</h2>
 
 <p>Callbacks on leadership events:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Candidate</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Candidate</span> <span class="o">{</span>
     <span class="kt">void</span> <span class="nf">onGranted</span><span class="o">(</span><span class="n">Context</span> <span class="n">ctx</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">;</span>
     <span class="kt">void</span> <span class="nf">onRevoked</span><span class="o">(</span><span class="n">Context</span> <span class="n">ctx</span><span class="o">);</span>
     <span class="o">...</span>
 <span class="o">}</span>
 </code></pre></div>
 <p>See also:</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@EventListener</span><span class="o">(</span><span class="n">OnGrantedEvent</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span></span><span class="nd">@EventListener</span><span class="o">(</span><span class="n">OnGrantedEvent</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kt">void</span> <span class="nf">start</span><span class="o">()</span> <span class="o">{</span>
 
 <span class="o">}</span>

@@ -9,3 +9,4 @@ gem "pygments.rb"
 gem "redcarpet"
 gem "tilt"
 gem "haml"
+gem "nokogiri", '1.6.8'

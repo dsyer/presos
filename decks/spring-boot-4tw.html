@@ -3,7 +3,7 @@
 <head>
 <meta content="text/html; charset=" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-<meta content="Asciidoctor 1.5.4" name="generator">
+<meta content="Asciidoctor 2.0.5" name="generator">
 <meta content="Dave Syer, 2015" name="author">
 <title>Spring Boot for the Web Tier</title>
 <link href="./asciidoctor-pygments.css" rel="stylesheet">
@@ -202,19 +202,7 @@ toolchain.</p></div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Bean</span>
-<span class="tok-kd">public</span> <span class="tok-n">ServletRegistrationBean</span> <span class="tok-nf">myServlet</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-    <span class="tok-n">ServletRegistrationBean</span> <span class="tok-n">bean</span> <span class="tok-o">=</span>
-        <span class="tok-k">new</span> <span class="tok-nf">ServletRegistrationBean</span><span class="tok-o">(</span><span class="tok-k">new</span> <span class="tok-nf">MyServlet</span><span class="tok-o">(),</span> <span class="tok-s">&quot;/mine&quot;</span><span class="tok-o">);</span>
-    <span class="tok-n">bean</span><span class="tok-o">.</span><span class="tok-na">setAsyncSupported</span><span class="tok-o">(</span><span class="tok-kc">false</span><span class="tok-o">);</span>
-    <span class="tok-n">bean</span><span class="tok-o">.</span><span class="tok-na">setInitParameters</span><span class="tok-o">(</span><span class="tok-n">Collections</span><span class="tok-o">.</span><span class="tok-na">singletonMap</span><span class="tok-o">(</span><span class="tok-s">&quot;debug&quot;</span><span class="tok-o">,</span> <span class="tok-s">&quot;true&quot;</span><span class="tok-o">));</span>
-    <span class="tok-k">return</span> <span class="tok-n">bean</span><span class="tok-o">;</span>
-<span class="tok-o">}</span>
-
-<span class="tok-nd">@Bean</span>
-<span class="tok-kd">public</span> <span class="tok-n">FilterRegistrationBean</span> <span class="tok-nf">myFilter</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-    <span class="tok-k">return</span> <span class="tok-k">new</span> <span class="tok-nf">FilterRegistrationBean</span><span class="tok-o">(</span><span class="tok-k">new</span> <span class="tok-nf">MyFilter</span><span class="tok-o">(),</span> <span class="tok-n">myServlet</span><span class="tok-o">());</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">@Bean&#x000A;public ServletRegistrationBean myServlet() {&#x000A;    ServletRegistrationBean bean =&#x000A;        new ServletRegistrationBean(new MyServlet(), "/mine");&#x000A;    bean.setAsyncSupported(false);&#x000A;    bean.setInitParameters(Collections.singletonMap("debug", "true"));&#x000A;    return bean;&#x000A;}&#x000A;&#x000A;@Bean&#x000A;public FilterRegistrationBean myFilter() {&#x000A;    return new FilterRegistrationBean(new MyFilter(), myServlet());&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -230,14 +218,7 @@ toolchain.</p></div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-cm">/**</span>
-<span class="tok-cm">   * Configure the given {@link ServletContext} with any servlets, filters, listeners</span>
-<span class="tok-cm">   * context-params and attributes necessary for initialization.</span>
-<span class="tok-cm">   * @param servletContext the {@code ServletContext} to initialize</span>
-<span class="tok-cm">   * @throws ServletException if any call against the given {@code ServletContext}</span>
-<span class="tok-cm">   * throws a {@code ServletException}</span>
-<span class="tok-cm">   */</span>
-  <span class="tok-kt">void</span> <span class="tok-nf">onStartup</span><span class="tok-o">(</span><span class="tok-n">ServletContext</span> <span class="tok-n">servletContext</span><span class="tok-o">)</span> <span class="tok-kd">throws</span> <span class="tok-n">ServletException</span><span class="tok-o">;</span></code></pre>
+<pre class="highlight"><code class="java language-java">/**&#x000A;   * Configure the given {@link ServletContext} with any servlets, filters, listeners&#x000A;   * context-params and attributes necessary for initialization.&#x000A;   * @param servletContext the {@code ServletContext} to initialize&#x000A;   * @throws ServletException if any call against the given {@code ServletContext}&#x000A;   * throws a {@code ServletException}&#x000A;   */&#x000A;  void onStartup(ServletContext servletContext) throws ServletException;</code></pre>
 </div>
 </div>
 </section>
@@ -269,8 +250,7 @@ toolchain.</p></div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>server.tomcat.protocol-header=x-forwarded-proto
-server.tomcat.remote-ip-header=x-forwarded-for</code></pre>
+<pre class="highlight"><code>server.tomcat.protocol-header=x-forwarded-proto&#x000A;server.tomcat.remote-ip-header=x-forwarded-for</code></pre>
 </div>
 </div>
 <div class="quoteblock">
@@ -312,12 +292,7 @@ diverged. Provides a nice programming model on top of Netty
 <div class="paragraph"><p>Trivial example (single <code>Handler</code>):</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Bean</span>
-<span class="tok-kd">public</span> <span class="tok-n">Handler</span> <span class="tok-nf">handler</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-    <span class="tok-k">return</span> <span class="tok-o">(</span><span class="tok-n">context</span><span class="tok-o">)</span> <span class="tok-o">-&gt;</span> <span class="tok-o">{</span>
-        <span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">render</span><span class="tok-o">(</span><span class="tok-s">&quot;Hello World&quot;</span><span class="tok-o">);</span>
-    <span class="tok-o">};</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">@Bean&#x000A;public Handler handler() {&#x000A;    return (context) -&gt; {&#x000A;        context.render("Hello World");&#x000A;    };&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -326,19 +301,7 @@ diverged. Provides a nice programming model on top of Netty
 <div class="paragraph"><p>More interesting example (<code>Action&lt;Chain&gt;</code> registers <code>Handlers</code>):</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="java language-java"><span class="tok-nd">@Bean</span>
-<span class="tok-kd">public</span> <span class="tok-n">Handler</span> <span class="tok-nf">hello</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-    <span class="tok-k">return</span> <span class="tok-o">(</span><span class="tok-n">context</span><span class="tok-o">)</span> <span class="tok-o">-&gt;</span> <span class="tok-o">{</span>
-        <span class="tok-n">context</span><span class="tok-o">.</span><span class="tok-na">render</span><span class="tok-o">(</span><span class="tok-s">&quot;Hello World&quot;</span><span class="tok-o">);</span>
-    <span class="tok-o">};</span>
-<span class="tok-o">}</span>
-
-<span class="tok-nd">@Bean</span>
-<span class="tok-kd">public</span> <span class="tok-n">Action</span><span class="tok-o">&lt;</span><span class="tok-n">Chain</span><span class="tok-o">&gt;</span> <span class="tok-nf">handlers</span><span class="tok-o">()</span> <span class="tok-o">{</span>
-    <span class="tok-k">return</span> <span class="tok-o">(</span><span class="tok-n">chain</span><span class="tok-o">)</span> <span class="tok-o">-&gt;</span> <span class="tok-o">{</span>
-        <span class="tok-n">chain</span><span class="tok-o">.</span><span class="tok-na">get</span><span class="tok-o">(</span><span class="tok-n">hello</span><span class="tok-o">());</span>
-    <span class="tok-o">};</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="java language-java">@Bean&#x000A;public Handler hello() {&#x000A;    return (context) -&gt; {&#x000A;        context.render("Hello World");&#x000A;    };&#x000A;}&#x000A;&#x000A;@Bean&#x000A;public Action&lt;Chain&gt; handlers() {&#x000A;    return (chain) -&gt; {&#x000A;        chain.get(hello());&#x000A;    };&#x000A;}</code></pre>
 </div>
 </div>
 </section>
@@ -347,19 +310,13 @@ diverged. Provides a nice programming model on top of Netty
 <div class="paragraph"><p>A valid Ratpack Groovy application:</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="groovy language-groovy"><span class="tok-n">ratpack</span> <span class="tok-o">{</span>
-  <span class="tok-n">handlers</span> <span class="tok-o">{</span>
-    <span class="tok-n">get</span> <span class="tok-o">{</span>
-      <span class="tok-n">render</span> <span class="tok-s2">&quot;Hello World&quot;</span>
-    <span class="tok-o">}</span>
-  <span class="tok-o">}</span>
-<span class="tok-o">}</span></code></pre>
+<pre class="highlight"><code class="groovy language-groovy">ratpack {&#x000A;  handlers {&#x000A;    get {&#x000A;      render "Hello World"&#x000A;    }&#x000A;  }&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph"><p>launched with Spring Boot:</p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code>$ spring run app.groovy</code></pre>
+<pre class="highlight"><code>$ spring run app.groovy</code></pre>
 </div>
 </div>
 </section>
