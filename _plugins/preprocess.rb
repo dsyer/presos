@@ -1,4 +1,5 @@
 require 'asciidoctor'
+require 'asciidoctor-diagram'
 require 'tilt'
 require 'haml'
 
