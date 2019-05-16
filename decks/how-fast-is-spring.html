@@ -96,15 +96,15 @@
 <ul>
 <li>Classpath exclusions from Spring Boot web starters</li>
 <li>Use the <code>spring-context-indexer</code></li>
-<li>Don&#8217;t use actuators if you can afford not to</li>
+<li>(Don&#8217;t use actuators if you can afford not to)</li>
 <li>Use Spring Boot 2.1 (or 2.2) and Spring 5.1</li>
 <li>Use explicit <code>spring.config.location</code></li>
-<li>Switch off JMX: <code>spring.jmx.enabled=false</code></li>
+<li>(Switch off JMX: <code>spring.jmx.enabled=false</code>)</li>
 <li>Make bean definitions lazy by default</li>
 <li>Unpack the fat jar and run with an explicit classpath</li>
 <li>Run the JVM with <code>-noverify</code>. Also consider <code>-XX:TieredStopAtLevel=1</code></li>
 <li>Import autoconfigurations individually</li>
-<li>Use functional bean definition</li>
+<li>Use functional bean definitions</li>
 <li>(Build a native image)</li>
 </ul>
 </div>
@@ -120,7 +120,7 @@
 <li>Server: there is no measureable difference between Tomcat, Jetty and Undertow</li>
 <li>Netty is a <em>bit</em> faster on startup - you won&#8217;t notice in a large app</li>
 <li>The more features you use, the more classes are loaded</li>
-<li>Functional bean definitions rule</li>
+<li>Functional bean definitions are interesting</li>
 <li>Spring Boot, HTTP: starts in &lt;1sec and uses &lt;10MB heap</li>
 </ul>
 </div>
@@ -171,7 +171,7 @@
 <ul>
 <li>Command line: <code>-noverify</code> <code>-XX:TieredStopAtLevel=1</code> <code>-Djava.security.egd=file:/dev/./urandom</code></li>
 <li>Open J9: CDS <code>-Xquickstart -Xshareclasses -Xscmx128m</code></li>
-<li>Java 10/11: CDS, AOT (GraalVM)</li>
+<li>Java 10+: CDS, AOT (GraalVM)</li>
 <li>Explicit classpath (exploded archive)</li>
 </ul>
 </div>
@@ -252,15 +252,6 @@
 </div>
 </div>
 </section>
-<section class="slide" id="_result">
-<h2>Result</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="startup progress" src="images/fast/startup-progress.png">
-</div>
-</div>
-<div class="paragraph"><p>C.f. <code>Bunc</code> vs <code>Demo</code>.</p></div>
-</section>
 <section class="slide" id="_examples">
 <h2>Examples</h2>
 <div class="ulist">
@@ -296,7 +287,7 @@
 </div>
 </div>
 <div class="paragraph"><p>Downside: you lose all of JVM benefits (debugging, manageability, dynamic compilation, optimization, garbage collection).</p></div>
-<div class="paragraph"><p>Also, too many issues still for general purpose use.</p></div>
+<div class="paragraph"><p>Many issues have been solved. Still work in progress. Native image feature is not part of GraalVM 19.0.0 release.</p></div>
 </section>
 <section class="slide" id="_links">
 <h2>Links</h2>
