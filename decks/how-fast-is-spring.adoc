@@ -46,15 +46,15 @@ TL;DR How do I make my app go faster?
 
 * Classpath exclusions from Spring Boot web starters
 * Use the `spring-context-indexer`
-* Don't use actuators if you can afford not to
+* (Don't use actuators if you can afford not to)
 * Use Spring Boot 2.1 (or 2.2) and Spring 5.1
 * Use explicit `spring.config.location`
-* Switch off JMX: `spring.jmx.enabled=false`
+* (Switch off JMX: `spring.jmx.enabled=false`)
 * Make bean definitions lazy by default
 * Unpack the fat jar and run with an explicit classpath
 * Run the JVM with `-noverify`. Also consider `-XX:TieredStopAtLevel=1`
 * Import autoconfigurations individually
-* Use functional bean definition
+* Use functional bean definitions
 * (Build a native image)
 
 == Summary
@@ -66,7 +66,7 @@ TL;DR How do I make my app go faster?
 * Server: there is no measureable difference between Tomcat, Jetty and Undertow
 * Netty is a _bit_ faster on startup - you won't notice in a large app
 * The more features you use, the more classes are loaded
-* Functional bean definitions rule
+* Functional bean definitions are interesting
 * Spring Boot, HTTP: starts in <1sec and uses <10MB heap
 
 == Tools
@@ -115,7 +115,7 @@ MiniBenchmark  micro jlog  2.000    2215.000  4.817  33.320  0.339  0.344  0.007
 
 * Command line: `-noverify` `-XX:TieredStopAtLevel=1` `-Djava.security.egd=file:/dev/./urandom`
 * Open J9: CDS `-Xquickstart -Xshareclasses -Xscmx128m`
-* Java 10/11: CDS, AOT (GraalVM)
+* Java 10+: CDS, AOT (GraalVM)
 * Explicit classpath (exploded archive)
 
 image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1689271723&format=image[width=75%]
@@ -226,12 +226,6 @@ public class SampleConfiguration
 }
 ```
 
-== Result
-
-image::images/fast/startup-progress.png[]
-
-C.f. `Bunc` vs `Demo`.
-
 == Examples
 
 * Micro apps (`FuncApplication` and `BuncApplication`): https://github.com/dsyer/spring-boot-micro-apps
@@ -285,7 +279,7 @@ Started HttpServer: 40ms
 
 Downside: you lose all of JVM benefits (debugging, manageability, dynamic compilation, optimization, garbage collection).
 
-Also, too many issues still for general purpose use.
+Many issues have been solved. Still work in progress. Native image feature is not part of GraalVM 19.0.0 release.
 
 == Links
 
