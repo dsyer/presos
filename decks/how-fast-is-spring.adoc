@@ -23,7 +23,7 @@ Dave Syer, 2018
 
 == Baseline Micro App
 
-image::images/fast/startup-progress.png[]
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1652003601&format=image[]
 
 == Heap Memory and Garbage Collection
 
@@ -96,7 +96,7 @@ StripBenchmark  strip  func  26.000   4967.000  11.351  70.516  0.686  0.701  0.
 
 == Number of Classes vs. Startup Time
 
-image::https://docs.google.com/spreadsheets/d/e/2PACX-1vR8B4l5WkWf-9gZWmIYTkmBWM7YWf5bRg852OakrV0G2-vtfM_UkVNRC3cTVk1079HagnMVHYZnvbib/pubchart?oid=976086548&format=image[width=75%]
+image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1452854557&amp;format=image[width=75%]
 
 == WebFlux and Micro Apps
 
@@ -104,11 +104,11 @@ https://github.com/dsyer/spring-boot-startup-bench/blob/master/flux/README.adoc[
 
 ```
 class        method sample  beans   classes   heap    memory  median  mean  range
-MainBenchmark  main  demo  93.000   4420.000  8.153  50.333  0.771  0.816  0.042
-MainBenchmark  main  jlog  80.000   3649.000  6.540  44.006  0.685  0.712  0.046
-MiniBenchmark  boot  jlog  28.000   3250.000  6.692  41.158  0.562  0.571  0.013
-MiniBenchmark  mini  jlog  27.000   2986.000  5.421  38.561  0.516  0.524  0.014
-MiniBenchmark  micro jlog  2.000    2215.000  4.817  33.320  0.339  0.344  0.007
+MainBenchmark  main  demo  93.000   4365.000  8.024  49.564  0.766  0.773  0.011
+MainBenchmark  main  jlog  80.000   3598.000  6.141  43.006  0.667  0.679  0.019
+MiniBenchmark  boot  jlog  28.000   3336.000  7.082  41.949  0.588  0.597  0.014
+MiniBenchmark  mini  jlog  27.000   3059.000  5.487  38.953  0.534  0.545  0.018
+MiniBenchmark  micro jlog  2.000    2176.000  4.608  32.886  0.336  0.345  0.013
 ```
 
 == JVM Tweaks
@@ -136,16 +136,7 @@ YMMV, but consider excluding:
 * Profiling with https://github.com/dsyer/spring-boot-aspectj/tree/master/timing[AspectJ]
 * Lazy subsystems, E.g. see https://github.com/dsyer/spring-boot-lazy-actuator[Lazy Actuator]
 * Spring Boot 2.2: `spring.main.lazy-initialization=true`
-
-```
-Benchmark            (sample)  Mode  Cnt  Score   Error  Units Faster
-MainBenchmark.main       empt    ss   10  0.495 ± 0.008   s/op 9.91%
-MainBenchmark.main       jlog    ss   10  0.692 ± 0.017   s/op 21.04%
-MainBenchmark.main       demo    ss   10  0.805 ± 0.016   s/op 19.45%
-MainBenchmark.main       actr    ss   10  0.946 ± 0.021   s/op 27.03%
-MainBenchmark.main       jdbc    ss   10  0.860 ± 0.010   s/op 19.95%
-MainBenchmark.main       actj    ss   10  1.015 ± 0.020   s/op 29.11%
-```
+* 10-30% faster for micro apps. Generally better for larger apps.
 
 == Manual Configuration
 

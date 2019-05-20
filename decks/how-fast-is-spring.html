@@ -50,7 +50,7 @@
 <h2>Baseline Micro App</h2>
 <div class="imageblock">
 <div class="content">
-<img alt="startup progress" src="images/fast/startup-progress.png">
+<img alt="pubchart?oid=1652003601&format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1652003601&format=image">
 </div>
 </div>
 </section>
@@ -152,7 +152,7 @@
 <h2>Number of Classes vs. Startup Time</h2>
 <div class="imageblock">
 <div class="content">
-<img alt="pubchart?oid=976086548&format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR8B4l5WkWf-9gZWmIYTkmBWM7YWf5bRg852OakrV0G2-vtfM_UkVNRC3cTVk1079HagnMVHYZnvbib/pubchart?oid=976086548&format=image" width="75%">
+<img alt="pubchart?oid=1452854557&amp;format=image" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=1452854557&amp;format=image" width="75%">
 </div>
 </div>
 </section>
@@ -161,7 +161,7 @@
 <div class="paragraph"><p><a href="https://github.com/dsyer/spring-boot-startup-bench/blob/master/flux/README.adoc">Flux benchmarks</a> from <a class="bare" href="https://github.com/dsyer/spring-boot-startup-bench">https://github.com/dsyer/spring-boot-startup-bench</a></p></div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>class        method sample  beans   classes   heap    memory  median  mean  range&#x000A;MainBenchmark  main  demo  93.000   4420.000  8.153  50.333  0.771  0.816  0.042&#x000A;MainBenchmark  main  jlog  80.000   3649.000  6.540  44.006  0.685  0.712  0.046&#x000A;MiniBenchmark  boot  jlog  28.000   3250.000  6.692  41.158  0.562  0.571  0.013&#x000A;MiniBenchmark  mini  jlog  27.000   2986.000  5.421  38.561  0.516  0.524  0.014&#x000A;MiniBenchmark  micro jlog  2.000    2215.000  4.817  33.320  0.339  0.344  0.007</code></pre>
+<pre class="highlight"><code>class        method sample  beans   classes   heap    memory  median  mean  range&#x000A;MainBenchmark  main  demo  93.000   4365.000  8.024  49.564  0.766  0.773  0.011&#x000A;MainBenchmark  main  jlog  80.000   3598.000  6.141  43.006  0.667  0.679  0.019&#x000A;MiniBenchmark  boot  jlog  28.000   3336.000  7.082  41.949  0.588  0.597  0.014&#x000A;MiniBenchmark  mini  jlog  27.000   3059.000  5.487  38.953  0.534  0.545  0.018&#x000A;MiniBenchmark  micro jlog  2.000    2176.000  4.608  32.886  0.336  0.345  0.013</code></pre>
 </div>
 </div>
 </section>
@@ -202,12 +202,8 @@
 <li>Profiling with <a href="https://github.com/dsyer/spring-boot-aspectj/tree/master/timing">AspectJ</a></li>
 <li>Lazy subsystems, E.g. see <a href="https://github.com/dsyer/spring-boot-lazy-actuator">Lazy Actuator</a></li>
 <li>Spring Boot 2.2: <code>spring.main.lazy-initialization=true</code></li>
+<li>10-30% faster for micro apps. Generally better for larger apps.</li>
 </ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>Benchmark            (sample)  Mode  Cnt  Score   Error  Units Faster&#x000A;MainBenchmark.main       empt    ss   10  0.495 ± 0.008   s/op 9.91%&#x000A;MainBenchmark.main       jlog    ss   10  0.692 ± 0.017   s/op 21.04%&#x000A;MainBenchmark.main       demo    ss   10  0.805 ± 0.016   s/op 19.45%&#x000A;MainBenchmark.main       actr    ss   10  0.946 ± 0.021   s/op 27.03%&#x000A;MainBenchmark.main       jdbc    ss   10  0.860 ± 0.010   s/op 19.95%&#x000A;MainBenchmark.main       actj    ss   10  1.015 ± 0.020   s/op 29.11%</code></pre>
-</div>
 </div>
 </section>
 <section class="slide" id="_manual_configuration">
