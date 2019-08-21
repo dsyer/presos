@@ -1,5 +1,5 @@
 = Serverless Spring
-@david_syer, 2018
+@david_syer, 2019
 :backend: deckjs
 :deckjs_transition: fade
 :navigation:
@@ -26,6 +26,19 @@ http://projectreactor.io/
 * Billing per message
 * Focus on business logic
 * Easy integration with platform services
+* Nothing to install or maintain
+
+== Platform Abstractions
+
+image::images/platforms/Faas-Too-Far.png[faas-too-far]
+
+Credit: Olivier Tardieu, and https://serverless.zone/abstracting-the-back-end-with-faas-e5e80e837362[John McKim]
+
+== Platform Abstractions
+
+image::images/platforms/Faas-Too-Far-Invert.png[faas-too-far-invert]
+
+Credit: Olivier Tardieu, and https://serverless.zone/abstracting-the-back-end-with-faas-e5e80e837362[John McKim]
 
 == Serverless Use Cases
 
@@ -40,10 +53,6 @@ CNCF https://docs.google.com/document/d/1UjW8bt5O8QBgQRILJVKZJej_IuNnxl20AJu9wA8
 image::images/serverless/burningmonk.png[mixed_arch]
 
 Credit: Yan Cui, https://theburningmonk.com
-
-== Service Block
-
-image::images/serverless/sba.png[service-block-architecture]
 
 == Amazon Lambda
 
@@ -210,26 +219,10 @@ image::images/function_demo_adapter.svg[function_demo_adapter]
 5. Adapters for Spring MVC, Spring Cloud Stream, AWS Lambda, Azure, Riff and other "serverless"
 service providers
 
-== Learnings
-
-1. Spring is not slow or "heavy" on its own, classes loaded is important
-
-2. AWS Lambda containers are *slow*, Azure even more so
-
-3. Functional bean definitions rule for fast startup
-
-4. Functions are glue code anyway - not latency sensitive
-
-5. Scale to Zero
-
-6. Platform services and integration spaghetti
-
-
 == Links
 
 * Spring Cloud Function: https://github.com/spring-cloud/spring-cloud-function
 * Riff: https://github.com/projectriff/riff
-* Spring Boot Thin Launcher: https://github.com/dsyer/spring-boot-thin-launcher
 * Spring Initializr: http://start.spring.io
 * Spring Cloud: http://cloud.spring.io
 * Reactor: http://projectreactor.io
