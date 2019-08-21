@@ -165,7 +165,7 @@ public class DemoApplication {
 image::https://docs.google.com/spreadsheets/d/e/2PACX-1vQpSEfx0Y1W9aD3XVyn91-S0jtUp2DRCQSy_W_LMGyMR91YLAQ1mL7MiR1BRd8VzshvtuxzL6WAnlxf/pubchart?oid=2146002665&format=image[]
 
 * Blue: out of the box Spring Boot.
-* Yello: manual autoconfiguration.
+* Yellow: manual autoconfiguration.
 * Red: fully functional via Spring Init
 
 == Functional Bean Definitions

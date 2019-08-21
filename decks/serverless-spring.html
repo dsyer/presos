@@ -4,7 +4,7 @@
 <meta content="text/html; charset=" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta content="Asciidoctor 2.0.5" name="generator">
-<meta content="@david_syer, 2018" name="author">
+<meta content="@david_syer, 2019" name="author">
 <title>Serverless Spring</title>
 <link href="./asciidoctor-pygments.css" rel="stylesheet">
 <link href="../deck.js/core/deck.core.css" rel="stylesheet">
@@ -22,7 +22,7 @@
 <div class="deck-container">
 <section class="slide" id="title-slide">
 <h1>Serverless Spring</h1>
-<span id="author">@david_syer, 2018</span>
+<span id="author">@david_syer, 2019</span>
 <br>
 </section>
 <section class="slide" id="_agenda">
@@ -46,8 +46,27 @@
 <li>Billing per message</li>
 <li>Focus on business logic</li>
 <li>Easy integration with platform services</li>
+<li>Nothing to install or maintain</li>
 </ul>
 </div>
+</section>
+<section class="slide" id="_platform_abstractions">
+<h2>Platform Abstractions</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="faas-too-far" src="images/platforms/Faas-Too-Far.png">
+</div>
+</div>
+<div class="paragraph"><p>Credit: Olivier Tardieu, and <a href="https://serverless.zone/abstracting-the-back-end-with-faas-e5e80e837362">John McKim</a></p></div>
+</section>
+<section class="slide" id="_platform_abstractions_2">
+<h2>Platform Abstractions</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="faas-too-far-invert" src="images/platforms/Faas-Too-Far-Invert.png">
+</div>
+</div>
+<div class="paragraph"><p>Credit: Olivier Tardieu, and <a href="https://serverless.zone/abstracting-the-back-end-with-faas-e5e80e837362">John McKim</a></p></div>
 </section>
 <section class="slide" id="_serverless_use_cases">
 <h2>Serverless Use Cases</h2>
@@ -68,14 +87,6 @@
 </div>
 </div>
 <div class="paragraph"><p>Credit: Yan Cui, <a class="bare" href="https://theburningmonk.com">https://theburningmonk.com</a></p></div>
-</section>
-<section class="slide" id="_service_block">
-<h2>Service Block</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="service-block-architecture" src="images/serverless/sba.png">
-</div>
-</div>
 </section>
 <section class="slide" id="_amazon_lambda">
 <h2>Amazon Lambda</h2>
@@ -244,38 +255,12 @@ service providers
 </ol>
 </div>
 </section>
-<section class="slide" id="_learnings">
-<h2>Learnings</h2>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-Spring is not slow or "heavy" on its own, classes loaded is important
-</li>
-<li>
-AWS Lambda containers are <strong>slow</strong>, Azure even more so
-</li>
-<li>
-Functional bean definitions rule for fast startup
-</li>
-<li>
-Functions are glue code anyway - not latency sensitive
-</li>
-<li>
-Scale to Zero
-</li>
-<li>
-Platform services and integration spaghetti
-</li>
-</ol>
-</div>
-</section>
 <section class="slide" id="_links">
 <h2>Links</h2>
 <div class="ulist">
 <ul>
 <li>Spring Cloud Function: <a class="bare" href="https://github.com/spring-cloud/spring-cloud-function">https://github.com/spring-cloud/spring-cloud-function</a></li>
 <li>Riff: <a class="bare" href="https://github.com/projectriff/riff">https://github.com/projectriff/riff</a></li>
-<li>Spring Boot Thin Launcher: <a class="bare" href="https://github.com/dsyer/spring-boot-thin-launcher">https://github.com/dsyer/spring-boot-thin-launcher</a></li>
 <li>Spring Initializr: <a class="bare" href="http://start.spring.io">http://start.spring.io</a></li>
 <li>Spring Cloud: <a class="bare" href="http://cloud.spring.io">http://cloud.spring.io</a></li>
 <li>Reactor: <a class="bare" href="http://projectreactor.io">http://projectreactor.io</a></li>
