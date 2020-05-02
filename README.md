@@ -20,7 +20,8 @@ them (read only) like this:
 Use Ruby 2.2 and make sure you have `bundle` on your `PATH` 
 
     $ cd presos
-    $ bundle 
+    $ nix-shell # or install ruby
+    $ bundle install
     $ bundle exec jekyll build
     ...
     

@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem "public_suffix", '1.4.6'
+gem "public_suffix"
 gem "guard-jekyll-plus"
 gem "github-pages"
 gem "asciidoctor"
@@ -9,4 +9,4 @@ gem "pygments.rb"
 gem "redcarpet"
 gem "tilt"
 gem "haml"
-gem "nokogiri", '1.6.8'
+gem "nokogiri"
